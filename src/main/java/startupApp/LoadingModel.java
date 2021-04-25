@@ -86,7 +86,7 @@ public class LoadingModel {
 
 
         //noinspection SpellCheckingInspection
-        BufferedImage backgroundImage = ImageIO.read(new File("textures/anktarktis.jpg"));
+        BufferedImage backgroundImage = ImageIO.read(new File("anktarktis.jpg"));
 
 
         loadingView = new LoadingView(backgroundImage, this);

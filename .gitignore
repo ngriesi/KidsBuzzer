@@ -1,4 +1,5 @@
 *.log
+*.wav
 /out/**
 /target/**
 /textures/**
