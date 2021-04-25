@@ -1,0 +1,19 @@
+background=default
+questionVolume=100
+buzzerTextColor=[255, 255, 255, 255]
+buzzerSound=default
+mainTextBold=false
+mainTextColor=[255, 255, 0, 255]
+buzzerFont=Arial
+mainFont=Arial
+buzzerTextBold=true
+questionSound=default
+rightSound=default
+rightVolume=100
+buzzerVolume=100
+introSound=default
+introVolume=100
+wrongSound=default
+icons=[default, default, default]
+wrongVolume=100
+

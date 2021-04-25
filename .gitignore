@@ -1,0 +1,7 @@
+*.log
+/out/**
+/target/**
+/textures/**
+/Bilder/**
+/.idea/**
+/target/classes/
