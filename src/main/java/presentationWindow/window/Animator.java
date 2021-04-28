@@ -1,13 +1,11 @@
 package presentationWindow.window;
 
 import org.joml.Vector2f;
-import presentationWindow.animations.Animation;
-import presentationWindow.animations.ColorAnimation;
-import presentationWindow.animations.FloatAnimation;
-import presentationWindow.animations.Vector2fAnimation;
+import presentationWindow.animations.*;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.renderItems.ChildItem;
+import presentationWindow.renderItems.QuadItem;
 import programs.quiztime.main.view.AnimationQueue;
 
 import java.util.ArrayList;
@@ -181,4 +179,7 @@ public abstract class Animator  {
         return startAnimation(new FloatAnimation(item.getWidth(),newWidth,duration,item::setWidth, animationCurve));
     }
 
+    public Animation fadeColorScheme(ColorScheme newColorScheme, ChildItem item, int duration) {
+        return startAnimation(new ColorSchemeAnimation(item.getColorScheme(), newColorScheme, duration, item::setColorScheme, animationCurve));
+    }
 }

@@ -182,6 +182,22 @@ public class ColorScheme {
     }
 
     /**
+     * sets the color of a specific side (int)
+     *
+     * @param color color to be set
+     * @param side side where the color is set to
+     */
+    public void setColor(Color color,int side) {
+        switch (side) {
+            case 0: this.top = color;break;
+            case 2: this.bottom = color;break;
+            case 3: this.left = color;break;
+            case 1: this.right = color;break;
+        }
+    }
+
+
+    /**
      * returns the color of a specific side
      *
      * @param side side the color is red form
@@ -197,6 +213,21 @@ public class ColorScheme {
     }
 
     /**
+     * returns the color of a specific side (as int
+     *
+     * @param side side the color is red form
+     * @return the color of the specified side
+     */
+    public Color getColor(int side) {
+        switch (side) {
+            case 0:return top;
+            case 2:return bottom;
+            case 3:return left;
+            default:return right;
+        }
+    }
+
+    /**
      * creates and returns an array of Vector4f objects with the length four. This is the
      * form the color data is passed on to the shaders
      *
@@ -207,6 +238,18 @@ public class ColorScheme {
      */
     public Vector4f[] getVectorArray() {
         return new Vector4f[] {left.getVector4f(),right.getVector4f(),top.getVector4f(),bottom.getVector4f()};
+    }
+
+    /**
+     * checks if two color schemes are equal
+     *
+     * @return true if the two color schemes are equal
+     */
+    public boolean equals(ColorScheme colorScheme) {
+        return colorScheme.bottom.getVector4f().equals(this.bottom.getVector4f(),0)
+                && colorScheme.top.getVector4f().equals(this.top.getVector4f(),0)
+                && colorScheme.right.getVector4f().equals(this.right.getVector4f(),0)
+                && colorScheme.left.getVector4f().equals(this.left.getVector4f(),0);
     }
 
     public Color getRight() {

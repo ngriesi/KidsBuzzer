@@ -38,8 +38,8 @@ public class ExitedAnimation {
 
                 if(finalI == SaveDataHandler.MAX_BUZZER_COUNT - 1) {
                     exponentialAnimator.moveYTo(1.5f, viewItems.getIcons()[finalI], 70 + (finalI) * 20).addOnFinishedAction(() -> {
-                        animationQueueItem.animationFinished();
                         resetToStart();
+                        animationQueueItem.animationFinished();
                     });
                 } else {
                     exponentialAnimator.moveYTo(1.5f, viewItems.getIcons()[finalI], 70 + (finalI) * 20);

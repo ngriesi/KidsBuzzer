@@ -1,8 +1,8 @@
-font=Arial
+font=Bauhaus 93
 buzzerSound=default
-textColor=[255, 255, 255, 255]
 icons=[default, default, default]
-buzzerSoundVolume=0
+textColor=[51, 255, 51, 255]
 textBold=false
-teamNames=[team 1, team 2, team 3]
+teamNames=[baum, ente, ganslinger]
+buzzerSoundVolume=0
 

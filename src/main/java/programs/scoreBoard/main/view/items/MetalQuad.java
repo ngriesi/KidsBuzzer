@@ -63,4 +63,8 @@ public class MetalQuad extends QuadItem {
         super.setWindow(window);
         updateInnerQuad();
     }
+
+    public QuadItem getCentralPlane() {
+        return innerQuad;
+    }
 }

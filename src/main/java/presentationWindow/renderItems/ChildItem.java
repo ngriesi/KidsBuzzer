@@ -251,4 +251,8 @@ public class ChildItem extends PresentationViewRenderItem {
     public Color getColor() {
         return colorScheme.getLeft();
     }
+
+    public ColorScheme getColorScheme() {
+        return colorScheme;
+    }
 }

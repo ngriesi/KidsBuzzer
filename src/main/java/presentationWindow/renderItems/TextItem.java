@@ -37,13 +37,17 @@ public class TextItem extends ChildItem {
      * @param text text of the item
      */
     public TextItem(String text) {
+        this(text, new Font("Arial", Font.PLAIN, 200));
+    }
+
+    public TextItem(String text, Font font) {
         super();
 
         this.text = text;
 
         this.setColorScheme(new ColorScheme(presentationWindow.assets.Color.BLACK));
 
-        this.font = new Font("arial", Font.PLAIN, 200);
+        this.font = font;
 
         createTexture();
     }
