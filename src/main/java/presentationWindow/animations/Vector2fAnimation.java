@@ -19,6 +19,18 @@ public class Vector2fAnimation extends Animation<Vector2f> {
     }
 
     @Override
+    protected boolean animationShouldStillBeRunning(float progress) {
+
+        Vector2f mov = new Vector2f(endValue);
+        mov.sub(startValue);
+
+        Vector2f progressTemp = new Vector2f(startValue);
+        progressTemp.add(mov.mul(progress));
+
+        return !startValue.equals(endValue,0) && !progressTemp.equals(endValue,0);
+    }
+
+    @Override
     public void stepAction(float progress) {
         Vector2f mov = new Vector2f(endValue);
         mov.sub(startValue);

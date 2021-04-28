@@ -74,7 +74,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
     @Override
     protected void buzzerAction(int buzzerNumber) {
         if (generalState.checkAndPerformAction(GeneralState.QuizAction.BUZZER_PRESS)) {
-            stateChanger.buzzerPressed(buzzerNumber);
+            stateChanger.buzzerPressed(buzzerNumber, new AnimationQueue.AnimationQueueItem());
         }
     }
 

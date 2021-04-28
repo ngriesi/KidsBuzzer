@@ -1,5 +1,6 @@
 package programs.quiztime.main.view.virtualBuzzers;
 
+import programs.quiztime.main.view.AnimationQueue;
 import savedataHandler.SaveDataHandler;
 
 public abstract class StateHandler {
@@ -19,28 +20,28 @@ public abstract class StateHandler {
         index = virtualBuzzer.getIndex();
     }
 
-    public void changeState(VirtualBuzzerStateHandler.BuzzerState to) {
+    public void changeState(VirtualBuzzerStateHandler.BuzzerState to, AnimationQueue.AnimationQueueItem animationQueueItem) {
         switch (to) {
-            case VISIBLE_DEFAULT: changeToVisibleDefault(); break;
-            case INVISIBLE_DEFAULT: changeToInvisibleDefault(); break;
-            case RIGHT: changeToRight(); break;
-            case WRONG: changeToWrong(); break;
-            case ON_TURN: changeToOnTurn(); break;
-            case PRESSED_NOT_ON_TURN: changeToPressedNotOnTurn(); break;
+            case VISIBLE_DEFAULT: changeToVisibleDefault(animationQueueItem); break;
+            case INVISIBLE_DEFAULT: changeToInvisibleDefault(animationQueueItem); break;
+            case RIGHT: changeToRight(animationQueueItem); break;
+            case WRONG: changeToWrong(animationQueueItem); break;
+            case ON_TURN: changeToOnTurn(animationQueueItem); break;
+            case PRESSED_NOT_ON_TURN: changeToPressedNotOnTurn(animationQueueItem); break;
         }
     }
 
-    protected abstract void changeToPressedNotOnTurn();
+    protected abstract void changeToPressedNotOnTurn(AnimationQueue.AnimationQueueItem animationQueueItem);
 
-    protected abstract void changeToOnTurn();
+    protected abstract void changeToOnTurn(AnimationQueue.AnimationQueueItem animationQueueItem);
 
-    protected abstract void changeToWrong();
+    protected abstract void changeToWrong(AnimationQueue.AnimationQueueItem animationQueueItem);
 
-    protected abstract void changeToRight();
+    protected abstract void changeToRight(AnimationQueue.AnimationQueueItem animationQueueItem);
 
-    protected abstract void changeToInvisibleDefault();
+    protected abstract void changeToInvisibleDefault(AnimationQueue.AnimationQueueItem animationQueueItem);
 
-    protected abstract void changeToVisibleDefault();
+    protected abstract void changeToVisibleDefault(AnimationQueue.AnimationQueueItem animationQueueItem);
 
     public void setBuzzerCount(int buzzerCount) {
         this.buzzerCount = buzzerCount;

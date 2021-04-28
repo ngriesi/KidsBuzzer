@@ -73,10 +73,11 @@ class StateChanger {
      * method called when a buzzer press should invoke a state change
      *
      * @param buzzerNumber number of the buzzer that was pressed
+     * @param animationQueueItem
      */
-    void buzzerPressed(int buzzerNumber) {
+    void buzzerPressed(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
         programModel.playBuzzerSound();
-        buzzerStateHandler.press(buzzerNumber);
+        buzzerStateHandler.press(buzzerNumber, animationQueueItem);
     }
 
     /**
@@ -130,10 +131,13 @@ class StateChanger {
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
         programModel.playQuestionSound();
         animationQueueItem.setAnimationAction(() -> {
+
             action.execute();
+
             viewUpdater.nextQuestion(generalState.getQuestionNumber(), animationQueueItem);
-            reset();
+
         });
+        animationQueueItem.addOnFinishedAction(this::reset);
         animationQueue.addAnimation(animationQueueItem);
     }
 

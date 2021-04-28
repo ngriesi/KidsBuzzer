@@ -89,7 +89,7 @@ public class QuizTimeProgramControlView extends ProgramView {
      * @param actionListener action listener of the text field
      */
     private void createTextField(GridBagConstraints gc, ActionListener actionListener) {
-        textField = new MyTextField("2");
+        textField = new MyTextField("1");
         textField.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/20,Toolkit.getDefaultToolkit().getScreenSize().height/20));
         textField.useOnlyInts();
         textField.addActionListener(actionListener);

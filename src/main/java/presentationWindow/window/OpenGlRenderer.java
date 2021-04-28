@@ -63,8 +63,8 @@ public class OpenGlRenderer implements IGameLogic {
      */
     public OpenGlRenderer() {
         executeOnOpenGlThread = new LinkedList<>();
-        linearAnimator = new LinearAnimator(this);
-        exponentialAnimator = new ExponentialAnimator(this);
+        linearAnimator = new LinearAnimator();
+        exponentialAnimator = new ExponentialAnimator();
         createTimedActionLists();
     }
 

@@ -69,6 +69,7 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
      *
      * @param mainItem main item of the presentation scene
      */
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public void setupView(MainItem mainItem) {
 
@@ -116,6 +117,7 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
     public void changeQuestionNumber(int number) {
 
         getProgram().getRenderer().addActionToOpenGlThread(() -> {
+            //noinspection SpellCheckingInspection
             questionText.changeText("Frage " + number);
             questionText.setPosition(0.5f, 1f / 3f);
             questionText.setSize((questionText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
@@ -127,17 +129,17 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
             for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
                 if (i != buzzerNumber - 1) {
 
-                    virtualBuzzers[i].hide();
+                    virtualBuzzers[i].hide(animationQueueItem);
 
                 } else {
 
-                    virtualBuzzers[i].moveToCenterAndScaleUp();
+                    virtualBuzzers[i].moveToCenterAndScaleUp(animationQueueItem);
 
                     rightText.setPosition(0.5f, 1f / 5f);
-                    getProgram().getRenderer().getLinearAnimator().fadeOut(questionText, changeAnimationDuration / 2).setOnFinishedAction(() -> {
+                    getProgram().getRenderer().getLinearAnimator().fadeOut(questionText, changeAnimationDuration / 2).addOnFinishedAction(() -> {
                         questionText.setVisible(false);
                         rightText.setVisible(true);
-                        getProgram().getRenderer().getLinearAnimator().fadeIn(rightText, changeAnimationDuration / 2).setOnFinishedAction(animationQueueItem::animationFinished);
+                        getProgram().getRenderer().getLinearAnimator().fadeIn(rightText, changeAnimationDuration / 2);
                     });
                     getProgram().getRenderer().getLinearAnimator().moveYTo(0.2f, questionText, changeAnimationDuration / 2);
                 }
@@ -149,28 +151,30 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
      * shows the first buzzer press for this question
      *
      * @param buzzerNumber number of the buzzer pressed
+     * @param animationQueueItem
      */
-    public void firstBuzzerPress(int buzzerNumber, int position) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedSizeIncrease(position));
+    public void firstBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedSizeIncrease(position, animationQueueItem));
     }
 
     /**
      * shows all followup buzzer presses with their position
-     *
-     * @param buzzerNumber number of the buzzer
+     *  @param buzzerNumber number of the buzzer
      * @param position position of the buzzer
+     * @param animationQueueItem
      */
-    public void followBuzzerPress(int buzzerNumber, int position) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedColorAndIconChange(position));
+    public void followBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedColorAndIconChange(position, animationQueueItem));
     }
 
     /**
      * shows that a new buzzer is on turn
      *
      * @param newBuzzer number of the new buzzer
+     * @param animationQueueItem
      */
-    public void newBuzzerOnTurn(int newBuzzer) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[newBuzzer - 1].scaleUpBuzzer());
+    public void newBuzzerOnTurn(int newBuzzer, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[newBuzzer - 1].scaleUpBuzzer(animationQueueItem));
     }
 
     /**
@@ -180,34 +184,35 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
      * @param animationQueueItem animation ques item
      */
     public void wrongAnswerGiven(int oldBuzzer, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[oldBuzzer - 1].wrongAnswerGiven());
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                animationQueueItem.animationFinished();
-            }
-        }, (long) (changeAnimationDuration/(float) Engine.TARGET_UPS * 1000));
+        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[oldBuzzer - 1].wrongAnswerGiven(animationQueueItem));
     }
 
     /**
      * resets the view for the next question
      */
     public void resetToQuestionView(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(title, changeAnimationDuration).setOnFinishedAction(() -> {
-            int buzzerCount = SaveDataHandler.MAX_BUZZER_COUNT;
+        if (title.getOpacity() > 0) {
+            getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(title, changeAnimationDuration).addOnFinishedAction(() -> resetToQuestionViewAfterTitleFade(animationQueueItem)));
+        } else {
+            getProgram().getRenderer().addActionToOpenGlThread(() -> resetToQuestionViewAfterTitleFade(animationQueueItem));
+        }
 
-            getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration).setOnFinishedAction(() -> {
-                rightText.setVisible(false);
-                questionText.setPosition(0.5f, 1f / 3f);
-                questionText.setVisible(true);
-                getProgram().getRenderer().getLinearAnimator().fadeIn(questionText, changeAnimationDuration).setOnFinishedAction(animationQueueItem::animationFinished);
-            });
-            getProgram().getRenderer().getLinearAnimator().moveYTo(0.1f, rightText, changeAnimationDuration);
+    }
 
-            for (int i = 0; i < buzzerCount; i++) {
-                virtualBuzzers[i].moveToStartPositionAndInitialScale();
-            }
-        }));
+    private void resetToQuestionViewAfterTitleFade(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        int buzzerCount = SaveDataHandler.MAX_BUZZER_COUNT;
+
+        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
+            rightText.setVisible(false);
+            questionText.setPosition(0.5f, 1f / 3f);
+            questionText.setVisible(true);
+            getProgram().getRenderer().getLinearAnimator().fadeIn(questionText, changeAnimationDuration,animationQueueItem);
+        });
+        getProgram().getRenderer().getLinearAnimator().moveYTo(0.1f, rightText, changeAnimationDuration, animationQueueItem);
+
+        for (int i = 0; i < buzzerCount; i++) {
+            virtualBuzzers[i].moveToStartPositionAndInitialScale(animationQueueItem);
+        }
     }
 
     public void updateBackground() {
@@ -240,25 +245,19 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
     }
 
     public void introAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getRenderer().getLinearAnimator().fadeIn(background, changeAnimationDuration).setOnFinishedAction(() -> {
+        getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getRenderer().getLinearAnimator().fadeIn(background, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
             title.setVisible(true);
-            getProgram().getRenderer().getLinearAnimator().fadeIn(title, changeAnimationDuration).setOnFinishedAction(() -> {
-                System.out.println("test");
-                animationQueueItem.animationFinished();
-            });
+            getProgram().getRenderer().getLinearAnimator().fadeIn(title, changeAnimationDuration, animationQueueItem);
         }));
     }
 
     public void fadeOut(AnimationQueue.AnimationQueueItem animationQueueItem) {
         for(VirtualBuzzer virtualBuzzer : virtualBuzzers) {
-            virtualBuzzer.hide();
+            virtualBuzzer.hide(animationQueueItem);
         }
-        getProgram().getRenderer().getLinearAnimator().fadeOut(title,changeAnimationDuration);
-        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText,changeAnimationDuration);
-        getProgram().getRenderer().getLinearAnimator().fadeOut(questionText,changeAnimationDuration).setOnFinishedAction(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(background, changeAnimationDuration).setOnFinishedAction(() -> {
-            resetView();
-            animationQueueItem.animationFinished();
-        }));
+        getProgram().getRenderer().getLinearAnimator().fadeOut(title,changeAnimationDuration,animationQueueItem);
+        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText,changeAnimationDuration,animationQueueItem);
+        getProgram().getRenderer().getLinearAnimator().fadeOut(questionText,changeAnimationDuration,animationQueueItem).addOnFinishedAction(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(background, changeAnimationDuration,animationQueueItem).addOnFinishedAction(this::resetView));
 
 
     }

@@ -27,7 +27,7 @@ public class ExitedAnimation {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
 
             int finalI = i;
-            exponentialAnimator.fadeOut(viewItems.getLabels()[i], 30).setOnFinishedAction(() -> {
+            exponentialAnimator.fadeOut(viewItems.getLabels()[i], 30).addOnFinishedAction(() -> {
                 exponentialAnimator.moveXTo(1.1f,viewItems.getTeamYellowBacks()[finalI],70);
 
 
@@ -37,7 +37,7 @@ public class ExitedAnimation {
                 exponentialAnimator.moveYTo(1.5f, viewItems.getTeamMetalBacks()[finalI], 70 + finalI * 20);
 
                 if(finalI == SaveDataHandler.MAX_BUZZER_COUNT - 1) {
-                    exponentialAnimator.moveYTo(1.5f, viewItems.getIcons()[finalI], 70 + (finalI) * 20).setOnFinishedAction(() -> {
+                    exponentialAnimator.moveYTo(1.5f, viewItems.getIcons()[finalI], 70 + (finalI) * 20).addOnFinishedAction(() -> {
                         animationQueueItem.animationFinished();
                         resetToStart();
                     });

@@ -45,8 +45,9 @@ public class BuzzerStateHandler {
      * action performed when a buzzer was pressed
      *
      * @param buzzerNumber number of the pressed buzzer
+     * @param animationQueueItem
      */
-    void press(int buzzerNumber) {
+    void press(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
         buzzerStates[buzzerNumber - 1].setPressed(true);
         buzzerStates[buzzerNumber - 1].setPosition(buzzerPositionPressed);
         buzzerPositionPressed++;
@@ -54,9 +55,9 @@ public class BuzzerStateHandler {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.isPressed() && buzzerState.getPosition() == (buzzerPositionPressed - 1)) {
                 if (buzzerState.getPosition() == buzzerOnTurn) {
-                    viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(),buzzerState.getPosition());
+                    viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(),buzzerState.getPosition(), animationQueueItem);
                 } else {
-                    viewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition());
+                    viewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 }
             }
         }
@@ -78,7 +79,7 @@ public class BuzzerStateHandler {
 
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(),buzzerState.getPosition());
+                viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(),buzzerState.getPosition(), animationQueueItem);
             }
         }
     }

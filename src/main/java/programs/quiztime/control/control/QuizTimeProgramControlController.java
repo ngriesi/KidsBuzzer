@@ -18,6 +18,8 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      */
     private SimpleOutputView simpleOutputView;
 
+    private boolean ignoreNextTextUpdate = false;
+
     /**
      * creates a new controller
      *
@@ -77,7 +79,11 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
                 nextButtonAction();
                 break;
             case "number":
-                getProgram().setQuestionNumber(Integer.parseInt(((MyTextField)e.getSource()).getText()) - 1);
+                if (ignoreNextTextUpdate) {
+                    ignoreNextTextUpdate = false;
+                } else {
+                    getProgram().setQuestionNumber(Integer.parseInt(((MyTextField) e.getSource()).getText()));
+                }
                 break;
             case "settings":
                 getProgram().setView(getProgram().getSettingsController().getProgramView());
@@ -91,6 +97,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * @param number int displayed in the text field
      */
     public void setQuestionNumber(int number) {
+        ignoreNextTextUpdate = true;
         getProgramView().getTextField().setText(String.valueOf(number));
     }
 

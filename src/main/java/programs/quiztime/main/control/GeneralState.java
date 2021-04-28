@@ -40,6 +40,11 @@ class GeneralState {
     private int buzzerActive = 0;
 
     /**
+     * true if buzzers can currently be pressed
+     */
+    private boolean buzzerReady = false;
+
+    /**
      * tracks the question number
      */
     private int questionNumber = 1;
@@ -53,7 +58,7 @@ class GeneralState {
     private boolean checkAction(QuizAction action) {
         switch (action) {
             case BUZZER_PRESS:
-                return !right && !invisible && !title;
+                return !right && !invisible && !title && buzzerReady;
             case WRONG:
                 return !right && !invisible && !title && buzzerActive > 0;
             case RIGHT:
@@ -119,7 +124,8 @@ class GeneralState {
      * @param stateChanger state changer of the quiztime program
      */
     void changeToInvisibleState(AnimationQueue.AnimationQueueItem animationQueueItem, StateChanger stateChanger) {
-        animationQueueItem.setOnFinishedAction(() -> {
+        buzzerReady = false;
+        animationQueueItem.addOnFinishedAction(() -> {
             invisible = true;
             question = false;
             right = false;
@@ -134,12 +140,16 @@ class GeneralState {
      * @param animationQueueItem animation queue item in which on finished action this gets performed
      */
     private void changeToQuestionState(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        animationQueueItem.setOnFinishedAction(() -> {
+        buzzerReady = false;
+        System.out.println("false");
+        animationQueueItem.addOnFinishedAction(() -> {
             question = true;
             title = false;
             right = false;
             buzzerActive = 0;
             questionNumber++;
+            buzzerReady = true;
+            System.out.println("true");
         });
     }
 
@@ -157,6 +167,7 @@ class GeneralState {
     private void changeToRightState() {
         question = false;
         right = true;
+        buzzerReady = false;
     }
 
     /**

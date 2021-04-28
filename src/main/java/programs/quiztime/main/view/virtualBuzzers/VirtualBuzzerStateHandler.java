@@ -1,5 +1,6 @@
 package programs.quiztime.main.view.virtualBuzzers;
 
+import programs.quiztime.main.view.AnimationQueue;
 import programs.quiztime.main.view.virtualBuzzers.chageHandlers.*;
 
 class VirtualBuzzerStateHandler {
@@ -22,25 +23,25 @@ class VirtualBuzzerStateHandler {
 
     private ChangeFromRightTo changeFromRightTo;
 
-    void changeState(BuzzerState to) {
+    void changeState(BuzzerState to, AnimationQueue.AnimationQueueItem animationQueueItem) {
         switch (currentState) {
             case INVISIBLE_DEFAULT:
-                changeFromInvisibleState.changeState(to);
+                changeFromInvisibleState.changeState(to, animationQueueItem);
                 break;
             case VISIBLE_DEFAULT:
-                changeFromVisibleDefaultTo.changeState(to);
+                changeFromVisibleDefaultTo.changeState(to, animationQueueItem);
                 break;
             case ON_TURN:
-                changeFromOnTurnTo.changeState(to);
+                changeFromOnTurnTo.changeState(to, animationQueueItem);
                 break;
             case PRESSED_NOT_ON_TURN:
-                changeFromPressedNotOnTurnTo.changeState(to);
+                changeFromPressedNotOnTurnTo.changeState(to, animationQueueItem);
                 break;
             case WRONG:
-                changeFromWrongTo.changeState(to);
+                changeFromWrongTo.changeState(to, animationQueueItem);
                 break;
             case RIGHT:
-                changeFromRightTo.changeState(to);
+                changeFromRightTo.changeState(to, animationQueueItem);
                 break;
         }
 

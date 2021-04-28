@@ -1,8 +1,8 @@
 font=Arial
 buzzerSound=default
-icons=[default, default, default]
 textColor=[255, 255, 255, 255]
-teamNames=[team 1, team 2, team 3]
-textBold=false
+icons=[default, default, default]
 buzzerSoundVolume=0
+textBold=false
+teamNames=[team 1, team 2, team 3]
 

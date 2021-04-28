@@ -11,6 +11,7 @@ import presentationWindow.renderItems.QuadItem;
 import presentationWindow.renderItems.TextItem;
 import presentationWindow.window.LinearAnimator;
 import programs.quiztime.main.control.QuizTimeProgram;
+import programs.quiztime.main.view.AnimationQueue;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
@@ -67,13 +68,13 @@ public class VirtualBuzzer {
         return index;
     }
 
-    public Animation moveAndScale(float x, float y, float width, float height, int duration) {
-        linearAnimator.scaleSize(new Vector2f(width, height), colorQuad, duration);
-        linearAnimator.moveTo(new Vector2f(x, y), number, duration);
-        linearAnimator.scaleSize(new Vector2f((number.getAspectRatio() * height)/Window.WINDOW_ASPECT_RATIO,height), number ,duration);
-        linearAnimator.moveTo(new Vector2f(x, y), icon, duration);
-        linearAnimator.scaleSize(new Vector2f((icon.getAspectRatio() * height)/Window.WINDOW_ASPECT_RATIO,height), icon ,duration);
-        return linearAnimator.moveTo(new Vector2f(x, y), colorQuad, duration);
+    public Animation moveAndScale(float x, float y, float width, float height, int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        linearAnimator.scaleSize(new Vector2f(width, height), colorQuad, duration, animationQueueItem);
+        linearAnimator.moveTo(new Vector2f(x, y), number, duration, animationQueueItem);
+        linearAnimator.scaleSize(new Vector2f((number.getAspectRatio() * height)/Window.WINDOW_ASPECT_RATIO,height), number ,duration, animationQueueItem);
+        linearAnimator.moveTo(new Vector2f(x, y), icon, duration, animationQueueItem);
+        linearAnimator.scaleSize(new Vector2f((icon.getAspectRatio() * height)/Window.WINDOW_ASPECT_RATIO,height), icon ,duration, animationQueueItem);
+        return linearAnimator.moveTo(new Vector2f(x, y), colorQuad, duration, animationQueueItem);
     }
 
     public void setPositionAndSize(float x, float y, float width, float height) {
@@ -85,62 +86,62 @@ public class VirtualBuzzer {
         number.setSize((number.getAspectRatio() * height)/Window.WINDOW_ASPECT_RATIO,height);
     }
 
-    public Animation fadeInIcon(int duration) {
-        return linearAnimator.fadeIn(icon, duration);
+    public Animation fadeInIcon(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.fadeIn(icon, duration, animationQueueItem);
     }
 
-    public Animation fadeInNumber(int duration) {
-        return linearAnimator.fadeIn(number, duration);
+    public Animation fadeInNumber(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.fadeIn(number, duration, animationQueueItem);
     }
 
-    public Animation fadeInQuad(int duration) {
-        return linearAnimator.fadeIn(colorQuad, duration);
+    public Animation fadeInQuad(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.fadeIn(colorQuad, duration, animationQueueItem);
     }
 
-    public Animation fadeOutIcon(int duration) {
-        return linearAnimator.fadeOut(icon, duration);
+    public Animation fadeOutIcon(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.fadeOut(icon, duration, animationQueueItem);
     }
 
-    public Animation fadeOutNumber(int duration) { return linearAnimator.fadeOut(number, duration); }
+    public Animation fadeOutNumber(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) { return linearAnimator.fadeOut(number, duration, animationQueueItem); }
 
-    public Animation fadeOutQuad(int duration) {
-        return linearAnimator.fadeOut(colorQuad, duration);
+    public Animation fadeOutQuad(int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.fadeOut(colorQuad, duration, animationQueueItem);
     }
 
-    public Animation fadeColor(Color newColor, int duration) {
-        return linearAnimator.colorFade(newColor, colorQuad, duration);
+    public Animation fadeColor(Color newColor, int duration, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        return linearAnimator.colorFade(newColor, colorQuad, duration, animationQueueItem);
     }
 
-    public void hide() {
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.INVISIBLE_DEFAULT);
+    public void hide(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.INVISIBLE_DEFAULT, animationQueueItem);
     }
 
-    public void moveToCenterAndScaleUp() {
+    public void moveToCenterAndScaleUp(AnimationQueue.AnimationQueueItem animationQueueItem) {
 
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.RIGHT);
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.RIGHT, animationQueueItem);
     }
 
-    public void moveToStartPositionAndInitialScale() {
+    public void moveToStartPositionAndInitialScale(AnimationQueue.AnimationQueueItem animationQueueItem) {
 
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.VISIBLE_DEFAULT);
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.VISIBLE_DEFAULT, animationQueueItem);
     }
 
-    public void scaleUpBuzzer() {
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.ON_TURN);
+    public void scaleUpBuzzer(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.ON_TURN, animationQueueItem);
     }
 
-    public void pressedColorAndIconChange(int position) {
+    public void pressedColorAndIconChange(int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
         number.changeText(position + "");
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.PRESSED_NOT_ON_TURN);
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.PRESSED_NOT_ON_TURN, animationQueueItem);
     }
 
-    public void pressedSizeIncrease(int position) {
+    public void pressedSizeIncrease(int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
         number.changeText(position + "");
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.ON_TURN);
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.ON_TURN, animationQueueItem);
     }
 
-    public void wrongAnswerGiven() {
-        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.WRONG);
+    public void wrongAnswerGiven(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        virtualBuzzerStateHandler.changeState(VirtualBuzzerStateHandler.BuzzerState.WRONG, animationQueueItem);
     }
 
     public ImageItem getIcon() {

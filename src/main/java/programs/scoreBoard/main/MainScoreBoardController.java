@@ -17,7 +17,7 @@ public class MainScoreBoardController {
     public void hide() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().exitAnimation(animationQueueItem));
-        animationQueueItem.setOnFinishedAction(() -> program.getControlModel().hidePresentationWindow());
+        animationQueueItem.addOnFinishedAction(() -> program.getControlModel().hidePresentationWindow());
         animationQueue.addAnimation(animationQueueItem);
     }
 
@@ -32,7 +32,7 @@ public class MainScoreBoardController {
         program.getProgramModel().getScores()[buzzer - 1]++;
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().buzzerAnimation(animationQueueItem, buzzer));
-        animationQueueItem.setOnFinishedAction(this::buzzerAnimationFinished);
+        animationQueueItem.addOnFinishedAction(this::buzzerAnimationFinished);
         animationQueue.addAnimation(animationQueueItem);
 
     }

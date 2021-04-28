@@ -20,6 +20,17 @@ public class ColorAnimation extends Animation<Color> {
     }
 
     @Override
+    protected boolean animationShouldStillBeRunning(float progress) {
+        Vector4f mov = new Vector4f(endValue.getVector4f());
+        mov.sub(startValue.getVector4f());
+
+        Vector4f progressTemp = new Vector4f(startValue.getVector4f());
+        progressTemp.add(mov.mul(progress));
+
+        return !startValue.getVector4f().equals(endValue.getVector4f(),0) && !progressTemp.equals(endValue.getVector4f(),0);
+    }
+
+    @Override
     public void stepAction(float progress) {
         Vector4f mov = new Vector4f(endValue.getVector4f());
         mov.sub(startValue.getVector4f());

@@ -21,10 +21,10 @@ public class BuzzerPressedAnimation {
     }
 
     public void executeAnimation(AnimationQueue.AnimationQueueItem animationQueueItem, int buzzer) {
-        linearAnimator.fadeOut(viewItems.getLabels()[buzzer - 1], 60).setOnFinishedAction(() -> {
+        linearAnimator.fadeOut(viewItems.getLabels()[buzzer - 1], 60).addOnFinishedAction(() -> {
             viewItems.getLabels()[buzzer - 1].changeText(viewItems.getScoreBoardModel().getSaveFile().getTeamNames()[buzzer - 1]
                     + ": " + viewItems.getScoreBoardModel().getScores()[buzzer - 1]);
-            linearAnimator.fadeIn(viewItems.getLabels()[buzzer - 1], 60).setOnFinishedAction(animationQueueItem::animationFinished);
+            linearAnimator.fadeIn(viewItems.getLabels()[buzzer - 1], 60).addOnFinishedAction(animationQueueItem::animationFinished);
         });
     }
 }

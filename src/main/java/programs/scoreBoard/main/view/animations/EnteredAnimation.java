@@ -27,9 +27,9 @@ public class EnteredAnimation {
             exponentialAnimator.moveXTo((1/(SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i)),viewItems.getTeamYellowBacks()[i],70);
             int finalI = i;
             if (i == SaveDataHandler.MAX_BUZZER_COUNT - 1) {
-                exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).setOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30).setOnFinishedAction(animationQueueItem::animationFinished));
+                exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).addOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30).addOnFinishedAction(animationQueueItem::animationFinished));
             } else {
-                exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).setOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30));
+                exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).addOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30));
             }
 
             exponentialAnimator.moveYTo(1, viewItems.getTeamMetalBacks()[i], 70 + i * 20);

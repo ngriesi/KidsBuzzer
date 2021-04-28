@@ -2,6 +2,9 @@ package presentationWindow.animations;
 
 import presentationWindow.engine.Action;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * animation class used to animate an object from one state to another in a set amount of steps
  *
@@ -37,7 +40,7 @@ public abstract class Animation<T> {
     /**
      * action, performed when the animation is finished
      */
-    private Action onFinishedAction;
+    private List<Action> onFinishedActions;
 
     /**
      * action of the animation, performed every frame
@@ -63,6 +66,7 @@ public abstract class Animation<T> {
      * @param animationAction action of the animation performed every frame
      */
     Animation(T startValue, T endValue, int duration, AnimationAction<T> animationAction, AnimationCurve animationCurve) {
+        onFinishedActions = new ArrayList<>();
         this.startValue = startValue;
         this.endValue = endValue;
         this.duration = duration;
@@ -116,7 +120,7 @@ public abstract class Animation<T> {
      * method is called every frame to make one animation step
      */
     public void makeStep() {
-        if(time < duration) {
+        if(time < duration && animationShouldStillBeRunning(getProgress())) {
             stepAction(getProgress());
             time++;
         } else {
@@ -124,6 +128,8 @@ public abstract class Animation<T> {
             animationFinished();
         }
     }
+
+    protected abstract boolean animationShouldStillBeRunning(float progress);
 
     /**
      * method is called to update animation value
@@ -136,18 +142,18 @@ public abstract class Animation<T> {
      */
     private void animationFinished() {
         finished = true;
-        if(onFinishedAction != null) {
-            onFinishedAction.execute();
+        for (Action action : onFinishedActions) {
+            action.execute();
         }
     }
 
     /**
-     * sets the finished action for this animation
+     * adds an onFinished action for this animation
      *
      * @param onFinishedAction finished action of this animation
      */
-    public void setOnFinishedAction(Action onFinishedAction) {
-        this.onFinishedAction = onFinishedAction;
+    public void addOnFinishedAction(Action onFinishedAction) {
+        onFinishedActions.add(onFinishedAction);
     }
 
     /**

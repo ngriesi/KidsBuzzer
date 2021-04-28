@@ -32,23 +32,23 @@ class ViewUpdater {
 
     /**
      * update for a buzzer that gets pressed an is immediately on turn
-     *
-     * @param buzzerNumber number of the buzzer
+     *  @param buzzerNumber number of the buzzer
      * @param buzzerPosition press position of the buzzer
+     * @param animationQueueItem
      */
-    void firstBuzzerPress(int buzzerNumber, int buzzerPosition) {
-        presentationView.firstBuzzerPress(buzzerNumber, buzzerPosition);
+    void firstBuzzerPress(int buzzerNumber, int buzzerPosition, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        presentationView.firstBuzzerPress(buzzerNumber, buzzerPosition, animationQueueItem);
         simpleOutputView.firstPress(buzzerNumber, buzzerPosition);
     }
 
     /**
      * update for a buzzer that gets pressed an is not immediately on turn
-     *
-     * @param buzzerNumber number of the buzzer
+     *  @param buzzerNumber number of the buzzer
      * @param buzzerPosition press position of the buzzer
+     * @param animationQueueItem
      */
-    void followBuzzerPress(int buzzerNumber, int buzzerPosition) {
-        presentationView.followBuzzerPress(buzzerNumber, buzzerPosition);
+    void followBuzzerPress(int buzzerNumber, int buzzerPosition, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        presentationView.followBuzzerPress(buzzerNumber, buzzerPosition, animationQueueItem);
         simpleOutputView.followPress(buzzerNumber, buzzerPosition);
     }
 
@@ -65,12 +65,12 @@ class ViewUpdater {
 
     /**
      * updates the view if a new buzzer is on turn
-     *
-     * @param buzzerNumber number of the buzzer
+     *  @param buzzerNumber number of the buzzer
      * @param position position of the buzzer
+     * @param animationQueueItem
      */
-    void newBuzzerOnTurn(int buzzerNumber, int position) {
-        presentationView.newBuzzerOnTurn(buzzerNumber);
+    void newBuzzerOnTurn(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
+        presentationView.newBuzzerOnTurn(buzzerNumber, animationQueueItem);
         simpleOutputView.firstPress(buzzerNumber, position);
     }
 
