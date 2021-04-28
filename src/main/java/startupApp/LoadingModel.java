@@ -112,7 +112,7 @@ public class LoadingModel {
 
             Engine gameEngine = null;
             try {
-                gameEngine = new Engine("Buzzer", 800, 450, false, openGlRenderer, loadingHandler, true, saveDataHandler.getSettings().getOutputScreen() != 1, saveDataHandler.getSettings().getOutputScreen());
+                gameEngine = new Engine("Buzzer", 800, 450, false, openGlRenderer, loadingHandler, true, saveDataHandler.getSettings().getOutputScreen() != -1, saveDataHandler.getSettings().getOutputScreen());
             } catch (Exception e) {
                 e.printStackTrace();
             }

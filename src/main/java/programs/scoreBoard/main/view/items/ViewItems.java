@@ -25,6 +25,8 @@ public class ViewItems {
 
     private ScoreBoardModel scoreBoardModel;
 
+    private float textSize = 0.11f;
+
     public ViewItems(ScoreBoardModel scoreBoardModel) {
         this.scoreBoardModel = scoreBoardModel;
     }
@@ -65,7 +67,7 @@ public class ViewItems {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             labels[i] = new TextItem(scoreBoardModel.getSaveFile().getTeamNames()[i] + ": " + 0, new Font(scoreBoardModel.getSaveFile().getFont(), scoreBoardModel.getSaveFile().isTextBold() ? Font.BOLD : Font.PLAIN, 200));
             labels[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 0.95f);
-            labels[i].setSize((labels[i].getAspectRatio() * 0.07f)/Window.WINDOW_ASPECT_RATIO,0.07f);
+            labels[i].setSize((labels[i].getAspectRatio() * textSize)/Window.WINDOW_ASPECT_RATIO,textSize);
             labels[i].setOpacity(0);
             labels[i].setColorScheme(new ColorScheme(new Color(scoreBoardModel.getSaveFile().getTextColor())));
             teamYellowBacks[i].addItem(labels[i]);
@@ -107,7 +109,7 @@ public class ViewItems {
     public void updateText() {
         for (int i = 0; i < labels.length;i++) {
             labels[i].changeText(scoreBoardModel.getSaveFile().getTeamNames()[i] + ": " + scoreBoardModel.getScores()[i]);
-            labels[i].setSize((labels[i].getAspectRatio() * 0.07f)/Window.WINDOW_ASPECT_RATIO,0.07f);
+            labels[i].setSize((labels[i].getAspectRatio() * textSize)/Window.WINDOW_ASPECT_RATIO,textSize);
         }
     }
 

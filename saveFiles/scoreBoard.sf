@@ -1,8 +1,8 @@
-font=Bauhaus 93
+font=Impact
 buzzerSound=default
 icons=[default, default, default]
-textColor=[51, 255, 51, 255]
+textColor=[0, 0, 0, 255]
+teamNames=[BAUM, ENTE, GANS]
 textBold=false
-teamNames=[baum, ente, ganslinger]
 buzzerSoundVolume=0
 

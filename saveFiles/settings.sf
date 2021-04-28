@@ -1,7 +1,7 @@
-windowPositionY=5
-windowPositionX=778
-outputScreen=1
-windowHeight=1000
 buzzerNumber=3
 windowWidth=1000
+windowHeight=1000
+outputScreen=1
+windowPositionY=5
+windowPositionX=778
 

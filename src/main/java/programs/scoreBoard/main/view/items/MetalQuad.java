@@ -27,7 +27,7 @@ public class MetalQuad extends QuadItem {
 
     private void updateInnerQuad() {
         if (window != null) {
-            float edgeSize = 0.03f;
+            float edgeSize = 0.015f * window.getWidth()/(float)window.getScreenWidth();
             float ratio = window.getWidth()/ (float)window.getScreenWidth();
             innerQuad.setSize(this.getSize().x - edgeSize * ratio, this.getSize().y - edgeSize * ratio * window.getAspectRatio());
             innerQuad.setPosition(this.getXPosition(), this.getYPosition());
