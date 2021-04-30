@@ -33,6 +33,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
      */
     private ComboBoxSettingsRow<Integer> outputScreen;
     private ComboBoxSettingsRow<Integer> buzzerNumber;
+    private CheckBoxSettingsRow useNativeKeyListener;
 
     /**
      * updates the settings views
@@ -67,7 +68,11 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
         super.addComponent(mainPanel, outputScreen,0,1,1,1);
         buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.getBuzzerCount(), "Select the number of buzzers", settingsController.getSettingsSaveFile().getBuzzerNumber(), new Integer[]{1, 2, 3});
         super.addComponent(mainPanel,buzzerNumber,0,2,1,1);
+        useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.getNativeKey(), "Use the Native Key Listener", settingsController.getSettingsSaveFile().isUseNativeKeyListener());
+        super.addComponent(mainPanel,useNativeKeyListener,0,3,1,1);
         createMessageRow(mainPanel);
+
+
     }
 
     /**
@@ -89,7 +94,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     private void createMessageRow(JPanel mainPanel) {
         messageSettingsRow = new MessageSettingsRow("<html><body>The Application has to be restarted to apply all changes<br>Press save and restart the App to apply</body></html>");
         messageSettingsRow.getLabel().setForeground(Color.RED);
-        super.addComponent(mainPanel,messageSettingsRow,0,3,1,1);
+        super.addComponent(mainPanel,messageSettingsRow,0,4,1,1);
     }
 
     /**

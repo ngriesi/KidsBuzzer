@@ -1,4 +1,4 @@
-package programs.quiztime.main.view;
+package presentationWindow.animations;
 
 import presentationWindow.engine.Action;
 
@@ -63,7 +63,6 @@ public class AnimationQueue {
         }
 
         void startAnimation(AnimationQueue animationQueue) {
-            System.out.println("start Animation");
             this.animationQueue = animationQueue;
             if (animationAction != null) {
                 animationAction.execute();
@@ -85,7 +84,6 @@ public class AnimationQueue {
 
         public void addFinishedAnimation() {
             finishedAnimations++;
-            System.out.println(finishedAnimations + "  ----   " + animationsToFinish);
             if(finishedAnimations==animationsToFinish) animationFinished();
         }
 

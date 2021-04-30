@@ -1,6 +1,7 @@
 package programs.scoreBoard.main;
 
-import programs.quiztime.main.view.AnimationQueue;
+
+import presentationWindow.animations.AnimationQueue;
 
 public class MainScoreBoardController {
 
@@ -30,7 +31,7 @@ public class MainScoreBoardController {
         animationQueue.addAnimation(animationQueueItem);
     }
 
-    public void buzzerPressed(int buzzer) {
+    void buzzerPressed(int buzzer) {
         program.getProgramModel().getScores()[buzzer - 1]++;
         program.getProgramController().updateScores();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();

@@ -1,12 +1,15 @@
 package startupApp;
 
 import controlWindow.ControlModel;
+import controlWindow.NativeKeyListener;
 import controlWindow.settings.SettingsSaveFile;
+import org.jnativehook.GlobalScreen;
 import presentationWindow.engine.Engine;
 import presentationWindow.window.OpenGlRenderer;
 import programs.keyPresser.main.KeyPressProgram;
 import programs.mouseClicker.main.MouseClickerProgram;
 import programs.programChooser.ProgramHandler;
+import programs.quizOverlay.main.control.QuizOverlayProgram;
 import programs.quiztime.main.control.QuizTimeProgram;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.testProgram.main.TestProgram;
@@ -81,6 +84,7 @@ public class LoadingModel {
         programHandler.addProgram(new TestProgram("test"));
         programHandler.addProgram(new MouseClickerProgram());
         programHandler.addProgram(new KeyPressProgram());
+        programHandler.addProgram(new QuizOverlayProgram());
 
 
 
@@ -124,7 +128,10 @@ public class LoadingModel {
      * method starts the control model end ends the loading window
      */
     private void loadingFinished() {
-        new ControlModel(saveDataHandler,openGlRenderer, programHandler);
+
+        ControlModel controlModel = new ControlModel(saveDataHandler,openGlRenderer, programHandler);
+        NativeKeyListener nativeKeyListener = new NativeKeyListener(controlModel);
+        GlobalScreen.addNativeKeyListener(nativeKeyListener);
         loadingView.closeWindow();
     }
 

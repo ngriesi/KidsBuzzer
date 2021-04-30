@@ -273,4 +273,8 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     public void programSelected() {}
 
     public abstract void updateBuzzerCount();
+
+    public void nativeKeyAction(int keyCode) {
+
+    }
 }

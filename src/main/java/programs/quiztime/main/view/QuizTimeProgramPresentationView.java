@@ -1,8 +1,8 @@
 package programs.quiztime.main.view;
 
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
-import presentationWindow.engine.Engine;
 import presentationWindow.engine.Window;
 import presentationWindow.renderItems.ImageItem;
 import presentationWindow.renderItems.MainItem;
@@ -13,8 +13,6 @@ import programs.quiztime.main.view.virtualBuzzers.VirtualBuzzer;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static java.awt.Font.PLAIN;
 

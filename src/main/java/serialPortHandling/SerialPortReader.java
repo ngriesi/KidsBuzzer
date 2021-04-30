@@ -1,11 +1,9 @@
 package serialPortHandling;
 
-import controlWindow.ControlModel;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class SerialPortReader {
     /**
      * reference to the main application logic
      */
-    private ControlModel controlModel;
+    private SerialPortReaderInterface serialPortReaderInterface;
 
     /**
      * true if the receiver is connected and recognized
@@ -38,18 +36,21 @@ public class SerialPortReader {
     /**
      * creates a new Thread to listen for inputs from the serial port
      *
-     * @param controlModel reference to the main application logic
+     * @param serialPortReaderInterface reference to the main application logic
      */
-    public SerialPortReader(ControlModel controlModel) {
-        this.controlModel = controlModel;
+    public SerialPortReader(SerialPortReaderInterface serialPortReaderInterface) {
+        this.serialPortReaderInterface = serialPortReaderInterface;
 
         serialPortHandlerList = new ArrayList<>();
 
        new Thread(this::checkSerialPorts).start();
     }
 
+    /**
+     * checks all available serial ports for the receiver
+     */
     private void checkSerialPorts() {
-        while (controlModel.isApplicationRunning()) {
+        while (serialPortReaderInterface.isRunning()) {
             try {
                 if (!connected) {
                     searchReceiver();
@@ -69,7 +70,6 @@ public class SerialPortReader {
      * @throws InterruptedException when the sleeping was interrupted
      */
     private void checkIfReceiverIsStillConnected() throws InterruptedException {
-
 
         try {
             if(!currentPort.getSerialPort().writeByte((byte) 1)) {
@@ -103,7 +103,7 @@ public class SerialPortReader {
      */
     private void searchReceiver() {
 
-        SwingUtilities.invokeLater(() -> controlModel.searchingForReceiver());
+        serialPortReaderInterface.searchingForReceiver();
 
 
         String[] ports;
@@ -145,7 +145,7 @@ public class SerialPortReader {
         connected = true;
         currentPort = serialPortHandler;
         new Thread(() -> listenForSerialInputs(serialPortHandler.getSerialPort())).start();
-        SwingUtilities.invokeLater(() -> controlModel.receiverFound(receiverName));
+        serialPortReaderInterface.receiverFound(receiverName);
 
     }
 
@@ -155,13 +155,12 @@ public class SerialPortReader {
      * @param serialPort serial Port the method is listening on
      */
     private void listenForSerialInputs(SerialPort serialPort) {
-        while (connected && controlModel.isApplicationRunning()) {
+        while (connected && serialPortReaderInterface.isRunning()) {
             try {
                 byte[] buffer = serialPort.readBytes();
                 if (buffer != null) {
                     String data = new String(buffer);
-                    System.out.println(data);
-                    updateBuzzerState(data);
+                    serialPortReaderInterface.handleData(data);
                 } else {
                     Thread.sleep(1);
                 }
@@ -172,24 +171,16 @@ public class SerialPortReader {
     }
 
     /**
-     * calls the method to update the buzzer states in the ControlModel class within the main Swing thread
-     *
-     * @param data data received through the serial port
+     * @return returns true if the connection to the receiver is established
      */
-    private void updateBuzzerState(final String data) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                controlModel.handleBuzzerInput(Integer.parseInt(data.trim()));
-            } catch (NumberFormatException ignored) {
-            }
-        });
-    }
-
-    ControlModel getControlModel() {
-        return controlModel;
-    }
-
     boolean isConnected() {
         return connected;
+    }
+
+    /**
+     * @return returns the interface used to connect the serial port reader to the program
+     */
+    SerialPortReaderInterface getSerialPortReaderInterface() {
+        return serialPortReaderInterface;
     }
 }

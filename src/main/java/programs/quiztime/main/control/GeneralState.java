@@ -1,6 +1,6 @@
 package programs.quiztime.main.control;
 
-import programs.quiztime.main.view.AnimationQueue;
+import presentationWindow.animations.AnimationQueue;
 
 /**
  * general state of the program

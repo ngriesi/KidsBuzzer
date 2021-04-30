@@ -2,6 +2,7 @@ package programs.quiztime.main.view.virtualBuzzers;
 
 import org.joml.Vector2f;
 import presentationWindow.animations.Animation;
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
@@ -11,7 +12,6 @@ import presentationWindow.renderItems.QuadItem;
 import presentationWindow.renderItems.TextItem;
 import presentationWindow.window.LinearAnimator;
 import programs.quiztime.main.control.QuizTimeProgram;
-import programs.quiztime.main.view.AnimationQueue;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;

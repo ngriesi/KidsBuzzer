@@ -1,6 +1,6 @@
 package programs.quiztime.main.view.virtualBuzzers;
 
-import programs.quiztime.main.view.AnimationQueue;
+import presentationWindow.animations.AnimationQueue;
 import savedataHandler.SaveDataHandler;
 
 public abstract class StateHandler {

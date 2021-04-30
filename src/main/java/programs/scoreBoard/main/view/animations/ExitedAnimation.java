@@ -1,9 +1,9 @@
 package programs.scoreBoard.main.view.animations;
 
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.renderItems.QuadItem;
 import presentationWindow.window.ExponentialAnimator;
 import presentationWindow.window.LinearAnimator;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.scoreBoard.main.view.items.ViewItems;
 import savedataHandler.SaveDataHandler;
 

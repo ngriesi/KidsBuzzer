@@ -5,8 +5,6 @@ import presentationWindow.animations.*;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.renderItems.ChildItem;
-import presentationWindow.renderItems.QuadItem;
-import programs.quiztime.main.view.AnimationQueue;
 
 import java.util.ArrayList;
 import java.util.List;

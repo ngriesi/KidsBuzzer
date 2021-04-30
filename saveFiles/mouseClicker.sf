@@ -1,0 +1,8 @@
+displayMouseTracker=true
+blockingBehaviour=Dont block
+unblockBuzzer=3
+blockingTime=1
+clickY=[0, 0, 0]
+clickX=[0, 0, 0]
+useClick=[false, false, false]
+

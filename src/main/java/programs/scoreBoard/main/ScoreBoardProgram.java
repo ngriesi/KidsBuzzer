@@ -53,4 +53,9 @@ public class ScoreBoardProgram extends Program<ScoreBoardControlController, Scor
     public void updateBuzzerCount() {
 
     }
+
+    @Override
+    public void nativeKeyAction(int keyCode) {
+        getProgramController().nativeKeyAction(keyCode);
+    }
 }

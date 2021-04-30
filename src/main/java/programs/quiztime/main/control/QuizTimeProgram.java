@@ -1,11 +1,11 @@
 package programs.quiztime.main.control;
 
 import controlWindow.ControlModel;
+import presentationWindow.animations.AnimationQueue;
 import programs.abstractProgram.Program;
 import programs.quiztime.control.control.QuizTimeProgramControlController;
 import programs.quiztime.control.control.SimpleOutputView;
 import programs.quiztime.data.QuizTimeProgramModel;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.quiztime.main.view.QuizTimeProgramPresentationView;
 import programs.quiztime.settings.QuizTimeProgramSettingsController;
 

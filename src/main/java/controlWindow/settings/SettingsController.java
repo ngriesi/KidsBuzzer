@@ -33,6 +33,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
     private final String presentationTransparency = "presentationTransparency";
     private final String outputScreen = "outputScreen";
     private final String buzzerCount = "buzzerCount";
+    private final String nativeKey = "nativeKey";
 
 
 
@@ -94,8 +95,10 @@ public class SettingsController extends assets.settings.general.SettingsControll
                 break;
             case buzzerCount:
                 saveFileHandler.getSaveFile().setBuzzerNumber((int) settingsEvent.getValue());
-
                 break;
+            case nativeKey:
+                saveFileHandler.getSaveFile().setUseNativeKeyListener((boolean)settingsEvent.getValue());
+                controlModel.setEnableNativeKeyListener(false);
         }
         updateMessage();
     }
@@ -145,5 +148,9 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     String getBuzzerCount() {
         return buzzerCount;
+    }
+
+    String getNativeKey() {
+        return nativeKey;
     }
 }

@@ -1,8 +1,8 @@
 package programs.scoreBoard.main.view;
 
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.renderItems.MainItem;
 import programs.abstractProgram.ProgramPresentationView;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.scoreBoard.main.view.animations.BuzzerPressedAnimation;
 import programs.scoreBoard.main.view.animations.EnteredAnimation;

@@ -122,6 +122,12 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
+    public void fadeOutIntroSound() {
+        if (introSound != null) {
+            introSound.fadeOut(1);
+        }
+    }
+
     /**
      * plays the question sound if it exists
      */
@@ -131,12 +137,24 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
+    public void fadeOutQuestionSound() {
+        if (questionSound != null) {
+            questionSound.fadeOut(1);
+        }
+    }
+
     /**
      * plays the right sound if it exists
      */
     public void playRightSound() {
         if (rightSound != null) {
             rightSound.play();
+        }
+    }
+
+    public void fadeOutRightSound() {
+        if (rightSound != null) {
+            rightSound.fadeOut(1);
         }
     }
 
@@ -153,6 +171,7 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
      * plays the wrong sound if it exists
      */
     public void playWrongSound() {
+        System.out.println(wrongSound);
         if (wrongSound != null) {
             wrongSound.play();
         }

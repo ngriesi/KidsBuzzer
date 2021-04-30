@@ -121,11 +121,43 @@ public class AudioClip {
     }
 
     /**
-     * sets the volume of the audio
-     *
-     * @param value new volume (between 0 and 1)
+     * fades out the audio
      */
-    public void setGain(float value) {
-        gainControl.setValue(value);
+    public void fadeOut(int time) {
+        new Thread(() -> {
+            int steps = 100;
+            int progress = 0;
+            float step = time/(float) steps;
+
+            while (progress <= steps) {
+
+                setGain(1f - (1f / steps) * progress);
+
+                try {
+                    Thread.sleep((long) (step * 1000f));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                progress++;
+            }
+
+            audioClip.stop();
+            audioClip.setFramePosition(0);
+
+        }).start();
+    }
+
+    /**
+     * Set the volume to a value between 0 and 1.
+     */
+    public void setGain(double value) {
+        value = (value<=0.0)? 0.0001 : (Math.min(value, 1.0));
+        try {
+            float dB = (float)(Math.log(value)/Math.log(10.0)*20.0);
+            gainControl.setValue(dB);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

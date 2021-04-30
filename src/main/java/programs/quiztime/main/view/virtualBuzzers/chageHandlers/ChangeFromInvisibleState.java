@@ -1,6 +1,6 @@
 package programs.quiztime.main.view.virtualBuzzers.chageHandlers;
 
-import programs.quiztime.main.view.AnimationQueue;
+import presentationWindow.animations.AnimationQueue;
 import programs.quiztime.main.view.virtualBuzzers.StateHandler;
 import programs.quiztime.main.view.virtualBuzzers.VirtualBuzzer;
 

@@ -1,7 +1,7 @@
 package programs.quiztime.main.view.virtualBuzzers.chageHandlers;
 
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.quiztime.main.view.virtualBuzzers.StateHandler;
 import programs.quiztime.main.view.virtualBuzzers.VirtualBuzzer;
 import savedataHandler.SaveDataHandler;

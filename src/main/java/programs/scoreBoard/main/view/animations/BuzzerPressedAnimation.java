@@ -1,10 +1,10 @@
 package programs.scoreBoard.main.view.animations;
 
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.window.ExponentialAnimator;
 import presentationWindow.window.LinearAnimator;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.scoreBoard.main.view.items.ViewItems;
 
 public class BuzzerPressedAnimation {

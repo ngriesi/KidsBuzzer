@@ -1,7 +1,8 @@
 buzzerNumber=3
-windowWidth=1000
-windowHeight=1000
+windowWidth=1248
+windowHeight=830
 outputScreen=1
-windowPositionY=5
-windowPositionX=778
+windowPositionX=480
+windowPositionY=65
+useNativeKeyListener=true
 

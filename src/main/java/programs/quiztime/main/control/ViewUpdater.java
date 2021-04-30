@@ -1,7 +1,7 @@
 package programs.quiztime.main.control;
 
+import presentationWindow.animations.AnimationQueue;
 import programs.quiztime.control.control.SimpleOutputView;
-import programs.quiztime.main.view.AnimationQueue;
 import programs.quiztime.main.view.QuizTimeProgramPresentationView;
 
 /**

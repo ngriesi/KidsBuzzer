@@ -70,4 +70,15 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
             getProgramView().getScore()[i].setText("" + getProgramModel().getScores()[i]);
         }
     }
+
+    public void nativeKeyAction(int keyCode) {
+        switch (keyCode) {
+            case 30:
+                getProgram().getMainController().show();
+                break;
+            case 47:
+                getProgram().getMainController().hide();
+                break;
+        }
+    }
 }

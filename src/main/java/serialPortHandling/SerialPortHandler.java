@@ -3,6 +3,10 @@ package serialPortHandling;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
+/**
+ * class used for handling the checking of one serial port. It checks if it receives the expected
+ * initial message
+ */
 class SerialPortHandler {
 
     /**
@@ -33,8 +37,10 @@ class SerialPortHandler {
         new Thread(this::checkPort).start();
     }
 
+    /**
+     * checks if the receiver is connected to this port
+     */
     private void checkPort() {
-
         try {
             createAndSetupPort();
             listenForInitialSerialInput();
@@ -50,7 +56,7 @@ class SerialPortHandler {
 
         StringBuilder data = new StringBuilder();
 
-        while (serialPortReader.getControlModel().isApplicationRunning() && !serialPortReader.isConnected()) {
+        while (serialPortReader.getSerialPortReaderInterface().isRunning() && !serialPortReader.isConnected()) {
             try {
                 byte[] buffer = serialPort.readBytes();
                 if (buffer != null) {
@@ -79,10 +85,16 @@ class SerialPortHandler {
         serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
     }
 
+    /**
+     * @return returns the serial port of this handler
+     */
     SerialPort getSerialPort() {
         return serialPort;
     }
 
+    /**
+     * @return returns the serial port name of this handler
+     */
     String getPortName() {
         return portName;
     }

@@ -39,6 +39,11 @@ public class SettingsSaveFile extends SaveFile {
     private int buzzerNumber = 3;
 
     /**
+     * enables the native key listener
+     */
+    private boolean useNativeKeyListener;
+
+    /**
      * creates a save file with a name
      */
     public SettingsSaveFile() {
@@ -97,5 +102,13 @@ public class SettingsSaveFile extends SaveFile {
 
     public void setWindowPositionY(int windowPositionY) {
         this.windowPositionY = windowPositionY;
+    }
+
+    public boolean isUseNativeKeyListener() {
+        return useNativeKeyListener;
+    }
+
+    public void setUseNativeKeyListener(boolean useNativeKeyListener) {
+        this.useNativeKeyListener = useNativeKeyListener;
     }
 }

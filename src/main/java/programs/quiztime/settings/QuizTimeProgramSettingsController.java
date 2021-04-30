@@ -121,7 +121,7 @@ public class QuizTimeProgramSettingsController extends ProgramController<QuizTim
                     getProgramModel().getSaveFile().setBuzzerSound(((File) se.getValue()).getAbsolutePath());
                     new Thread(() -> getProgramModel().setBuzzerSound(AudioClip.load((File) se.getValue()))).start();
                     break;
-                case "WrongSound":
+                case "WrongFile":
                     getProgramModel().getSaveFile().setWrongSound(((File) se.getValue()).getAbsolutePath());
                     new Thread(() -> getProgramModel().setWrongSound(AudioClip.load((File) se.getValue()))).start();
                     break;

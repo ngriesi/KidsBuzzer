@@ -3,17 +3,14 @@ package controlWindow;
 import buzzerHandler.BuzzerModel;
 import controlWindow.settings.SettingsController;
 import presentationWindow.window.OpenGlRenderer;
-import programs.keyPresser.main.KeyPressProgram;
-import programs.mouseClicker.main.MouseClickerProgram;
 import programs.programChooser.ProgramHandler;
 import programs.abstractProgram.Program;
 import programs.programChooser.ProgramChooserModel;
-import programs.quiztime.main.control.QuizTimeProgram;
-import programs.testProgram.main.TestProgram;
 import savedataHandler.SaveDataHandler;
 import serialPortHandling.SerialPortReader;
-import startupApp.LoadingHandler;
+import serialPortHandling.SerialPortReaderInterface;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static java.awt.GridBagConstraints.BOTH;
@@ -22,7 +19,7 @@ import static java.awt.GridBagConstraints.LAST_LINE_END;
 /**
  * Main class connecting the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
  */
-public class ControlModel {
+public class ControlModel implements SerialPortReaderInterface {
 
     /**
      * shows that the Application is running for separate Threads
@@ -64,6 +61,8 @@ public class ControlModel {
      */
     private SettingsController settingsController;
 
+    private boolean useNativeKeyListener;
+
     /**
      * Constructor creates the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
      * Gets the SaveDataHandler form the loading model containing all the loaded resources
@@ -77,7 +76,7 @@ public class ControlModel {
 
         new SerialPortReader(this);
 
-
+        useNativeKeyListener = saveDataHandler.getSettings().isUseNativeKeyListener();
 
         createControlView(programHandler);
         setProgram(programHandler.getByName(programHandler.getProgramNamesList()[0]));
@@ -107,6 +106,13 @@ public class ControlModel {
         this.currentProgram = program;
         currentProgram.programSelected();
         getView().setProgramPane(program.getMainView());
+        while (openGlRenderer == null) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println(openGlRenderer);
         openGlRenderer.addActionToOpenGlThread(() -> openGlRenderer.getScene().setMainItem(program.getMainPresentationViewItem()));
     }
@@ -116,7 +122,6 @@ public class ControlModel {
      */
     public void showPresentationWindow() {
         openGlRenderer.getWindow().show();
-        getView().getMyJFrame().getFrame().setVisible(true);
     }
 
     /**
@@ -238,8 +243,25 @@ public class ControlModel {
     /**
      * shows on the gui that the program is searching the receiver
      */
+    @Override
     public void searchingForReceiver() {
-        buzzerModel.changeButtonText("searching");
+
+        SwingUtilities.invokeLater(() -> buzzerModel.changeButtonText("searching"));
+    }
+
+    @Override
+    public void handleData(String data) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                handleBuzzerInput(Integer.parseInt(data.trim()));
+            } catch (NumberFormatException ignored) {
+            }
+        });
+    }
+
+    @Override
+    public boolean isRunning() {
+        return isApplicationRunning();
     }
 
     /**
@@ -247,8 +269,9 @@ public class ControlModel {
      *
      * @param receiverName name of the receiver
      */
+    @Override
     public void receiverFound(String receiverName) {
-        buzzerModel.changeButtonText(receiverName);
+        SwingUtilities.invokeLater(() -> buzzerModel.changeButtonText(receiverName));
     }
 
     public void updateOutputScreen() {
@@ -258,5 +281,20 @@ public class ControlModel {
     public void recreatePrograms() {
 
         getProgramChooserModel().getProgramHandler().updateBuzzerCount();
+    }
+
+    public void setEnableNativeKeyListener(boolean value) {
+        useNativeKeyListener = value;
+    }
+
+    void nativeKeyAction(int keyCode) {
+        if (useNativeKeyListener) {
+
+            currentProgram.nativeKeyAction(keyCode);
+        }
+    }
+
+    void toggleNativeKeyListener() {
+        useNativeKeyListener = !useNativeKeyListener;
     }
 }

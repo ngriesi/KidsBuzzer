@@ -1,9 +1,9 @@
 package programs.quiztime.main.control;
 
 import controlWindow.ControlModel;
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.engine.Action;
 import programs.quiztime.data.QuizTimeProgramModel;
-import programs.quiztime.main.view.AnimationQueue;
 
 /**
  * changes the state of the quiz time program
@@ -73,7 +73,7 @@ class StateChanger {
      * method called when a buzzer press should invoke a state change
      *
      * @param buzzerNumber number of the buzzer that was pressed
-     * @param animationQueueItem
+     * @param animationQueueItem animation queue item
      */
     void buzzerPressed(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
         programModel.playBuzzerSound();
@@ -94,6 +94,7 @@ class StateChanger {
      * method called when a buzzer has given a right answer and the programs state has to be changed accordingly
      */
     void rightAnswerGiven() {
+        programModel.fadeOutRightSound();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playRightSound();
         animationQueueItem.setAnimationAction(() -> buzzerStateHandler.right(animationQueueItem));
@@ -114,6 +115,9 @@ class StateChanger {
      * method called and used when the presentation view should fade out
      */
     void fadeToInvisible() {
+        programModel.fadeOutIntroSound();
+        programModel.fadeOutQuestionSound();
+        programModel.fadeOutRightSound();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> viewUpdater.fadeOutAnimation(animationQueueItem));
         generalState.changeToInvisibleState(animationQueueItem, this);
@@ -129,6 +133,7 @@ class StateChanger {
      *               written inside the QuizTimeProgram class
      */
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
+        programModel.fadeOutIntroSound();
         programModel.playQuestionSound();
         animationQueueItem.setAnimationAction(() -> {
 

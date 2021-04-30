@@ -142,6 +142,8 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_FOCUSED, GL_FALSE);
+        glfwWindowHint(GLFW_FOCUS_ON_SHOW, GL_FALSE);
+        glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
 
 
 
