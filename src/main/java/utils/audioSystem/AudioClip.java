@@ -129,9 +129,13 @@ public class AudioClip {
             int progress = 0;
             float step = time/(float) steps;
 
+            float saveGain = (float) Math.pow(Math.E, (gainControl.getValue() / 20.0 * Math.log(10)));
+
+            System.out.println(saveGain);
+
             while (progress <= steps) {
 
-                setGain(1f - (1f / steps) * progress);
+                setGain(saveGain - (saveGain / steps) * progress);
 
                 try {
                     Thread.sleep((long) (step * 1000f));
@@ -144,6 +148,7 @@ public class AudioClip {
 
             audioClip.stop();
             audioClip.setFramePosition(0);
+            setGain(saveGain);
 
         }).start();
     }

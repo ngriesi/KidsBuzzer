@@ -237,8 +237,17 @@ public class SimpleOutputView {
     /**
      * sets the title flag to true
      */
-    void setTitleToTrue() {
+    public void setTitleToTrue() {
         this.title = true;
+        drawOutputView();
+    }
+
+    /**
+     * change to default state
+     */
+    public void changeToDefaultState() {
+        this.title = true;
+        this.right = false;
         drawOutputView();
     }
 }

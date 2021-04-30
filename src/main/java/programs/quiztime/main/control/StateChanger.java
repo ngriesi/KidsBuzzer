@@ -94,7 +94,7 @@ class StateChanger {
      * method called when a buzzer has given a right answer and the programs state has to be changed accordingly
      */
     void rightAnswerGiven() {
-        programModel.fadeOutRightSound();
+        programModel.fadeOutQuestionSound();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playRightSound();
         animationQueueItem.setAnimationAction(() -> buzzerStateHandler.right(animationQueueItem));

@@ -114,6 +114,7 @@ class ViewUpdater {
      * @param animationQueueItem animation queue item
      */
     void fadeOutAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        simpleOutputView.changeToDefaultState();
         presentationView.fadeOut(animationQueueItem);
     }
 }

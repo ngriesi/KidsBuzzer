@@ -78,23 +78,23 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
         }
 
         new Thread(() -> {
-            introSound = AudioClip.load(new File(getSaveFile().getIntroSound()), loadingHandler);
+            introSound = loadAudio(getSaveFile().getIntroSound(), loadingHandler, getSaveFile().getIntroVolume());
             if(introSound==null) getSaveFile().setIntroSound("default");
         }).start();
         new Thread(() -> {
-            questionSound = AudioClip.load(new File(getSaveFile().getQuestionSound()), loadingHandler);
+            questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
             if(questionSound==null) getSaveFile().setQuestionSound("default");
         }).start();
         new Thread(() -> {
-            rightSound = AudioClip.load(new File(getSaveFile().getRightSound()), loadingHandler);
+            rightSound = loadAudio(getSaveFile().getRightSound(), loadingHandler, getSaveFile().getRightVolume());
             if(rightSound==null) getSaveFile().setRightSound("default");
         }).start();
         new Thread(() -> {
-            buzzerSound = AudioClip.load(new File(getSaveFile().getBuzzerSound()), loadingHandler);
+            buzzerSound = loadAudio(getSaveFile().getBuzzerSound(), loadingHandler, getSaveFile().getBuzzerVolume());
             if(buzzerSound==null) getSaveFile().setBuzzerSound("default");
         }).start();
         new Thread(() -> {
-            wrongSound = AudioClip.load(new File(getSaveFile().getWrongSound()), loadingHandler);
+            wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
             if(wrongSound==null) getSaveFile().setWrongSound("default");
         }).start();
     }

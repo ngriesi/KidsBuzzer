@@ -4,9 +4,11 @@ import presentationWindow.engine.Action;
 import presentationWindow.window.OpenGlRenderer;
 import startupApp.LoadingHandler;
 import startupApp.LoadingMonitor;
+import utils.audioSystem.AudioClip;
 import utils.saveFile.SaveFile;
 import utils.saveFile.SaveFileLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +73,16 @@ public abstract class ProgramModel <S extends SaveFile> {
      * @param openGlRenderer to load open gl resources
      */
     public abstract void loadResources(LoadingHandler loadingModel, OpenGlRenderer openGlRenderer);
+
+    /**
+     * method should be called in an extra Thread to load a audio file
+     */
+    public AudioClip loadAudio(String path, LoadingHandler loadingHandler, int volume) {
+        AudioClip audioClip = AudioClip.load(new File(path), loadingHandler);
+        if(audioClip==null) return null;
+        else audioClip.setGain(volume/100f);
+        return audioClip;
+    }
 
     /**
      * @return returns the save file of this model
