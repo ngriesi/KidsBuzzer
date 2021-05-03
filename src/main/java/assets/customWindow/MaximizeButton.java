@@ -28,10 +28,10 @@ public class MaximizeButton extends TitleBarButton {
      * @param frame window this button is inside
      */
     MaximizeButton(JFrame frame) {
-        super(frame, StandardAssetFields.PRESSED_COLOR,StandardAssetFields.ROLLOVER_COLOR,StandardAssetFields.NORMAL_COLOR);
+        super(frame, StandardAssetFields.PRESSED_COLOR, StandardAssetFields.ROLLOVER_COLOR, StandardAssetFields.NORMAL_COLOR);
 
         frame.addWindowStateListener(createWindowStateListener());
-        maximized = frame.getWidth()==Toolkit.getDefaultToolkit().getScreenSize().width && frame.getHeight() == Toolkit.getDefaultToolkit().getScreenSize().height;
+        maximized = frame.getWidth() == Toolkit.getDefaultToolkit().getScreenSize().width && frame.getHeight() == Toolkit.getDefaultToolkit().getScreenSize().height;
 
         addChangeListener(evt -> colorChange = getModel().isRollover() || getModel().isPressed());
     }
@@ -43,7 +43,7 @@ public class MaximizeButton extends TitleBarButton {
      */
     @Override
     void buttonAction(ActionEvent e) {
-        if(maximized) {
+        if (maximized) {
             normalizeAction();
             maximized = false;
         } else {
@@ -59,7 +59,7 @@ public class MaximizeButton extends TitleBarButton {
         getFrame().setExtendedState(Frame.NORMAL);
         if (getFrame().getHeight() == Toolkit.getDefaultToolkit().getScreenSize().height && getFrame().getWidth() == Toolkit.getDefaultToolkit().getScreenSize().width) {
             getFrame().setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
-            getFrame().setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/4,Toolkit.getDefaultToolkit().getScreenSize().height/4);
+            getFrame().setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 4, Toolkit.getDefaultToolkit().getScreenSize().height / 4);
         }
     }
 
@@ -68,9 +68,9 @@ public class MaximizeButton extends TitleBarButton {
      */
     private WindowStateListener createWindowStateListener() {
         return (e) -> {
-            if(e.getNewState() == Frame.MAXIMIZED_BOTH) {
+            if (e.getNewState() == Frame.MAXIMIZED_BOTH) {
                 maximized = true;
-            } else if(e.getNewState() == JFrame.NORMAL) {
+            } else if (e.getNewState() == JFrame.NORMAL) {
                 maximized = false;
             }
         };
@@ -88,40 +88,40 @@ public class MaximizeButton extends TitleBarButton {
         int width = this.getWidth();
         int height = this.getHeight();
 
-        if(!maximized) {
-            drawMaximizeIcon(g,width,height);
+        if (!maximized) {
+            drawMaximizeIcon(g, width, height);
         } else {
-            drawNormalizeIcon(g,width,height);
+            drawNormalizeIcon(g, width, height);
         }
     }
 
     /**
      * draws the maximized button icon
      *
-     * @param g graphic context of this button
-     * @param width width of this button
+     * @param g      graphic context of this button
+     * @param width  width of this button
      * @param height height of this button
      */
     private void drawMaximizeIcon(Graphics g, int width, int height) {
         g.setColor(StandardAssetFields.FOREGROUND_COLOR);
-        g.drawRect(width/8 * 3,height/3,width/4,height/3);
+        g.drawRect(width / 8 * 3, height / 3, width / 4, height / 3);
     }
 
     /**
      * draws the minimized button icon
      *
-     * @param g graphic context of this button
-     * @param width width of this button
+     * @param g      graphic context of this button
+     * @param width  width of this button
      * @param height height of this button
      */
     private void drawNormalizeIcon(Graphics g, int width, int height) {
         g.setColor(StandardAssetFields.FOREGROUND_COLOR);
-        g.drawRect((int) (width/100f * 43), (int) (height/100f * 33),width/12 * 2, (int) (height/14f * 4));
+        g.drawRect((int) (width / 100f * 43), (int) (height / 100f * 33), width / 12 * 2, (int) (height / 14f * 4));
 
-        g.setColor(colorChange?StandardAssetFields.PRESSED_COLOR:StandardAssetFields.NORMAL_COLOR);
-        g.fillRect((int) (width/100f * 40), (int) (height/100f * 38),width/12 * 2, (int) (height/14f * 4));
+        g.setColor(colorChange ? StandardAssetFields.PRESSED_COLOR : StandardAssetFields.NORMAL_COLOR);
+        g.fillRect((int) (width / 100f * 40), (int) (height / 100f * 38), width / 12 * 2, (int) (height / 14f * 4));
 
         g.setColor(StandardAssetFields.FOREGROUND_COLOR);
-        g.drawRect((int) (width/100f * 40), (int) (height/100f * 38),width/12 * 2, (int) (height/14f * 4));
+        g.drawRect((int) (width / 100f * 40), (int) (height / 100f * 38), width / 12 * 2, (int) (height / 14f * 4));
     }
 }

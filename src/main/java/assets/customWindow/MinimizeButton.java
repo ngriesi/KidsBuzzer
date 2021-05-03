@@ -17,7 +17,7 @@ public class MinimizeButton extends TitleBarButton {
      * @param frame window the button is inside
      */
     MinimizeButton(JFrame frame) {
-        super(frame, StandardAssetFields.PRESSED_COLOR,StandardAssetFields.ROLLOVER_COLOR,StandardAssetFields.NORMAL_COLOR);
+        super(frame, StandardAssetFields.PRESSED_COLOR, StandardAssetFields.ROLLOVER_COLOR, StandardAssetFields.NORMAL_COLOR);
     }
 
     /**
@@ -43,6 +43,6 @@ public class MinimizeButton extends TitleBarButton {
         int height = this.getHeight();
 
         g.setColor(StandardAssetFields.FOREGROUND_COLOR);
-        g.drawLine((int) (width/5f * 2), height/2, (int) (width/5f * 3), height/2);
+        g.drawLine((int) (width / 5f * 2), height / 2, (int) (width / 5f * 3), height / 2);
     }
 }

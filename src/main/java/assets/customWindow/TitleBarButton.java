@@ -20,15 +20,15 @@ abstract class TitleBarButton extends CleanButton {
     /**
      * constructor creates a new TitleBarButton, calls the constructor of CleanButton and sets the colors for the different states
      *
-     * @param frame window the button is inside
-     * @param pressedColor color of the button when it is pressed
+     * @param frame         window the button is inside
+     * @param pressedColor  color of the button when it is pressed
      * @param rolloverColor color of the button when the mouse rolls over it
-     * @param normalColor color of the button when it is pressed
+     * @param normalColor   color of the button when it is pressed
      */
     TitleBarButton(JFrame frame, Color pressedColor, Color rolloverColor, Color normalColor) {
-        super(pressedColor,rolloverColor,normalColor);
+        super(pressedColor, rolloverColor, normalColor);
         this.frame = frame;
-        this.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/35, Toolkit.getDefaultToolkit().getScreenSize().height/35));
+        this.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 35, Toolkit.getDefaultToolkit().getScreenSize().height / 35));
         this.addActionListener(this::buttonAction);
     }
 

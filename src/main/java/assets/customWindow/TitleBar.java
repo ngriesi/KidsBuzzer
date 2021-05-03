@@ -34,23 +34,23 @@ class TitleBar extends JPanel {
 
         this.frame = frame;
 
-        setupLayout(createTitle(),createButtonBack());
+        setupLayout(createTitle(), createButtonBack());
     }
 
     /**
      * creates the layout for this title bar
      *
-     * @param title title of the window
+     * @param title       title of the window
      * @param buttonPanel panel of the buttons in the top right corner
      */
     private void setupLayout(JLabel title, JPanel buttonPanel) {
         this.setBackground(StandardAssetFields.NORMAL_COLOR);
-        this.setPreferredSize(new Dimension(frame.getWidth(),Toolkit.getDefaultToolkit().getScreenSize().height / 35));
+        this.setPreferredSize(new Dimension(frame.getWidth(), Toolkit.getDefaultToolkit().getScreenSize().height / 35));
 
         this.addMouseListener(createMouseListener());
         this.addMouseMotionListener(createMouseMotionListener());
 
-        this.add(title,BorderLayout.LINE_START);
+        this.add(title, BorderLayout.LINE_START);
         this.add(buttonPanel, BorderLayout.LINE_END);
     }
 
@@ -61,7 +61,8 @@ class TitleBar extends JPanel {
     private MouseListener createMouseListener() {
         return new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
 
             @Override
             public void mousePressed(MouseEvent e) {
@@ -78,7 +79,7 @@ class TitleBar extends JPanel {
         return new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                frame.setLocation(e.getXOnScreen() - framePositionXDiff,e.getYOnScreen() - framePositionYDiff);
+                frame.setLocation(e.getXOnScreen() - framePositionXDiff, e.getYOnScreen() - framePositionYDiff);
             }
         };
     }
@@ -90,7 +91,7 @@ class TitleBar extends JPanel {
         MyLabel title = new MyLabel(" Buzzer");
         title.setForeground(StandardAssetFields.FOREGROUND_COLOR);
         title.setOpaque(false);
-        title.setFont(new Font("arial",Font.PLAIN,20));
+        title.setFont(new Font("arial", Font.PLAIN, 20));
         title.setAlignmentX(LINE_START);
         title.setHorizontalAlignment(SwingConstants.LEFT);
         return title;

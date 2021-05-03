@@ -18,7 +18,7 @@ public class CloseButton extends TitleBarButton {
      * @param frame window the button is inside
      */
     CloseButton(JFrame frame) {
-        super(frame, new Color(250,150,150),new Color(250,0,0), StandardAssetFields.NORMAL_COLOR);
+        super(frame, new Color(250, 150, 150), new Color(250, 0, 0), StandardAssetFields.NORMAL_COLOR);
     }
 
     /**
@@ -45,7 +45,7 @@ public class CloseButton extends TitleBarButton {
 
         g.setColor(Color.WHITE);
 
-        g.drawLine(width/5 * 2,height/3, width/5 * 3,height/3 * 2);
-        g.drawLine(width/5 * 2,height/3 * 2, width/5 * 3,height/3);
+        g.drawLine(width / 5 * 2, height / 3, width / 5 * 3, height / 3 * 2);
+        g.drawLine(width / 5 * 2, height / 3 * 2, width / 5 * 3, height / 3);
     }
 }

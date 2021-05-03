@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * creates a custom resizable frame from an undecorated window
+ * creates a custom resizable frame with the default windows title bar with a different color from an undecorated window
  */
 public class MyJFrame extends ResizeWindowPanel {
 
@@ -25,9 +25,9 @@ public class MyJFrame extends ResizeWindowPanel {
     /**
      * creates a new window with the passed bounds
      *
-     * @param x window x position
-     * @param y window y position
-     * @param width window width
+     * @param x      window x position
+     * @param y      window y position
+     * @param width  window width
      * @param height window height
      */
     public MyJFrame(int x, int y, int width, int height) {
@@ -36,12 +36,12 @@ public class MyJFrame extends ResizeWindowPanel {
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
-        setFrameSettings(screenWidth,screenHeight,x,y,width,height);
+        setFrameSettings(screenWidth, screenHeight, x, y, width, height);
 
         createShadowBorder();
-        chooseWindowBorder(screenWidth,screenHeight,getFrame().getState());
+        chooseWindowBorder(screenWidth, screenHeight, getFrame().getState());
 
-        this.setBackground(new Color(0,0,0,0));
+        this.setBackground(new Color(0, 0, 0, 0));
         this.add(new TitleBar(super.getFrame()), BorderLayout.PAGE_START);
 
         createMouseEventConsumer();
@@ -50,15 +50,15 @@ public class MyJFrame extends ResizeWindowPanel {
     /**
      * chooses the border of the window according to its state and size
      *
-     * @param screenWidth width of the screen
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
-    private void chooseWindowBorder(int screenWidth,int screenHeight, int state) {
+    private void chooseWindowBorder(int screenWidth, int screenHeight, int state) {
 
-        if(state != Frame.MAXIMIZED_BOTH || (super.getFrame().getSize().width != screenWidth || super.getFrame().getSize().height != screenHeight)) {
+        if (state != Frame.MAXIMIZED_BOTH || (super.getFrame().getSize().width != screenWidth || super.getFrame().getSize().height != screenHeight)) {
             this.setBorder(shadowBorder);
         } else {
-            this.setBorder(BorderFactory.createLineBorder(StandardAssetFields.NORMAL_COLOR,1));
+            this.setBorder(BorderFactory.createLineBorder(StandardAssetFields.NORMAL_COLOR, 1));
         }
     }
 
@@ -66,21 +66,21 @@ public class MyJFrame extends ResizeWindowPanel {
      * creates the shadow border
      */
     private void createShadowBorder() {
-        Border border1 = BorderFactory.createLineBorder(new Color(50,50,50,60),1);
-        Border border2 = BorderFactory.createLineBorder(new Color(50,50,50,30),1);
-        Border border3 = BorderFactory.createLineBorder(new Color(50,50,50,10),1);
-        shadowBorder =  BorderFactory.createCompoundBorder(border3,BorderFactory.createCompoundBorder(border2,border1));
+        Border border1 = BorderFactory.createLineBorder(new Color(50, 50, 50, 60), 1);
+        Border border2 = BorderFactory.createLineBorder(new Color(50, 50, 50, 30), 1);
+        Border border3 = BorderFactory.createLineBorder(new Color(50, 50, 50, 10), 1);
+        shadowBorder = BorderFactory.createCompoundBorder(border3, BorderFactory.createCompoundBorder(border2, border1));
     }
 
     /**
      * sets the settings for the frame
      *
-     * @param screenWidth width of the screen
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param x x position of the window
-     * @param y y position of the window
-     * @param width width of the window
-     * @param height height of the window
+     * @param x            x position of the window
+     * @param y            y position of the window
+     * @param width        width of the window
+     * @param height       height of the window
      */
     private void setFrameSettings(int screenWidth, int screenHeight, int x, int y, int width, int height) {
         setWindowBounds(screenWidth, screenHeight, x, y, width, height);
@@ -94,7 +94,7 @@ public class MyJFrame extends ResizeWindowPanel {
     private void setWindowAttributes() {
         super.getFrame().setUndecorated(true);
         super.getFrame().setContentPane(this);
-        super.getFrame().setBackground(new Color(0,0,0,0));
+        super.getFrame().setBackground(new Color(0, 0, 0, 0));
         super.getFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
@@ -102,17 +102,17 @@ public class MyJFrame extends ResizeWindowPanel {
     /**
      * sets the bounds for the frame
      *
-     * @param screenWidth width of the screen
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param x x position of the window
-     * @param y y position of the window
-     * @param width width of the window
-     * @param height height of the window
+     * @param x            x position of the window
+     * @param y            y position of the window
+     * @param width        width of the window
+     * @param height       height of the window
      */
     private void setWindowBounds(int screenWidth, int screenHeight, int x, int y, int width, int height) {
-        super.getFrame().setLocation(x,y);
-        super.getFrame().setMinimumSize(new Dimension(screenWidth/2,screenHeight/2));
-        super.getFrame().setMaximumSize(new Dimension(screenWidth,screenHeight));
+        super.getFrame().setLocation(x, y);
+        super.getFrame().setMinimumSize(new Dimension(screenWidth / 2, screenHeight / 2));
+        super.getFrame().setMaximumSize(new Dimension(screenWidth, screenHeight));
         super.getFrame().setSize(width, height);
     }
 
@@ -120,7 +120,7 @@ public class MyJFrame extends ResizeWindowPanel {
      * @return returns a state listener for the window to set the border of the window
      */
     private WindowStateListener createWindowStateListener() {
-        return e -> chooseWindowBorder(getFrame().getWidth(),getFrame().getHeight(), e.getNewState());
+        return e -> chooseWindowBorder(getFrame().getWidth(), getFrame().getHeight(), e.getNewState());
     }
 
     /**
@@ -130,7 +130,8 @@ public class MyJFrame extends ResizeWindowPanel {
         mouseEventConsumer = new JPanel(new BorderLayout());
         mouseEventConsumer.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
         });
         this.add(mouseEventConsumer, BorderLayout.CENTER);
     }
@@ -141,7 +142,7 @@ public class MyJFrame extends ResizeWindowPanel {
      * @param panel new content panel of the window
      */
     public void setView(JPanel panel) {
-        if(mouseEventConsumer.getComponents().length > 0) {
+        if (mouseEventConsumer.getComponents().length > 0) {
             mouseEventConsumer.remove(0);
         }
         mouseEventConsumer.add(panel, BorderLayout.CENTER);
