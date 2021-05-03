@@ -23,7 +23,7 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
 
     private FontChooserRow buzzerFontChooserRow;
 
-    private AudioSettingRow introSound, questionSound, rightSound, buzzerSound, wrongSound;
+    private AudioSettingRow questionSound, rightSound, buzzerSound, wrongSound;
 
     /**
      * creates a new view
@@ -43,25 +43,22 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
 
         MyPanel panel = new MyPanel(new GridBagLayout());
 
-        introSound = new AudioSettingRow(settingsChangeListener, "soundIntro", "Intro Sound", new AudioSettingRow.AudioData(new File("default"), 0));
-
-        panel.addComponent(panel, introSound, 0, 0,1,1);
 
         questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", "Frage Sound", new AudioSettingRow.AudioData(new File("default"), 0));
 
-        panel.addComponent(panel, questionSound, 0, 1,1,1);
+        panel.addComponent(panel, questionSound, 0, 0,1,1);
 
         rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", "Richtig Sound", new AudioSettingRow.AudioData(new File("default"), 0));
 
-        panel.addComponent(panel, rightSound, 0, 2,1,1);
+        panel.addComponent(panel, rightSound, 0, 1,1,1);
 
         buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", "Buzzer Sound", new AudioSettingRow.AudioData(new File("default"), 0));
 
-        panel.addComponent(panel, buzzerSound, 0, 3, 1, 1);
+        panel.addComponent(panel, buzzerSound, 0, 2, 1, 1);
 
         wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", "Falsch Sound", new AudioSettingRow.AudioData(new File("default"), 0));
 
-        panel.addComponent(panel, wrongSound, 0, 4, 1, 1);
+        panel.addComponent(panel, wrongSound, 0, 3, 1, 1);
 
         return panel;
     }
@@ -114,10 +111,6 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
 
     FontChooserRow getBuzzerFontChooserRow() {
         return buzzerFontChooserRow;
-    }
-
-    AudioSettingRow getIntroSound() {
-        return introSound;
     }
 
     AudioSettingRow getQuestionSound() {

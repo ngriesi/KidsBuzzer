@@ -309,4 +309,8 @@ public class ControlModel implements SerialPortReaderInterface {
     public void displayCredits() {
         getView().setView(creditsController.getView());
     }
+
+    public boolean isUseNativeKeyListener() {
+        return useNativeKeyListener;
+    }
 }

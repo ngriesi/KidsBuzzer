@@ -62,7 +62,7 @@ class GeneralState {
             case WRONG:
                 return !right && !invisible && !title && buzzerActive > 0;
             case RIGHT:
-                return !title && !invisible && buzzerActive > 0;
+                return !title && !invisible && buzzerActive > 0 && !right;
             case SHOW_TITLE:
                 return invisible;
             case NEXT_QUESTION:

@@ -31,11 +31,6 @@ public class SimpleOutputView {
     private boolean right;
 
     /**
-     * flag indicates that the view is currently at the title view
-     */
-    private boolean title;
-
-    /**
      * reference for repainting
      */
     private QuizOverlayProgramController controller;
@@ -49,19 +44,11 @@ public class SimpleOutputView {
         this.controller = controlController;
         simpleView = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         right = false;
-        title = true;
         simpleVirtualBuzzers = new SimpleVirtualBuzzer[SaveDataHandler.MAX_BUZZER_COUNT];
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             simpleVirtualBuzzers[i] = new SimpleVirtualBuzzer(i);
         }
-    }
-
-    /**
-     * hides the title of the preview
-     */
-    public void hideTitle() {
-        title = false;
     }
 
     /**
@@ -158,11 +145,11 @@ public class SimpleOutputView {
      * @param g graphic context of the image
      */
     private void drawSimpleVirtualBuzzers(Graphics g) {
-        if (!title) {
-            for (SimpleVirtualBuzzer simpleVirtualBuzzer : simpleVirtualBuzzers) {
-                simpleVirtualBuzzer.drawBuzzer(g);
-            }
+
+        for (SimpleVirtualBuzzer simpleVirtualBuzzer : simpleVirtualBuzzers) {
+            simpleVirtualBuzzer.drawBuzzer(g);
         }
+
     }
 
     /**
@@ -173,8 +160,6 @@ public class SimpleOutputView {
     private void drawText(Graphics g) {
         if (right) {
             g.drawString("Richtig", SimpleOutputView.WIDTH/3, SimpleOutputView.HEIGHT/4);
-        } else if(title) {
-            g.drawString("Quiz", (int) (SimpleOutputView.WIDTH/3f), (int) (SimpleOutputView.HEIGHT/1.8f));
         }
     }
 
@@ -215,13 +200,5 @@ public class SimpleOutputView {
      */
     public boolean isRight() {
         return right;
-    }
-
-    /**
-     * sets the title flag to true
-     */
-    void setTitleToTrue() {
-        this.title = true;
-        drawOutputView();
     }
 }

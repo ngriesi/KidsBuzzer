@@ -22,10 +22,6 @@ public class QuizOverlaySaveFile extends SaveFile {
 
     private String buzzerFont = "Arial";
 
-    private String introSound = "default";
-
-    private int introVolume = 100;
-
     private String questionSound = "default";
 
     private int questionVolume = 100;
@@ -79,22 +75,6 @@ public class QuizOverlaySaveFile extends SaveFile {
 
     public void setWrongVolume(int wrongVolume) {
         this.wrongVolume = wrongVolume;
-    }
-
-    public String getIntroSound() {
-        return introSound;
-    }
-
-    public void setIntroSound(String introSound) {
-        this.introSound = introSound;
-    }
-
-    public int getIntroVolume() {
-        return introVolume;
-    }
-
-    public void setIntroVolume(int introVolume) {
-        this.introVolume = introVolume;
     }
 
     public String getQuestionSound() {

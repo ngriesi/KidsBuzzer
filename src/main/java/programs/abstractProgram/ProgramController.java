@@ -27,6 +27,7 @@ public abstract class ProgramController<P extends Program,V extends ProgramView,
      */
     private M programModel;
 
+
     /**
      * creates a new controller
      *

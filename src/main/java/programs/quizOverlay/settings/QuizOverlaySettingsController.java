@@ -56,7 +56,6 @@ public class QuizOverlaySettingsController extends ProgramController<QuizOverlay
         Color buzzerColor = new Color(getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[0],getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[1],getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[2],getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[3]);
         getProgramView().getBuzzerFontChooserRow().setSetting(new FontData(buzzerFont,buzzerColor));
 
-        getProgramView().getIntroSound().setSetting(new AudioSettingRow.AudioData(new File(getProgramModel().getSaveFile().getIntroSound()), getProgramModel().getSaveFile().getIntroVolume()));
         getProgramView().getQuestionSound().setSetting(new AudioSettingRow.AudioData(new File(getProgramModel().getSaveFile().getQuestionSound()), getProgramModel().getSaveFile().getQuestionVolume()));
         getProgramView().getRightSound().setSetting(new AudioSettingRow.AudioData(new File(getProgramModel().getSaveFile().getRightSound()), getProgramModel().getSaveFile().getRightVolume()));
         getProgramView().getBuzzerSound().setSetting(new AudioSettingRow.AudioData(new File(getProgramModel().getSaveFile().getBuzzerSound()), getProgramModel().getSaveFile().getBuzzerVolume()));
@@ -97,10 +96,6 @@ public class QuizOverlaySettingsController extends ProgramController<QuizOverlay
     private void changeSoundSetting(SettingsEvent se) {
         if (se.getName().endsWith("File")) {
             switch (se.getName().substring(5)) {
-                case "IntroFile":
-                    getProgramModel().getSaveFile().setIntroSound(((File) se.getValue()).getAbsolutePath());
-                    new Thread(() -> getProgramModel().setIntroSound(AudioClip.load((File) se.getValue()))).start();
-                    break;
                 case "QuestionFile":
                     getProgramModel().getSaveFile().setQuestionSound(((File) se.getValue()).getAbsolutePath());
                     new Thread(() -> getProgramModel().setQuestionSound(AudioClip.load((File) se.getValue()))).start();
@@ -120,12 +115,6 @@ public class QuizOverlaySettingsController extends ProgramController<QuizOverlay
             }
         } else {
             switch (se.getName().substring(5)) {
-                case "IntroVolume":
-                    getProgramModel().getSaveFile().setIntroVolume((int) ((float) se.getValue() * 100));
-                    if(getProgramModel().getIntroSound() != null) {
-                        getProgramModel().getIntroSound().setGain((float) se.getValue());
-                    }
-                    break;
                 case "QuestionVolume":
                     getProgramModel().getSaveFile().setQuestionVolume((int) ((float) se.getValue() * 100));
                     if(getProgramModel().getQuestionSound() != null) {

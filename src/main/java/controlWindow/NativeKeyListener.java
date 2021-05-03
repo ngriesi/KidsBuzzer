@@ -2,14 +2,23 @@ package controlWindow;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NativeKeyListener implements org.jnativehook.keyboard.NativeKeyListener {
 
     private ControlModel controlModel;
 
     private boolean controlPressed, altPressed, shiftPressed;
 
+    /**
+     * map saves the states of the keys
+     */
+    private Map<Integer,Boolean> keyStates;
+
     public NativeKeyListener(ControlModel controlModel) {
         this.controlModel = controlModel;
+        keyStates = new HashMap<>();
     }
 
     @Override

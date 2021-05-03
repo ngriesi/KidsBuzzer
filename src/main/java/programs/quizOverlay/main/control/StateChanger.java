@@ -1,9 +1,8 @@
 package programs.quizOverlay.main.control;
 
 import controlWindow.ControlModel;
-import presentationWindow.engine.Action;
-import programs.quizOverlay.data.QuizOverlayModel;
 import presentationWindow.animations.AnimationQueue;
+import programs.quizOverlay.data.QuizOverlayModel;
 
 /**
  * changes the state of the quiz time program
@@ -102,20 +101,9 @@ class StateChanger {
     }
 
     /**
-     * method called and used when the intro screen should fade in
-     */
-    void changeToIntro() {
-        AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playIntroSound();
-        animationQueueItem.setAnimationAction(() -> viewUpdater.introAnimation(animationQueueItem));
-        animationQueue.addAnimation(animationQueueItem);
-    }
-
-    /**
      * method called and used when the presentation view should fade out
      */
     void fadeToInvisible() {
-        programModel.fadeOutIntroSound();
         programModel.fadeOutQuestionSound();
         programModel.fadeOutRightSound();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
@@ -131,7 +119,6 @@ class StateChanger {
      *                           check whether this method should be called in the QuizTimeProgram class
      */
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        programModel.fadeOutIntroSound();
         programModel.playQuestionSound();
         animationQueueItem.setAnimationAction(() -> viewUpdater.nextQuestion(animationQueueItem));
         animationQueueItem.addOnFinishedAction(this::reset);

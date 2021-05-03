@@ -1,16 +1,13 @@
 package programs.quizOverlay.control.view;
 
 import assets.standardAssets.MyButton;
-import assets.standardAssets.MyLabel;
-import assets.standardAssets.MyTextField;
 import assets.standardAssets.StandardAssetFields;
-import programs.abstractProgram.ProgramView;
+import programs.abstractProgram.ProgramControllerView;
 import programs.quizOverlay.control.control.QuizOverlayProgramController;
 import programs.quizOverlay.control.control.SimpleOutputView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static java.awt.GridBagConstraints.*;
@@ -18,12 +15,7 @@ import static java.awt.GridBagConstraints.*;
 /**
  * control view of the quiz time program
  */
-public class QuizOverlayControlView extends ProgramView {
-
-    /**
-     * text field containing the number of the next question
-     */
-    private MyTextField textField;
+public class QuizOverlayControlView extends ProgramControllerView {
 
     /**
      * size of the buttons
@@ -41,9 +33,7 @@ public class QuizOverlayControlView extends ProgramView {
 
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
 
-        setupInputMap();
-
-        setupActionMap(programController);
+        setupKeyBindings(programController);
 
 
         GridBagConstraints gc = new GridBagConstraints(2,0,1,2,1,1,CENTER,BOTH,new Insets(0,0,0,0),0,0);
@@ -73,73 +63,21 @@ public class QuizOverlayControlView extends ProgramView {
     }
 
     /**
-     * creates the text field containing the number of the next question
-     *
-     * @param gc constraint of the text field
-     * @param actionListener action listener of the text field
-     */
-    private void createTextField(GridBagConstraints gc, ActionListener actionListener) {
-        textField = new MyTextField("1");
-        textField.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/20,Toolkit.getDefaultToolkit().getScreenSize().height/20));
-        textField.useOnlyInts();
-        textField.addActionListener(actionListener);
-        textField.setActionCommand("number");
-        this.add(textField, gc);
-    }
-
-    /**
-     * sets up the action map for this panel
+     * sets up the key bindings for this panel
      *
      * @param programController reference to the controller to call the action methods
      */
-    private void setupActionMap(QuizOverlayProgramController programController) {
-        this.getActionMap().put("right", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                programController.rightButtonAction();
-            }
-        });
+    private void setupKeyBindings(QuizOverlayProgramController programController) {
 
-        this.getActionMap().put("wrong", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                programController.wrongButtonAction();
-            }
-        });
+        addKeyAction(KeyStroke.getKeyStroke("R"), programController::rightButtonAction);
+        addKeyAction(KeyStroke.getKeyStroke("F"), programController::wrongButtonAction);
+        addKeyAction(KeyStroke.getKeyStroke("N"), programController::nextButtonAction);
+        addKeyAction(KeyStroke.getKeyStroke("A"), programController::show);
+        addKeyAction(KeyStroke.getKeyStroke("V"), programController::hide);
+        addKeyAction(KeyStroke.getKeyStroke("ESCAPE"), programController::hide);
 
-        this.getActionMap().put("next", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                programController.nextButtonAction();
-            }
-        });
-
-        this.getActionMap().put("show", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                programController.show();
-            }
-        });
-
-        this.getActionMap().put("hide", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                programController.hide();
-            }
-        });
     }
 
-    /**
-     * sets up the input map of this panel
-     */
-    private void setupInputMap() {
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("R"),"right");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F"),"wrong");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("N"),"next");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"),"show");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("V"),"hide");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"),"hide");
-    }
 
     /**
      * adds a control button to the view
@@ -155,12 +93,5 @@ public class QuizOverlayControlView extends ProgramView {
         button.addActionListener(actionListener);
         button.setPreferredSize(buttonSize);
         this.add(button, gbc);
-    }
-
-    /**
-     * @return returns the text field containing the number of the next question
-     */
-    public MyTextField getTextField() {
-        return textField;
     }
 }

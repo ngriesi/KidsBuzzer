@@ -97,20 +97,21 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     }
 
     /**
-     * starts the intro animation
-     */
-    public void introAnimation() {
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.SHOW_TITLE)) {
-            stateChanger.changeToIntro();
-        }
-    }
-
-    /**
      * next button action
      */
     public void nextQuestion() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         if(generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
+            stateChanger.nextQuestion(animationQueueItem);
+        }
+    }
+
+    /**
+     * fade in animation
+     */
+    public void fadeIn() {
+        AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
+        if(generalState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
             stateChanger.nextQuestion(animationQueueItem);
         }
     }

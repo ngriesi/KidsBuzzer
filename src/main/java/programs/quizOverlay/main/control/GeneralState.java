@@ -11,18 +11,13 @@ class GeneralState {
      * possible actions that get checked with the current state
      */
     enum QuizAction {
-        BUZZER_PRESS, SHOW_TITLE, RIGHT, WRONG, NEXT_QUESTION, TO_INVISIBLE
+        BUZZER_PRESS, RIGHT, WRONG, NEXT_QUESTION, TO_INVISIBLE, FADE_IN
     }
 
     /**
      * true if the program is currently in the question view
      */
-    private boolean question = false;
-
-    /**
-     * true if the title is currently visible
-     */
-    private boolean title = false;
+    private boolean question = true;
 
     /**
      * true if the output screen is invisible
@@ -53,17 +48,17 @@ class GeneralState {
     private boolean checkAction(QuizAction action) {
         switch (action) {
             case BUZZER_PRESS:
-                return !right && !invisible && !title && buzzerReady;
+                return !right && !invisible  && buzzerReady;
             case WRONG:
-                return !right && !invisible && !title && buzzerActive > 0;
+                return !right && !invisible && buzzerActive > 0;
             case RIGHT:
-                return !title && !invisible && buzzerActive > 0;
-            case SHOW_TITLE:
-                return invisible;
+                return !invisible && buzzerActive > 0 && !right;
             case NEXT_QUESTION:
-                return (right || question || title) && !invisible;
+                return (right || question) && !invisible;
             case TO_INVISIBLE:
                 return !invisible;
+            case FADE_IN:
+                return invisible;
 
         }
 
@@ -107,9 +102,8 @@ class GeneralState {
                 removeActiveBuzzer(); break;
             case RIGHT:
                 changeToRightState(); break;
-            case SHOW_TITLE:
-                changeToIntroState(); break;
             case NEXT_QUESTION:
+            case FADE_IN:
                 changeToQuestionState(animationQueueItem); break;
         }
     }
@@ -126,7 +120,6 @@ class GeneralState {
             invisible = true;
             question = false;
             right = false;
-            title = false;
             stateChanger.reset();
         });
     }
@@ -138,23 +131,13 @@ class GeneralState {
      */
     private void changeToQuestionState(AnimationQueue.AnimationQueueItem animationQueueItem) {
         buzzerReady = false;
-        System.out.println("false");
+        invisible = false;
         animationQueueItem.addOnFinishedAction(() -> {
             question = true;
-            title = false;
             right = false;
             buzzerActive = 0;
             buzzerReady = true;
-            System.out.println("true");
         });
-    }
-
-    /**
-     * changes the state to the intro state
-     */
-    private void changeToIntroState() {
-        title = true;
-        invisible = false;
     }
 
     /**

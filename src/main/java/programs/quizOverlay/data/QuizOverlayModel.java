@@ -21,11 +21,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
     private Texture[] icons;
 
     /**
-     * intro sound
-     */
-    private AudioClip introSound;
-
-    /**
      * question sound
      */
     private AudioClip questionSound;
@@ -78,10 +73,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
         }
 
         new Thread(() -> {
-            introSound = loadAudio(getSaveFile().getIntroSound(), loadingHandler, getSaveFile().getIntroVolume());
-            if(introSound==null) getSaveFile().setIntroSound("default");
-        }).start();
-        new Thread(() -> {
             questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
             if(questionSound==null) getSaveFile().setQuestionSound("default");
         }).start();
@@ -97,21 +88,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
             wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
             if(wrongSound==null) getSaveFile().setWrongSound("default");
         }).start();
-    }
-
-    /**
-     * plays the intro sound if it exists
-     */
-    public void playIntroSound() {
-        if (introSound != null) {
-            introSound.play();
-        }
-    }
-
-    public void fadeOutIntroSound() {
-        if (introSound != null) {
-            introSound.fadeOut(1);
-        }
     }
 
     /**
@@ -170,10 +146,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
         this.icons[number] = icon;
     }
 
-    public void setIntroSound(AudioClip introSound) {
-        this.introSound = introSound;
-    }
-
     public void setQuestionSound(AudioClip questionSound) {
         this.questionSound = questionSound;
     }
@@ -196,10 +168,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
 
     public void setWrongSound(AudioClip wrongSound) {
         this.wrongSound = wrongSound;
-    }
-
-    public AudioClip getIntroSound() {
-        return introSound;
     }
 
     public AudioClip getQuestionSound() {

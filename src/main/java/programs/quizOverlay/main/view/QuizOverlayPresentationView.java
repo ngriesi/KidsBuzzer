@@ -4,7 +4,6 @@ import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
-import presentationWindow.renderItems.ImageItem;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.renderItems.TextItem;
 import programs.abstractProgram.ProgramPresentationView;
@@ -31,11 +30,6 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
      * right text
      */
     private TextItem rightText;
-
-    /**
-     * title text
-     */
-    private TextItem title;
 
     /**
      * duration of the change animation
@@ -70,15 +64,6 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
         rightText.setVisible(false);
         rightText.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
         mainItem.addItem(rightText);
-
-        title = new TextItem("Quiz");
-        title.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold()?Font.BOLD:PLAIN, 200));
-        title.setPosition(0.5f, 0.5f);
-        title.setSize((rightText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
-        title.setOpacity(0);
-        title.setVisible(true);
-        title.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
-        mainItem.addItem(title);
 
         virtualBuzzers = new VirtualBuzzer[SaveDataHandler.MAX_BUZZER_COUNT];
 
@@ -152,24 +137,20 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
      * resets the view for the next question
      */
     public void resetToQuestionView(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        if (title.getOpacity() > 0) {
-            getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(title, changeAnimationDuration).addOnFinishedAction(() -> resetToQuestionViewAfterTitleFade(animationQueueItem)));
-        } else {
-            getProgram().getRenderer().addActionToOpenGlThread(() -> resetToQuestionViewAfterTitleFade(animationQueueItem));
-        }
 
+        getProgram().getRenderer().addActionToOpenGlThread(() -> resetToQuestionViewAfterTitleFade(animationQueueItem));
     }
 
     private void resetToQuestionViewAfterTitleFade(AnimationQueue.AnimationQueueItem animationQueueItem) {
         int buzzerCount = SaveDataHandler.MAX_BUZZER_COUNT;
 
-        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
-            rightText.setVisible(false);
-        });
+        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> rightText.setVisible(false));
         getProgram().getRenderer().getLinearAnimator().moveYTo(0.1f, rightText, changeAnimationDuration, animationQueueItem);
 
         for (int i = 0; i < buzzerCount; i++) {
             virtualBuzzers[i].moveToStartPositionAndInitialScale(animationQueueItem);
+            virtualBuzzers[i].fadeInIcon(changeAnimationDuration, animationQueueItem);
+            virtualBuzzers[i].fadeInQuad(changeAnimationDuration, animationQueueItem);
         }
     }
 
@@ -181,11 +162,8 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
 
         Font font = new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200);
         rightText.changeFont(font);
-        title.changeFont(font);
         Color color = new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor()[0],getProgram().getProgramModel().getSaveFile().getMainTextColor()[1],getProgram().getProgramModel().getSaveFile().getMainTextColor()[2],getProgram().getProgramModel().getSaveFile().getMainTextColor()[3]);
         rightText.setColorScheme(new ColorScheme(color));
-        title.setColorScheme(new ColorScheme(color));
-
     }
 
     public void updateBuzzerFont() {
@@ -196,23 +174,16 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
         }
     }
 
-    public void introAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        title.setVisible(true);
-        getProgram().getRenderer().getLinearAnimator().fadeIn(title, changeAnimationDuration, animationQueueItem);
-    }
-
     public void fadeOut(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        for(VirtualBuzzer virtualBuzzer : virtualBuzzers) {
+        for (VirtualBuzzer virtualBuzzer : virtualBuzzers) {
             virtualBuzzer.hide(animationQueueItem);
         }
-        getProgram().getRenderer().getLinearAnimator().fadeOut(title,changeAnimationDuration,animationQueueItem);
-        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText,changeAnimationDuration,animationQueueItem).addOnFinishedAction(this::resetView);
+        getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration, animationQueueItem);
+        animationQueueItem.addOnFinishedAction(this::resetView);
     }
 
+
     private void resetView() {
-        title.setOpacity(0);
-        title.setPosition(0.5f, 0.5f);
-        title.setSize((rightText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
         rightText.setOpacity(0);
         rightText.setPosition(0.5f, 1f / 5f);
         rightText.setSize((rightText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);

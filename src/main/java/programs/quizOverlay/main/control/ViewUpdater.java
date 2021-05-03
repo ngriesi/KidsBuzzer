@@ -91,18 +91,8 @@ class ViewUpdater {
      * @param animationQueueItem animation queue item
      */
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        simpleOutputView.hideTitle();
         presentationView.resetToQuestionView(animationQueueItem);
         simpleOutputView.resetToQuestionView();
-    }
-
-    /**
-     * plays the intro animation
-     *
-     * @param animationQueueItem animation queue item
-     */
-    void introAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        presentationView.introAnimation(animationQueueItem);
     }
 
     /**

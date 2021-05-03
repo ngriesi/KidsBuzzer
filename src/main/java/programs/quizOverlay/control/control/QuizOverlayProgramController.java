@@ -1,13 +1,14 @@
 package programs.quizOverlay.control.control;
 
-import assets.standardAssets.MyTextField;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import programs.abstractProgram.ProgramController;
-import programs.quizOverlay.main.control.QuizOverlayProgram;
 import programs.quizOverlay.control.view.QuizOverlayControlView;
 import programs.quizOverlay.data.QuizOverlayModel;
+import programs.quizOverlay.main.control.QuizOverlayProgram;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * controller of the control panel of the quiz time program
@@ -19,7 +20,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      */
     private SimpleOutputView simpleOutputView;
 
-    private boolean ignoreNextTextUpdate = false;
+
 
     /**
      * creates a new controller
@@ -90,7 +91,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      */
     public void show() {
         getProgram().getControlModel().showPresentationWindow();
-        getProgram().introAnimation();
+        getProgram().fadeIn();
     }
 
     /**
@@ -103,7 +104,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
                     @Override
                     public void run() {
                         getProgram().getControlModel().hidePresentationWindow();
-                        getSimpleOutputView().setTitleToTrue();
+                        getSimpleOutputView().resetToQuestionView();
                     }
                 },
                 2000
