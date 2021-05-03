@@ -6,6 +6,7 @@ import controlWindow.settings.SettingsSaveFile;
 import org.jnativehook.GlobalScreen;
 import presentationWindow.engine.Engine;
 import presentationWindow.window.OpenGlRenderer;
+import programs.instantButton.main.InstantButtonProgram;
 import programs.keyPresser.main.KeyPressProgram;
 import programs.mouseClicker.main.MouseClickerProgram;
 import programs.programChooser.ProgramHandler;
@@ -81,6 +82,7 @@ public class LoadingModel {
 
         programHandler.addProgram(new QuizTimeProgram());
         programHandler.addProgram(new ScoreBoardProgram());
+        programHandler.addProgram(new InstantButtonProgram());
         programHandler.addProgram(new TestProgram("test"));
         programHandler.addProgram(new MouseClickerProgram());
         programHandler.addProgram(new KeyPressProgram());

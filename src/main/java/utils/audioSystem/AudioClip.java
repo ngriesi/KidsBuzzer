@@ -1,5 +1,6 @@
 package utils.audioSystem;
 
+import presentationWindow.engine.Action;
 import startupApp.LoadingHandler;
 import startupApp.LoadingMonitor;
 
@@ -22,6 +23,8 @@ public class AudioClip {
      * volume controller for the audio
      */
     private FloatControl gainControl;
+
+    private Action onFinishedAction;
 
     /**
      * creates a new audio clip
@@ -117,6 +120,13 @@ public class AudioClip {
     public void play() {
         audioClip.stop();
         audioClip.setFramePosition(0);
+        audioClip.addLineListener(e -> {
+            if (e.getType() == LineEvent.Type.STOP) {
+                if (onFinishedAction != null) {
+                    onFinishedAction.execute();
+                }
+            }
+        });
         audioClip.start();
     }
 
@@ -164,5 +174,9 @@ public class AudioClip {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void setOnFinishedAction(Action action) {
+        this.onFinishedAction = action;
     }
 }

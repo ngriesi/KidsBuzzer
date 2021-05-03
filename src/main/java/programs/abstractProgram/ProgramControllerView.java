@@ -5,12 +5,12 @@ import presentationWindow.engine.Action;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public abstract class ProgramControllerView extends ProgramView {
+public abstract class ProgramControllerView <T extends ProgramController> extends ProgramView {
 
     /**
      * controller of the view
      */
-    private ProgramController controller;
+    private T controller;
 
     /**
      * number of the key bindings this view has
@@ -22,7 +22,7 @@ public abstract class ProgramControllerView extends ProgramView {
      *
      * @param controller sets the actionListener of the view
      */
-    public ProgramControllerView(ProgramController controller) {
+    public ProgramControllerView(T controller) {
         super(controller);
         this.controller = controller;
     }
