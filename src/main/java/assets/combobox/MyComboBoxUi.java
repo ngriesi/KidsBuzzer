@@ -35,8 +35,7 @@ public class MyComboBoxUi extends BasicComboBoxUI {
         if ( comboBox.isEnabled() )
             g.setColor(StandardAssetFields.NORMAL_COLOR);
         else
-            g.setColor(DefaultLookup.getColor(comboBox, this,
-                    "ComboBox.disabledBackground", null));
+            g.setColor(DefaultLookup.getColor(comboBox, this, "ComboBox.disabledBackground", null));
         g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
         g.setColor(t);
     }

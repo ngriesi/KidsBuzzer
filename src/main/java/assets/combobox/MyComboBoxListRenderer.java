@@ -42,17 +42,25 @@ class MyComboBoxListRenderer extends DefaultListCellRenderer {
         Component c = defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
         if (c instanceof JLabel) {
-
-            if (isSelected) {
-                c.setBackground(StandardAssetFields.ROLLOVER_COLOR);
-                c.setForeground(StandardAssetFields.FOREGROUND_COLOR);
-            } else {
-                c.setBackground(StandardAssetFields.NORMAL_COLOR);
-            }
+            setLabelColor((JLabel) c,isSelected);
         } else {
-            c = super.getListCellRendererComponent(
-                    list, value, index, isSelected, cellHasFocus);
+            c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         }
         return c;
+    }
+
+    /**
+     * sets the fore and background color for the labels of the combo box
+     *
+     * @param label label inside the combo box
+     * @param isSelected if true, the label is currently selected
+     */
+    private void setLabelColor(JLabel label, boolean isSelected) {
+        label.setForeground(StandardAssetFields.FOREGROUND_COLOR);
+        if (isSelected) {
+            label.setBackground(StandardAssetFields.ROLLOVER_COLOR);
+        } else {
+            label.setBackground(StandardAssetFields.NORMAL_COLOR);
+        }
     }
 }

@@ -84,7 +84,6 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
 
     private void mainBlockingBehaviourSelectorAction(String item) {
         getProgramModel().getSaveFile().setBlockingBehaviour(item);
-        if (item != null) getProgramView().getBlockingBehaviourRow().changeBlockingBehaviour(item);
         if (getProgram().getControlModel() != null) getProgram().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);
     }
 
@@ -94,7 +93,6 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
 
     private void buzzerSelectorAction(String s) {
         getProgramModel().getSaveFile().setUnblockBuzzer(getBuzzerNum(s));
-        getProgramView().getBlockingBehaviourRow().buzzerAction(s);
     }
 
     private void resetButtonAction() {
