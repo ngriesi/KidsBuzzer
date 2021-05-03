@@ -108,7 +108,7 @@ public class ChildItem extends PresentationViewRenderItem {
         shaderProgram.setUniform("projModelMatrix", projModelMatrix);
         shaderProgram.setUniform("transparencyMode", maskMode.ordinal());
 
-        shaderProgram.setUniform("opacity", Math.max(opacity,0));
+        shaderProgram.setUniform("opacity", Math.max(opacity,0f));
 
         shaderProgram.setUniform("colors", colorScheme.getVectorArray());
         shaderProgram.setUniform("useColorShade",useColorShade?1:0);   //boolean is made to an int uniform
@@ -122,7 +122,7 @@ public class ChildItem extends PresentationViewRenderItem {
 
         shaderProgram.setUniform("cornerSize",tempCornerSize);
 
-        shaderProgram.setUniform("edgeSize", tempCornerSize!=0?tempCornerSize - (edgeSize * tempCornerSize):1 - edgeSize);
+        shaderProgram.setUniform("edgeSize", tempCornerSize!=0?tempCornerSize - (edgeSize * tempCornerSize):1f - edgeSize);
 
 
         /*
@@ -140,7 +140,7 @@ public class ChildItem extends PresentationViewRenderItem {
             shaderProgram.setUniform("cornerScale", new Vector2f(0, 0));
 
         } else {
-            shaderProgram.setUniform("keepCornerProportion", 0);
+            shaderProgram.setUniform("keepCornerProportion", 0f);
             shaderProgram.setUniform("cornerScale", new Vector2f(0,0));
 
         }

@@ -1,18 +1,18 @@
 buzzerSound=default
-rightSound=default
-icons=[default, default, default]
 wrongSound=default
-introSound=default
-questionSound=default
-mainTextColor=[255, 255, 0, 255]
 wrongVolume=100
-mainFont=Arial
-introVolume=100
+questionSound=default
+rightSound=default
 buzzerFont=Arial
-rightVolume=100
 buzzerTextBold=true
+rightVolume=100
 buzzerVolume=100
+icons=[default, default, default]
+mainFont=Arial
 mainTextBold=false
-buzzerTextColor=[255, 255, 255, 255]
+mainTextColor=[255, 255, 0, 255]
+introSound=default
+introVolume=100
 questionVolume=100
+buzzerTextColor=[255, 255, 255, 255]
 

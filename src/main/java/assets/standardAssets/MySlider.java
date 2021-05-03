@@ -24,7 +24,7 @@ public class MySlider extends JSlider {
     public MySlider(int maxValue) {
         super(JSlider.HORIZONTAL, 0, maxValue, 0);
         this.maxValue = maxValue;
-        this.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/10,30));
+        //this.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/10,30));
         actionListeners = new LinkedList<>();
 
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);

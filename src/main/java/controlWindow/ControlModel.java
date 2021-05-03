@@ -1,6 +1,7 @@
 package controlWindow;
 
 import buzzerHandler.BuzzerModel;
+import controlWindow.credits.CreditsController;
 import controlWindow.settings.SettingsController;
 import presentationWindow.window.OpenGlRenderer;
 import programs.programChooser.ProgramHandler;
@@ -61,6 +62,11 @@ public class ControlModel implements SerialPortReaderInterface {
      */
     private SettingsController settingsController;
 
+    /**
+     * controller for the credits screen
+     */
+    private CreditsController creditsController;
+
     private boolean useNativeKeyListener;
 
     /**
@@ -73,6 +79,7 @@ public class ControlModel implements SerialPortReaderInterface {
         this.openGlRenderer = openGlRenderer;
         this.saveDataHandler = saveDataHandler;
         this.settingsController = new SettingsController(this, saveDataHandler.getSettings());
+        creditsController = new CreditsController(this);
 
         new SerialPortReader(this);
 
@@ -296,5 +303,10 @@ public class ControlModel implements SerialPortReaderInterface {
 
     void toggleNativeKeyListener() {
         useNativeKeyListener = !useNativeKeyListener;
+        settingsController.setNativeKeyListenerSetting(useNativeKeyListener);
+    }
+
+    public void displayCredits() {
+        getView().setView(creditsController.getView());
     }
 }

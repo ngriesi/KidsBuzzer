@@ -4,6 +4,8 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLUtil;
+import org.lwjgl.system.Callback;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -144,6 +146,11 @@ public class Window {
         glfwWindowHint(GLFW_FOCUSED, GL_FALSE);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, GL_FALSE);
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
+        // before window creation
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
+
+
 
 
 
@@ -241,6 +248,9 @@ public class Window {
 
 
         GL.createCapabilities();
+
+        // after GL.createCapabilities()
+        Callback debugProc = GLUtil.setupDebugMessageCallback();
 
         //resize Callback
         glfwSetFramebufferSizeCallback(windowHandle, (window, width, height) -> engine.frameAction());

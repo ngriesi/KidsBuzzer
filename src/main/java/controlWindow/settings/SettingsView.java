@@ -129,4 +129,8 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
         back.addActionListener(settingsController);
         super.addComponent(this,back,0,1,bottom_button_width,bottom_height);
     }
+
+    CheckBoxSettingsRow getNativeKeySettingsRow() {
+        return useNativeKeyListener;
+    }
 }

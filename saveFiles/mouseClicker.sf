@@ -1,8 +1,8 @@
-displayMouseTracker=true
 blockingBehaviour=Dont block
+displayMouseTracker=true
 unblockBuzzer=3
-blockingTime=1
-clickY=[0, 0, 0]
-clickX=[0, 0, 0]
 useClick=[false, false, false]
+clickY=[0, 0, 0]
+blockingTime=1
+clickX=[0, 0, 0]
 

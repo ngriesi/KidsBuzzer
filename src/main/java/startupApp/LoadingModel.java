@@ -101,6 +101,19 @@ public class LoadingModel {
 
         startOpenGlThread();
 
+        new Thread(() -> {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            for (LoadingMonitor loadingMonitor : loadingHandler.getLoadingProcesses()) {
+                System.out.println(loadingMonitor.getProcessName());
+            }
+        }).start();
+
     }
 
     /**

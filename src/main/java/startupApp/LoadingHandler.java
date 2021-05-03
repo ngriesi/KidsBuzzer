@@ -85,4 +85,11 @@ public class LoadingHandler {
         finishedProcessNamesBuffer.clear();
         return content;
     }
+
+    /**
+     * @return returns the currently running loading processes
+     */
+    public CopyOnWriteArrayList<LoadingMonitor> getLoadingProcesses() {
+        return loadingProcesses;
+    }
 }

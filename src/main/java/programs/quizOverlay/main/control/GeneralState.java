@@ -11,7 +11,7 @@ class GeneralState {
      * possible actions that get checked with the current state
      */
     enum QuizAction {
-        BUZZER_PRESS, SHOW_TITLE, RIGHT, WRONG, NEXT_QUESTION
+        BUZZER_PRESS, SHOW_TITLE, RIGHT, WRONG, NEXT_QUESTION, TO_INVISIBLE
     }
 
     /**
@@ -62,6 +62,8 @@ class GeneralState {
                 return invisible;
             case NEXT_QUESTION:
                 return (right || question || title) && !invisible;
+            case TO_INVISIBLE:
+                return !invisible;
 
         }
 

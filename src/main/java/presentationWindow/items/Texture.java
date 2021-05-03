@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
@@ -19,19 +20,28 @@ import static org.lwjgl.stb.STBImage.*;
 public class Texture {
 
     public static Texture loadTexture(File file, LoadingHandler loadingHandler) throws FileNotFoundException {
-        LoadingMonitor loadingMonitor = new LoadingMonitor(file.getAbsolutePath());
+
+        String temp = "";
+
+
+        LoadingMonitor loadingMonitor = new LoadingMonitor(file.getAbsolutePath() + temp);
         loadingHandler.addLoadingProcess(loadingMonitor);
         ByteBuffer buf;
+
         //Load texture File
         try (MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer w = stack.mallocInt(1);
             IntBuffer h = stack.mallocInt(1);
             IntBuffer channels = stack.mallocInt(1);
+            loadingMonitor.setText("test1");
             buf = stbi_load(file.getAbsolutePath(), w, h, channels, 4);
+            loadingMonitor.setText("tes5");
             if (buf == null) {
+                loadingMonitor.finishedProcess(loadingHandler);
                 throw new FileNotFoundException("Cant find file " + file.getAbsolutePath());
             }
 
+            loadingMonitor.setText("tes6");
 
             return new Texture(w.get(), h.get(), buf, loadingHandler, loadingMonitor);
         }
@@ -90,7 +100,9 @@ public class Texture {
         this.width = width;
         this.height = height;
 
+        loadingMonitor.setText("test77");
         this.id = createTexture(buf);
+        loadingMonitor.setText("test222");
         loadingMonitor.finishedProcess(loadingHandler);
     }
 

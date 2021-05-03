@@ -153,4 +153,11 @@ public class SettingsController extends assets.settings.general.SettingsControll
     String getNativeKey() {
         return nativeKey;
     }
+
+    public void setNativeKeyListenerSetting(boolean useNativeKeyListener) {
+        saveFileHandler.getSaveFile().setUseNativeKeyListener(useNativeKeyListener);
+        saveFileHandler.applyChanges();
+        saveFileHandler.saveToFile();
+        getSettingsView().getNativeKeySettingsRow().setSetting(useNativeKeyListener);
+    }
 }

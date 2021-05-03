@@ -3,6 +3,6 @@ buzzerSound=default
 icons=[default, default, default]
 textColor=[0, 0, 0, 255]
 buzzerSoundVolume=0
-textBold=false
 teamNames=[BAUM, ENTE, GANS]
+textBold=false
 

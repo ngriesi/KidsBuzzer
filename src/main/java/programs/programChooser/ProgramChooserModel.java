@@ -89,6 +89,8 @@ public class ProgramChooserModel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("settings")) {
             controlModel.displaySettings();
+        } else if (e.getActionCommand().equals("credits")) {
+            controlModel.displayCredits();
         }
     }
 }

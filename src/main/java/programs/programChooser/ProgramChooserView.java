@@ -55,15 +55,31 @@ public class ProgramChooserView extends MyPanel {
     private JPanel createLayoutComponents(ProgramChooserModel programChooserModel) {
         JPanel leftBarBack = createLeftBarBack();
 
-        this.addComponent(expanded, leftBarBack, 1, 1, 0, 0, 0.5f, 1);
-        this.addComponent(expanded, createCollapseButton(programChooserModel), 1, 1, 1, 0, 0.02f, 1);
-        this.addComponent(expanded,createEmptySpace(),2,0,1,1);
+        this.addComponent(expanded, leftBarBack, 1, 2, 0, 0, 0.5f, 1);
+        this.addComponent(expanded, createCollapseButton(programChooserModel), 1, 1, 2, 0, 0.02f, 1);
+        this.addComponent(expanded,createEmptySpace(),3,0,1,1);
 
         JPanel programListBack = createProgramListBack();
-        this.addComponent(leftBarBack,programListBack,1,1,0,0,0.02f,1,BOTH,PAGE_START);
-        this.addComponent(leftBarBack,createSettingsButton(programChooserModel),1,1,0,2,1,0.08f,BOTH,PAGE_END);
+        this.addComponent(leftBarBack,programListBack,1,2,0,0,0.02f,1,BOTH,PAGE_START);
+        leftBarBack.add(createSettingsButton(programChooserModel), new GridBagConstraints(0,2,1,1,0.5f,0.08f,PAGE_END,BOTH,new Insets(0,10,10,5),0,0));
+        leftBarBack.add(createCreditsButton(programChooserModel), new GridBagConstraints(1,2,1,1,0.5f,0.08f,PAGE_END,BOTH,new Insets(0,5,10,10),0,0));
+
+
 
         return programListBack;
+    }
+
+    /**
+     * creates the credits button
+     *
+     * @param programChooserModel action listener for the button
+     * @return credits button
+     */
+    private MyButton createCreditsButton(ProgramChooserModel programChooserModel) {
+        MyButton creditsButton = new MyButton("Credits");
+        creditsButton.setActionCommand("credits");
+        creditsButton.addActionListener(programChooserModel);
+        return creditsButton;
     }
 
     /**
@@ -76,7 +92,7 @@ public class ProgramChooserView extends MyPanel {
         int i = 0;
         for(String name : programChooserModel.getProgramHandler().getProgramNamesList()) {
             MyButton program = new MyButton(name);
-            programListBack.add(program,new GridBagConstraints(0,i + 1,1,1,1,0.03f,PAGE_END,BOTH,new Insets(0,0,10,0),0,0));
+            programListBack.add(program,new GridBagConstraints(0,i + 1,2,1,1,0.03f,PAGE_END,BOTH,new Insets(0,0,10,0),0,0));
             program.addActionListener((e) -> programChooserModel.programButtonAction(name));
             i++;
         }
@@ -130,7 +146,7 @@ public class ProgramChooserView extends MyPanel {
      */
     private JPanel createLeftBarBack() {
         JPanel leftBarBack = new JPanel(new GridBagLayout());
-        leftBarBack.setBackground(StandardAssetFields.NORMAL_COLOR);
+        leftBarBack.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
         leftBarBack.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {}

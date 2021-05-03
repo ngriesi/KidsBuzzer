@@ -82,4 +82,8 @@ public class ProgramHandler {
             program.updateBuzzerCount();
         }
     }
+
+    public Program getByNumber(int i) {
+        return programs.get(i);
+    }
 }

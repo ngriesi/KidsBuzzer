@@ -54,13 +54,13 @@ public class MainItem extends PresentationViewRenderItem {
         shaderProgram.setUniform("colors", new Vector4f[]{new Vector4f(1,1,1,0)});
         shaderProgram.setUniform("useColorShade",0);   //boolean is made to an int uniform
 
-        shaderProgram.setUniform("keepCornerProportion", 0);
+        shaderProgram.setUniform("keepCornerProportion", 0f);
         shaderProgram.setUniform("cornerScale", new Vector2f(0,0));
 
 
-        shaderProgram.setUniform("cornerSize",0);
+        shaderProgram.setUniform("cornerSize",0f);
 
-        shaderProgram.setUniform("edgeSize", 0);
+        shaderProgram.setUniform("edgeSize", 0f);
 
 
     }

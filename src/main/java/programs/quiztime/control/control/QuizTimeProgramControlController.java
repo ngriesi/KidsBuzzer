@@ -119,7 +119,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
                     @Override
                     public void run() {
                         getProgram().getControlModel().hidePresentationWindow();
-                        getSimpleOutputView().setTitleToTrue();
+                        getSimpleOutputView().changeToDefaultState();
                     }
                 },
                 2000

@@ -34,4 +34,8 @@ public class LoadingMonitor {
     String getProcessName() {
         return processName;
     }
+
+    public void setText(String text) {
+        processName = text;
+    }
 }

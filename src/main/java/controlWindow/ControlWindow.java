@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import static java.awt.GridBagConstraints.*;
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 
 /**
  * Window to control the Presentation and to Monitor the Buzzers
@@ -37,27 +38,37 @@ public class ControlWindow {
     private MyJFrame myJFrame;
 
     /**
+     * main controller of the application
+     */
+    private ControlModel controlModel;
+
+    /**
      * Constructor creates the Window and sets it up for its first look
      *
      * @param controlModel reference to the model of this assets.View
      */
     ControlWindow(final ControlModel controlModel) {
 
-        Vector4i storedWindowBounds = getSavedWindowBounds(controlModel);
+        this.controlModel = controlModel;
+
+        Vector4i storedWindowBounds = getSavedWindowBounds();
 
         myJFrame = new MyJFrame(storedWindowBounds.x, storedWindowBounds.y, storedWindowBounds.z, storedWindowBounds.w);
-        myJFrame.getFrame().addWindowListener(createWindowListener(controlModel));
+        myJFrame.getFrame().addWindowListener(createWindowListener());
 
-        setupWindow(controlModel);
+
+        setupWindow();
+
+        setupInputMap();
+        setupActionMap();
     }
 
     /**
      * creates a window listener for the frame to catch the close event
      *
-     * @param controlModel model of the control frame
      * @return returns the listener
      */
-    private WindowListener createWindowListener(ControlModel controlModel) {
+    private WindowListener createWindowListener() {
         return new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -69,10 +80,9 @@ public class ControlWindow {
     /**
      * gets the bounds of the window from the save file
      *
-     * @param controlModel model of the frame
      * @return returns a Vector4i with the window bounds
      */
-    private Vector4i getSavedWindowBounds(ControlModel controlModel) {
+    private Vector4i getSavedWindowBounds() {
         Vector4i result = new Vector4i();
         result.x = controlModel.getSettingsController().getSettingsSaveFile().getWindowPositionX();
         result.y = controlModel.getSettingsController().getSettingsSaveFile().getWindowPositionY();
@@ -83,14 +93,12 @@ public class ControlWindow {
 
     /**
      * creates the main layout of the window
-     *
-     * @param controlModel main model of the control window
      */
-    private void setupWindow(ControlModel controlModel) {
+    private void setupWindow() {
         mainLayout = new UnoptimizedPanel(new GridBagLayout());
         mainLayout.setLayout(new OverlayLayout(mainLayout));
-        mainLayout.add(createChooserExpanded(controlModel));
-        mainLayout.add(createChooserCollapsed(controlModel));
+        mainLayout.add(createChooserExpanded());
+        mainLayout.add(createChooserCollapsed());
 
         myJFrame.setView(mainLayout);
     }
@@ -111,10 +119,9 @@ public class ControlWindow {
     /**
      * creates the panel for the view when the program chooser is collapsed
      *
-     * @param controlModel main model of the control frame
      * @return returns the panel
      */
-    private JPanel createChooserCollapsed(ControlModel controlModel) {
+    private JPanel createChooserCollapsed() {
         chooserCollapsed = new JPanel(new GridBagLayout());
         chooserCollapsed.setBackground(StandardAssetFields.NORMAL_COLOR);
         chooserCollapsed.add(controlModel.getProgramChooserModel().getProgramChooserView(),createConstraint(0,0, 2,0,1,LINE_START,VERTICAL));
@@ -126,10 +133,9 @@ public class ControlWindow {
     /**
      * creates the panel for the view when the program chooser is expanded
      *
-     * @param controlModel main model of the control frame
      * @return returns the panel
      */
-    private JPanel createChooserExpanded(ControlModel controlModel) {
+    private JPanel createChooserExpanded() {
         JPanel chooserExpanded = new JPanel(new GridBagLayout());
         chooserExpanded.setOpaque(false);
         chooserExpanded.setBackground(new Color(0.3f,0.3f,0.3f,0.3f));
@@ -160,8 +166,9 @@ public class ControlWindow {
      * @param programPanel new program panel
      */
     void setProgramPane(JPanel programPanel) {
-        chooserCollapsed.remove(this.programPanel);
+        this.programPanel.setVisible(false);
         this.programPanel = programPanel;
+        this.programPanel.setVisible(true);
         chooserCollapsed.add(programPanel,createConstraint(1,0,1,1,8,LAST_LINE_END,BOTH));
     }
 
@@ -193,5 +200,71 @@ public class ControlWindow {
      */
     public MyJFrame getMyJFrame() {
         return myJFrame;
+    }
+
+    /**
+     * sets up the action map for the program panel (program selection)
+     */
+    private void setupActionMap() {
+        chooserCollapsed.getActionMap().put("1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(0);
+            }
+        });
+        chooserCollapsed.getActionMap().put("2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(1);
+            }
+        });
+        chooserCollapsed.getActionMap().put("3", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(2);
+            }
+        });
+        chooserCollapsed.getActionMap().put("4", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(3);
+            }
+        });
+        chooserCollapsed.getActionMap().put("5", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(4);
+            }
+        });
+        chooserCollapsed.getActionMap().put("6", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToProgram(5);
+            }
+        });
+    }
+
+    /**
+     * switches to the program with the given number
+     *
+     * @param number program number
+     */
+    private void switchToProgram(int number) {
+
+        controlModel.setProgram(controlModel.getProgramChooserModel().getProgramHandler().getByNumber(number));
+        myJFrame.getFrame().setVisible(true);
+
+    }
+
+    /**
+     * sets up the input map of this panel
+     */
+    private void setupInputMap() {
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 1"),"1");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 2"),"2");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 3"),"3");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 4"),"4");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 5"),"5");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 6"),"6");
     }
 }

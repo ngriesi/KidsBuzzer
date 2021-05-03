@@ -44,33 +44,45 @@ public class AudioSettingRow extends SettingsRow<AudioSettingRow.AudioData> {
         fileChooser.setFileFilter(new FileNameExtensionFilter("Waves","wav"));
 
         MyPanel interaction = new MyPanel(new GridBagLayout());
+        interaction.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/5,Toolkit.getDefaultToolkit().getScreenSize().height/10));
 
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.weighty = 1;
-        c.gridwidth = 1;
+        c.gridwidth = 2;
+        c.gridheight = 1;
         c.gridy = 0;
+        c.gridx = 0;
+        c.fill = BOTH;
 
         button = new MyButton(startValue.getFile().getName());
         button.addActionListener(e -> buttonAction(fileChooser,button,settingsChangeListener,name));
+        button.setPreferredSize(new Dimension(1,1));
+        button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/5,Toolkit.getDefaultToolkit().getScreenSize().height/20));
         interaction.add(button, c);
 
-        MyPanel bottom = new MyPanel(new BorderLayout());
+        GridBagConstraints gc = new GridBagConstraints();
 
-        MyLabel label = new MyLabel("Volume");
+        gc.gridx = 0;
+        gc.gridy = 1;
+        gc.fill = BOTH;
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.gridwidth = 1;
+        gc.gridheight = 1;
 
-        bottom.add(label, BorderLayout.LINE_START);
+        MyLabel label = new MyLabel("Volume   ");
+        label.setPreferredSize(new Dimension(1,1));
 
-        bottom.add(new MyLabel("   "), BorderLayout.CENTER);
+        interaction.add(label, gc);
+
+        gc.gridx = 1;
+
 
         slider = new MySlider(100);
         slider.addActionListener((e) -> settingsChangeListener.settingChanged(new SettingsEvent<>(((MySlider)e.getSource()).getRelativeValue(), name + "Volume")));
-        bottom.add(slider, BorderLayout.LINE_END);
-
-
-        c.gridy = 1;
-        c.fill = BOTH;
-        interaction.add(bottom, c);
+        slider.setPreferredSize(new Dimension(1,1));
+        interaction.add(slider,gc);
 
         super.addInteractionElement(interaction);
     }

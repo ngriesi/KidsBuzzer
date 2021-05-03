@@ -102,13 +102,13 @@ public class AudioClip {
      * @throws InterruptedException when the sleeping of the thread was interrupted
      */
     private static void pre_playAudio(Clip clip) throws InterruptedException {
-        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0);
+        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-80);
         clip.start();
         Thread.sleep(10);
         clip.stop();
         clip.flush();
         clip.setFramePosition(0);
-        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(1);
+        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0);
     }
 
     /**
