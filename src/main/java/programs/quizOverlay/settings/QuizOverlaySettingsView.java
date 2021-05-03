@@ -44,19 +44,19 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
         MyPanel panel = new MyPanel(new GridBagLayout());
 
 
-        questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", "Frage Sound", new AudioSettingRow.AudioData(new File("default"), 0));
+        questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", "Frage Sound");
 
         panel.addComponent(panel, questionSound, 0, 0,1,1);
 
-        rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", "Richtig Sound", new AudioSettingRow.AudioData(new File("default"), 0));
+        rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", "Richtig Sound");
 
         panel.addComponent(panel, rightSound, 0, 1,1,1);
 
-        buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", "Buzzer Sound", new AudioSettingRow.AudioData(new File("default"), 0));
+        buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", "Buzzer Sound");
 
         panel.addComponent(panel, buzzerSound, 0, 2, 1, 1);
 
-        wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", "Falsch Sound", new AudioSettingRow.AudioData(new File("default"), 0));
+        wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", "Falsch Sound");
 
         panel.addComponent(panel, wrongSound, 0, 3, 1, 1);
 

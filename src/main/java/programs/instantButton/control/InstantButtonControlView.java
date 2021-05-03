@@ -5,9 +5,7 @@ import assets.settings.rows.EmptySettingsRow;
 import programs.abstractProgram.ProgramControllerView;
 import savedataHandler.SaveDataHandler;
 
-import java.io.File;
-
-public class InstantButtonControlView extends ProgramControllerView<InstantButtonController> {
+class InstantButtonControlView extends ProgramControllerView<InstantButtonController> {
 
     private AudioSettingRow[] audioSettingRows;
 
@@ -16,13 +14,13 @@ public class InstantButtonControlView extends ProgramControllerView<InstantButto
      *
      * @param controller sets the actionListener of the view
      */
-    public InstantButtonControlView(InstantButtonController controller) {
+    InstantButtonControlView(InstantButtonController controller) {
         super(controller);
 
         audioSettingRows = new AudioSettingRow[SaveDataHandler.MAX_BUZZER_COUNT];
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            audioSettingRows[i] = new AudioSettingRow(controller,i+":","Sound von Buzzer " + (i + 1), new AudioSettingRow.AudioData(new File("default"),1));
+            audioSettingRows[i] = new AudioSettingRow(controller,i+":","Sound von Buzzer " + (i + 1));
             this.addComponent(this, audioSettingRows[i],0,i,1,1);
         }
 
@@ -32,7 +30,7 @@ public class InstantButtonControlView extends ProgramControllerView<InstantButto
 
     }
 
-    public AudioSettingRow[] getAudioSettingRows() {
+    AudioSettingRow[] getAudioSettingRows() {
         return audioSettingRows;
     }
 }

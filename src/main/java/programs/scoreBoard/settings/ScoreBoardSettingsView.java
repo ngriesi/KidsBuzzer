@@ -62,7 +62,7 @@ public class ScoreBoardSettingsView extends ProgramSettingsView {
 
         panel.addComponent(panel, teamsFontChooserRow, 0, 0,1,1);
 
-        buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", "Sound bei Punkt", new AudioSettingRow.AudioData(new File("default"), 1));
+        buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", "Sound bei Punkt");
 
         panel.addComponent(panel, buzzerPressedSound, 0, 1,1,1);
 

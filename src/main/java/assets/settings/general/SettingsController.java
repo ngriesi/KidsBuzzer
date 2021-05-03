@@ -27,7 +27,7 @@ public abstract class SettingsController<T extends SaveFile, V extends SettingsV
     /**
      * creates a new settings controller
      *
-     * @param saveFile save file of the settings
+     * @param saveFile     save file of the settings
      * @param settingsView view of the settings
      */
     public SettingsController(T saveFile, V settingsView) {

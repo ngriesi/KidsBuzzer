@@ -6,20 +6,17 @@ import assets.standardAssets.MySeparator;
 import assets.standardAssets.StandardAssetFields;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 /**
  * abstract super class for the settings rows
  */
-abstract class SettingsRow <T> extends MyPanel {
+abstract class SettingsRow extends MyPanel {
 
     /**
      * thickness of the border
      */
     private final int BORDER_THICKNESS = 10;
-
-    private MySeparator bottomSeparator;
 
     /**
      * creates an empty settings row
@@ -27,8 +24,8 @@ abstract class SettingsRow <T> extends MyPanel {
     SettingsRow() {
         super(new BorderLayout());
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        this.getInsets().set(BORDER_THICKNESS,BORDER_THICKNESS,BORDER_THICKNESS,BORDER_THICKNESS);
-        this.setPreferredSize(new Dimension(10,10));
+        this.getInsets().set(BORDER_THICKNESS, BORDER_THICKNESS, BORDER_THICKNESS, BORDER_THICKNESS);
+        this.setPreferredSize(new Dimension(10, 10));
     }
 
     /**
@@ -42,18 +39,13 @@ abstract class SettingsRow <T> extends MyPanel {
     }
 
     /**
-     * sets the currently displayed value
-     */
-    abstract void setSetting(T value);
-
-    /**
      * adds the interaction element to the setting
      *
      * @param component interaction element to change the setting
      */
     void addInteractionElement(JComponent component) {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBorder(BorderFactory.createLineBorder(StandardAssetFields.PANEL_BACKGROUND_COLOR,BORDER_THICKNESS * 2));
+        panel.setBorder(BorderFactory.createLineBorder(StandardAssetFields.PANEL_BACKGROUND_COLOR, BORDER_THICKNESS * 2));
         panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
         panel.add(component);
         this.add(panel, BorderLayout.LINE_END);
@@ -68,7 +60,7 @@ abstract class SettingsRow <T> extends MyPanel {
         this.add(createLabel(description), BorderLayout.LINE_START);
 
 
-        bottomSeparator = new MySeparator();
+        MySeparator bottomSeparator = new MySeparator();
         this.add(bottomSeparator, BorderLayout.PAGE_END);
     }
 
@@ -80,13 +72,10 @@ abstract class SettingsRow <T> extends MyPanel {
      */
     private MyLabel createLabel(String description) {
         MyLabel label = new MyLabel(description);
-        label.setBorder(BorderFactory.createLineBorder(StandardAssetFields.PANEL_BACKGROUND_COLOR,BORDER_THICKNESS));
+        label.setBorder(BorderFactory.createLineBorder(StandardAssetFields.PANEL_BACKGROUND_COLOR, BORDER_THICKNESS));
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setAlignmentX(LEFT_ALIGNMENT);
         return label;
     }
 
-    public MySeparator getBottomSeparator() {
-        return bottomSeparator;
-    }
 }

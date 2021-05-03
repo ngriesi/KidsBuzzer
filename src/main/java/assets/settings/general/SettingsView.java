@@ -46,7 +46,7 @@ public abstract class SettingsView<T extends SaveFile> extends MyPanel {
     void createSettings() {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        this.addComponent(this,mainPanel,1,3,0,0,1f,1f);
+        this.addComponent(this, mainPanel, 1, 3, 0, 0, 1f, 1f);
 
         createSettingsRows(mainPanel);
     }

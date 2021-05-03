@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 /**
  * creates a settings row with a check box for boolean values
  */
-public class CheckBoxSettingsRow extends SettingsRow<Boolean> {
+public class CheckBoxSettingsRow extends SettingsRow {
 
     /**
      * check box
@@ -21,9 +21,9 @@ public class CheckBoxSettingsRow extends SettingsRow<Boolean> {
      * creates the settings row
      *
      * @param settingsChangeListener listener that listens for changes to the setting
-     * @param name name to identify the setting in the listener
-     * @param description description that gets displayed in the settings
-     * @param startValue start value of the settings
+     * @param name                   name to identify the setting in the listener
+     * @param description            description that gets displayed in the settings
+     * @param startValue             start value of the settings
      */
     public CheckBoxSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, boolean startValue) {
         super(description);
@@ -33,14 +33,14 @@ public class CheckBoxSettingsRow extends SettingsRow<Boolean> {
 
         super.addInteractionElement(checkBox);
 
-        checkBox.addItemListener(createItemListener(settingsChangeListener,name));
+        checkBox.addItemListener(createItemListener(settingsChangeListener, name));
     }
 
     /**
      * creates an item listener for this check box to update the setting
      *
      * @param settingsChangeListener settings changed listener
-     * @param name name to identify the setting in the listener
+     * @param name                   name to identify the setting in the listener
      * @return ItemListener for the check box
      */
     private ItemListener createItemListener(SettingsChangeListener settingsChangeListener, String name) {
@@ -59,7 +59,6 @@ public class CheckBoxSettingsRow extends SettingsRow<Boolean> {
      *
      * @param value new value
      */
-    @Override
     public void setSetting(Boolean value) {
         checkBox.setSelected(value);
     }
