@@ -8,7 +8,7 @@ import static java.awt.GridBagConstraints.*;
 /**
  * JPanel with methods to add components to a grid bag layout
  */
-@SuppressWarnings({"unused", "SameParameterValue", "WeakerAccess"})
+@SuppressWarnings({"unused", "SameParameterValue"})
 public class MyPanel extends JPanel {
 
     /**
@@ -24,16 +24,16 @@ public class MyPanel extends JPanel {
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
+     * @param parent     parent the component gets added to
+     * @param child      child that gets added to the component
      * @param gridHeight grid height of the child in rows
-     * @param gridWidth grid width of the child in columns
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
-     * @param weightX weight of the child in x direction
-     * @param weightY weight of the child in y direction
-     * @param fill filling behaviour of the component
-     * @param anchor anchor of the component
+     * @param gridWidth  grid width of the child in columns
+     * @param gridX      grid x position of the child (in rows, starts with 0)
+     * @param gridY      grid y position of the child (in columns, starts with 0)
+     * @param weightX    weight of the child in x direction
+     * @param weightY    weight of the child in y direction
+     * @param fill       filling behaviour of the component
+     * @param anchor     anchor of the component
      */
     protected void addComponent(JPanel parent, JComponent child, int gridHeight, int gridWidth, int gridX, int gridY, float weightX, float weightY, int fill, int anchor) {
         GridBagConstraints c = new GridBagConstraints();
@@ -51,31 +51,31 @@ public class MyPanel extends JPanel {
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
+     * @param parent     parent the component gets added to
+     * @param child      child that gets added to the component
      * @param gridHeight grid height of the child in rows
-     * @param gridWidth grid width of the child in columns
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
-     * @param weightX weight of the child in x direction
-     * @param weightY weight of the child in y direction
-     * @param fill filling behaviour of the component
+     * @param gridWidth  grid width of the child in columns
+     * @param gridX      grid x position of the child (in rows, starts with 0)
+     * @param gridY      grid y position of the child (in columns, starts with 0)
+     * @param weightX    weight of the child in x direction
+     * @param weightY    weight of the child in y direction
+     * @param fill       filling behaviour of the component
      */
     protected void addComponent(JPanel parent, JComponent child, int gridHeight, int gridWidth, int gridX, int gridY, float weightX, float weightY, int fill) {
-        addComponent(parent, child, gridHeight, gridWidth, gridX, gridY, weightX, weightY,fill,CENTER);
+        addComponent(parent, child, gridHeight, gridWidth, gridX, gridY, weightX, weightY, fill, CENTER);
     }
 
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
+     * @param parent     parent the component gets added to
+     * @param child      child that gets added to the component
      * @param gridHeight grid height of the child in rows
-     * @param gridWidth grid width of the child in columns
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
-     * @param weightX weight of the child in x direction
-     * @param weightY weight of the child in y direction
+     * @param gridWidth  grid width of the child in columns
+     * @param gridX      grid x position of the child (in rows, starts with 0)
+     * @param gridY      grid y position of the child (in columns, starts with 0)
+     * @param weightX    weight of the child in x direction
+     * @param weightY    weight of the child in y direction
      */
     public void addComponent(JPanel parent, JComponent child, int gridHeight, int gridWidth, int gridX, int gridY, float weightX, float weightY) {
         addComponent(parent, child, gridHeight, gridWidth, gridX, gridY, weightX, weightY, BOTH);
@@ -84,10 +84,10 @@ public class MyPanel extends JPanel {
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
+     * @param parent  parent the component gets added to
+     * @param child   child that gets added to the component
+     * @param gridX   grid x position of the child (in rows, starts with 0)
+     * @param gridY   grid y position of the child (in columns, starts with 0)
      * @param weightX weight of the child in x direction
      * @param weightY weight of the child in y direction
      */
@@ -98,31 +98,31 @@ public class MyPanel extends JPanel {
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
+     * @param parent  parent the component gets added to
+     * @param child   child that gets added to the component
+     * @param gridX   grid x position of the child (in rows, starts with 0)
+     * @param gridY   grid y position of the child (in columns, starts with 0)
      * @param weightX weight of the child in x direction
      * @param weightY weight of the child in y direction
-     * @param fill filling behaviour of the component
+     * @param fill    filling behaviour of the component
      */
-    protected void addComponent(JPanel parent, JComponent child, int gridX, int gridY, float weightX, float weightY,int fill) {
+    protected void addComponent(JPanel parent, JComponent child, int gridX, int gridY, float weightX, float weightY, int fill) {
         addComponent(parent, child, 1, 1, gridX, gridY, weightX, weightY, fill);
     }
 
     /**
      * adds a component with a grid bag constraint
      *
-     * @param parent parent the component gets added to
-     * @param child child that gets added to the component
-     * @param gridX grid x position of the child (in rows, starts with 0)
-     * @param gridY grid y position of the child (in columns, starts with 0)
+     * @param parent  parent the component gets added to
+     * @param child   child that gets added to the component
+     * @param gridX   grid x position of the child (in rows, starts with 0)
+     * @param gridY   grid y position of the child (in columns, starts with 0)
      * @param weightX weight of the child in x direction
      * @param weightY weight of the child in y direction
-     * @param fill filling behaviour of the component
-     * @param anchor of the component
+     * @param fill    filling behaviour of the component
+     * @param anchor  of the component
      */
-    protected void addComponent(JPanel parent, JComponent child, int gridX, int gridY, float weightX, float weightY,int fill,int anchor) {
-        addComponent(parent, child, 1, 1, gridX, gridY, weightX, weightY, fill,anchor);
+    protected void addComponent(JPanel parent, JComponent child, int gridX, int gridY, float weightX, float weightY, int fill, int anchor) {
+        addComponent(parent, child, 1, 1, gridX, gridY, weightX, weightY, fill, anchor);
     }
 }

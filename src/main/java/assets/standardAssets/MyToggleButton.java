@@ -9,7 +9,11 @@ import java.awt.*;
  */
 public class MyToggleButton extends JToggleButton {
 
-    private Color pressedColor = StandardAssetFields.PRESSED_COLOR,selectedColor = StandardAssetFields.ROLLOVER_COLOR,normalColor = StandardAssetFields.NORMAL_COLOR, textColor = StandardAssetFields.FOREGROUND_COLOR;
+    /**
+     * colors for the different states of the button
+     */
+    @SuppressWarnings("FieldCanBeLocal")
+    private Color pressedColor = StandardAssetFields.PRESSED_COLOR, selectedColor = StandardAssetFields.ROLLOVER_COLOR, normalColor = StandardAssetFields.NORMAL_COLOR, textColor = StandardAssetFields.FOREGROUND_COLOR;
 
     /**
      * creates a custom check box and sets the attributes
@@ -40,17 +44,5 @@ public class MyToggleButton extends JToggleButton {
                 setBackground(normalColor);
             }
         };
-    }
-
-    public void setPressedColor(Color pressedColor) {
-        this.pressedColor = pressedColor;
-    }
-
-    public void setSelectedColor(Color selectedColor) {
-        this.selectedColor = selectedColor;
-    }
-
-    public void setNormalColor(Color normalColor) {
-        this.normalColor = normalColor;
     }
 }

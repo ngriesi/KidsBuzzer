@@ -27,9 +27,9 @@ public class CleanButton extends JButton {
     /**
      * creates a button but sets the colors for the three button states
      *
-     * @param pressedColor color hen button is pressed
+     * @param pressedColor  color hen button is pressed
      * @param rolloverColor color when the mouse is inside the button
-     * @param normalColor normal color of the button
+     * @param normalColor   normal color of the button
      */
     protected CleanButton(Color pressedColor, Color rolloverColor, Color normalColor) {
 
@@ -37,13 +37,22 @@ public class CleanButton extends JButton {
         this.rolloverColor = rolloverColor;
         this.normalColor = normalColor;
 
+        setLayoutValues(normalColor);
+
+        addChangeListener(createCleanButtonChangeListener());
+    }
+
+    /**
+     * sets the values for the layout of the button
+     *
+     * @param normalColor color of the button in its normal state
+     */
+    private void setLayoutValues(Color normalColor) {
         this.setBorderPainted(false);
         this.setBackground(normalColor);
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);
         this.setOpaque(true);
-
-        addChangeListener(createCleanButtonChangeListener());
     }
 
     /**
@@ -84,14 +93,29 @@ public class CleanButton extends JButton {
         return normalColor;
     }
 
+    /**
+     * sets the color the button has in its pressed state
+     *
+     * @param pressedColor new pressed color of the button
+     */
     public void setPressedColor(Color pressedColor) {
         this.pressedColor = pressedColor;
     }
 
+    /**
+     * sets the color the button has in its rollover state
+     *
+     * @param rolloverColor new rollover color of the button
+     */
     public void setRolloverColor(Color rolloverColor) {
         this.rolloverColor = rolloverColor;
     }
 
+    /**
+     * sets the color the button has in its normal state
+     *
+     * @param normalColor new normal color of the button
+     */
     public void setNormalColor(Color normalColor) {
         this.normalColor = normalColor;
     }

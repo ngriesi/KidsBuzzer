@@ -2,6 +2,9 @@ package assets.standardAssets;
 
 import java.awt.*;
 
+/**
+ * clean button with a text
+ */
 @SuppressWarnings("unused")
 public class MyButton extends CleanButton {
 
