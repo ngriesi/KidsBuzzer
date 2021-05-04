@@ -113,17 +113,18 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * starts the fade out animation and hides the presentation window when it is finished
      */
     public void hide() {
-        getProgram().fadeOut();
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        getProgram().getMainController().hidePresentationWindow();
-                        getSimpleOutputView().changeToDefaultState();
-                    }
-                },
-                2000
-        );
+        if(getProgram().fadeOut()) {
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            getProgram().getMainController().hidePresentationWindow();
+                            getSimpleOutputView().changeToDefaultState();
+                        }
+                    },
+                    1000
+            );
+        }
     }
 
     /**

@@ -113,11 +113,10 @@ class GeneralState {
             case RIGHT:
                 changeToRightState(); break;
             case SHOW_TITLE:
-                changeToIntroState(); break;
-            case NEXT_QUESTION:
-                changeToQuestionState(animationQueueItem); break;
             case TO_INVISIBLE:
                 break;
+            case NEXT_QUESTION:
+                changeToQuestionState(animationQueueItem); break;
         }
     }
 
@@ -145,7 +144,6 @@ class GeneralState {
      */
     private void changeToQuestionState(AnimationQueue.AnimationQueueItem animationQueueItem) {
         buzzerReady = false;
-        System.out.println("false");
         animationQueueItem.addOnFinishedAction(() -> {
             question = true;
             title = false;
@@ -153,14 +151,13 @@ class GeneralState {
             buzzerActive = 0;
             questionNumber++;
             buzzerReady = true;
-            System.out.println("true");
         });
     }
 
     /**
      * changes the state to the intro state
      */
-    private void changeToIntroState() {
+    void changeToIntroState() {
         title = true;
         invisible = false;
     }

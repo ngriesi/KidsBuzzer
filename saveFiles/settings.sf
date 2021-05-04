@@ -1,8 +1,8 @@
 outputScreen=1
+windowHeight=540
+buzzerNumber=3
+windowWidth=960
+useNativeKeyListener=true
 windowPositionX=619
 windowPositionY=182
-useNativeKeyListener=true
-buzzerNumber=3
-windowHeight=540
-windowWidth=960
 

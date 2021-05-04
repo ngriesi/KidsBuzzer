@@ -131,12 +131,12 @@ class GeneralState {
      */
     private void changeToQuestionState(AnimationQueue.AnimationQueueItem animationQueueItem) {
         buzzerReady = false;
-        invisible = false;
         animationQueueItem.addOnFinishedAction(() -> {
             question = true;
             right = false;
             buzzerActive = 0;
             buzzerReady = true;
+            invisible = false;
         });
     }
 

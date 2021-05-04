@@ -19,7 +19,6 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
     private SimpleOutputView simpleOutputView;
 
 
-
     /**
      * creates a new controller
      *
@@ -45,7 +44,8 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      * method used to update the view when it gets launched
      */
     @Override
-    protected void updateView() {}
+    protected void updateView() {
+    }
 
     /**
      * @return returns the simple output preview
@@ -96,24 +96,25 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      * starts the fade out animation and hides the presentation window when it is finished
      */
     public void hide() {
-        getProgram().fadeOut();
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        getProgram().getMainController().hidePresentationWindow();
-                        getSimpleOutputView().resetToQuestionView();
-                    }
-                },
-                2000
-        );
+        if (getProgram().fadeOut()) {
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            getProgram().getMainController().hidePresentationWindow();
+                            getSimpleOutputView().resetToQuestionView();
+                        }
+                    },
+                    1000
+            );
+        }
     }
 
     /**
      * action of the wrong button - tells the program that the current buzzer gave a wrong answer
      */
     public void wrongButtonAction() {
-        if(!getSimpleOutputView().isRight()) {
+        if (!getSimpleOutputView().isRight()) {
             getProgram().wrongAnswer();
         }
     }

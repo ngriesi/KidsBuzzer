@@ -127,11 +127,12 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
     /**
      * fades out the presentation view
      */
-    public void fadeOut() {
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE)) {
+    public boolean fadeOut() {
+        boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
+        if(result) {
             stateChanger.fadeToInvisible();
         }
-
+        return result;
     }
 
     /**

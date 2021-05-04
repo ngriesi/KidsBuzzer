@@ -109,6 +109,7 @@ class StateChanger {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playIntroSound();
         animationQueueItem.setAnimationAction(() -> viewUpdater.introAnimation(animationQueueItem));
+        animationQueueItem.addOnFinishedAction(() -> generalState.changeToIntroState());
         animationQueue.addAnimation(animationQueueItem);
     }
 
