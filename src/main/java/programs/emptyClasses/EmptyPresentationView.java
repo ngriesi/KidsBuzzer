@@ -4,6 +4,9 @@ import presentationWindow.renderItems.MainItem;
 import programs.abstractProgram.Program;
 import programs.abstractProgram.ProgramPresentationView;
 
+/**
+ * empty presentation view class for unused generics
+ */
 public class EmptyPresentationView extends ProgramPresentationView<Program> {
 
     /**

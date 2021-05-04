@@ -7,7 +7,11 @@ import programs.abstractProgram.ProgramView;
 
 import java.awt.event.ActionEvent;
 
+/**
+ * empty controller class for unused generics
+ */
 public class EmptyController extends ProgramController<Program,ProgramView,ProgramModel> {
+
     /**
      * creates a new controller
      *
