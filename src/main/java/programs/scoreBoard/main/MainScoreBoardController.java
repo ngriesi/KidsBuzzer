@@ -18,14 +18,14 @@ public class MainScoreBoardController {
     public void hide() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().exitAnimation(animationQueueItem));
-        animationQueueItem.addOnFinishedAction(() -> program.getControlModel().hidePresentationWindow());
+        animationQueueItem.addOnFinishedAction(() -> program.getMainController().hidePresentationWindow());
         animationQueue.addAnimation(animationQueueItem);
     }
 
     public void show() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> {
-            program.getControlModel().showPresentationWindow();
+            program.getMainController().showPresentationWindow();
             program.getProgramPresentationView().enterAnimation(animationQueueItem);
         });
         animationQueue.addAnimation(animationQueueItem);
@@ -42,7 +42,7 @@ public class MainScoreBoardController {
     }
 
     private void buzzerAnimationFinished() {
-        program.getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
+        program.getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
     }
 
     public void setBuzzerScore(int buzzer, int score) {

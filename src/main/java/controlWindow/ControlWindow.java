@@ -40,16 +40,17 @@ public class ControlWindow {
     /**
      * main controller of the application
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
      * Constructor creates the Window and sets it up for its first look
      *
-     * @param controlModel reference to the model of this assets.View
+     * @param mainController reference to the model of this assets.View
      */
-    ControlWindow(final ControlModel controlModel) {
+    ControlWindow(final MainController mainController) {
 
-        this.controlModel = controlModel;
+        this.mainController = mainController;
+
 
         Vector4i storedWindowBounds = getSavedWindowBounds();
 
@@ -72,7 +73,7 @@ public class ControlWindow {
         return new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                controlModel.applicationClosing();
+                mainController.applicationClosing();
             }
         };
     }
@@ -84,10 +85,10 @@ public class ControlWindow {
      */
     private Vector4i getSavedWindowBounds() {
         Vector4i result = new Vector4i();
-        result.x = controlModel.getSettingsController().getSettingsSaveFile().getWindowPositionX();
-        result.y = controlModel.getSettingsController().getSettingsSaveFile().getWindowPositionY();
-        result.z = controlModel.getSettingsController().getSettingsSaveFile().getWindowWidth();
-        result.w = controlModel.getSettingsController().getSettingsSaveFile().getWindowHeight();
+        result.x = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowPositionX();
+        result.y = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowPositionY();
+        result.z = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowWidth();
+        result.w = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowHeight();
         return result;
     }
 
@@ -124,9 +125,9 @@ public class ControlWindow {
     private JPanel createChooserCollapsed() {
         chooserCollapsed = new JPanel(new GridBagLayout());
         chooserCollapsed.setBackground(StandardAssetFields.NORMAL_COLOR);
-        chooserCollapsed.add(controlModel.getProgramChooserModel().getProgramChooserView(),createConstraint(0,0, 2,0,1,LINE_START,VERTICAL));
-        chooserCollapsed.add(controlModel.getBuzzerControl().getView(),createConstraint(1,1, 1,1,0.1f,LAST_LINE_END,BOTH));
-        chooserCollapsed.add(createProgramPanel(),createConstraint(1,0, 1,1,1,LAST_LINE_END,BOTH));
+        chooserCollapsed.add(mainController.getControlModel().getProgramChooserModel().getProgramChooserView(), createConstraint(0, 0, 2, 0, 1, LINE_START, VERTICAL));
+        chooserCollapsed.add(mainController.getControlModel().getBuzzerControl().getView(), createConstraint(1, 1, 1, 1, 0.1f, LAST_LINE_END, BOTH));
+        chooserCollapsed.add(createProgramPanel(), createConstraint(1, 0, 1, 1, 1, LAST_LINE_END, BOTH));
         return chooserCollapsed;
     }
 
@@ -138,25 +139,25 @@ public class ControlWindow {
     private JPanel createChooserExpanded() {
         JPanel chooserExpanded = new JPanel(new GridBagLayout());
         chooserExpanded.setOpaque(false);
-        chooserExpanded.setBackground(new Color(0.3f,0.3f,0.3f,0.3f));
-        chooserExpanded.add(controlModel.getProgramChooserModel().getProgramChooserView().getExpandedView(),createConstraint(0,0, 2,1,1,LINE_START,BOTH));
+        chooserExpanded.setBackground(new Color(0.3f, 0.3f, 0.3f, 0.3f));
+        chooserExpanded.add(mainController.getControlModel().getProgramChooserModel().getProgramChooserView().getExpandedView(), createConstraint(0, 0, 2, 1, 1, LINE_START, BOTH));
         return chooserExpanded;
     }
 
     /**
      * helper method to create a GridBagConstraint
      *
-     * @param gridX x position in the grid (starts with 0)
-     * @param gridY y position in the grid (starts with 0)
+     * @param gridX      x position in the grid (starts with 0)
+     * @param gridY      y position in the grid (starts with 0)
      * @param gridHeight height of the item in the grid (in rows)
-     * @param weightX weight of the item in x direction
-     * @param weightY weight of the item in y direction
-     * @param anchor anchor of the item
-     * @param fill filling behaviour of the item in the grid
+     * @param weightX    weight of the item in x direction
+     * @param weightY    weight of the item in y direction
+     * @param anchor     anchor of the item
+     * @param fill       filling behaviour of the item in the grid
      * @return a GridBagConstraints
      */
     private GridBagConstraints createConstraint(int gridX, int gridY, int gridHeight, float weightX, float weightY, int anchor, int fill) {
-        return new GridBagConstraints(gridX,gridY, 1,gridHeight,weightX,weightY,anchor,fill, new Insets(0, 0, 0, 0), 0, 0);
+        return new GridBagConstraints(gridX, gridY, 1, gridHeight, weightX, weightY, anchor, fill, new Insets(0, 0, 0, 0), 0, 0);
     }
 
 
@@ -169,7 +170,7 @@ public class ControlWindow {
         this.programPanel.setVisible(false);
         this.programPanel = programPanel;
         this.programPanel.setVisible(true);
-        chooserCollapsed.add(programPanel,createConstraint(1,0,1,1,8,LAST_LINE_END,BOTH));
+        chooserCollapsed.add(programPanel, createConstraint(1, 0, 1, 1, 8, LAST_LINE_END, BOTH));
     }
 
     /**
@@ -245,26 +246,25 @@ public class ControlWindow {
     }
 
     /**
-     * switches to the program with the given number
+     * switches to the program with the given number and updates the window by
+     * calling <code>JFrame.setVisible(true)</code>
      *
      * @param number program number
      */
     private void switchToProgram(int number) {
-
-        controlModel.setProgram(controlModel.getProgramChooserModel().getProgramHandler().getByNumber(number));
+        mainController.setProgram(mainController.getControlModel().getProgramChooserModel().getProgramHandler().getByNumber(number));
         myJFrame.getFrame().setVisible(true);
-
     }
 
     /**
      * sets up the input map of this panel
      */
     private void setupInputMap() {
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 1"),"1");
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 2"),"2");
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 3"),"3");
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 4"),"4");
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 5"),"5");
-        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 6"),"6");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 1"), "1");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 2"), "2");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 3"), "3");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 4"), "4");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 5"), "5");
+        chooserCollapsed.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control 6"), "6");
     }
 }

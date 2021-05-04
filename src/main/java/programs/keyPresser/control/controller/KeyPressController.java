@@ -71,7 +71,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
 
     private void mainBlockingBehaviourSelectorAction(String item) {
         getProgramModel().getSaveFile().setBlockingBehaviour(item);
-        if (getProgram().getControlModel() != null) getProgram().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);
+        if (getProgram().getMainController() != null) getProgram().getMainController().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);
     }
 
     private void saveBlockTime() {
@@ -83,9 +83,9 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
     }
 
     private void resetButtonAction() {
-        getProgram().getControlModel().getBuzzerControl().unblockBuzzer(1);
-        getProgram().getControlModel().getBuzzerControl().unblockBuzzer(2);
-        getProgram().getControlModel().getBuzzerControl().unblockBuzzer(3);
+        getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(1);
+        getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(2);
+        getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(3);
     }
 
     @Override

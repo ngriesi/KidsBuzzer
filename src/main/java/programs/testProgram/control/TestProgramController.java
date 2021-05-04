@@ -31,10 +31,10 @@ public class TestProgramController extends ProgramController<TestProgram,TestPro
                 getProgram().setView(getProgram().getSettingsController().getProgramView());
                 break;
             case "show":
-                if (getProgram().getControlModel().isShowingPresentation()) {
-                    getProgram().getControlModel().hidePresentationWindow();
+                if (getProgram().getMainController().isShowingPresentation()) {
+                    getProgram().getMainController().hidePresentationWindow();
                 } else {
-                    getProgram().getControlModel().showPresentationWindow();
+                    getProgram().getMainController().showPresentationWindow();
                 }
                 break;
             case "move":

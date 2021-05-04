@@ -1,6 +1,7 @@
 package programs.abstractProgram;
 
 import controlWindow.ControlModel;
+import controlWindow.MainController;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.window.OpenGlRenderer;
 import startupApp.LoadingHandler;
@@ -68,7 +69,7 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     /**
      * main controller of the control window
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
      * main item in the presentation window
@@ -226,8 +227,8 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     /**
      * @return returns the main controller of the control window
      */
-    public ControlModel getControlModel() {
-        return controlModel;
+    public MainController getMainController() {
+        return mainController;
     }
 
     /**
@@ -240,10 +241,10 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     /**
      * sets the main controller of the control window
      *
-     * @param controlModel main controller of the control window
+     * @param mainController main controller of the control window
      */
-    public void setControlModel(ControlModel controlModel) {
-        this.controlModel = controlModel;
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     /**

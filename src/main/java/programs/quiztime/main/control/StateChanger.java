@@ -1,6 +1,7 @@
 package programs.quiztime.main.control;
 
 import controlWindow.ControlModel;
+import controlWindow.MainController;
 import presentationWindow.animations.AnimationQueue;
 import presentationWindow.engine.Action;
 import programs.quiztime.data.QuizTimeProgramModel;
@@ -18,7 +19,7 @@ class StateChanger {
     /**
      * control model to update the general buzzer view
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
      * handles the states of the buzzers
@@ -48,7 +49,7 @@ class StateChanger {
      */
     StateChanger(QuizTimeProgram program, GeneralState generalState) {
 
-        this.controlModel = program.getControlModel();
+        this.mainController = program.getMainController();
         this.generalState = generalState;
 
         this.programModel = program.getProgramModel();
@@ -63,10 +64,10 @@ class StateChanger {
     /**
      * sets the control model
      *
-     * @param controlModel control model
+     * @param mainController control model
      */
-    void setControlModel(ControlModel controlModel) {
-        this.controlModel = controlModel;
+    void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     /**
@@ -152,7 +153,7 @@ class StateChanger {
     void reset() {
 
         buzzerStateHandler.reset();
-        controlModel.getBuzzerControl().resetBuzzers();
+        mainController.getControlModel().getBuzzerControl().resetBuzzers();
     }
 }
 

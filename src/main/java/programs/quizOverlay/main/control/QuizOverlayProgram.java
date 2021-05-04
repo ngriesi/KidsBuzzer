@@ -1,6 +1,6 @@
 package programs.quizOverlay.main.control;
 
-import controlWindow.ControlModel;
+import controlWindow.MainController;
 import programs.abstractProgram.Program;
 import programs.quizOverlay.control.control.QuizOverlayProgramController;
 import programs.quizOverlay.control.control.SimpleOutputView;
@@ -129,12 +129,12 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     /**
      * updates the controlModel of the stateChanger
      *
-     * @param controlModel main controller of the control window
+     * @param mainController main controller of the control window
      */
     @Override
-    public void setControlModel(ControlModel controlModel) {
-        super.setControlModel(controlModel);
-        stateChanger.setControlModel(controlModel);
+    public void setMainController(MainController mainController) {
+        super.setMainController(mainController);
+        stateChanger.setMainController(mainController);
     }
 
     /**

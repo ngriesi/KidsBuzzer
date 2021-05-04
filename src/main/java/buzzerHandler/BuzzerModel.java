@@ -1,6 +1,6 @@
 package buzzerHandler;
 
-import controlWindow.ControlModel;
+import controlWindow.MainController;
 
 /**
  * Logic class behind the buzzer overlay at the bottom of the window
@@ -10,7 +10,7 @@ public class BuzzerModel {
     /**
      * reference to the main class of the Control Window
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
      * View that contains the virtual buzzers
@@ -35,12 +35,12 @@ public class BuzzerModel {
     /**
      * initialises the view of the virtual buzzers
      *
-     * @param controlModel reference to the main class of the control window
+     * @param mainController reference to the main class of the control window
      */
-    public BuzzerModel(ControlModel controlModel) {
-        this.controlModel = controlModel;
+    public BuzzerModel(MainController mainController) {
+        this.mainController = mainController;
 
-        buzzerCount = controlModel.getSettingsController().getSettingsSaveFile().getBuzzerNumber();
+        buzzerCount = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getBuzzerNumber();
         buzzerControlView = new BuzzerControlView(this);
         buzzerPressed = new boolean[buzzerCount];
         resetBuzzers();
@@ -141,7 +141,7 @@ public class BuzzerModel {
      *
      * @return main controller of the application
      */
-    public ControlModel getControlModel() {
-        return controlModel;
+    public MainController getMainController() {
+        return mainController;
     }
 }

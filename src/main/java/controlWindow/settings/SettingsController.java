@@ -2,9 +2,7 @@ package controlWindow.settings;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsEvent;
-import assets.standardAssets.StandardAssetFields;
-import buzzerHandler.BuzzerModel;
-import controlWindow.ControlModel;
+import controlWindow.MainController;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
@@ -14,49 +12,42 @@ import java.awt.event.ActionListener;
 /**
  * controller of the main settings of the application
  */
-public class SettingsController extends assets.settings.general.SettingsController<SettingsSaveFile,SettingsView> implements ActionListener, SettingsChangeListener {
+public class SettingsController extends assets.settings.general.SettingsController<SettingsSaveFile, SettingsView> implements ActionListener, SettingsChangeListener {
 
     /**
      * reference to the main application model
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
-     * old settings values to check the requirement of a restart
+     * names to identify the possible <code>SettingsChangedEvents</code> that can occur
      */
-    private int oldScreenValue;
-    private int oldBuzzerNumber;
-
-    /**
-     * identification names of the settings
-     */
-    private final String presentationTransparency = "presentationTransparency";
     private final String outputScreen = "outputScreen";
     private final String buzzerCount = "buzzerCount";
     private final String nativeKey = "nativeKey";
 
 
-
     /**
      * creates a new settings controller
      *
-     * @param controlModel reference to the main application model
+     * @param mainController     reference to the main application model
      * @param settingsSaveFile save file that was loaded at the start of the application
      */
-    public SettingsController(ControlModel controlModel, SettingsSaveFile settingsSaveFile) {
+    public SettingsController(MainController mainController, SettingsSaveFile settingsSaveFile) {
         super(settingsSaveFile, new SettingsView());
-        this.controlModel = controlModel;
-
-        oldScreenValue = settingsSaveFile.getOutputScreen();
-        oldBuzzerNumber = settingsSaveFile.getBuzzerNumber();
-
-        updateMessage();
+        this.mainController = mainController;
     }
-
 
 
     /**
      * actions performed by the buttons of the view
+     * <p>
+     * Actions:
+     * ActionCommand: "cancel":
+     * closes the settings and deletes all changes made
+     * <p>
+     * ActionCommand: "save":
+     * saves the settings and updates the values respectively
      *
      * @param e action event
      */
@@ -66,23 +57,59 @@ public class SettingsController extends assets.settings.general.SettingsControll
 
         switch (command) {
             case "cancel":
-                saveFileHandler.rollbackChanges();
-                controlModel.displayControlView();
+                cancelButtonAction();
                 break;
             case "save":
-                saveFileHandler.applyChanges();
-                saveFileHandler.saveToFile();
-                controlModel.displayControlView();
-                SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getBuzzerNumber();
-                controlModel.setBuzzerControl(new BuzzerModel(controlModel));
-                controlModel.recreatePrograms();
+                saveButtonAction();
                 break;
 
         }
     }
 
     /**
+     * The Method saves and applies the changes made in the settings.
+     * The method applies the changes in the <code>SaveFileHandler</code> and saves them to the file.
+     * It also applies the changes to the view by updating the output window of the application and the
+     * buzzer count in the application.
+     */
+    private void saveButtonAction() {
+        saveFileHandler.applyChanges();
+        saveFileHandler.saveToFile();
+        mainController.displayControlView();
+        updateBuzzerCount();
+    }
+
+    /**
+     * updates the number of buzzer used/displayed in the whole program
+     */
+    private void updateBuzzerCount() {
+        SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getBuzzerNumber();
+        mainController.recreateBuzzerModel();
+        mainController.updateBuzzerCountOfPrograms();
+    }
+
+    /**
+     * action performed by the cancel button of the view
+     */
+    private void cancelButtonAction() {
+        saveFileHandler.rollbackChanges();
+        mainController.displayControlView();
+    }
+
+    /**
      * updates the values in the save file class when settings were changed
+     * <p>
+     * SettingsEvents:
+     * SettingsName: "outputScreen":
+     * updates the output screen value in the <code>SaveFileHandler</code> and updates the
+     * output screen by calling <code>updateOutputScreen</code> in <code>MainController</code>
+     * <p>
+     * SettingsName: "buzzerCount":
+     * updates the buzzer count value in the <code>SaveFileHandler</code>
+     * <p>
+     * SettingsName: "nativeKey":
+     * updates the <code>useNativeKeyListener</code> flag in the <code>SaveFileHandler</code> and
+     * updates the behaviour of the program by settings the flag in <code>ControlModel</code>
      *
      * @param settingsEvent settings event containing the setting identification name and the new value of the setting
      */
@@ -90,17 +117,16 @@ public class SettingsController extends assets.settings.general.SettingsControll
     public void settingChanged(SettingsEvent settingsEvent) {
         switch (settingsEvent.getName()) {
             case outputScreen:
-                saveFileHandler.getSaveFile().setOutputScreen((int)settingsEvent.getValue());
-                controlModel.updateOutputScreen();
+                saveFileHandler.getSaveFile().setOutputScreen((int) settingsEvent.getValue());
+                mainController.updateOutputScreen();
                 break;
             case buzzerCount:
                 saveFileHandler.getSaveFile().setBuzzerNumber((int) settingsEvent.getValue());
                 break;
             case nativeKey:
-                saveFileHandler.getSaveFile().setUseNativeKeyListener((boolean)settingsEvent.getValue());
-                controlModel.setEnableNativeKeyListener(false);
+                saveFileHandler.getSaveFile().setUseNativeKeyListener((boolean) settingsEvent.getValue());
+                mainController.getControlModel().setEnableNativeKeyListener((boolean) settingsEvent.getValue());
         }
-        updateMessage();
     }
 
     /**
@@ -112,29 +138,11 @@ public class SettingsController extends assets.settings.general.SettingsControll
         GraphicsDevice[] devices = env.getScreenDevices();
         Integer[] result = new Integer[devices.length];
         for (int i = 0; i < devices.length; i++) {
-            result[i] = i+1;
+            result[i] = i + 1;
         }
         return result;
     }
 
-    /**
-     * updates the visibility of the message int the settings view
-     */
-    private void updateMessage() {
-
-        getViewWithoutUpdate().getMessageSettingsRow().getLabel().setForeground(
-                (saveFileHandler.getSaveFile().getOutputScreen() != oldScreenValue
-                || saveFileHandler.getSaveFile().getBuzzerNumber() != oldBuzzerNumber) ?
-                Color.RED:
-                StandardAssetFields.PANEL_BACKGROUND_COLOR);
-    }
-
-    /**
-     * @return returns the identification name of the presentation window transparency setting
-     */
-    String getPresentationTransparency() {
-        return presentationTransparency;
-    }
 
     /**
      * @return returns the identification name of the output screen setting
@@ -150,10 +158,19 @@ public class SettingsController extends assets.settings.general.SettingsControll
         return buzzerCount;
     }
 
+    /**
+     * @return returns the identification name of the native key setting
+     */
     String getNativeKey() {
         return nativeKey;
     }
 
+    /**
+     * Changes the nativeKeyListener Settings. This method sets the useNativeKeyListener setting and
+     * saves it to a file
+     *
+     * @param useNativeKeyListener new value for the use native key listener setting
+     */
     public void setNativeKeyListenerSetting(boolean useNativeKeyListener) {
         saveFileHandler.getSaveFile().setUseNativeKeyListener(useNativeKeyListener);
         saveFileHandler.applyChanges();

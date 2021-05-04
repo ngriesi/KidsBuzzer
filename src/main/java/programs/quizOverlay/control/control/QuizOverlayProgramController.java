@@ -7,8 +7,6 @@ import programs.quizOverlay.data.QuizOverlayModel;
 import programs.quizOverlay.main.control.QuizOverlayProgram;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * controller of the control panel of the quiz time program
@@ -65,7 +63,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "show":
-                if (getProgram().getControlModel().isShowingPresentation()) {
+                if (getProgram().getMainController().isShowingPresentation()) {
                     hide();
                 } else {
                     show();
@@ -90,7 +88,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      * shoes the presentation window and starts the intro animation
      */
     public void show() {
-        getProgram().getControlModel().showPresentationWindow();
+        getProgram().getMainController().showPresentationWindow();
         getProgram().fadeIn();
     }
 
@@ -103,7 +101,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        getProgram().getControlModel().hidePresentationWindow();
+                        getProgram().getMainController().hidePresentationWindow();
                         getSimpleOutputView().resetToQuestionView();
                     }
                 },
@@ -146,12 +144,12 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
     public void nativeKeyAction(int keyCode) {
         switch (keyCode) {
             case NativeKeyEvent.VC_V:
-                if (getProgram().getControlModel().isShowingPresentation()) {
+                if (getProgram().getMainController().isShowingPresentation()) {
                     hide();
                 }
                 break;
             case NativeKeyEvent.VC_A:
-                if (!getProgram().getControlModel().isShowingPresentation()) {
+                if (!getProgram().getMainController().isShowingPresentation()) {
                     show();
                 }
                 break;

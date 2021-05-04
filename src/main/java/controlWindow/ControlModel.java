@@ -4,23 +4,15 @@ import buzzerHandler.BuzzerModel;
 import controlWindow.credits.CreditsController;
 import controlWindow.settings.SettingsController;
 import presentationWindow.window.OpenGlRenderer;
-import programs.programChooser.ProgramHandler;
 import programs.abstractProgram.Program;
 import programs.programChooser.ProgramChooserModel;
+import programs.programChooser.ProgramHandler;
 import savedataHandler.SaveDataHandler;
-import serialPortHandling.SerialPortReader;
-import serialPortHandling.SerialPortReaderInterface;
-
-import javax.swing.*;
-import java.awt.*;
-
-import static java.awt.GridBagConstraints.BOTH;
-import static java.awt.GridBagConstraints.LAST_LINE_END;
 
 /**
  * Main class connecting the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
  */
-public class ControlModel implements SerialPortReaderInterface {
+public class ControlModel {
 
     /**
      * shows that the Application is running for separate Threads
@@ -67,7 +59,15 @@ public class ControlModel implements SerialPortReaderInterface {
      */
     private CreditsController creditsController;
 
+    /**
+     * flag indicating if the input received from the native key listener should be used
+     */
     private boolean useNativeKeyListener;
+
+    /**
+     * handler for the input coming form the serial port
+     */
+    private BuzzerPressHandler buzzerPressHandler;
 
     /**
      * Constructor creates the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
@@ -76,106 +76,54 @@ public class ControlModel implements SerialPortReaderInterface {
     public ControlModel(SaveDataHandler saveDataHandler, OpenGlRenderer openGlRenderer, ProgramHandler programHandler) {
         applicationRunning = true;
 
+        MainController mainController = new MainController(this);
+
         this.openGlRenderer = openGlRenderer;
         this.saveDataHandler = saveDataHandler;
-        this.settingsController = new SettingsController(this, saveDataHandler.getSettings());
-        creditsController = new CreditsController(this);
 
-        new SerialPortReader(this);
+        creditsController = new CreditsController(mainController);
+        buzzerPressHandler = new BuzzerPressHandler(this);
 
         useNativeKeyListener = saveDataHandler.getSettings().isUseNativeKeyListener();
 
-        createControlView(programHandler);
-        setProgram(programHandler.getByName(programHandler.getProgramNamesList()[0]));
+        this.settingsController = new SettingsController(mainController, saveDataHandler.getSettings());
+        createControlView(programHandler, mainController);
+
+        mainController.setProgram(programHandler.getByName(programHandler.getProgramNamesList()[0]));
+
+
     }
 
     /**
      * creates the view of the program
      *
      * @param programHandler handler for the programs
+     * @param mainController main controller of the application
      */
-    private void createControlView(ProgramHandler programHandler) {
-        this.buzzerModel = new BuzzerModel(this);
-        this.programChooserModel = new ProgramChooserModel(this, programHandler);
-        this.controlWindow = new ControlWindow(this);
+    private void createControlView(ProgramHandler programHandler, MainController mainController) {
+        this.buzzerModel = new BuzzerModel(mainController);
+        this.programChooserModel = new ProgramChooserModel(mainController, programHandler);
+        this.controlWindow = new ControlWindow(mainController);
     }
 
     /**
-     * Method changes the currently used program
-     *
-     * @param program new program
+     * @return returns true if the application is running
      */
-    public void setProgram(Program program) {
-        program.setControlModel(this);
-        if (currentProgram != null) {
-            currentProgram.programClosed();
-        }
-        this.currentProgram = program;
-        currentProgram.programSelected();
-        getView().setProgramPane(program.getMainView());
-        while (openGlRenderer == null) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(openGlRenderer);
-        openGlRenderer.addActionToOpenGlThread(() -> openGlRenderer.getScene().setMainItem(program.getMainPresentationViewItem()));
+    boolean isApplicationRunning() {
+        return applicationRunning;
     }
 
     /**
-     * shows the presentation window
+     * sets the applicationRunning flag to false to stop all processes
      */
-    public void showPresentationWindow() {
-        openGlRenderer.getWindow().show();
-    }
-
-    /**
-     * hides the presentation window
-     */
-    public void hidePresentationWindow() {
-        openGlRenderer.getWindow().hide();
-    }
-
-    /**
-     * returns true if the presentation window is visible
-     */
-    public boolean isShowingPresentation() {
-        return openGlRenderer.getWindow().isShown();
-    }
-
-
-    /**
-     * Handles the Button number input coming from the SerialBuffer (Part of the Serial Port Reader). The
-     * Method is called with SwingUtilities.invokeLater() for it to be able to do things on the UI
-     *
-     * @param buzzerID ID of the pressed buzzer
-     */
-    public void handleBuzzerInput(int buzzerID) {
-        if(!buzzerModel.isBlockAllBuzzer()) {
-            int buzzerNum = buzzerID / 2;
-
-            boolean blockedSave = buzzerModel.isBuzzerBlocked(buzzerNum);
-            buzzerModel.pressBuzzer(buzzerNum);
-            currentProgram.handleBuzzerInput(buzzerNum, blockedSave);
-        }
-    }
-
-    /**
-     * performs the actions for the closing of the application
-     */
-    void applicationClosing() {
-        currentProgram.programClosed();
+    void applicationIsClosing() {
         applicationRunning = false;
-        saveWindowBounds();
-        settingsController.getSettingsSaveFile().saveFile();
     }
 
     /**
      * sets the window bounds in the save file
      */
-    private void saveWindowBounds() {
+    void saveWindowBounds() {
         settingsController.getSettingsSaveFile().setWindowHeight(getView().getMyJFrame().getFrame().getHeight());
         settingsController.getSettingsSaveFile().setWindowWidth(getView().getMyJFrame().getFrame().getWidth());
         settingsController.getSettingsSaveFile().setWindowPositionX(getView().getMyJFrame().getFrame().getX());
@@ -183,25 +131,41 @@ public class ControlModel implements SerialPortReaderInterface {
     }
 
     /**
-     * displays the normal control view in the control frame
+     * sets the flag that decides whether the native key listeners input should be used
+     *
+     * @param value new value of the flag
      */
-    public void displayControlView() {
-        getView().setView(getView().getMainLayout());
+    public void setEnableNativeKeyListener(boolean value) {
+        useNativeKeyListener = value;
     }
 
     /**
-     * displays the main settings view in the control frame
+     * method called by the native key listener if a key gets released.
+     * The key code is the released key
+     *
+     * @param keyCode key that was released
      */
-    public void displaySettings() {
-        getView().setView(settingsController.getSettingsView());
+    void nativeKeyAction(int keyCode) {
+        if (useNativeKeyListener) {
+            currentProgram.nativeKeyAction(keyCode);
+        }
     }
 
     /**
-     * @return returns true if the application is running
+     * switches the state of the useNativeKeyListener flag and sets the new value in the <code>SettingsController</code>
      */
-    public boolean isApplicationRunning() {
-        return applicationRunning;
+    void toggleNativeKeyListener() {
+        useNativeKeyListener = !useNativeKeyListener;
+        settingsController.setNativeKeyListenerSetting(useNativeKeyListener);
     }
+
+    /**
+     * @return returns true if the native key listener is currently getting used
+     */
+    public boolean isUseNativeKeyListener() {
+        return useNativeKeyListener;
+    }
+
 
     /**
      * @return returns the controller for the virtual buzzers at the bottom of the control window
@@ -213,7 +177,7 @@ public class ControlModel implements SerialPortReaderInterface {
     /**
      * @return returns the save data handler of the application
      */
-    public SaveDataHandler getSaveDataHandler() {
+    SaveDataHandler getSaveDataHandler() {
         return saveDataHandler;
     }
 
@@ -239,78 +203,48 @@ public class ControlModel implements SerialPortReaderInterface {
     }
 
     /**
-     * @param buzzerModel replaces the virtual buzzer view with a new one when updates were made to it
+     * @return returns the currently selected program
      */
-    public void setBuzzerControl(BuzzerModel buzzerModel) {
-        getView().getChooserCollapsed().remove(this.buzzerModel.getView());
-        this.buzzerModel = buzzerModel;
-        getView().getChooserCollapsed().add(getBuzzerControl().getView(),new GridBagConstraints(1, 1, 1, 1, 1, 0.3f, LAST_LINE_END, BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    Program getCurrentProgram() {
+        return currentProgram;
     }
 
     /**
-     * shows on the gui that the program is searching the receiver
-     */
-    @Override
-    public void searchingForReceiver() {
-
-        SwingUtilities.invokeLater(() -> buzzerModel.changeButtonText("searching"));
-    }
-
-    @Override
-    public void handleData(String data) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                handleBuzzerInput(Integer.parseInt(data.trim()));
-            } catch (NumberFormatException ignored) {
-            }
-        });
-    }
-
-    @Override
-    public boolean isRunning() {
-        return isApplicationRunning();
-    }
-
-    /**
-     * shows on the gui that the receiver was found
+     * sets the current program (no updates made, only used by setProgram in <code>MainController</code>)
      *
-     * @param receiverName name of the receiver
+     * @param currentProgram new current program
      */
-    @Override
-    public void receiverFound(String receiverName) {
-        SwingUtilities.invokeLater(() -> buzzerModel.changeButtonText(receiverName));
+    void setCurrentProgram(Program currentProgram) {
+        this.currentProgram = currentProgram;
     }
 
-    public void updateOutputScreen() {
-        openGlRenderer.changeScreen(saveDataHandler.getSettings().getOutputScreen());
+    /**
+     * @return returns the renderer for the output window which is created using LWJGL
+     */
+    public OpenGlRenderer getOpenGlRenderer() {
+        return openGlRenderer;
     }
 
-    public void recreatePrograms() {
-
-        getProgramChooserModel().getProgramHandler().updateBuzzerCount();
+    /**
+     * @return returns the controller of the credits view to access its view
+     */
+    CreditsController getCreditsController() {
+        return creditsController;
     }
 
-    public void setEnableNativeKeyListener(boolean value) {
-        useNativeKeyListener = value;
+    /**
+     * sets an new <code>BuzzerModel</code>. This is used if the buzzer count was updated
+     *
+     * @param buzzerModel new <code>BuzzerModel</code>
+     */
+    void setBuzzerModel(BuzzerModel buzzerModel) {
+        this.buzzerModel = buzzerModel;
     }
 
-    void nativeKeyAction(int keyCode) {
-        if (useNativeKeyListener) {
-
-            currentProgram.nativeKeyAction(keyCode);
-        }
-    }
-
-    void toggleNativeKeyListener() {
-        useNativeKeyListener = !useNativeKeyListener;
-        settingsController.setNativeKeyListenerSetting(useNativeKeyListener);
-    }
-
-    public void displayCredits() {
-        getView().setView(creditsController.getView());
-    }
-
-    public boolean isUseNativeKeyListener() {
-        return useNativeKeyListener;
+    /**
+     * @return returns the buzzer press handler which handles the serial input from the receiver
+     */
+    public BuzzerPressHandler getBuzzerPressHandler() {
+        return buzzerPressHandler;
     }
 }

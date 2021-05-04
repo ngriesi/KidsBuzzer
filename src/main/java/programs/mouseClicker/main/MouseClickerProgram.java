@@ -70,7 +70,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             case "Dont block":
-                getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
+                getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
                 break;
             case "Block until Released":
@@ -81,8 +81,8 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
                     try {
                         Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
 
-                        getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
-                        getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
+                        getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
+                        getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -90,9 +90,9 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
                 break;
             case "Unblock with Buzzer":
                 if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
-                    getControlModel().getBuzzerControl().unblockBuzzer(1);
-                    getControlModel().getBuzzerControl().unblockBuzzer(2);
-                    getControlModel().getBuzzerControl().unblockBuzzer(3);
+                    getMainController().getControlModel().getBuzzerControl().unblockBuzzer(1);
+                    getMainController().getControlModel().getBuzzerControl().unblockBuzzer(2);
+                    getMainController().getControlModel().getBuzzerControl().unblockBuzzer(3);
 
                 }
                 break;

@@ -2,21 +2,15 @@ package controlWindow.settings;
 
 import assets.settings.rows.CheckBoxSettingsRow;
 import assets.settings.rows.ComboBoxSettingsRow;
-import assets.settings.rows.MessageSettingsRow;
+import assets.settings.rows.EmptySettingsRow;
 import assets.standardAssets.MyButton;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * creates  the main settings view for the whole application
  */
 public class SettingsView extends assets.settings.general.SettingsView<SettingsSaveFile> {
-
-    /**
-     * Message row, displays an alert message at the bottom of the page
-     */
-    private MessageSettingsRow messageSettingsRow;
 
     /**
      * width of the buttons at the bottom
@@ -46,14 +40,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     }
 
     /**
-     * @return returns the message row from the bottom of the view
-     */
-    MessageSettingsRow getMessageSettingsRow() {
-        return messageSettingsRow;
-    }
-
-    /**
-     * creates the settings rows
+     * creates the settings rows and adds them to the <code>JPanel</code> passed to the method
      *
      * @param mainPanel main panel, back of the rows
      */
@@ -65,12 +52,12 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
         createBottomBar(settingsController);
 
         outputScreen = new ComboBoxSettingsRow<>(settingsController, settingsController.getOutputScreen(), "Choose the output screen", settingsController.getSettingsSaveFile().getOutputScreen(), settingsController.getPossibleScreens());
-        super.addComponent(mainPanel, outputScreen,0,1,1,1);
+        super.addComponent(mainPanel, outputScreen, 0, 1, 1, 1);
         buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.getBuzzerCount(), "Select the number of buzzers", settingsController.getSettingsSaveFile().getBuzzerNumber(), new Integer[]{1, 2, 3});
-        super.addComponent(mainPanel,buzzerNumber,0,2,1,1);
+        super.addComponent(mainPanel, buzzerNumber, 0, 2, 1, 1);
         useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.getNativeKey(), "Use the Native Key Listener", settingsController.getSettingsSaveFile().isUseNativeKeyListener());
-        super.addComponent(mainPanel,useNativeKeyListener,0,3,1,1);
-        createMessageRow(mainPanel);
+        super.addComponent(mainPanel, useNativeKeyListener, 0, 3, 1, 1);
+        super.addComponent(mainPanel, new EmptySettingsRow(), 0, 4, 1, 1);
 
 
     }
@@ -87,17 +74,6 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     }
 
     /**
-     * creates the row that displays the alert message
-     *
-     * @param mainPanel main back panel of the rows
-     */
-    private void createMessageRow(JPanel mainPanel) {
-        messageSettingsRow = new MessageSettingsRow("<html><body>The Application has to be restarted to apply all changes<br>Press save and restart the App to apply</body></html>");
-        messageSettingsRow.getLabel().setForeground(Color.RED);
-        super.addComponent(mainPanel,messageSettingsRow,0,4,1,1);
-    }
-
-    /**
      * creates the save button
      *
      * @param settingsController action listener of the button
@@ -106,7 +82,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
         MyButton save = new MyButton("Save");
         save.setActionCommand("save");
         save.addActionListener(settingsController);
-        super.addComponent(this,save,2,1,bottom_button_width,bottom_height);
+        super.addComponent(this, save, 2, 1, bottom_button_width, bottom_height);
     }
 
     /**
@@ -115,7 +91,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     private void createBottomSpacing() {
         JPanel bottomSpacing = new JPanel();
         bottomSpacing.setOpaque(false);
-        super.addComponent(this,bottomSpacing,1,1,1f,bottom_height);
+        super.addComponent(this, bottomSpacing, 1, 1, 1f, bottom_height);
     }
 
     /**
@@ -127,9 +103,16 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
         MyButton back = new MyButton("Cancel");
         back.setActionCommand("cancel");
         back.addActionListener(settingsController);
-        super.addComponent(this,back,0,1,bottom_button_width,bottom_height);
+        super.addComponent(this, back, 0, 1, bottom_button_width, bottom_height);
     }
 
+    /**
+     * used to update the nativeKeySettingsRow from elsewhere for example if the
+     * setting was changed with the key combination assigned to it in the <code>NativeKeyListener</code>
+     *
+     * @return returns the settings row used for the useNativeKeyListener settings
+     * @see controlWindow.NativeKeyListener for the update with keys
+     */
     CheckBoxSettingsRow getNativeKeySettingsRow() {
         return useNativeKeyListener;
     }

@@ -63,7 +63,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "show":
-                if (getProgram().getControlModel().isShowingPresentation()) {
+                if (getProgram().getMainController().isShowingPresentation()) {
                     hide();
                 } else {
                     show();
@@ -105,7 +105,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * shoes the presentation window and starts the intro animation
      */
     public void show() {
-        getProgram().getControlModel().showPresentationWindow();
+        getProgram().getMainController().showPresentationWindow();
         getProgram().introAnimation();
     }
 
@@ -118,7 +118,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        getProgram().getControlModel().hidePresentationWindow();
+                        getProgram().getMainController().hidePresentationWindow();
                         getSimpleOutputView().changeToDefaultState();
                     }
                 },

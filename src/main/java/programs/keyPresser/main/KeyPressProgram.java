@@ -67,7 +67,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             case "Dont block":
-                getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
+                getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
                 break;
             case "Block until Released":
@@ -78,8 +78,8 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
                     try {
                         Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
 
-                        getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
-                        getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
+                        getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
+                        getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -88,7 +88,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
             case "Unblock with Buzzer":
                 if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
                     for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-                        getControlModel().getBuzzerControl().unblockBuzzer(i + 1);
+                        getMainController().getControlModel().getBuzzerControl().unblockBuzzer(i + 1);
                     }
                 }
                 break;

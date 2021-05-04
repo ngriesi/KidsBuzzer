@@ -35,7 +35,7 @@ public abstract class ProgramControllerView <T extends ProgramController> extend
         this.getActionMap().put("" + keyBindingID, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!controller.getProgram().getControlModel().isUseNativeKeyListener()) {
+                if(!controller.getProgram().getMainController().getControlModel().isUseNativeKeyListener()) {
                     action.execute();
                 }
             }

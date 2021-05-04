@@ -69,7 +69,7 @@ public class BuzzerControlView extends JPanel {
         virtualBuzzers[i].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                buzzerModel.getControlModel().handleBuzzerInput(2 + i * 2);
+                buzzerModel.getMainController().getControlModel().getBuzzerPressHandler().handleBuzzerInput(2 + i * 2);
             }
         });
     }

@@ -48,10 +48,10 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
 
             switch (e.getActionCommand()) {
                 case "show":
-                    getProgram().getMainController().show();
+                    getProgram().getMainScoreBoardController().show();
                     break;
                 case "hide":
-                    getProgram().getMainController().hide();
+                    getProgram().getMainScoreBoardController().hide();
                     break;
                 case "settings":
                     getProgram().setView(getProgram().getSettingsController().getProgramView());
@@ -61,7 +61,7 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
     }
 
     private void handleScoreChange(int index, int value) {
-        getProgram().getMainController().setBuzzerScore(index + 1, value);
+        getProgram().getMainScoreBoardController().setBuzzerScore(index + 1, value);
     }
 
     public void updateScores() {
@@ -74,10 +74,10 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
     public void nativeKeyAction(int keyCode) {
         switch (keyCode) {
             case 30:
-                getProgram().getMainController().show();
+                getProgram().getMainScoreBoardController().show();
                 break;
             case 47:
-                getProgram().getMainController().hide();
+                getProgram().getMainScoreBoardController().hide();
                 break;
         }
     }

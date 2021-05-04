@@ -71,7 +71,7 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
                 getProgram().getRenderer().addTimedAction(new TimedAction(1, () -> {
                     red.setColorScheme(new ColorScheme(Color.WHITE));
                     redText.setColorScheme(new ColorScheme(Color.BLACK));
-                    getProgram().getControlModel().getBuzzerControl().unblockBuzzer(1);
+                    getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(1);
                 }));
                 break;
             case 2:
@@ -80,7 +80,7 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
                 getProgram().getRenderer().addTimedAction(new TimedAction(1, () -> {
                     green.setColorScheme(new ColorScheme(Color.WHITE));
                     greenText.setColorScheme(new ColorScheme(Color.BLACK));
-                    getProgram().getControlModel().getBuzzerControl().unblockBuzzer(2);
+                    getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(2);
                 }));
                 break;
             case 3:
@@ -89,7 +89,7 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
                 getProgram().getRenderer().addTimedAction(new TimedAction(1, () -> {
                     black.setColorScheme(new ColorScheme(Color.WHITE));
                     blackText.setColorScheme(new ColorScheme(Color.BLACK));
-                    getProgram().getControlModel().getBuzzerControl().unblockBuzzer(3);
+                    getProgram().getMainController().getControlModel().getBuzzerControl().unblockBuzzer(3);
                 }));
                 break;
         }

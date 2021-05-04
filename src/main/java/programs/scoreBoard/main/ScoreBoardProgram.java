@@ -39,13 +39,13 @@ public class ScoreBoardProgram extends Program<ScoreBoardControlController, Scor
         return new ScoreBoardPresentationView(this);
     }
 
-    public MainScoreBoardController getMainController() {
+    public MainScoreBoardController getMainScoreBoardController() {
         return mainController;
     }
 
     @Override
     protected void buzzerAction(int buzzerNumber) {
-        getControlModel().getBuzzerControl().setBlockAllBuzzer(true);
+        this.getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(true);
         mainController.buzzerPressed(buzzerNumber);
     }
 

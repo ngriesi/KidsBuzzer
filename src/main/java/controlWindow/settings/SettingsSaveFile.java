@@ -51,9 +51,9 @@ public class SettingsSaveFile extends SaveFile {
     }
 
     /*
-    *********************************
-            GETTER AND SETTER
-    *********************************
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
      */
 
     public int getBuzzerNumber() {

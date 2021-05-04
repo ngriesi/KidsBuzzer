@@ -1,6 +1,6 @@
 package programs.programChooser;
 
-import controlWindow.ControlModel;
+import controlWindow.MainController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ public class ProgramChooserModel implements ActionListener {
     /**
      * main controller of the controlling window
      */
-    private ControlModel controlModel;
+    private MainController mainController;
 
     /**
      * handler for the programs
@@ -28,11 +28,11 @@ public class ProgramChooserModel implements ActionListener {
     /**
      * creates a new program chooser
      *
-     * @param controlModel main controller of the controlling window
+     * @param mainController main controller of the controlling window
      * @param programHandler handler for the programs
      */
-    public ProgramChooserModel(ControlModel controlModel, ProgramHandler programHandler) {
-        this.controlModel = controlModel;
+    public ProgramChooserModel(MainController mainController, ProgramHandler programHandler) {
+        this.mainController = mainController;
 
         this.programHandler = programHandler;
 
@@ -50,7 +50,7 @@ public class ProgramChooserModel implements ActionListener {
      * action of the high, slim button when the program choosing side panel is collapsed
      */
     void expandButtonAction() {
-        controlModel.getView().getMyJFrame().getFrame().repaint();
+        mainController.getControlModel().getView().getMyJFrame().getFrame().repaint();
         programChooserView.getExpandedView().setVisible(true);
     }
 
@@ -58,7 +58,7 @@ public class ProgramChooserModel implements ActionListener {
      * action of the high, slim button when the program choosing side panel is expanded
      */
     void collapseButtonAction() {
-        controlModel.getView().getMyJFrame().getFrame().repaint();
+        mainController.getControlModel().getView().getMyJFrame().getFrame().repaint();
         programChooserView.getExpandedView().setVisible(false);
 
     }
@@ -76,7 +76,7 @@ public class ProgramChooserModel implements ActionListener {
      * @param name name of the selected program
      */
     void programButtonAction(String name) {
-        controlModel.setProgram(programHandler.getByName(name));
+        mainController.setProgram(programHandler.getByName(name));
         collapseButtonAction();
     }
 
@@ -88,9 +88,9 @@ public class ProgramChooserModel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("settings")) {
-            controlModel.displaySettings();
+            mainController.displaySettings();
         } else if (e.getActionCommand().equals("credits")) {
-            controlModel.displayCredits();
+            mainController.displayCredits();
         }
     }
 }

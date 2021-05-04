@@ -5,7 +5,6 @@ import programs.emptyClasses.EmptyController;
 import programs.emptyClasses.EmptyPresentationView;
 import programs.instantButton.control.InstantButtonController;
 import programs.instantButton.data.InstantButtonModel;
-import programs.testProgram.main.TestProgramView;
 
 public class InstantButtonProgram extends Program<InstantButtonController, EmptyController, InstantButtonModel, EmptyPresentationView> {
     /**
@@ -37,9 +36,9 @@ public class InstantButtonProgram extends Program<InstantButtonController, Empty
 
     @Override
     protected void buzzerAction(int buzzerNumber) {
-        getProgramModel().getAudioClips()[buzzerNumber - 1].setOnFinishedAction(() -> getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber));
+        getProgramModel().getAudioClips()[buzzerNumber - 1].setOnFinishedAction(() -> getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber));
         if(!getProgramModel().playSound(buzzerNumber - 1)) {
-            getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
+            getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
         }
     }
 
