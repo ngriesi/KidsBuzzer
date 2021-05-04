@@ -19,6 +19,13 @@ public class FloatAnimation extends Animation<Float> {
         super(startValue, endValue, duration, animationAction, animationCurve);
     }
 
+    /**
+     * checks if the animation should still be running by checking if the start value
+     * of the current progress is equal to the end value of the animation
+     *
+     * @param progress progress of the animation
+     * @return true if the animation should still be running
+     */
     @Override
     protected boolean animationShouldStillBeRunning(float progress) {
         return !startValue.equals(endValue) && startValue + (endValue - startValue) * progress != endValue;

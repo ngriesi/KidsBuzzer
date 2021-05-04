@@ -60,9 +60,9 @@ public abstract class Animation<T> {
     /**
      * creates a new animation
      *
-     * @param startValue start position of the animation
-     * @param endValue end position of the animation
-     * @param duration duration of the animation
+     * @param startValue      start position of the animation
+     * @param endValue        end position of the animation
+     * @param duration        duration of the animation
      * @param animationAction action of the animation performed every frame
      */
     Animation(T startValue, T endValue, int duration, AnimationAction<T> animationAction, AnimationCurve animationCurve) {
@@ -78,15 +78,15 @@ public abstract class Animation<T> {
     /**
      * returns the progress of a exponential animation
      *
-     * @param time current time
+     * @param time     current time
      * @param duration duration of the animation
      * @return progress of the animation in the range of 0 to 1
      */
     private float getExponentialProgress(float time, float duration) {
         int iterations = 3;
         time /= duration / 2;
-        if (time < 1)  {
-            return (float) (0.5f * Math.pow(time,iterations));
+        if (time < 1) {
+            return (float) (0.5f * Math.pow(time, iterations));
         }
 
         return (float) (0.5f * Math.pow(time - 2, iterations) + 1);
@@ -95,12 +95,12 @@ public abstract class Animation<T> {
     /**
      * returns the progress of a linear animation
      *
-     * @param time current time
+     * @param time     current time
      * @param duration duration of the animation
      * @return progress of the animation in the range of 0 to 1
      */
     private float getLinearProgress(float time, float duration) {
-        return time/ duration;
+        return time / duration;
     }
 
     /**
@@ -110,9 +110,12 @@ public abstract class Animation<T> {
      */
     private float getProgress() {
         switch (animationCurve) {
-            case LINEAR: return getLinearProgress(time,duration);
-            case EXPONENTIAL: return getExponentialProgress(time, duration);
-            default: return 0;
+            case LINEAR:
+                return getLinearProgress(time, duration);
+            case EXPONENTIAL:
+                return getExponentialProgress(time, duration);
+            default:
+                return 0;
         }
     }
 
@@ -120,7 +123,7 @@ public abstract class Animation<T> {
      * method is called every frame to make one animation step
      */
     public void makeStep() {
-        if(time < duration && animationShouldStillBeRunning(getProgress())) {
+        if (time < duration && animationShouldStillBeRunning(getProgress())) {
             stepAction(getProgress());
             time++;
         } else {
@@ -129,6 +132,13 @@ public abstract class Animation<T> {
         }
     }
 
+    /**
+     * method implemented in sub classes to check if the animation should still be
+     * running or if it is already finished
+     *
+     * @param progress progress of the animation
+     * @return true if the animation should still be running
+     */
     protected abstract boolean animationShouldStillBeRunning(float progress);
 
     /**
