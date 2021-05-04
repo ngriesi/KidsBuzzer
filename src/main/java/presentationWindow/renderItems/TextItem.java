@@ -68,11 +68,11 @@ public class TextItem extends ChildItem {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setFont(font);
         g.setColor(Color.BLACK);
-        g.drawRect(-1,-1,width + 1,height + 1);
+        g.drawRect(-1, -1, width + 1, height + 1);
         g.setColor(Color.WHITE);
         g.drawString(text, 0, metrics.getAscent());
 
-        aspectRatio = (float)width/(float)height;
+        aspectRatio = (float) width / (float) height;
 
         gameItem.getMesh().getMaterial().setTexture(new Texture(image));
     }
@@ -107,17 +107,17 @@ public class TextItem extends ChildItem {
     /**
      * sets up the shader for the text rendering
      *
-     * @param shaderProgram shader program of the window
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program of the window
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
-     * @param level z level of the item
+     * @param level          z level of the item
      */
     @Override
     protected void setupShader(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation, int level) {
         super.setupShader(shaderProgram, orthographic, transformation, level);
 
-        shaderProgram.setUniform("useTexture",3);
-        shaderProgram.setUniform("texture2d",0);
+        shaderProgram.setUniform("useTexture", 3);
+        shaderProgram.setUniform("texture2d", 0);
     }
 
     /**

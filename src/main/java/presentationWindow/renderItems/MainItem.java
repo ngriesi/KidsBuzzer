@@ -21,18 +21,18 @@ public class MainItem extends PresentationViewRenderItem {
     public MainItem(Window window) {
         setWindow(window);
         super.gameItem = new Quad();
-        gameItem.getMesh().getMaterial().setAmbientColor(new Vector4f(1,1,1,1));
-        gameItem.setPosition(0.5f,0.5f,50);
-        gameItem.setScale3(1f,1f,1);
+        gameItem.getMesh().getMaterial().setAmbientColor(new Vector4f(1, 1, 1, 1));
+        gameItem.setPosition(0.5f, 0.5f, 50);
+        gameItem.setScale3(1f, 1f, 1);
     }
 
     /**
      * sets up the shader for the main item
      *
-     * @param shaderProgram shader program used
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program used
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
-     * @param level z level
+     * @param level          z level
      */
     @Override
     protected void setupShader(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation, int level) {
@@ -50,15 +50,15 @@ public class MainItem extends PresentationViewRenderItem {
         //noinspection SpellCheckingInspection
         shaderProgram.setUniform("projModelMatrix", projModelMatrix);
 
-        shaderProgram.setUniform("useTexture",0);
-        shaderProgram.setUniform("colors", new Vector4f[]{new Vector4f(1,1,1,0)});
-        shaderProgram.setUniform("useColorShade",0);   //boolean is made to an int uniform
+        shaderProgram.setUniform("useTexture", 0);
+        shaderProgram.setUniform("colors", new Vector4f[]{new Vector4f(1, 1, 1, 0)});
+        shaderProgram.setUniform("useColorShade", 0);   //boolean is made to an int uniform
 
         shaderProgram.setUniform("keepCornerProportion", 0f);
-        shaderProgram.setUniform("cornerScale", new Vector2f(0,0));
+        shaderProgram.setUniform("cornerScale", new Vector2f(0, 0));
 
 
-        shaderProgram.setUniform("cornerSize",0f);
+        shaderProgram.setUniform("cornerSize", 0f);
 
         shaderProgram.setUniform("edgeSize", 0f);
 

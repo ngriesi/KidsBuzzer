@@ -48,13 +48,13 @@ public class PresentationViewRenderItem {
     /**
      * sets the z position
      *
-     * @param shaderProgram shader program used
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program used
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
-     * @param level z level
+     * @param level          z level
      */
     protected void setupShader(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation, int level) {
-        gameItem.setPosition(gameItem.getPosition().x,gameItem.getPosition().y,manualDepth==-1?level:manualDepth);
+        gameItem.setPosition(gameItem.getPosition().x, gameItem.getPosition().y, manualDepth == -1 ? level : manualDepth);
     }
 
     /**
@@ -81,8 +81,8 @@ public class PresentationViewRenderItem {
     /**
      * render method for the item used to set the initial z level
      *
-     * @param shaderProgram shader program used
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program used
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
      */
     public void render(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation) {
@@ -92,13 +92,13 @@ public class PresentationViewRenderItem {
     /**
      * sets up the shader, renders this item and its children
      *
-     * @param shaderProgram shader program used
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program used
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
-     * @param level z level
+     * @param level          z level
      */
     private void render(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation, int level) {
-        if(visible) {
+        if (visible) {
             setupShader(shaderProgram, orthographic, transformation, level);
             gameItem.getMesh().render();
         }
@@ -117,6 +117,12 @@ public class PresentationViewRenderItem {
         item.setWindow(window);
     }
 
+    /**
+     * sets a manual depth for the component, must be in the range of:
+     * 0 to {@value MAX_DEPTH} - 2
+     *
+     * @param manualDepth new depth of the item
+     */
     public void setManualDepth(int manualDepth) {
         this.manualDepth = MAX_DEPTH - 2 - manualDepth;
     }
@@ -140,14 +146,19 @@ public class PresentationViewRenderItem {
         }
     }
 
-    public boolean isVisible() {
-        return visible;
-    }
-
+    /**
+     * sets the visibility flag of the item which decides whether the item and
+     * all of its children should be rendered or not
+     *
+     * @param visible new visibility of the item
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    /**
+     * sets the manual depth to -1 deactivating its usage
+     */
     public void deactivateManualDepth() {
         manualDepth = -1;
     }

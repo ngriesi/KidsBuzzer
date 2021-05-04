@@ -19,15 +19,15 @@ public class QuadItem extends ChildItem {
     /**
      * sets up the shader for the quad
      *
-     * @param shaderProgram shader program of the window
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program of the window
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
-     * @param level z level of the item
+     * @param level          z level of the item
      */
     @Override
     protected void setupShader(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation, int level) {
         super.setupShader(shaderProgram, orthographic, transformation, level);
 
-        shaderProgram.setUniform("useTexture",0);
+        shaderProgram.setUniform("useTexture", 0);
     }
 }
