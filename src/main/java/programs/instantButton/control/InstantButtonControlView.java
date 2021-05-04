@@ -5,8 +5,14 @@ import assets.settings.rows.EmptySettingsRow;
 import programs.abstractProgram.ProgramControllerView;
 import savedataHandler.SaveDataHandler;
 
+/**
+ * view of the instant button controls consisting out of three <code>AudioSettingRows</code>
+ */
 class InstantButtonControlView extends ProgramControllerView<InstantButtonController> {
 
+    /**
+     * settings rows to change the audio files and their volumes
+     */
     private AudioSettingRow[] audioSettingRows;
 
     /**
@@ -30,6 +36,9 @@ class InstantButtonControlView extends ProgramControllerView<InstantButtonContro
 
     }
 
+    /**
+     * @return returns the audio settings rows of this view, used to update the view
+     */
     AudioSettingRow[] getAudioSettingRows() {
         return audioSettingRows;
     }

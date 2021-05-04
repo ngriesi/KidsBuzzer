@@ -7,8 +7,14 @@ import startupApp.LoadingHandler;
 import utils.audioSystem.AudioClip;
 import utils.saveFile.SaveFile;
 
+/**
+ * Program model of the instant button program containing the audio clips for the program
+ */
 public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
 
+    /**
+     * audio clips that get played when a buzzer is pressed
+     */
     private AudioClip[] audioClips;
 
     /**
@@ -18,6 +24,12 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
         super(InstantButtonSaveFile.class);
     }
 
+    /**
+     * loads the resources for this model
+     *
+     * @param loadingHandler loading handler to track the loading
+     * @param openGlRenderer to load open gl resources
+     */
     @Override
     public void loadResources(LoadingHandler loadingHandler, OpenGlRenderer openGlRenderer) {
         audioClips = new AudioClip[SaveDataHandler.MAX_BUZZER_COUNT];
@@ -25,7 +37,7 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
             int finalI = i;
             new Thread(() -> {
                 audioClips[finalI] = loadAudio(getSaveFile().getBuzzerSounds()[finalI], loadingHandler, getSaveFile().getVolume()[finalI]);
-                if(audioClips[finalI]==null) getSaveFile().getBuzzerSounds()[finalI] = "default";
+                if (audioClips[finalI] == null) getSaveFile().getBuzzerSounds()[finalI] = "default";
             }).start();
         }
     }
@@ -41,12 +53,9 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
         return false;
     }
 
-    public void fadeOutSound(int buzzer) {
-        if (audioClips[buzzer] != null) {
-            audioClips[buzzer].fadeOut(1);
-        }
-    }
-
+    /**
+     * @return returns the array of <code>AudioClips</code> of the buzzers
+     */
     public AudioClip[] getAudioClips() {
         return audioClips;
     }
