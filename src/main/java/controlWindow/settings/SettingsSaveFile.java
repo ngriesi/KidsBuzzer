@@ -11,7 +11,7 @@ public class SettingsSaveFile extends SaveFile {
     /**
      * stores the output screen
      */
-    private int outputScreen = 0;
+    private int outputScreen = 1;
 
     /**
      * stores the width of the application when it was closed
