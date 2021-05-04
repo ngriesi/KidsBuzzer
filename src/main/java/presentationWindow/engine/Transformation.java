@@ -10,16 +10,20 @@ import presentationWindow.items.GameItem;
 @SuppressWarnings("SpellCheckingInspection")
 public class Transformation {
 
-    /** Matrix for orthographic projection ( hud ) */
+    /**
+     * Matrix for orthographic projection ( hud )
+     */
     private final Matrix4f orthoMatrix;
 
-    /** Matrix for an orthographic model */
+    /**
+     * Matrix for an orthographic model
+     */
     private final Matrix4f orthographic2DMatrix;
 
     /**
      * create a new object for every matrix
      */
-    public Transformation(){
+    public Transformation() {
         orthoMatrix = new Matrix4f();
         orthographic2DMatrix = new Matrix4f();
     }
@@ -33,7 +37,7 @@ public class Transformation {
      */
     final Matrix4f getOrtho2DProjectionMatrix(float zFar) {
         orthoMatrix.identity();
-        orthoMatrix.setOrtho((float) 0, (float) 1, (float) 1, (float) 0, (float) 0,zFar);
+        orthoMatrix.setOrtho((float) 0, (float) 1, (float) 1, (float) 0, (float) 0, zFar);
         return orthoMatrix;
     }
 
@@ -41,7 +45,7 @@ public class Transformation {
      * Creates the matrix that has to be used for the specific game item by using the transformation applied to this game item
      * this Method is for the game items drawn orthographically
      *
-     * @param gameItem game item that gets rendered with this transformation
+     * @param gameItem    game item that gets rendered with this transformation
      * @param orthoMatrix of the current window
      * @return orthoProjectionModelMatrix
      */
@@ -49,10 +53,10 @@ public class Transformation {
         Vector3f rotation = gameItem.getRotation();
         Matrix4f modelMatrix = new Matrix4f();
         modelMatrix.identity().translate(gameItem.getPosition()).
-                rotateX((float)Math.toRadians(-rotation.x)).
-                rotateY((float)Math.toRadians(-rotation.y)).
-                rotateZ((float)Math.toRadians(-rotation.z)).
-                scale(gameItem.getScale3().x,gameItem.getScale3().y,gameItem.getScale3().z);
+                rotateX((float) Math.toRadians(-rotation.x)).
+                rotateY((float) Math.toRadians(-rotation.y)).
+                rotateZ((float) Math.toRadians(-rotation.z)).
+                scale(gameItem.getScale3().x, gameItem.getScale3().y, gameItem.getScale3().z);
         orthographic2DMatrix.set(orthoMatrix);
         orthographic2DMatrix.mul(modelMatrix);
         return orthographic2DMatrix;

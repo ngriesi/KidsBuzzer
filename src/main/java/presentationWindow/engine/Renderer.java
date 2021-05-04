@@ -13,16 +13,20 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class Renderer {
 
-    /** transformation object used for the matrix calculations */
+    /**
+     * transformation object used for the matrix calculations
+     */
     private final Transformation transformation;
 
-    /** shader program for the scene */
+    /**
+     * shader program for the scene
+     */
     private ShaderProgram shaderProgram;
 
     /**
      * constructor creates transformation object
      */
-    public Renderer(){
+    public Renderer() {
         transformation = new Transformation();
     }
 
@@ -33,8 +37,7 @@ public class Renderer {
      * @throws Exception if shaders cant be created or the uniforms cant be found
      */
     @SuppressWarnings("unused")
-    public void init(Window window) throws Exception{
-
+    public void init(Window window) throws Exception {
         setupShader();
     }
 
@@ -61,7 +64,7 @@ public class Renderer {
         shaderProgram.createUniforms("cornerSize");
         shaderProgram.createUniforms("useTexture");
         shaderProgram.createUniforms("texture2d");
-        shaderProgram.createVector4fArrayUniform("colors",4);
+        shaderProgram.createVector4fArrayUniform("colors", 4);
         shaderProgram.createUniforms("useColorShade");
         shaderProgram.createUniforms("edgeStartColor");
         shaderProgram.createUniforms("edgeEndColor");
@@ -77,20 +80,17 @@ public class Renderer {
      *
      * @param window in witch the rendering happens
      */
-    public void render(Window window, Scene scene){
+    public void render(Window window, Scene scene) {
         clear();
 
-
-
-
-        GL11.glViewport(0,0,window.getWidth(),window.getHeight());
-        if(window.isResized()){
+        GL11.glViewport(0, 0, window.getWidth(), window.getHeight());
+        if (window.isResized()) {
             window.setResized(false);
         }
 
-        renderScreen(window,scene);
+        renderScreen(window, scene);
 
-        glClear( GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 
     }
@@ -108,7 +108,7 @@ public class Renderer {
 
         shaderProgram.bind();
 
-        glColorMask(true,true,true,true);
+        glColorMask(true, true, true, true);
 
         scene.render(shaderProgram, orthographic, transformation);
 
@@ -118,7 +118,7 @@ public class Renderer {
     /**
      * cleans up the shaders
      */
-    public void cleanup(){
+    public void cleanup() {
         if (shaderProgram != null) {
             shaderProgram.cleanup();
         }
@@ -130,7 +130,7 @@ public class Renderer {
      * depthBuffer
      * stencilBuffer
      */
-    private void clear(){
+    private void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     }
 }

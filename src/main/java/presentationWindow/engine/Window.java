@@ -4,8 +4,6 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GLUtil;
-import org.lwjgl.system.Callback;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -16,7 +14,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
 
 
-    public static float WINDOW_ASPECT_RATIO = 16f/9f;
+    public static float WINDOW_ASPECT_RATIO = 16f / 9f;
 
 
     /**
@@ -55,16 +53,6 @@ public class Window {
     private Engine engine;
 
     /**
-     * Action when window gets minimized
-     */
-    private Action minimizedAction;
-
-    /**
-     * Action when window gets reopened
-     */
-    private Action reopenAction;
-
-    /**
      * Action when window gets closed
      */
     private Action closedAction;
@@ -99,7 +87,7 @@ public class Window {
      * @param vSync  should use vSync
      */
 
-    public Window(String title, int width, int height, boolean vSync,Engine engine, boolean transparent, boolean fullScreen, int screen) {
+    public Window(String title, int width, int height, boolean vSync, Engine engine, boolean transparent, boolean fullScreen, int screen) {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -120,8 +108,6 @@ public class Window {
     void init() {
 
 
-
-
         //ErrorCallback
         try {
             GLFWErrorCallback.createPrint(System.err).set();
@@ -136,7 +122,6 @@ public class Window {
         }
 
 
-
         glfwDefaultWindowHints(); //optional
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE); //window will stay hidden
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //major glfw version used (libraries)
@@ -146,25 +131,17 @@ public class Window {
         glfwWindowHint(GLFW_FOCUSED, GL_FALSE);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, GL_FALSE);
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
-        // before window creation
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-
-
-
-
-
-
-        if(transparent) {
-            glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
-        }
         glfwWindowHint(GLFW_DECORATED, GL_FALSE);
-
         glfwWindowHint(GLFW_FLOATING, GL_TRUE);
 
 
+        if (transparent) {
+            glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
+        }
+
 
         PointerBuffer monitors = glfwGetMonitors();
-        long monitor = 0;
+        long monitor;
         if (monitors != null && monitors.sizeof() > screen - 1) {
             monitor = monitors.get(screen - 1);
         } else {
@@ -179,8 +156,7 @@ public class Window {
         int[] yPos = new int[1];
 
 
-        glfwGetMonitorPos(monitor,xPos,yPos);
-
+        glfwGetMonitorPos(monitor, xPos, yPos);
 
 
         if (fullScreen) {
@@ -188,19 +164,16 @@ public class Window {
             width = monitorData.width();
             height = monitorData.height() + 1;
 
-            windowHandle = glfwCreateWindow(width,height, title, NULL, NULL);
+            windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 
-            glfwSetWindowPos(windowHandle, xPos[0] + width/2, yPos[0] + height/2);
+            glfwSetWindowPos(windowHandle, xPos[0] + width / 2, yPos[0] + height / 2);
 
-            glfwSetWindowMonitor(windowHandle,NULL,xPos[0], yPos[0], width, height,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
         } else {
             windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 
-            glfwSetWindowMonitor(windowHandle,NULL,xPos[0],yPos[0], width, height,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
         }
-
-
-
 
 
         // Create window
@@ -219,19 +192,6 @@ public class Window {
         });
 
 
-
-        glfwSetWindowIconifyCallback(windowHandle, (window, direction) -> {
-            if (direction) {
-                if (minimizedAction != null) {
-                    minimizedAction.execute();
-                }
-            } else {
-                if (reopenAction != null) {
-                    reopenAction.execute();
-                }
-            }
-        });
-
         glfwSetWindowCloseCallback(windowHandle, window -> {
             if (closedAction != null) {
                 closedAction.execute();
@@ -246,11 +206,7 @@ public class Window {
         }
 
 
-
         GL.createCapabilities();
-
-        // after GL.createCapabilities()
-        Callback debugProc = GLUtil.setupDebugMessageCallback();
 
         //resize Callback
         glfwSetFramebufferSizeCallback(windowHandle, (window, width, height) -> engine.frameAction());
@@ -258,10 +214,6 @@ public class Window {
         //support for transparent textures
         glEnable(GL_BLEND);
         glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_DST_ALPHA);
-
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-
 
         glEnable(GL_DEPTH_TEST);
     }
@@ -433,15 +385,6 @@ public class Window {
     /**
      * Setter for Actions
      */
-
-    public void setMinimizedAction(Action minimizedAction) {
-        this.minimizedAction = minimizedAction;
-    }
-
-    public void setReopenAction(Action reopenAction) {
-        this.reopenAction = reopenAction;
-    }
-
     public void setClosedAction(Action closedAction) {
         this.closedAction = closedAction;
     }
@@ -450,6 +393,12 @@ public class Window {
         this.onFocusAction = onFocusAction;
     }
 
+    /**
+     * method sets the screen for this window if the passed screen index corresponds to an existing
+     * monitor
+     *
+     * @param outputScreen index of the screen this window should be placed in
+     */
     public void setScreen(int outputScreen) {
         screen = outputScreen;
         PointerBuffer monitors = glfwGetMonitors();
@@ -461,27 +410,38 @@ public class Window {
         //get Resolution of the primary monitor
         monitorData = glfwGetVideoMode(monitor);
 
+        if (monitorData != null) {
+            WINDOW_ASPECT_RATIO = monitorData.width() / (float) monitorData.height();
+        }
+
         int[] xPos = new int[1];
         int[] yPos = new int[1];
-        glfwGetMonitorPos(monitor,xPos,yPos);
+        glfwGetMonitorPos(monitor, xPos, yPos);
 
         if (monitor != glfwGetPrimaryMonitor()) {
 
             width = monitorData.width();
             height = monitorData.height() + 1;
 
-            glfwSetWindowPos(windowHandle, xPos[0] + width/2, yPos[0] + height/2);
+            glfwSetWindowPos(windowHandle, xPos[0] + width / 2, yPos[0] + height / 2);
 
-            glfwSetWindowMonitor(windowHandle,NULL,xPos[0], yPos[0], width, height,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
         } else {
             windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 
-            glfwSetWindowMonitor(windowHandle,NULL,xPos[0],yPos[0], width, height,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
         }
 
 
     }
 
+    /**
+     * Tries to return the height of the screen this window is currently inside.
+     * If this fails it returns the height of the primary screen.
+     * If this fails it returns 1080
+     *
+     * @return returns the height of the screen this window is placed inside
+     */
     public int getScreenHeight() {
         PointerBuffer monitors = glfwGetMonitors();
         long monitor = 0;
@@ -492,9 +452,21 @@ public class Window {
         if (monitorData != null) {
             return monitorData.height();
         }
-        return glfwGetVideoMode(glfwGetPrimaryMonitor()).height();
+        monitorData = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        if (monitorData != null) {
+            return monitorData.height();
+        } else {
+            return 1080;
+        }
     }
 
+    /**
+     * Tries to return the width of the screen this window is currently inside.
+     * If this fails it returns the width of the primary screen.
+     * If this fails it returns 1920
+     *
+     * @return returns the width of the screen this window is placed inside
+     */
     public int getScreenWidth() {
         PointerBuffer monitors = glfwGetMonitors();
         long monitor = 0;
@@ -505,10 +477,18 @@ public class Window {
         if (monitorData != null) {
             return monitorData.width();
         }
-        return glfwGetVideoMode(glfwGetPrimaryMonitor()).width();
+        monitorData = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        if (monitorData != null) {
+            return monitorData.width();
+        } else {
+            return 1920;
+        }
     }
 
+    /**
+     * @return calculates and returns the aspect ratio of this window
+     */
     public float getAspectRatio() {
-        return width/(float) height;
+        return width / (float) height;
     }
 }

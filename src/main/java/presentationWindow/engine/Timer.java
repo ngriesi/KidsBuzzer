@@ -14,21 +14,27 @@ class Timer {
     /**
      * Sets lastLoopTime to current Time in Seconds
      */
-    void init() {lastLoopTime = getTime();}
+    void init() {
+        lastLoopTime = getTime();
+    }
 
     /**
      * Calculates current time in seconds
+     *
      * @return current time in seconds
      */
-    double getTime() {return System.nanoTime() / 1000_000_000.0;}
+    double getTime() {
+        return System.nanoTime() / 1000_000_000.0;
+    }
 
     /**
      * Calculates the time since last call of getElapsedTime() or init()
+     *
      * @return elapsed Time in seconds
      */
     float getElapsedTime() {
         double time = getTime();
-        float elapsedTime = (float)(time - lastLoopTime);
+        float elapsedTime = (float) (time - lastLoopTime);
         lastLoopTime = time;
         return elapsedTime;
     }

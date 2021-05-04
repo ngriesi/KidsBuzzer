@@ -18,7 +18,7 @@ public class TimedAction {
     /**
      * creates a new timed action
      *
-     * @param time time until the action gets performed
+     * @param time   time until the action gets performed
      * @param action action performed after the specified time
      */
     public TimedAction(float time, Action action) {

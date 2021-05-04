@@ -8,14 +8,16 @@ import presentationWindow.renderItems.MainItem;
  */
 public class Scene {
 
-    /** content of the scene */
+    /**
+     * content of the scene
+     */
     @SuppressWarnings("unused")
     private MainItem mainItem;
 
     /**
      * constructor creates hashMap and lightHandler
      */
-    public Scene(Window window){
+    public Scene(Window window) {
         mainItem = new MainItem(window);
     }
 
@@ -29,12 +31,12 @@ public class Scene {
     /**
      * starts the rendering of the scene by calling the render method of the main item
      *
-     * @param shaderProgram shader program used to render the scene
-     * @param orthographic orthographic projection matrix
+     * @param shaderProgram  shader program used to render the scene
+     * @param orthographic   orthographic projection matrix
      * @param transformation transformation class
      */
     void render(ShaderProgram shaderProgram, Matrix4f orthographic, Transformation transformation) {
-        if(mainItem != null) {
+        if (mainItem != null) {
             mainItem.render(shaderProgram, orthographic, transformation);
         }
     }
