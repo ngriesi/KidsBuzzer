@@ -15,7 +15,6 @@ import programs.quiztime.main.control.QuizTimeProgram;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.testProgram.main.TestProgram;
 import savedataHandler.SaveDataHandler;
-import utils.audioSystem.AudioSystem;
 import utils.saveFile.SaveFileLoader;
 
 import javax.imageio.ImageIO;
@@ -55,6 +54,11 @@ public class LoadingModel {
     private ProgramHandler programHandler;
 
     /**
+     * initialize loading loading process
+     */
+    private LoadingMonitor initializeLoading;
+
+    /**
      * creates a new loading model
      * loads all the resources for the programs
      *
@@ -63,58 +67,61 @@ public class LoadingModel {
     public LoadingModel() throws IOException {
 
 
-
-        loadingHandler = new LoadingHandler();
-
-        programHandler = new ProgramHandler();
-
-        SettingsSaveFile settingsSaveFile = SaveFileLoader.loadFile("settings", SettingsSaveFile.class);
-        if (settingsSaveFile == null) {
-            settingsSaveFile = new SettingsSaveFile();
-        }
-        saveDataHandler = new SaveDataHandler(new AudioSystem(loadingHandler), settingsSaveFile);
-
-        GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice[] devices = g.getScreenDevices();
-        if (settingsSaveFile.getOutputScreen() > devices.length) {
-            settingsSaveFile.setOutputScreen(1);
-        }
-
-        programHandler.addProgram(new QuizTimeProgram());
-        programHandler.addProgram(new ScoreBoardProgram());
-        programHandler.addProgram(new InstantButtonProgram());
-        programHandler.addProgram(new TestProgram("test"));
-        programHandler.addProgram(new MouseClickerProgram());
-        programHandler.addProgram(new KeyPressProgram());
-        programHandler.addProgram(new QuizOverlayProgram());
-
-
-
-
         //noinspection SpellCheckingInspection
         BufferedImage backgroundImage = ImageIO.read(new File("anktarktis.jpg"));
 
+        loadingHandler = new LoadingHandler();
+
+        initializeLoading = new LoadingMonitor("initialize");
+        loadingHandler.addLoadingProcess(initializeLoading);
 
         loadingView = new LoadingView(backgroundImage, this);
 
 
-
-
-
-        startOpenGlThread();
-
         new Thread(() -> {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
 
-            for (LoadingMonitor loadingMonitor : loadingHandler.getLoadingProcesses()) {
-                System.out.println(loadingMonitor.getProcessName());
+            programHandler = new ProgramHandler();
+
+            SettingsSaveFile settingsSaveFile = SaveFileLoader.loadFile("settings", SettingsSaveFile.class);
+            if (settingsSaveFile == null) {
+                settingsSaveFile = new SettingsSaveFile();
             }
+            saveDataHandler = new SaveDataHandler(settingsSaveFile);
+
+            GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice[] devices = g.getScreenDevices();
+            if (settingsSaveFile.getOutputScreen() > devices.length) {
+                settingsSaveFile.setOutputScreen(1);
+            }
+
+            programHandler.addProgram(new QuizTimeProgram());
+            programHandler.addProgram(new ScoreBoardProgram());
+            programHandler.addProgram(new InstantButtonProgram());
+            programHandler.addProgram(new TestProgram("test"));
+            programHandler.addProgram(new MouseClickerProgram());
+            programHandler.addProgram(new KeyPressProgram());
+            programHandler.addProgram(new QuizOverlayProgram());
+
+
+            startOpenGlThread();
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+                for (LoadingMonitor loadingMonitor : loadingHandler.getLoadingProcesses()) {
+                    System.out.println(loadingMonitor.getProcessName());
+                }
+            }).start();
+
+
         }).start();
+
 
     }
 
@@ -124,17 +131,24 @@ public class LoadingModel {
     private void startOpenGlThread() {
         new Thread(() -> {
 
+            LoadingMonitor loadingMonitor = new LoadingMonitor("mainOpenGL");
+            loadingHandler.addLoadingProcess(loadingMonitor);
 
             openGlRenderer = new OpenGlRenderer();
+
             programHandler.loadPrograms(openGlRenderer, loadingHandler);
 
 
             Engine gameEngine = null;
             try {
                 gameEngine = new Engine("Buzzer", 800, 450, false, openGlRenderer, loadingHandler, true, saveDataHandler.getSettings().getOutputScreen() != 1, saveDataHandler.getSettings().getOutputScreen());
+                Thread.sleep(10);
+                loadingMonitor.finishedProcess(loadingHandler);
+                initializeLoading.finishedProcess(loadingHandler);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             new Thread(gameEngine).start();
         }).start();
     }
@@ -144,7 +158,7 @@ public class LoadingModel {
      */
     private void loadingFinished() {
 
-        ControlModel controlModel = new ControlModel(saveDataHandler,openGlRenderer, programHandler);
+        ControlModel controlModel = new ControlModel(saveDataHandler, openGlRenderer, programHandler);
         NativeKeyListener nativeKeyListener = new NativeKeyListener(controlModel);
         GlobalScreen.addNativeKeyListener(nativeKeyListener);
         loadingView.closeWindow();
@@ -155,10 +169,10 @@ public class LoadingModel {
      */
     void updateProgressBar() {
         StringBuilder sb = new StringBuilder();
-        for(String s : loadingHandler.getCurrentBufferContent()) {
+        for (String s : loadingHandler.getCurrentBufferContent()) {
             sb.append(s);
         }
-        loadingView.updateProgressBar(loadingHandler.getProgress(),sb.toString());
+        loadingView.updateProgressBar(loadingHandler.getProgress(), sb.toString());
         if (loadingHandler.getProgress() == 1) {
             loadingFinished();
         }

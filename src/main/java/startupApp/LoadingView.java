@@ -23,7 +23,7 @@ public class LoadingView extends JPanel {
     /**
      * finished step text
      */
-    private String finishedStep = "";
+    private String finishedStep = "initializeLoading";
 
     /**
      * loading controller
@@ -77,6 +77,7 @@ public class LoadingView extends JPanel {
         g.drawImage(image, 0, 0,this.getWidth(),this.getHeight(), this);
         g.drawString(finishedStep,(int)(this.getWidth() * 0.01),(int)(this.getHeight() * 0.94));
         g.fillRect(0,(int)(this.getHeight() * 0.95), (int) (this.getWidth() * loadingProgress), (int)(this.getHeight() * 0.02));
+
         loadingModel.updateProgressBar();
 
         repaint();

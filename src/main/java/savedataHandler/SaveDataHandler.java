@@ -1,7 +1,6 @@
 package savedataHandler;
 
 import controlWindow.settings.SettingsSaveFile;
-import utils.audioSystem.AudioSystem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -44,11 +43,6 @@ public class SaveDataHandler {
     public static final Color[] BUZZER_COLORS_DISABLED = {new Color(150, 125,125),new Color(125,150,125),new Color(125,125,125)};
 
     /**
-     * audio system of the main application
-     */
-    private AudioSystem audioSystem;
-
-    /**
      * settings save file of the main settings
      */
     private SettingsSaveFile settings;
@@ -56,11 +50,9 @@ public class SaveDataHandler {
     /**
      * creates a new SaveDataHandler
      *
-     * @param audioSystem audio system of the main application
      * @param settings settings save file of the main settings
      */
-    public SaveDataHandler(AudioSystem audioSystem, SettingsSaveFile settings) {
-        this.audioSystem = audioSystem;
+    public SaveDataHandler(SettingsSaveFile settings) {
         this.settings = settings;
         BUZZER_COUNT = settings.getBuzzerNumber();
     }
@@ -71,14 +63,6 @@ public class SaveDataHandler {
         }
 
         return -1;
-    }
-
-    /**
-     * @return returns audio system of the main application
-     */
-    @SuppressWarnings("unused")
-    public AudioSystem getAudioSystem() {
-        return audioSystem;
     }
 
     /**

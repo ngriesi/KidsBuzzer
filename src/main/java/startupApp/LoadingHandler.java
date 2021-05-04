@@ -71,7 +71,7 @@ public class LoadingHandler {
      * @return returns the loading process
      */
     float getProgress() {
-        return (float) finishedLoadingProcesses / (float) startedLoadingProcesses;
+        return startedLoadingProcesses>0?(float) finishedLoadingProcesses / (float) startedLoadingProcesses:0;
     }
 
     /**
@@ -89,7 +89,7 @@ public class LoadingHandler {
     /**
      * @return returns the currently running loading processes
      */
-    public CopyOnWriteArrayList<LoadingMonitor> getLoadingProcesses() {
+    CopyOnWriteArrayList<LoadingMonitor> getLoadingProcesses() {
         return loadingProcesses;
     }
 }
