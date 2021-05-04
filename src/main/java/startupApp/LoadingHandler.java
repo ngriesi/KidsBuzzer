@@ -71,7 +71,7 @@ public class LoadingHandler {
      * @return returns the loading process
      */
     float getProgress() {
-        return startedLoadingProcesses>0?(float) finishedLoadingProcesses / (float) startedLoadingProcesses:0;
+        return startedLoadingProcesses > 0 ? (float) finishedLoadingProcesses / (float) startedLoadingProcesses : 0;
     }
 
     /**
@@ -79,7 +79,7 @@ public class LoadingHandler {
      */
     synchronized String[] getCurrentBufferContent() {
         String[] content = new String[finishedProcessNamesBuffer.size()];
-        for(int i = 0; i < content.length; i++) {
+        for (int i = 0; i < content.length; i++) {
             content[i] = finishedProcessNamesBuffer.get(i);
         }
         finishedProcessNamesBuffer.clear();

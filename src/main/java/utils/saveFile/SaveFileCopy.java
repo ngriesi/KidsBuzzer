@@ -25,7 +25,7 @@ class SaveFileCopy {
             methods = result.getClass().getMethods();
         }
 
-        copyFields(result,methods,saveFile);
+        copyFields(result, methods, saveFile);
 
         return result;
     }
@@ -33,17 +33,17 @@ class SaveFileCopy {
     /**
      * methods copies the fields of one save file to another one
      *
-     * @param result the save file that gets copied to
-     * @param methods methods of the class of the object that gets copied
+     * @param result   the save file that gets copied to
+     * @param methods  methods of the class of the object that gets copied
      * @param saveFile save file that gets copied from
-     * @param <T> type of the save file
+     * @param <T>      type of the save file
      */
     private static <T extends SaveFile> void copyFields(T result, Method[] methods, T saveFile) {
         for (Method method : methods) {
             if (checkMethod(method)) {
                 String setterName = "set" + method.getName().substring(method.getName().startsWith("get") ? 3 : 2);
 
-                copyField(result,setterName,method,saveFile);
+                copyField(result, setterName, method, saveFile);
             }
         }
     }
@@ -51,11 +51,11 @@ class SaveFileCopy {
     /**
      * copies one field from one Save file to another
      *
-     * @param result object that gets copied to
+     * @param result     object that gets copied to
      * @param setterName name of the setter method to write the value
-     * @param method getter method to access the value of the field
-     * @param saveFile object that gets copied from
-     * @param <T> type of the save file
+     * @param method     getter method to access the value of the field
+     * @param saveFile   object that gets copied from
+     * @param <T>        type of the save file
      */
     private static <T extends SaveFile> void copyField(T result, String setterName, Method method, T saveFile) {
         try {
@@ -86,7 +86,7 @@ class SaveFileCopy {
      * creates an object of the passed type extending SaveFile
      *
      * @param type type of the object
-     * @param <T> generic type of the object
+     * @param <T>  generic type of the object
      * @return new instance of the save file type
      */
     private static <T extends SaveFile> T createObject(Class<T> type) {

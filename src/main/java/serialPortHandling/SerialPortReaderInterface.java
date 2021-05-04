@@ -22,7 +22,7 @@ public interface SerialPortReaderInterface {
 
     /**
      * method gets called every time the serial port reader tries to find the receiver (every 100 ms)
-     *
+     * <p>
      * only gets called if no receiver is connected
      */
     void searchingForReceiver();

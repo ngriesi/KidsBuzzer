@@ -95,34 +95,26 @@ public class LoadingModel {
                 settingsSaveFile.setOutputScreen(1);
             }
 
-            programHandler.addProgram(new QuizTimeProgram());
-            programHandler.addProgram(new ScoreBoardProgram());
-            programHandler.addProgram(new InstantButtonProgram());
-            programHandler.addProgram(new TestProgram("test"));
-            programHandler.addProgram(new MouseClickerProgram());
-            programHandler.addProgram(new KeyPressProgram());
-            programHandler.addProgram(new QuizOverlayProgram());
+            createPrograms();
 
 
             startOpenGlThread();
-
-            new Thread(() -> {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-                for (LoadingMonitor loadingMonitor : loadingHandler.getLoadingProcesses()) {
-                    System.out.println(loadingMonitor.getProcessName());
-                }
-            }).start();
-
-
         }).start();
 
 
+    }
+
+    /**
+     * creates the sub programs of the application
+     */
+    private void createPrograms() {
+        programHandler.addProgram(new QuizTimeProgram());
+        programHandler.addProgram(new ScoreBoardProgram());
+        programHandler.addProgram(new InstantButtonProgram());
+        programHandler.addProgram(new TestProgram("test"));
+        programHandler.addProgram(new MouseClickerProgram());
+        programHandler.addProgram(new KeyPressProgram());
+        programHandler.addProgram(new QuizOverlayProgram());
     }
 
     /**

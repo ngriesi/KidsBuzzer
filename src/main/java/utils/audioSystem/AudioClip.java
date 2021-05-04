@@ -39,7 +39,7 @@ public class AudioClip {
     /**
      * loads a audio file
      *
-     * @param file audio file
+     * @param file           audio file
      * @param loadingHandler loading handler
      * @return loaded audio clip
      */
@@ -58,7 +58,8 @@ public class AudioClip {
             result.open(audioInputStream);
             pre_playAudio(result);
 
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ignored) {}
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ignored) {
+        }
 
         loadingMonitor.finishedProcess(loadingHandler);
         if (result != null) {
@@ -137,7 +138,7 @@ public class AudioClip {
         new Thread(() -> {
             int steps = 100;
             int progress = 0;
-            float step = time/(float) steps;
+            float step = time / (float) steps;
 
             float saveGain = (float) Math.pow(Math.E, (gainControl.getValue() / 20.0 * Math.log(10)));
 
@@ -167,9 +168,9 @@ public class AudioClip {
      * Set the volume to a value between 0 and 1.
      */
     public void setGain(double value) {
-        value = (value<=0.0)? 0.0001 : (Math.min(value, 1.0));
+        value = (value <= 0.0) ? 0.0001 : (Math.min(value, 1.0));
         try {
-            float dB = (float)(Math.log(value)/Math.log(10.0)*20.0);
+            float dB = (float) (Math.log(value) / Math.log(10.0) * 20.0);
             gainControl.setValue(dB);
         } catch (Exception ex) {
             ex.printStackTrace();

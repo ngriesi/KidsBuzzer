@@ -38,7 +38,7 @@ public class LoadingView extends JPanel {
     /**
      * creates a new loading view
      *
-     * @param image background image
+     * @param image        background image
      * @param loadingModel connected controller
      */
     LoadingView(BufferedImage image, LoadingModel loadingModel) {
@@ -59,7 +59,7 @@ public class LoadingView extends JPanel {
      */
     private void setupFrame(Dimension screenSize) {
         window.setSize(screenSize.width / 3, screenSize.height / 3);
-        window.setLocation(screenSize.width/3, screenSize.height/3);
+        window.setLocation(screenSize.width / 3, screenSize.height / 3);
         window.setUndecorated(true);
         window.getContentPane().add(this);
         window.setVisible(true);
@@ -74,9 +74,9 @@ public class LoadingView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(image, 0, 0,this.getWidth(),this.getHeight(), this);
-        g.drawString(finishedStep,(int)(this.getWidth() * 0.01),(int)(this.getHeight() * 0.94));
-        g.fillRect(0,(int)(this.getHeight() * 0.95), (int) (this.getWidth() * loadingProgress), (int)(this.getHeight() * 0.02));
+        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        g.drawString(finishedStep, (int) (this.getWidth() * 0.01), (int) (this.getHeight() * 0.94));
+        g.fillRect(0, (int) (this.getHeight() * 0.95), (int) (this.getWidth() * loadingProgress), (int) (this.getHeight() * 0.02));
 
         loadingModel.updateProgressBar();
 
@@ -86,12 +86,12 @@ public class LoadingView extends JPanel {
     /**
      * updates the progress
      *
-     * @param newProgress new progress value for the bar
+     * @param newProgress        new progress value for the bar
      * @param newFinishedActions finished action string
      */
     void updateProgressBar(float newProgress, String newFinishedActions) {
         this.loadingProgress = newProgress;
-        if(!newFinishedActions.equals("")) {
+        if (!newFinishedActions.equals("")) {
             this.finishedStep = newFinishedActions;
         }
     }

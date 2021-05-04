@@ -27,7 +27,7 @@ class SerialPortHandler {
     /**
      * creates a SerialPortHandler and starts checking if this port has the receiver connected
      *
-     * @param portName name of the port
+     * @param portName         name of the port
      * @param serialPortReader reader this handler belongs to
      */
     SerialPortHandler(String portName, SerialPortReader serialPortReader) {
@@ -63,7 +63,7 @@ class SerialPortHandler {
                     String temp = new String(buffer);
                     data.append(temp);
                     if (data.toString().trim().equals("buzzer:kids")) {
-                        serialPortReader.receiverFound(this,data.toString().split(":")[1]);
+                        serialPortReader.receiverFound(this, data.toString().split(":")[1]);
                         return;
                     }
                 }

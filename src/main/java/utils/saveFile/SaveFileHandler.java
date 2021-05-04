@@ -5,7 +5,7 @@ package utils.saveFile;
  *
  * @param <T> type of the save file
  */
-public class SaveFileHandler <T extends SaveFile> {
+public class SaveFileHandler<T extends SaveFile> {
 
     /**
      * the data that actually gets saved

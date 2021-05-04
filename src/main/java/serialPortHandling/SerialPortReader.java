@@ -43,7 +43,7 @@ public class SerialPortReader {
 
         serialPortHandlerList = new ArrayList<>();
 
-       new Thread(this::checkSerialPorts).start();
+        new Thread(this::checkSerialPorts).start();
     }
 
     /**
@@ -72,7 +72,7 @@ public class SerialPortReader {
     private void checkIfReceiverIsStillConnected() throws InterruptedException {
 
         try {
-            if(!currentPort.getSerialPort().writeByte((byte) 1)) {
+            if (!currentPort.getSerialPort().writeByte((byte) 1)) {
                 receiverDisconnected();
             } else {
 
@@ -115,7 +115,7 @@ public class SerialPortReader {
         }
 
         for (String port : ports) {
-            if(!searchingOnPortsStarted(port)) {
+            if (!searchingOnPortsStarted(port)) {
                 serialPortHandlerList.add(new SerialPortHandler(port, this));
             }
         }
@@ -129,7 +129,7 @@ public class SerialPortReader {
      */
     private boolean searchingOnPortsStarted(String portName) {
         for (SerialPortHandler serialPortHandler : serialPortHandlerList) {
-            if(serialPortHandler.getPortName().equals(portName)) return true;
+            if (serialPortHandler.getPortName().equals(portName)) return true;
         }
         return false;
     }
@@ -139,7 +139,7 @@ public class SerialPortReader {
      * action when a receiver was found
      *
      * @param serialPortHandler handler of the port with the receiver
-     * @param receiverName name of the receiver
+     * @param receiverName      name of the receiver
      */
     void receiverFound(SerialPortHandler serialPortHandler, String receiverName) {
         connected = true;

@@ -68,7 +68,7 @@ public abstract class SaveFile {
         StringBuilder fileContent = new StringBuilder();
         for (Method method : methods) {
             if (checkIfMethodIsSpecificGetter(method)) {
-                addFileLine(method,fileContent);
+                addFileLine(method, fileContent);
             }
         }
         return fileContent;
@@ -87,14 +87,14 @@ public abstract class SaveFile {
     /**
      * creates a line of the save file with a getter method
      *
-     * @param method method, used to access the value that gets saved
+     * @param method      method, used to access the value that gets saved
      * @param fileContent string builder the line that was created gets added to
      */
     private void addFileLine(Method method, StringBuilder fileContent) {
         try {
             fileContent.append(SaveFileLineCreator.createLine(method, SaveFile.this)).append("\n");
         } catch (InvocationTargetException e) {
-            System.out.println("Exception thrown in called method: " +method.getName());
+            System.out.println("Exception thrown in called method: " + method.getName());
         } catch (IllegalAccessException e) {
             System.out.println("Cant access getter method " + method.getName() + ". Make sure the method is public");
         }
