@@ -15,28 +15,19 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Disables the Logger of the NativeHook library
-        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.WARNING);
-        logger.setUseParentHandlers(false);
-
-        try {
-            GlobalScreen.registerNativeHook();
-        }
-        catch (NativeHookException ex) {
-            System.err.println("There was a problem registering the native hook.");
-            System.err.println(ex.getMessage());
-
-            System.exit(1);
-        }
+        setLookAndFeel();
+        registerNativeKeyListener();
 
 
+        createStartupApp();
+
+
+    }
+
+    /**
+     * creates the startup app
+     */
+    private static void createStartupApp() {
         SwingUtilities.invokeLater(() -> {
             try {
                 new LoadingModel();
@@ -44,7 +35,32 @@ public class Main {
                 e.printStackTrace();
             }
         });
+    }
 
+    /**
+     * registers the native key listener for the application
+     */
+    private static void registerNativeKeyListener() {
+        // Disables the Logger of the NativeHook library
+        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.WARNING);
+        logger.setUseParentHandlers(false);
 
+        try {
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException ignored) {
+
+        }
+    }
+
+    /**
+     * sets the LookAndFeel of the application
+     */
+    private static void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
