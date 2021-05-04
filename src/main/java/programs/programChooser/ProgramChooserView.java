@@ -11,8 +11,14 @@ import java.awt.event.MouseEvent;
 
 import static java.awt.GridBagConstraints.*;
 
+/**
+ * View of the program chooser
+ */
 public class ProgramChooserView extends MyPanel {
 
+    /**
+     * left side panel in its expanded state to select programs
+     */
     private MyPanel expanded;
 
     /**
@@ -20,7 +26,7 @@ public class ProgramChooserView extends MyPanel {
      *
      * @param programChooserModel controller of this view
      */
-    public ProgramChooserView(ProgramChooserModel programChooserModel) {
+    ProgramChooserView(ProgramChooserModel programChooserModel) {
         super(new GridBagLayout());
 
         createCollapsedLayout(programChooserModel);
@@ -41,7 +47,7 @@ public class ProgramChooserView extends MyPanel {
     private void createCollapsedLayout(ProgramChooserModel programChooserModel) {
         MyButton expandButton = new MyButton(">");
         expandButton.addActionListener(e -> programChooserModel.expandButtonAction());
-        this.addComponent(this,expandButton,0,0,1,1,VERTICAL);
+        this.addComponent(this, expandButton, 0, 0, 1, 1, VERTICAL);
         this.setBackground(StandardAssetFields.NORMAL_COLOR);
         this.setVisible(true);
     }
@@ -57,13 +63,12 @@ public class ProgramChooserView extends MyPanel {
 
         this.addComponent(expanded, leftBarBack, 1, 2, 0, 0, 0.5f, 1);
         this.addComponent(expanded, createCollapseButton(programChooserModel), 1, 1, 2, 0, 0.02f, 1);
-        this.addComponent(expanded,createEmptySpace(),3,0,1,1);
+        this.addComponent(expanded, createEmptySpace(), 3, 0, 1, 1);
 
         JPanel programListBack = createProgramListBack();
-        this.addComponent(leftBarBack,programListBack,1,2,0,0,0.02f,1,BOTH,PAGE_START);
-        leftBarBack.add(createSettingsButton(programChooserModel), new GridBagConstraints(0,2,1,1,0.5f,0.08f,PAGE_END,BOTH,new Insets(0,10,10,5),0,0));
-        leftBarBack.add(createCreditsButton(programChooserModel), new GridBagConstraints(1,2,1,1,0.5f,0.08f,PAGE_END,BOTH,new Insets(0,5,10,10),0,0));
-
+        this.addComponent(leftBarBack, programListBack, 1, 2, 0, 0, 0.02f, 1, BOTH, PAGE_START);
+        leftBarBack.add(createSettingsButton(programChooserModel), new GridBagConstraints(0, 2, 1, 1, 0.5f, 0.08f, PAGE_END, BOTH, new Insets(0, 10, 10, 5), 0, 0));
+        leftBarBack.add(createCreditsButton(programChooserModel), new GridBagConstraints(1, 2, 1, 1, 0.5f, 0.08f, PAGE_END, BOTH, new Insets(0, 5, 10, 10), 0, 0));
 
 
         return programListBack;
@@ -86,13 +91,13 @@ public class ProgramChooserView extends MyPanel {
      * creates the program buttons and adds them to a panel
      *
      * @param programChooserModel action listener for the buttons
-     * @param programListBack parent panel for the buttons
+     * @param programListBack     parent panel for the buttons
      */
     private void createProgramButtons(ProgramChooserModel programChooserModel, JPanel programListBack) {
         int i = 0;
-        for(String name : programChooserModel.getProgramHandler().getProgramNamesList()) {
+        for (String name : programChooserModel.getProgramHandler().getProgramNamesList()) {
             MyButton program = new MyButton(name);
-            programListBack.add(program,new GridBagConstraints(0,i + 1,2,1,1,0.03f,PAGE_END,BOTH,new Insets(0,0,10,0),0,0));
+            programListBack.add(program, new GridBagConstraints(0, i + 1, 2, 1, 1, 0.03f, PAGE_END, BOTH, new Insets(0, 0, 10, 0), 0, 0));
             program.addActionListener((e) -> programChooserModel.programButtonAction(name));
             i++;
         }
@@ -149,7 +154,8 @@ public class ProgramChooserView extends MyPanel {
         leftBarBack.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
         leftBarBack.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+            }
         });
         return leftBarBack;
     }
@@ -163,7 +169,7 @@ public class ProgramChooserView extends MyPanel {
         expanded = new MyPanel(new GridBagLayout());
         expanded.setVisible(false);
         expanded.setOpaque(true);
-        expanded.setBackground(new Color(0.3f,0.3f,0.3f,0.5f));
+        expanded.setBackground(new Color(0.3f, 0.3f, 0.3f, 0.5f));
         expanded.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

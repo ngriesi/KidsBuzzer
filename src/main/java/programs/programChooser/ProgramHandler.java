@@ -51,7 +51,7 @@ public class ProgramHandler {
     public String[] getProgramNamesList() {
         String[] result = new String[programs.size()];
 
-        for(int i = 0; i < programs.size();i++) {
+        for (int i = 0; i < programs.size(); i++) {
             result[i] = programs.get(i).getName();
         }
 
@@ -65,7 +65,7 @@ public class ProgramHandler {
      * @return returns the program with that name
      */
     public Program getByName(String name) {
-        for(Program program : programs) {
+        for (Program program : programs) {
             if (program.getName().equals(name)) {
                 return program;
             }
@@ -73,16 +73,28 @@ public class ProgramHandler {
         return null;
     }
 
+    /**
+     * resets the programs list
+     */
     public void reset() {
         programs.clear();
     }
 
+    /**
+     * calls the <code>updateBuzzerCount</code> method in all programs
+     */
     public void updateBuzzerCount() {
         for (Program program : programs) {
             program.updateBuzzerCount();
         }
     }
 
+    /**
+     * gets a program by its position in the list
+     *
+     * @param i position of the program in the programs list starting with 0
+     * @return the program at the given position
+     */
     public Program getByNumber(int i) {
         return programs.get(i);
     }
