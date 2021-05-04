@@ -14,7 +14,7 @@ public class ColorScheme {
      * enums to identify standard color schemes for the default hud layout
      */
     public enum StandardColorSchemes {
-        BUTTON_STANDARD,BUTTON_ENTERED,BUTTON_PRESSED,BUTTON_TEXT_STANDARD,BUTTON_TEXT_PRESSED,BUTTON_DISABLED,BUTTON_TEXT_DISABLED
+        BUTTON_STANDARD, BUTTON_ENTERED, BUTTON_PRESSED, BUTTON_TEXT_STANDARD, BUTTON_TEXT_PRESSED, BUTTON_DISABLED, BUTTON_TEXT_DISABLED
     }
 
     /**
@@ -25,15 +25,21 @@ public class ColorScheme {
      */
     public static ColorScheme getStandardColorScheme(StandardColorSchemes colorScheme) {
         switch (colorScheme) {
-            case BUTTON_STANDARD: return new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.LIGHT_GRAY,Color.VERY_DARK_GREY);
-            case BUTTON_ENTERED: return new ColorScheme(Color.GREY,Color.GREY,Color.GREY,Color.VERY_DARK_GREY);
-            case BUTTON_PRESSED: return new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.GREY,Color.GREY);
+            case BUTTON_STANDARD:
+                return new ColorScheme(Color.DARK_GRAY, Color.DARK_GRAY, Color.LIGHT_GRAY, Color.VERY_DARK_GREY);
+            case BUTTON_ENTERED:
+                return new ColorScheme(Color.GREY, Color.GREY, Color.GREY, Color.VERY_DARK_GREY);
+            case BUTTON_PRESSED:
+                return new ColorScheme(Color.DARK_GRAY, Color.DARK_GRAY, Color.GREY, Color.GREY);
             case BUTTON_TEXT_STANDARD:
             case BUTTON_TEXT_PRESSED:
                 return new ColorScheme(Color.BLACK);
-            case BUTTON_DISABLED: return new ColorScheme(Color.WHITE,Color.WHITE,Color.WHITE,Color.LIGHT_GRAY);
-            case BUTTON_TEXT_DISABLED: return new ColorScheme(Color.GREY);
-            default:return new ColorScheme();
+            case BUTTON_DISABLED:
+                return new ColorScheme(Color.WHITE, Color.WHITE, Color.WHITE, Color.LIGHT_GRAY);
+            case BUTTON_TEXT_DISABLED:
+                return new ColorScheme(Color.GREY);
+            default:
+                return new ColorScheme();
         }
     }
 
@@ -56,20 +62,20 @@ public class ColorScheme {
      * enum used to identify color sides in the getter method
      */
     public enum ColorSide {
-        LEFT,RIGHT,TOP,BOTTOM
+        LEFT, RIGHT, TOP, BOTTOM
     }
 
     /**
      * colors of the sides of the component
      */
-    private Color right,left,top,bottom;
+    private Color right, left, top, bottom;
 
     /**
      * constructor sets all colors of the scheme
      *
-     * @param right right color
-     * @param left left color
-     * @param top top color
+     * @param right  right color
+     * @param left   left color
+     * @param top    top color
      * @param bottom bottom color
      */
     public ColorScheme(Color right, Color left, Color top, Color bottom) {
@@ -85,7 +91,7 @@ public class ColorScheme {
      * @param color color set to all sides
      */
     public ColorScheme(Color color) {
-        this(color,color,color,color);
+        this(color, color, color, color);
     }
 
     /**
@@ -122,12 +128,12 @@ public class ColorScheme {
     /**
      * sets all four colors
      *
-     * @param left left color
-     * @param top top color
-     * @param right right color
+     * @param left   left color
+     * @param top    top color
+     * @param right  right color
      * @param bottom bottom color
      */
-    public void setColors(Color left,Color top,Color right,Color bottom) {
+    public void setColors(Color left, Color top, Color right, Color bottom) {
         this.right = right;
         this.left = left;
         this.top = top;
@@ -150,19 +156,35 @@ public class ColorScheme {
      * creates a gradient inside this color scheme
      *
      * @param startColor start color of the gradient
-     * @param endColor end color of the gradient
-     * @param direction direction of the gradient
+     * @param endColor   end color of the gradient
+     * @param direction  direction of the gradient
      */
-    public void createGradient(Color startColor,Color endColor,GradientDirection direction) {
+    public void createGradient(Color startColor, Color endColor, GradientDirection direction) {
         switch (direction) {
-            case BOTTOM_TO_TOP: setColors(startColor,endColor,startColor,startColor);break;
-            case TOP_TO_BOTTOM: setColors(startColor,startColor,startColor,endColor);break;
-            case LEFT_TO_RIGHT: setColors(startColor,startColor,endColor,startColor);break;
-            case RIGHT_TO_LEFT: setColors(endColor,startColor,startColor,startColor);break;
-            case LEFT_BOTTOM_TO_RIGHT_TOP: setColors(startColor,endColor,endColor,startColor);break;
-            case LEFT_TOP_TO_RIGHT_BOTTOM: setColors(startColor,startColor,endColor,endColor);break;
-            case RIGHT_BOTTOM_TO_LEFT_TOP: setColors(endColor,endColor,startColor,startColor);break;
-            case RIGHT_TOP_TO_LEFT_BOTTOM: setColors(endColor,startColor,startColor,endColor);break;
+            case BOTTOM_TO_TOP:
+                setColors(startColor, endColor, startColor, startColor);
+                break;
+            case TOP_TO_BOTTOM:
+                setColors(startColor, startColor, startColor, endColor);
+                break;
+            case LEFT_TO_RIGHT:
+                setColors(startColor, startColor, endColor, startColor);
+                break;
+            case RIGHT_TO_LEFT:
+                setColors(endColor, startColor, startColor, startColor);
+                break;
+            case LEFT_BOTTOM_TO_RIGHT_TOP:
+                setColors(startColor, endColor, endColor, startColor);
+                break;
+            case LEFT_TOP_TO_RIGHT_BOTTOM:
+                setColors(startColor, startColor, endColor, endColor);
+                break;
+            case RIGHT_BOTTOM_TO_LEFT_TOP:
+                setColors(endColor, endColor, startColor, startColor);
+                break;
+            case RIGHT_TOP_TO_LEFT_BOTTOM:
+                setColors(endColor, startColor, startColor, endColor);
+                break;
         }
     }
 
@@ -170,14 +192,22 @@ public class ColorScheme {
      * sets the color of a specific side
      *
      * @param color color to be set
-     * @param side side where the color is set to
+     * @param side  side where the color is set to
      */
-    public void setColor(Color color,ColorSide side) {
+    public void setColor(Color color, ColorSide side) {
         switch (side) {
-            case TOP: this.top = color;break;
-            case BOTTOM: this.bottom = color;break;
-            case LEFT: this.left = color;break;
-            case RIGHT: this.right = color;break;
+            case TOP:
+                this.top = color;
+                break;
+            case BOTTOM:
+                this.bottom = color;
+                break;
+            case LEFT:
+                this.left = color;
+                break;
+            case RIGHT:
+                this.right = color;
+                break;
         }
     }
 
@@ -185,14 +215,22 @@ public class ColorScheme {
      * sets the color of a specific side (int)
      *
      * @param color color to be set
-     * @param side side where the color is set to
+     * @param side  side where the color is set to
      */
-    public void setColor(Color color,int side) {
+    public void setColor(Color color, int side) {
         switch (side) {
-            case 0: this.top = color;break;
-            case 2: this.bottom = color;break;
-            case 3: this.left = color;break;
-            case 1: this.right = color;break;
+            case 0:
+                this.top = color;
+                break;
+            case 2:
+                this.bottom = color;
+                break;
+            case 3:
+                this.left = color;
+                break;
+            case 1:
+                this.right = color;
+                break;
         }
     }
 
@@ -205,10 +243,14 @@ public class ColorScheme {
      */
     public Color getColor(ColorSide side) {
         switch (side) {
-            case TOP:return top;
-            case BOTTOM:return bottom;
-            case LEFT:return left;
-            default:return right;
+            case TOP:
+                return top;
+            case BOTTOM:
+                return bottom;
+            case LEFT:
+                return left;
+            default:
+                return right;
         }
     }
 
@@ -220,24 +262,27 @@ public class ColorScheme {
      */
     public Color getColor(int side) {
         switch (side) {
-            case 0:return top;
-            case 2:return bottom;
-            case 3:return left;
-            default:return right;
+            case 0:
+                return top;
+            case 2:
+                return bottom;
+            case 3:
+                return left;
+            default:
+                return right;
         }
     }
 
     /**
      * creates and returns an array of Vector4f objects with the length four. This is the
      * form the color data is passed on to the shaders
-     *
+     * <p>
      * order: left,right,top,bottom
-     *
      *
      * @return the color scheme as an array of vectors
      */
     public Vector4f[] getVectorArray() {
-        return new Vector4f[] {left.getVector4f(),right.getVector4f(),top.getVector4f(),bottom.getVector4f()};
+        return new Vector4f[]{left.getVector4f(), right.getVector4f(), top.getVector4f(), bottom.getVector4f()};
     }
 
     /**
@@ -246,11 +291,18 @@ public class ColorScheme {
      * @return true if the two color schemes are equal
      */
     public boolean equals(ColorScheme colorScheme) {
-        return colorScheme.bottom.getVector4f().equals(this.bottom.getVector4f(),0)
-                && colorScheme.top.getVector4f().equals(this.top.getVector4f(),0)
-                && colorScheme.right.getVector4f().equals(this.right.getVector4f(),0)
-                && colorScheme.left.getVector4f().equals(this.left.getVector4f(),0);
+        return colorScheme.bottom.getVector4f().equals(this.bottom.getVector4f(), 0)
+                && colorScheme.top.getVector4f().equals(this.top.getVector4f(), 0)
+                && colorScheme.right.getVector4f().equals(this.right.getVector4f(), 0)
+                && colorScheme.left.getVector4f().equals(this.left.getVector4f(), 0);
     }
+
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public Color getRight() {
         return right;

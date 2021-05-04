@@ -11,24 +11,24 @@ public class Color {
     /**
      * default colors
      */
-    public static final Color BLACK = new Color(0,0,0,1f);
-    public static final Color WHITE = new Color(1f,1f,1f,1f);
-    public static final Color TRANSPARENT = new Color(0,0,0,0);
-    public static final Color RED = new Color(1f,0,0,1f);
-    public static final Color GREEN = new Color(0,1f,0,1f);
-    public static final Color BLUE = new Color(0,0,1f,1f);
-    public static final Color PINK = new Color(1f,0,1f,1f);
-    public static final Color YELLOW = new Color(1f,1f,0,1f);
-    public static final Color TEAL = new Color(0,1f,1f,1f);
-    public static final Color ORANGE = new Color(1f,0.5f,0,1f);
-    public static final Color PURPLE = new Color(0.5f,0,1f,1f);
-    public static final Color MID_GREEN = new Color(0,1f,0.5f,1f);
-    public static final Color DARK_GREEN = new Color(0,0.4f,0,1f);
-    public static final Color GREY = new Color(0.5f,0.5f,0.5f,1f);
-    public static final Color VERY_LIGHT_GRAY = new Color(0.9f,0.9f,0.9f,1f);
-    public static final Color LIGHT_GRAY = new Color(0.7f,0.7f,0.7f,1f);
-    public static final Color DARK_GRAY = new Color(0.3f,0.3f,0.3f,1f);
-    public static final Color VERY_DARK_GREY = new Color(0.15f,0.15f,0.15f,1f);
+    public static final Color BLACK = new Color(0, 0, 0, 1f);
+    public static final Color WHITE = new Color(1f, 1f, 1f, 1f);
+    public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+    public static final Color RED = new Color(1f, 0, 0, 1f);
+    public static final Color GREEN = new Color(0, 1f, 0, 1f);
+    public static final Color BLUE = new Color(0, 0, 1f, 1f);
+    public static final Color PINK = new Color(1f, 0, 1f, 1f);
+    public static final Color YELLOW = new Color(1f, 1f, 0, 1f);
+    public static final Color TEAL = new Color(0, 1f, 1f, 1f);
+    public static final Color ORANGE = new Color(1f, 0.5f, 0, 1f);
+    public static final Color PURPLE = new Color(0.5f, 0, 1f, 1f);
+    public static final Color MID_GREEN = new Color(0, 1f, 0.5f, 1f);
+    public static final Color DARK_GREEN = new Color(0, 0.4f, 0, 1f);
+    public static final Color GREY = new Color(0.5f, 0.5f, 0.5f, 1f);
+    public static final Color VERY_LIGHT_GRAY = new Color(0.9f, 0.9f, 0.9f, 1f);
+    public static final Color LIGHT_GRAY = new Color(0.7f, 0.7f, 0.7f, 1f);
+    public static final Color DARK_GRAY = new Color(0.3f, 0.3f, 0.3f, 1f);
+    public static final Color VERY_DARK_GREY = new Color(0.15f, 0.15f, 0.15f, 1f);
 
     /**
      * creates a color vector from an awt color
@@ -36,7 +36,7 @@ public class Color {
      * @param color aet color
      */
     public Color(java.awt.Color color) {
-        this(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha());
+        this(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
     /**
@@ -56,7 +56,7 @@ public class Color {
      * @return new transparent version of the color
      */
     public static Color getTransparent(Color color) {
-        return new Color(color.getRed(),color.getGreen(),color.getBlue(),0);
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), 0);
     }
 
     /**
@@ -77,31 +77,31 @@ public class Color {
      * default constructor (creates white)
      */
     public Color() {
-        this(new Vector4f(1,1,1,1));
+        this(new Vector4f(1, 1, 1, 1));
     }
 
     /**
      * constructor setting r,g,b and a value as a float between 0 and 1f
      *
-     * @param red red value
+     * @param red   red value
      * @param green green value
-     * @param blue blue value
+     * @param blue  blue value
      * @param alpha alpha value
      */
-    public Color(float red,float green,float blue,float alpha) {
-        this.color = new Vector4f(red,green,blue,alpha);
+    public Color(float red, float green, float blue, float alpha) {
+        this.color = new Vector4f(red, green, blue, alpha);
     }
 
     /**
      * constructor setting r,g and b value as a float between 0 and 1f;
      * the alpha value is 1f
      *
-     * @param red red value
+     * @param red   red value
      * @param green green value
-     * @param blue blue value
+     * @param blue  blue value
      */
-    public Color(float red,float green,float blue) {
-        this(red,green,blue,1f);
+    public Color(float red, float green, float blue) {
+        this(red, green, blue, 1f);
     }
 
     /**
@@ -117,24 +117,24 @@ public class Color {
      * constructor setting r,g and b value as an int between 0 and 255;
      * the alpha value is 255
      *
-     * @param red red value
+     * @param red   red value
      * @param green green value
-     * @param blue blue value
+     * @param blue  blue value
      */
-    public Color(int red,int green,int blue) {
-        this(red,green,blue,255);
+    public Color(int red, int green, int blue) {
+        this(red, green, blue, 255);
     }
 
     /**
      * constructor setting r,g,b and a value as an int between 0 and 255
      *
-     * @param red red value
+     * @param red   red value
      * @param green green value
-     * @param blue blue value
+     * @param blue  blue value
      * @param alpha alpha value
      */
-    public Color(int red,int green,int blue,int alpha) {
-        color = new Vector4f(red/255f,green/255f,blue/255f,alpha/255f);
+    public Color(int red, int green, int blue, int alpha) {
+        color = new Vector4f(red / 255f, green / 255f, blue / 255f, alpha / 255f);
     }
 
     /**
@@ -143,7 +143,7 @@ public class Color {
      * @param shift value r,g and b get multiplied with
      */
     public void shiftColor(float shift) {
-        color = new Vector4f(color.x * shift,color.y * shift,color.z * shift,color.w);
+        color = new Vector4f(color.x * shift, color.y * shift, color.z * shift, color.w);
     }
 
     /**
@@ -160,6 +160,19 @@ public class Color {
         return this;
     }
 
+    /**
+     * @return returns this color with all its values (rgba) divided by 2
+     */
+    public Color half() {
+        return new Color(getRed() / 2, getGreen() / 2, getBlue() / 2, getAlpha() / 2);
+    }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
+
     public Vector4f getVector4f() {
         return color;
     }
@@ -173,7 +186,7 @@ public class Color {
     }
 
     public void setRed(int red) {
-        this.color.x = red/255f;
+        this.color.x = red / 255f;
     }
 
     public float getRed() {
@@ -185,7 +198,7 @@ public class Color {
     }
 
     public void setGreen(int green) {
-        this.color.y = green/255f;
+        this.color.y = green / 255f;
     }
 
     public float getGreen() {
@@ -197,7 +210,7 @@ public class Color {
     }
 
     public void setBlue(int blue) {
-        this.color.z = blue/255f;
+        this.color.z = blue / 255f;
     }
 
     public float getBlue() {
@@ -209,14 +222,10 @@ public class Color {
     }
 
     public void setAlpha(int alpha) {
-        this.color.w = alpha/255f;
+        this.color.w = alpha / 255f;
     }
 
     public float getAlpha() {
         return this.color.w;
-    }
-
-    public Color half() {
-        return new Color(getRed() / 2, getGreen() / 2, getBlue() / 2, getAlpha() / 2);
     }
 }

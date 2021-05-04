@@ -26,34 +26,34 @@ public class Quad extends GameItem {
     private void createQuad() {
 
         float[] positions = {
-            -0.5f,-0.5f,0,
-            0.5f,-0.5f,0,
-            -0.5f,0.5f,0,
-            0.5f,0.5f,0
+                -0.5f, -0.5f, 0,
+                0.5f, -0.5f, 0,
+                -0.5f, 0.5f, 0,
+                0.5f, 0.5f, 0
         };
 
         float[] texCords = {
-            0,0,
-            1,0,
-            0,1,
-            1,1
+                0, 0,
+                1, 0,
+                0, 1,
+                1, 1
         };
 
         float[] normals = {
-            0,0,-1,
-            0,0,-1,
-            0,0,-1,
-            0,0,-1
+                0, 0, -1,
+                0, 0, -1,
+                0, 0, -1,
+                0, 0, -1
         };
 
         int[] indices = {
-                1,2,3,
-                1,0,2
+                1, 2, 3,
+                1, 0, 2
         };
 
-        Material material = new Material(new Vector4f(1,1,1,1),0);
-        this.setPosition(0,0,1);
-        Mesh mesh = new Mesh(positions,texCords,normals,indices);
+        Material material = new Material(new Vector4f(1, 1, 1, 1), 0);
+        this.setPosition(0, 0, 1);
+        Mesh mesh = new Mesh(positions, texCords, normals, indices);
         mesh.setMaterial(material);
         this.setMesh(mesh);
     }
