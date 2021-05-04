@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  * @param <M> model of the program
  */
 @SuppressWarnings("unused")
-public abstract class ProgramController<P extends Program,V extends ProgramView,M extends ProgramModel> implements ActionListener {
+public abstract class ProgramController<P extends Program, V extends ProgramView, M extends ProgramModel> implements ActionListener {
 
     /**
      * program this controller belongs to
@@ -31,7 +31,7 @@ public abstract class ProgramController<P extends Program,V extends ProgramView,
     /**
      * creates a new controller
      *
-     * @param program program this controller belongs to
+     * @param program      program this controller belongs to
      * @param programModel model of this program
      */
     public ProgramController(P program, M programModel) {

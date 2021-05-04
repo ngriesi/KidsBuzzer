@@ -7,7 +7,7 @@ import presentationWindow.renderItems.MainItem;
  *
  * @param <P> type of the program
  */
-public abstract class ProgramPresentationView <P extends Program> {
+public abstract class ProgramPresentationView<P extends Program> {
 
     /**
      * the program this is the presentation view of

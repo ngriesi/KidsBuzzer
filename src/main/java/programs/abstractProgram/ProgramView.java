@@ -33,11 +33,16 @@ public abstract class ProgramView extends MyPanel {
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
     }
 
+    /**
+     * creates a shadow border for the panel
+     *
+     * @return border for the panel
+     */
     Border createShadowBorder() {
-        Border border1 = BorderFactory.createLineBorder(new Color(50,50,50,20),3);
-        Border border2 = BorderFactory.createLineBorder(new Color(50,50,50,50),3);
-        Border border3 = BorderFactory.createLineBorder(new Color(50,50,50,90),3);
-        return BorderFactory.createCompoundBorder(border3,BorderFactory.createCompoundBorder(border2,border1));
+        Border border1 = BorderFactory.createLineBorder(new Color(50, 50, 50, 20), 3);
+        Border border2 = BorderFactory.createLineBorder(new Color(50, 50, 50, 50), 3);
+        Border border3 = BorderFactory.createLineBorder(new Color(50, 50, 50, 90), 3);
+        return BorderFactory.createCompoundBorder(border3, BorderFactory.createCompoundBorder(border2, border1));
     }
 
     /**

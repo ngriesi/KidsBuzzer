@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @param <S> type of the save file of this model
  */
-public abstract class ProgramModel <S extends SaveFile> {
+public abstract class ProgramModel<S extends SaveFile> {
 
     /**
      * save file of this model
@@ -69,7 +69,7 @@ public abstract class ProgramModel <S extends SaveFile> {
     /**
      * loads the resources for the program
      *
-     * @param loadingModel to track the loading
+     * @param loadingModel   to track the loading
      * @param openGlRenderer to load open gl resources
      */
     public abstract void loadResources(LoadingHandler loadingModel, OpenGlRenderer openGlRenderer);
@@ -77,10 +77,10 @@ public abstract class ProgramModel <S extends SaveFile> {
     /**
      * method should be called in an extra Thread to load a audio file
      */
-    public AudioClip loadAudio(String path, LoadingHandler loadingHandler, int volume) {
+    protected AudioClip loadAudio(String path, LoadingHandler loadingHandler, int volume) {
         AudioClip audioClip = AudioClip.load(new File(path), loadingHandler);
-        if(audioClip==null) return null;
-        else audioClip.setGain(volume/100f);
+        if (audioClip == null) return null;
+        else audioClip.setGain(volume / 100f);
         return audioClip;
     }
 
@@ -109,12 +109,4 @@ public abstract class ProgramModel <S extends SaveFile> {
         changeListeners.add(changeListener);
     }
 
-    /**
-     * removes a change listener
-     *
-     * @param changeListener change Listener to be removed
-     */
-    public void removeChangeListener(Action changeListener) {
-        changeListeners.remove(changeListener);
-    }
 }

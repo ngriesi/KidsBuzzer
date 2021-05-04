@@ -1,6 +1,5 @@
 package programs.abstractProgram;
 
-import controlWindow.ControlModel;
 import controlWindow.MainController;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.window.OpenGlRenderer;
@@ -271,10 +270,25 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
         this.programClosedActions.add(closedAction);
     }
 
-    public void programSelected() {}
+    /**
+     * method gets called when the program gets selected
+     */
+    public void programSelected() {
 
+    }
+
+    /**
+     * method gets called when the number of buzzers that should be
+     * visible changed
+     */
     public abstract void updateBuzzerCount();
 
+    /**
+     * method gets called when the native key listener is active and a key
+     * has been released
+     *
+     * @param keyCode code of the key that was released
+     */
     public void nativeKeyAction(int keyCode) {
 
     }

@@ -5,7 +5,12 @@ import presentationWindow.engine.Action;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public abstract class ProgramControllerView <T extends ProgramController> extends ProgramView {
+/**
+ * view of the controller containing an extra method to add key bindings
+ *
+ * @param <T> controller of this view
+ */
+public abstract class ProgramControllerView<T extends ProgramController> extends ProgramView {
 
     /**
      * controller of the view
@@ -31,11 +36,11 @@ public abstract class ProgramControllerView <T extends ProgramController> extend
      * adds a new key action
      */
     protected void addKeyAction(KeyStroke keyStroke, Action action) {
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke,"" + keyBindingID);
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "" + keyBindingID);
         this.getActionMap().put("" + keyBindingID, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!controller.getProgram().getMainController().getControlModel().isUseNativeKeyListener()) {
+                if (!controller.getProgram().getMainController().getControlModel().isUseNativeKeyListener()) {
                     action.execute();
                 }
             }

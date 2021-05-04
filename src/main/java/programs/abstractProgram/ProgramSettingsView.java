@@ -13,14 +13,30 @@ import java.awt.event.ActionListener;
 import static java.awt.BorderLayout.*;
 import static java.awt.GridBagConstraints.BOTH;
 
+/**
+ * Parent class for the settings view of the programs. Creates a bar at the bottom with
+ * a back button and a bar at the top for multiple settings pages
+ */
 public abstract class ProgramSettingsView extends ProgramView {
 
+    /**
+     * buttons to select the pages
+     */
     private MyToggleButton[] layerSelectors;
 
+    /**
+     * index of the currently selected page
+     */
     private int selectedIndex;
 
+    /**
+     * layout of the panel in the center of the layout containing the different pages of the settings
+     */
     private CardLayout center;
 
+    /**
+     * panel in the center of the layout containing the different pages of the settings
+     */
     private JPanel centerPanel;
 
     /**
@@ -37,7 +53,6 @@ public abstract class ProgramSettingsView extends ProgramView {
         JPanel[] panels = createPanels(actionListener, settingsChangeListener);
 
 
-
         center = new CardLayout();
 
 
@@ -47,16 +62,16 @@ public abstract class ProgramSettingsView extends ProgramView {
         int i = 0;
         for (JPanel panel : panels) {
             panel.setBorder(createShadowBorder());
-            centerPanel.add(panel,"" + i);
+            centerPanel.add(panel, "" + i);
             i++;
         }
 
         this.add(createTopBar(panelNames), PAGE_START);
         this.add(centerPanel, CENTER);
-        this.add(createBottomBar(actionListener),PAGE_END);
+        this.add(createBottomBar(actionListener), PAGE_END);
 
 
-        center.show(centerPanel,"0");
+        center.show(centerPanel, "0");
 
         selectedIndex = 0;
         layerSelectors[0].setSelected(true);
@@ -66,18 +81,30 @@ public abstract class ProgramSettingsView extends ProgramView {
 
     protected abstract JPanel[] createPanels(ActionListener actionListener, SettingsChangeListener settingsChangeListener);
 
+    /**
+     * Method creates the top bar with the buttons to select the pages
+     *
+     * @param panelNames names of the pages
+     * @return The panel of the top bar
+     */
     private MyPanel createTopBar(String[] panelNames) {
         MyPanel topBar = new MyPanel(new GridBagLayout());
         topBar.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        topBar.setPreferredSize(new Dimension(10,Toolkit.getDefaultToolkit().getScreenSize().height/20));
+        topBar.setPreferredSize(new Dimension(10, Toolkit.getDefaultToolkit().getScreenSize().height / 20));
         createTopButtons(panelNames, topBar);
         JPanel thickLine = new JPanel();
         thickLine.setBackground(StandardAssetFields.ROLLOVER_COLOR);
-        topBar.addComponent(topBar,thickLine,1,5,0,1,1,0.2f);
+        topBar.addComponent(topBar, thickLine, 1, 5, 0, 1, 1, 0.2f);
 
         return topBar;
     }
 
+    /**
+     * method creates the buttons of the top bar
+     *
+     * @param panelNames names of the buttons
+     * @param topBar     background panel
+     */
     private void createTopButtons(String[] panelNames, MyPanel topBar) {
         layerSelectors = new MyToggleButton[panelNames.length];
         for (int i = 0; i < 5; i++) {
@@ -85,38 +112,50 @@ public abstract class ProgramSettingsView extends ProgramView {
                 layerSelectors[i] = new MyToggleButton(panelNames[i]);
                 int finalI = i;
                 layerSelectors[i].addActionListener((event) -> selectNewLayer(finalI));
-                topBar.addComponent(topBar, layerSelectors[i],1,1, i, 0, 1, 1);
+                topBar.addComponent(topBar, layerSelectors[i], 1, 1, i, 0, 1, 1);
             } else {
-                topBar.addComponent(topBar, new MyPanel(new GridBagLayout()),1,1,i,0,1,1);
+                topBar.addComponent(topBar, new MyPanel(new GridBagLayout()), 1, 1, i, 0, 1, 1);
             }
         }
     }
 
+    /**
+     * action of the page selector buttons
+     *
+     * @param newIndex index of the pressed button
+     */
     private void selectNewLayer(int newIndex) {
         layerSelectors[selectedIndex].setSelected(false);
         layerSelectors[selectedIndex].setEnabled(true);
         layerSelectors[newIndex].setEnabled(false);
         selectedIndex = newIndex;
-        center.show(centerPanel,"" + newIndex);
+        center.show(centerPanel, "" + newIndex);
     }
 
+    /**
+     * method creates the bottom bar of the layout
+     *
+     * @param actionListener action listener for the view
+     * @return returns the bottom panel of the view
+     */
     private JPanel createBottomBar(ActionListener actionListener) {
 
         JPanel bottomBar = new JPanel(new GridBagLayout());
         bottomBar.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        bottomBar.setPreferredSize(new Dimension(10,Toolkit.getDefaultToolkit().getScreenSize().height/20));
+        bottomBar.setPreferredSize(new Dimension(10, Toolkit.getDefaultToolkit().getScreenSize().height / 20));
 
+        //noinspection SpellCheckingInspection
         MyButton back = new MyButton("Zurück");
         back.setActionCommand("back");
         back.addActionListener(actionListener);
 
         GridBagConstraints c = new GridBagConstraints();
-        c.fill  = BOTH;
+        c.fill = BOTH;
         c.anchor = GridBagConstraints.LINE_START;
         c.gridx = 0;
         c.gridwidth = 1;
         c.weightx = 0.1f;
-        bottomBar.add(back,c);
+        bottomBar.add(back, c);
 
         c.weightx = 1;
         c.gridx = 1;
