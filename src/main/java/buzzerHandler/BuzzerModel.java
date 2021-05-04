@@ -28,7 +28,7 @@ public class BuzzerModel {
     private boolean[] buzzerPressed;
 
     /**
-    blocks all buzzers
+     * blocks all buzzers
      */
     private boolean blockAllBuzzer;
 
@@ -88,7 +88,7 @@ public class BuzzerModel {
 
         if (!buzzerPressed[number - 1] && !blockAllBuzzer) {
             buzzerControlView.pressBuzzer(number);
-            buzzerPressed[number-1] = true;
+            buzzerPressed[number - 1] = true;
         }
     }
 
@@ -118,14 +118,29 @@ public class BuzzerModel {
         getView().getButton().setText(text);
     }
 
+    /**
+     * checks if the boolean that blocks all buzzers at once is true
+     *
+     * @return returns true if the block all buzzers flag is true
+     */
     public boolean isBlockAllBuzzer() {
         return blockAllBuzzer;
     }
 
+    /**
+     * sets the flag to block all buzzers. this is independent from the normal blocking behaviour
+     *
+     * @param blockAllBuzzer new value for block all buzzers
+     */
     public void setBlockAllBuzzer(boolean blockAllBuzzer) {
         this.blockAllBuzzer = blockAllBuzzer;
     }
 
+    /**
+     * returns the main controller of the application
+     *
+     * @return main controller of the application
+     */
     public ControlModel getControlModel() {
         return controlModel;
     }

@@ -37,8 +37,8 @@ public class BuzzerControlView extends JPanel {
     BuzzerControlView(BuzzerModel buzzerModel) {
         this.buzzerModel = buzzerModel;
 
-        this.setBackground(new Color(0.3f,0.3f,0.3f));
-        this.setLayout(new GridLayout(1,buzzerModel.getCount() + 1));
+        this.setBackground(new Color(0.3f, 0.3f, 0.3f));
+        this.setLayout(new GridLayout(1, buzzerModel.getCount() + 1));
 
         button = new MyButton("Reset");
         button.addActionListener(this::resetButtonAction);
@@ -59,8 +59,8 @@ public class BuzzerControlView extends JPanel {
      * @param i number of the buzzer
      */
     private void createVirtualBuzzer(int i) {
-        virtualBuzzers[i] = new JLabel("BUZZER " + (i+1));
-        virtualBuzzers[i].setFont(new Font("arial",Font.BOLD,20));
+        virtualBuzzers[i] = new JLabel("BUZZER " + (i + 1));
+        virtualBuzzers[i].setFont(new Font("arial", Font.BOLD, 20));
         virtualBuzzers[i].setForeground(Color.WHITE);
         virtualBuzzers[i].setHorizontalAlignment(SwingConstants.CENTER);
         virtualBuzzers[i].setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -105,7 +105,7 @@ public class BuzzerControlView extends JPanel {
      * resets the colors of the buzzers
      */
     void resetBuzzers() {
-        for(int i = 0; i < virtualBuzzers.length; i++) {
+        for (int i = 0; i < virtualBuzzers.length; i++) {
             virtualBuzzers[i].setBackground(SaveDataHandler.BUZZER_COLORS_UNPRESSED[i]);
         }
     }
