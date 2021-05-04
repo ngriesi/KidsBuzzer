@@ -7,19 +7,29 @@ import org.joml.Vector3f;
  */
 public class GameItem {
 
-    /** mesh - drawable object of the GameItem */
+    /**
+     * mesh - drawable object of the GameItem
+     */
     private Mesh mesh;
 
-    /** position as Vector */
+    /**
+     * position as Vector
+     */
     private final Vector3f position;
 
-    /** scale as float */
+    /**
+     * scale as float
+     */
     private float scale;
 
-    /** scale as Vector */
+    /**
+     * scale as Vector
+     */
     private final Vector3f scale3;
 
-    /** rotation as Vector */
+    /**
+     * rotation as Vector
+     */
     private final Vector3f rotation;
 
     /*
@@ -35,7 +45,7 @@ public class GameItem {
      */
 
     @SuppressWarnings("unused")
-    public GameItem(Mesh mesh){
+    public GameItem(Mesh mesh) {
         this();
         this.mesh = mesh;
 
@@ -46,10 +56,10 @@ public class GameItem {
      */
 
     protected GameItem() {
-        position = new Vector3f(0,0,0);
+        position = new Vector3f(0, 0, 0);
         scale = 1;
-        rotation = new Vector3f(0,0,0);
-        scale3 = new Vector3f(1,1,1);
+        rotation = new Vector3f(0, 0, 0);
+        scale3 = new Vector3f(1, 1, 1);
     }
 
     /**
@@ -112,7 +122,7 @@ public class GameItem {
      * @param z Position
      */
 
-    public void setPosition(float x,float y,float z){
+    public void setPosition(float x, float y, float z) {
         this.position.x = x;
         this.position.y = y;
         this.position.z = z;
@@ -127,7 +137,7 @@ public class GameItem {
      */
 
     @SuppressWarnings("unused")
-    public void setRotation(float x, float y, float z){
+    public void setRotation(float x, float y, float z) {
         this.rotation.x = x;
         this.rotation.y = y;
         this.rotation.z = z;
@@ -142,7 +152,7 @@ public class GameItem {
      * @param z scale
      */
 
-    public void setScale3(float x,float y,float z) {
+    public void setScale3(float x, float y, float z) {
         this.scale3.x = x;
         this.scale3.y = y;
         this.scale3.z = z;

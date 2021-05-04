@@ -8,43 +8,52 @@ import org.joml.Vector4f;
 @SuppressWarnings("unused")
 public class Material {
 
-    /** default mesh color */
-    private static final Vector4f DEFAULT_COLOUR  = new Vector4f(1.0f,1.0f,1.0f,1.0f);
+    /**
+     * default mesh color
+     */
+    private static final Vector4f DEFAULT_COLOUR = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-    /** color in ambient light */
+    /**
+     * color in ambient light
+     */
     private Vector4f ambientColor;
 
-    /** color in diffuse light */
+    /**
+     * color in diffuse light
+     */
     private Vector4f diffuseColor;
 
-    /** color in specular light */
+    /**
+     * color in specular light
+     */
     private Vector4f specularColor;
 
-    /** reflectance of the surface*/
+    /**
+     * reflectance of the surface
+     */
     private float reflectance;
 
-    /** texture of the material */
+    /**
+     * texture of the material
+     */
     private Texture texture;
-
-    /** normal map of the material */
-    private Texture normalMap;
 
     /**
      * setting default values
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public Material(){
-        this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR,null, null, 0);
+    public Material() {
+        this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR, null, null, 0);
     }
 
     /**
      * creating a single colored material
      *
-     * @param colour mesh color
+     * @param colour      mesh color
      * @param reflectance mesh reflectance
      */
-    public Material(Vector4f colour, float reflectance){
-        this(colour,colour,colour,null,reflectance);
+    public Material(Vector4f colour, float reflectance) {
+        this(colour, colour, colour, null, reflectance);
     }
 
     /**
@@ -52,31 +61,31 @@ public class Material {
      *
      * @param texture used texture
      */
-    public Material(Texture texture){
-        this(DEFAULT_COLOUR,DEFAULT_COLOUR,DEFAULT_COLOUR,texture,0);
+    public Material(Texture texture) {
+        this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR, texture, 0);
     }
 
     /**
      * creating a textured material with reflectiveness
      *
-     * @param texture texture used
+     * @param texture     texture used
      * @param reflectance reflectance of the surface
      */
-    public Material(Texture texture, float reflectance){
-        this(DEFAULT_COLOUR,DEFAULT_COLOUR,DEFAULT_COLOUR,texture,reflectance);
+    public Material(Texture texture, float reflectance) {
+        this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR, texture, reflectance);
     }
 
     /**
      * custom values for all fields (no normal map)
      *
-     * @param ambientColor ambient
-     * @param diffuseColor diffuse
+     * @param ambientColor  ambient
+     * @param diffuseColor  diffuse
      * @param specularColor specular
-     * @param texture texture
-     * @param reflectance reflectance
+     * @param texture       texture
+     * @param reflectance   reflectance
      */
     @SuppressWarnings("WeakerAccess")
-    public Material(Vector4f ambientColor, Vector4f diffuseColor, Vector4f specularColor, Texture texture, float reflectance){
+    public Material(Vector4f ambientColor, Vector4f diffuseColor, Vector4f specularColor, Texture texture, float reflectance) {
         this.ambientColor = ambientColor;
         this.diffuseColor = diffuseColor;
         this.specularColor = specularColor;
@@ -87,17 +96,16 @@ public class Material {
     /**
      * custom values for all fields
      *
-     * @param ambientColor ambient
-     * @param diffuseColor diffuse
+     * @param ambientColor  ambient
+     * @param diffuseColor  diffuse
      * @param specularColor specular
-     * @param texture texture
-     * @param normalMap normal map
-     * @param reflectance reflectance
+     * @param texture       texture
+     * @param normalMap     normal map
+     * @param reflectance   reflectance
      */
     @SuppressWarnings("WeakerAccess")
-    public Material(Vector4f ambientColor, Vector4f diffuseColor, Vector4f specularColor, Texture texture, Texture normalMap, float reflectance){
+    public Material(Vector4f ambientColor, Vector4f diffuseColor, Vector4f specularColor, Texture texture, Texture normalMap, float reflectance) {
         this(ambientColor, diffuseColor, specularColor, texture, reflectance);
-        this.normalMap = normalMap;
     }
 
     /**
@@ -162,14 +170,13 @@ public class Material {
     /**
      * @return check if texture is used
      */
-    public boolean isTexture(){
+    public boolean isTexture() {
         return this.texture != null;
     }
 
     /**
      * @return texture of the material
      */
-    @SuppressWarnings("WeakerAccess")
     public Texture getTexture() {
         return texture;
     }
@@ -182,19 +189,4 @@ public class Material {
         this.texture = texture;
     }
 
-    /**
-     * @return returns true if the material uses a normal map
-     */
-    public boolean isNormalMap() {
-        return this.normalMap != null;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public Texture getNormalMap() {
-        return normalMap;
-    }
-
-    public void setNormalMap(Texture normalMap) {
-        this.normalMap = normalMap;
-    }
 }

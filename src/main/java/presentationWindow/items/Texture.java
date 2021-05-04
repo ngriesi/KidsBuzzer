@@ -9,16 +9,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.stb.STBImage.*;
 
+/**
+ * Class for loading and handling Textures used in open gl rendering
+ */
 @SuppressWarnings("WeakerAccess")
 public class Texture {
 
+    /**
+     * static method to load a <code>Texture</code> from a file
+     * (png and jpg files), tracked by a <code>LoadingHandler</code>
+     *
+     * @param file           the File of the image
+     * @param loadingHandler <code>LoadingHandler</code> to track the loading
+     * @return returns the loaded <code>Texture</code> object
+     * @throws FileNotFoundException exception thrown if the file can not be loaded
+     */
     public static Texture loadTexture(File file, LoadingHandler loadingHandler) throws FileNotFoundException {
 
         String temp = "";
@@ -47,6 +58,13 @@ public class Texture {
         }
     }
 
+    /**
+     * static method to load a <code>Texture</code> from a file
+     * (png and jpg files)
+     *
+     * @param file the File of the image
+     * @return returns the loaded <code>Texture</code> object
+     */
     public static Texture loadTexture(File file) {
         ByteBuffer buf;
         //Load texture File
@@ -96,16 +114,30 @@ public class Texture {
      */
     private FilterMode filterMode = FilterMode.NEAREST;
 
+    /**
+     * creates a texture from a <code>ByteBuffer</code> and tracks the action with a <code>LoadingHandler</code>
+     *
+     * @param width          width of the texture
+     * @param height         height of the texture
+     * @param buf            <code>ByteBuffer</code> containing the data of the image
+     * @param loadingHandler <code>LoadingHandler</code> to track the loading
+     * @param loadingMonitor <code>LoadingMonitor</code> for this loading process
+     */
     private Texture(int width, int height, ByteBuffer buf, LoadingHandler loadingHandler, LoadingMonitor loadingMonitor) {
         this.width = width;
         this.height = height;
 
-        loadingMonitor.setText("test77");
         this.id = createTexture(buf);
-        loadingMonitor.setText("test222");
         loadingMonitor.finishedProcess(loadingHandler);
     }
 
+    /**
+     * creates a Texture from a width, height and a <code>ByteBuffer</code>
+     *
+     * @param width  width of the texture
+     * @param height height of the texture
+     * @param buf    <code>ByteBuffer</code> containing the image
+     */
     private Texture(int width, int height, ByteBuffer buf) {
         this.width = width;
         this.height = height;
@@ -113,6 +145,11 @@ public class Texture {
         this.id = createTexture(buf);
     }
 
+    /**
+     * creates an open gl texture form a <code>BufferedImage</code>
+     *
+     * @param image <code>BufferedImage</code> the texture is created of
+     */
     public Texture(BufferedImage image) {
         filterMode = FilterMode.LINEAR;
         int[] pixels = new int[image.getWidth() * image.getHeight()];
