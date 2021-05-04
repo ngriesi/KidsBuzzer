@@ -111,7 +111,7 @@ public class OpenGlRenderer implements IGameLogic {
      * executes the actions from the open gl thread actions list
      */
     private synchronized void handlerOnOpenGLThreadActions() {
-        while(!executeOnOpenGlThread.isEmpty()) {
+        while (!executeOnOpenGlThread.isEmpty()) {
             executeOnOpenGlThread.remove().execute();
         }
     }
@@ -125,7 +125,7 @@ public class OpenGlRenderer implements IGameLogic {
         currentTimedActions.addAll(newTimedActions);
         newTimedActions.clear();
         for (TimedAction timedAction : currentTimedActions) {
-            if(timedAction.getTime() <= 0) {
+            if (timedAction.getTime() <= 0) {
                 timedAction.getAction().execute();
                 finishedTimedActions.add(timedAction);
             } else {
@@ -198,14 +198,25 @@ public class OpenGlRenderer implements IGameLogic {
         newTimedActions.add(timedAction);
     }
 
+    /**
+     * @return returns the linear animator of the renderer
+     */
     public LinearAnimator getLinearAnimator() {
         return linearAnimator;
     }
 
+    /**
+     * changes the screen the open gl window of this renderer is inside
+     *
+     * @param outputScreen index of the new screen
+     */
     public void changeScreen(int outputScreen) {
         window.setScreen(outputScreen);
     }
 
+    /**
+     * @return returns the exponential animator of the renderer
+     */
     public ExponentialAnimator getExponentialAnimator() {
         return exponentialAnimator;
     }
