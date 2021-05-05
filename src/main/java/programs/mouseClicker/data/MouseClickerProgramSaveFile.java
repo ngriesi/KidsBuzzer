@@ -2,20 +2,46 @@ package programs.mouseClicker.data;
 
 import utils.saveFile.SaveFile;
 
+/**
+ * save file of the <code>MouseClickerProgram</code>
+ */
+@SuppressWarnings("unused")
 public class MouseClickerProgramSaveFile extends SaveFile {
 
+    /**
+     * flag storing the visibility of the mouse tracker window
+     */
     private boolean displayMouseTracker = true;
 
+    /**
+     * array storing the flags that determine if the mouse clicks should be used
+     */
     private boolean[] useClick = {false, false, false};
 
+    /**
+     * array storing the x positions of the clicks
+     */
     private int[] clickX = {0, 0, 0};
 
+    /**
+     * array storing the y position of the clicks
+     */
     private int[] clickY = {0, 0, 0};
 
+    /**
+     * Positions of the main selector of the blocking behaviour contorl view row
+     */
+    @SuppressWarnings("SpellCheckingInspection")
     private String blockingBehaviour = "Dont block";
 
+    /**
+     * Blocking time for the buzzers
+     */
     private int blockingTime = 1;
 
+    /**
+     * buzzer used for unblocking
+     */
     private int unblockBuzzer = 3;
 
 
@@ -25,6 +51,12 @@ public class MouseClickerProgramSaveFile extends SaveFile {
     public MouseClickerProgramSaveFile() {
         super("mouseClicker");
     }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public boolean isDisplayMouseTracker() {
         return displayMouseTracker;

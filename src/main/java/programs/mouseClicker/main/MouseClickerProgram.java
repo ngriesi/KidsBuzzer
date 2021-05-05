@@ -1,13 +1,14 @@
 package programs.mouseClicker.main;
 
 import programs.abstractProgram.Program;
+import programs.emptyClasses.EmptyPresentationView;
 import programs.mouseClicker.control.controller.MouseClickerProgramController;
 import programs.mouseClicker.data.MouseClickerProgramModel;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 
-public class MouseClickerProgram extends Program<MouseClickerProgramController, MouseClickerProgramController, MouseClickerProgramModel, MouseClickerProgramPresentationView> {
+public class MouseClickerProgram extends Program<MouseClickerProgramController, MouseClickerProgramController, MouseClickerProgramModel, EmptyPresentationView> {
 
     private float screenScalar;
 
@@ -18,41 +19,58 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
         super(true, "Mouse Clicker");
 
         screenScalar = Toolkit.getDefaultToolkit().getScreenResolution() / 96f;
-
-        addClosedAction(() -> getProgramModel().getSaveFile().saveFile());
     }
 
+    /**
+     * @return the created <code>MouseClickerProgramModel</code>
+     */
     @Override
     public MouseClickerProgramModel createModel() {
         return new MouseClickerProgramModel();
     }
 
+    /**
+     * @return the created <code>MouseClickerProgramController</code>
+     */
     @Override
     public MouseClickerProgramController createSettingsController() {
         return null;
     }
 
+    /**
+     * @return the created <code>MouseClickerProgramController</code>
+     */
     @Override
     public MouseClickerProgramController createControlController() {
         return new MouseClickerProgramController(this, getProgramModel());
     }
 
+    /**
+     * @return the created <code>EmptyPresentationView</code>
+     */
     @Override
-    public MouseClickerProgramPresentationView createPresentationView() {
-        return new MouseClickerProgramPresentationView(this);
+    public EmptyPresentationView createPresentationView() {
+        return new EmptyPresentationView(this);
     }
 
+    /**
+     * action performed when an unblocked buzzer gets pressed
+     *
+     * @param buzzerNumber number of the buzzer pressed (starting with 1)
+     */
     @Override
     protected void buzzerAction(int buzzerNumber) {
         if (getProgramModel().getSaveFile().getUseClick()[buzzerNumber - 1]) {
             mousePress(buzzerNumber);
         }
         handleReset(buzzerNumber);
-
-
-
     }
 
+    /**
+     * method performs the mouse click when a buzzer was pressed
+     *
+     * @param buzzer number of the pressed buzzer (starting with 1)
+     */
     private void mousePress(int buzzer) {
         Robot bot;
         try {
@@ -67,6 +85,12 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
 
     }
 
+    /**
+     * Method handles the reset of the buzzers according to the settings made to
+     * the blocking behaviour
+     *
+     * @param buzzerNumber number of the buzzer pressed (starting with 1)
+     */
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             case "Dont block":

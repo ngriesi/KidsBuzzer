@@ -2,20 +2,36 @@ package programs.keyPresser.data;
 
 import utils.saveFile.SaveFile;
 
+/**
+ * save file of the <code>KeyPressProgram</code>
+ */
 @SuppressWarnings("unused")
 public class KeyPressSaveFile extends SaveFile {
 
-    private boolean displayMouseTracker = true;
+    /**
+     * array storing the flags that determine if the key presses should be used
+     */
+    private boolean[] useKey = {false, false, false};
 
-    private boolean[] useClick = {false, false, false};
-
+    /**
+     * code of the keys assigned to the buzzers
+     */
     private int[] key = {0, 0, 0};
 
+    /**
+     * Positions of the main selector of the blocking behaviour contorl view row
+     */
     @SuppressWarnings("SpellCheckingInspection")
     private String blockingBehaviour = "Dont block";
 
+    /**
+     * Blocking time for the buzzers
+     */
     private int blockingTime = 1;
 
+    /**
+     * buzzer used for unblocking
+     */
     private int unblockBuzzer = 3;
 
     /**
@@ -25,20 +41,18 @@ public class KeyPressSaveFile extends SaveFile {
         super("keyPress");
     }
 
-    public boolean isDisplayMouseTracker() {
-        return displayMouseTracker;
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
+
+    public boolean[] getUseKey() {
+        return useKey;
     }
 
-    public void setDisplayMouseTracker(boolean displayMouseTracker) {
-        this.displayMouseTracker = displayMouseTracker;
-    }
-
-    public boolean[] getUseClick() {
-        return useClick;
-    }
-
-    public void setUseClick(boolean[] useClick) {
-        this.useClick = useClick;
+    public void setUseKey(boolean[] useKey) {
+        this.useKey = useKey;
     }
 
     public int[] getKey() {

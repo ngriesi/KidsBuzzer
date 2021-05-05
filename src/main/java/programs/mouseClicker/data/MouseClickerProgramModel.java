@@ -4,6 +4,9 @@ import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.ProgramModel;
 import startupApp.LoadingHandler;
 
+/**
+ * Model of the <code>MouseClickerProgram</code>. Holds a reference to the save file
+ */
 public class MouseClickerProgramModel extends ProgramModel<MouseClickerProgramSaveFile> {
 
     /**

@@ -1,13 +1,17 @@
 package programs.keyPresser.main;
 
 import programs.abstractProgram.Program;
+import programs.emptyClasses.EmptyPresentationView;
 import programs.keyPresser.control.controller.KeyPressController;
 import programs.keyPresser.data.KeyPressModel;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
 
-public class KeyPressProgram extends Program<KeyPressController, KeyPressController, KeyPressModel, KeyPressPresentationView> {
+/**
+ * main class of the key press program handling the buzzer input
+ */
+public class KeyPressProgram extends Program<KeyPressController, KeyPressController, KeyPressModel, EmptyPresentationView> {
 
     /**
      * creates a new program
@@ -16,26 +20,43 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
         super(true, "Key Presser");
     }
 
+    /**
+     * @return the created <code>KeyPressModel</code>
+     */
     @Override
     public KeyPressModel createModel() {
         return new KeyPressModel();
     }
 
+    /**
+     * @return the created <code>KeyPressController</code>
+     */
     @Override
     public KeyPressController createSettingsController() {
         return new KeyPressController(this, getProgramModel());
     }
 
+    /**
+     * @return the created <code>KeyPressController</code>
+     */
     @Override
     public KeyPressController createControlController() {
         return new KeyPressController(this, getProgramModel());
     }
 
+    /**
+     * @return the created <code>EmptyPresentationView</code>
+     */
     @Override
-    public KeyPressPresentationView createPresentationView() {
-        return new KeyPressPresentationView(this);
+    public EmptyPresentationView createPresentationView() {
+        return new EmptyPresentationView(this);
     }
 
+    /**
+     * action performed when an unblocked buzzer gets pressed
+     *
+     * @param buzzerNumber number of the buzzer pressed (starting with 1)
+     */
     @Override
     protected void buzzerAction(int buzzerNumber) {
         keyPress(buzzerNumber);
@@ -47,8 +68,13 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
 
     }
 
+    /**
+     * method performs the key press when a buzzer was pressed
+     *
+     * @param buzzer number of the pressed buzzer (starting with 1)
+     */
     private void keyPress(int buzzer) {
-        if (getProgramModel().getSaveFile().getUseClick()[buzzer - 1]) {
+        if (getProgramModel().getSaveFile().getUseKey()[buzzer - 1]) {
 
             new Thread(() -> {
                 Robot bot;
@@ -64,6 +90,12 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
         }
     }
 
+    /**
+     * Method handles the reset of the buzzers according to the settings made to
+     * the blocking behaviour
+     *
+     * @param buzzerNumber number of the buzzer pressed (starting with 1)
+     */
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             case "Dont block":

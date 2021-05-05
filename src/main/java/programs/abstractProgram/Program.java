@@ -184,7 +184,7 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     /**
      * action performed after a buzzer press by the individual program
      *
-     * @param buzzerNumber number of the buzzer pressed
+     * @param buzzerNumber number of the buzzer pressed (starting with 1)
      */
     protected abstract void buzzerAction(int buzzerNumber);
 
