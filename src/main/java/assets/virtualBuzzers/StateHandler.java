@@ -1,4 +1,4 @@
-package programs.quizOverlay.main.view.virtualBuzzers;
+package assets.virtualBuzzers;
 
 import presentationWindow.animations.AnimationQueue;
 import savedataHandler.SaveDataHandler;

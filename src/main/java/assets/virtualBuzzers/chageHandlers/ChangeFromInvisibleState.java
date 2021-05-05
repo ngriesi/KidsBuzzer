@@ -1,8 +1,8 @@
-package programs.quizOverlay.main.view.virtualBuzzers.chageHandlers;
+package assets.virtualBuzzers.chageHandlers;
 
+import assets.virtualBuzzers.StateHandler;
+import assets.virtualBuzzers.VirtualBuzzer;
 import presentationWindow.animations.AnimationQueue;
-import programs.quizOverlay.main.view.virtualBuzzers.StateHandler;
-import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
 
 /**
  * <code>StateHandler</code> that changes the state of the buzzer from the <code>INVISIBLE_DEFAULT</code> state

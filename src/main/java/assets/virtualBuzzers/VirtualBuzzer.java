@@ -1,14 +1,17 @@
-package programs.quizOverlay.main.view.virtualBuzzers;
+package assets.virtualBuzzers;
 
 import org.joml.Vector2f;
 import presentationWindow.animations.Animation;
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
+import presentationWindow.items.Texture;
 import presentationWindow.renderItems.*;
 import presentationWindow.window.LinearAnimator;
+import presentationWindow.window.OpenGlRenderer;
+import programs.abstractProgram.Program;
 import programs.quizOverlay.main.control.QuizOverlayProgram;
-import presentationWindow.animations.AnimationQueue;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
@@ -19,6 +22,7 @@ import static java.awt.Font.PLAIN;
  * The <code>VirtualBuzzer</code> class represents a buzzer virtually in the
  * output view
  */
+@SuppressWarnings("UnusedReturnValue")
 public class VirtualBuzzer {
 
     /**
@@ -61,24 +65,27 @@ public class VirtualBuzzer {
      *
      * @param background  background the buzzer items get added to
      * @param index       index of the buzzer
-     * @param program     program this virtual buzzer is part of
+     * @param buzzerFont  font of the buzzers
+     * @param textColor   color of the number
+     * @param texture     icon of the buzzer
      * @param buzzerCount number of buzzers currently used in the program
+     * @param renderer    renderer of the buzzer
      */
-    public VirtualBuzzer(MainItem background, int index, QuizOverlayProgram program, int buzzerCount) {
+    public VirtualBuzzer(PresentationViewRenderItem background, int index, Font buzzerFont, Color textColor, Texture texture, int buzzerCount, OpenGlRenderer renderer) {
         this.buzzerCount = buzzerCount;
         this.index = index;
-        this.linearAnimator = program.getRenderer().getLinearAnimator();
+        this.linearAnimator = renderer.getLinearAnimator();
         virtualBuzzerStateHandler = new VirtualBuzzerStateHandler(this);
         colorQuad = new QuadItem();
         background.addItem(colorQuad);
 
         number = new TextItem((index + 1) + "");
-        number.changeFont(new Font(program.getProgramModel().getSaveFile().getBuzzerFont(), program.getProgramModel().getSaveFile().isBuzzerTextBold() ? Font.BOLD : PLAIN, 200));
-        number.setColorScheme(new ColorScheme(new Color(program.getProgramModel().getSaveFile().getBuzzerTextColor())));
+        number.changeFont(buzzerFont);
+        number.setColorScheme(new ColorScheme(textColor));
         number.setOpacity(0);
         colorQuad.addItem(number);
 
-        icon = new ImageItem(program.getProgramModel().getIcon(index + 1));
+        icon = new ImageItem(texture);
         colorQuad.addItem(icon);
 
         reset();

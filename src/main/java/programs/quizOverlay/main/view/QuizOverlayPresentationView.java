@@ -1,14 +1,15 @@
 package programs.quizOverlay.main.view;
 
+import assets.virtualBuzzers.VirtualBuzzer;
 import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
+import presentationWindow.items.Texture;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.renderItems.TextItem;
 import programs.abstractProgram.ProgramPresentationView;
 import programs.quizOverlay.main.control.QuizOverlayProgram;
-import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
@@ -66,8 +67,12 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
 
         virtualBuzzers = new VirtualBuzzer[SaveDataHandler.MAX_BUZZER_COUNT];
 
+        Font font = new Font(getProgram().getProgramModel().getSaveFile().getBuzzerFont(), getProgram().getProgramModel().getSaveFile().isBuzzerTextBold() ? Font.BOLD : PLAIN, 200);
+        Color textColor = new Color(getProgram().getProgramModel().getSaveFile().getBuzzerTextColor());
+
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            virtualBuzzers[i] = new VirtualBuzzer(mainItem, i, getProgram(), SaveDataHandler.BUZZER_COUNT);
+            Texture icon = getProgram().getProgramModel().getIcon(i + 1);
+            virtualBuzzers[i] = new VirtualBuzzer(mainItem, i,font,textColor, icon, SaveDataHandler.BUZZER_COUNT,getProgram().getRenderer());
         }
     }
 

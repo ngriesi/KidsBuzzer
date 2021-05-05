@@ -46,7 +46,7 @@ public class QuizTimeProgramControlView extends ProgramView {
         setupActionMap(programController);
 
 
-        GridBagConstraints gc = new GridBagConstraints(2,0,1,2,1,1,CENTER,BOTH,new Insets(0,0,0,0),0,0);
+        GridBagConstraints gc = new GridBagConstraints(2, 0, 1, 2, 1, 1, CENTER, BOTH, new Insets(0, 0, 0, 0), 0, 0);
 
         SimpleOutputView simpleOutputView = programController.getSimpleOutputView();
         this.add(new SimpleViewPanel(simpleOutputView), gc);
@@ -75,7 +75,7 @@ public class QuizTimeProgramControlView extends ProgramView {
         gc.weightx = 0.5f;
         gc.gridwidth = 1;
         MyLabel nextQuestion = new MyLabel("Nächste Frage:");
-        this.add(nextQuestion,gc);
+        this.add(nextQuestion, gc);
 
         gc.gridx = 1;
 
@@ -85,12 +85,12 @@ public class QuizTimeProgramControlView extends ProgramView {
     /**
      * creates the text field containing the number of the next question
      *
-     * @param gc constraint of the text field
+     * @param gc             constraint of the text field
      * @param actionListener action listener of the text field
      */
     private void createTextField(GridBagConstraints gc, ActionListener actionListener) {
         textField = new MyTextField("1");
-        textField.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/20,Toolkit.getDefaultToolkit().getScreenSize().height/20));
+        textField.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 20, Toolkit.getDefaultToolkit().getScreenSize().height / 20));
         textField.useOnlyInts();
         textField.addActionListener(actionListener);
         textField.setActionCommand("number");
@@ -143,21 +143,21 @@ public class QuizTimeProgramControlView extends ProgramView {
      * sets up the input map of this panel
      */
     private void setupInputMap() {
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("R"),"right");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F"),"wrong");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("N"),"next");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"),"show");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("V"),"hide");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"),"hide");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("R"), "right");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F"), "wrong");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("N"), "next");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "show");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("V"), "hide");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "hide");
     }
 
     /**
      * adds a control button to the view
      *
-     * @param buttonText text of the button
-     * @param actionCommand action command of the button
+     * @param buttonText     text of the button
+     * @param actionCommand  action command of the button
      * @param actionListener action listener of the button
-     * @param gbc constraint of the button
+     * @param gbc            constraint of the button
      */
     private void addButton(String buttonText, String actionCommand, ActionListener actionListener, GridBagConstraints gbc) {
         MyButton button = new MyButton(buttonText);

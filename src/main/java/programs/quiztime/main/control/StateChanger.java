@@ -1,6 +1,5 @@
 package programs.quiztime.main.control;
 
-import controlWindow.ControlModel;
 import controlWindow.MainController;
 import presentationWindow.animations.AnimationQueue;
 import presentationWindow.engine.Action;
@@ -44,7 +43,7 @@ class StateChanger {
     /**
      * creates a new state changer
      *
-     * @param program program this is the state changer of
+     * @param program      program this is the state changer of
      * @param generalState general state of the program
      */
     StateChanger(QuizTimeProgram program, GeneralState generalState) {
@@ -73,7 +72,7 @@ class StateChanger {
     /**
      * method called when a buzzer press should invoke a state change
      *
-     * @param buzzerNumber number of the buzzer that was pressed
+     * @param buzzerNumber       number of the buzzer that was pressed
      * @param animationQueueItem animation queue item
      */
     void buzzerPressed(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
@@ -131,8 +130,8 @@ class StateChanger {
      *
      * @param animationQueueItem animation queue item that gets passed because it is needed for the
      *                           check whether this method should be called in the QuizTimeProgram class
-     * @param action action containing the action of updating the control view of the program which is
-     *               written inside the QuizTimeProgram class
+     * @param action             action containing the action of updating the control view of the program which is
+     *                           written inside the QuizTimeProgram class
      */
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
         programModel.fadeOutIntroSound();

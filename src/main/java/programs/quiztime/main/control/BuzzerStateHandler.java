@@ -44,8 +44,8 @@ public class BuzzerStateHandler {
     /**
      * action performed when a buzzer was pressed
      *
-     * @param buzzerNumber number of the pressed buzzer
-     * @param animationQueueItem
+     * @param buzzerNumber       number of the pressed buzzer
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     void press(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
         buzzerStates[buzzerNumber - 1].setPressed(true);
@@ -55,7 +55,7 @@ public class BuzzerStateHandler {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.isPressed() && buzzerState.getPosition() == (buzzerPositionPressed - 1)) {
                 if (buzzerState.getPosition() == buzzerOnTurn) {
-                    viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(),buzzerState.getPosition(), animationQueueItem);
+                    viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 } else {
                     viewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 }
@@ -79,7 +79,7 @@ public class BuzzerStateHandler {
 
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(),buzzerState.getPosition(), animationQueueItem);
+                viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
             }
         }
     }
@@ -92,7 +92,7 @@ public class BuzzerStateHandler {
     void right(AnimationQueue.AnimationQueueItem animationQueueItem) {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.rightAnswerGiven(buzzerState.getBuzzerNumber(),animationQueueItem);
+                viewUpdater.rightAnswerGiven(buzzerState.getBuzzerNumber(), animationQueueItem);
             }
         }
     }

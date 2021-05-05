@@ -1,10 +1,10 @@
-package programs.quizOverlay.main.view.virtualBuzzers.chageHandlers;
+package assets.virtualBuzzers.chageHandlers;
 
+import assets.virtualBuzzers.StateHandler;
+import assets.virtualBuzzers.VirtualBuzzer;
+import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
-import presentationWindow.animations.AnimationQueue;
-import programs.quizOverlay.main.view.virtualBuzzers.StateHandler;
-import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
 import savedataHandler.SaveDataHandler;
 
 /**

@@ -45,7 +45,8 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * method used to update the view when it gets launched
      */
     @Override
-    protected void updateView() {}
+    protected void updateView() {
+    }
 
     /**
      * @return returns the simple output preview
@@ -113,7 +114,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * starts the fade out animation and hides the presentation window when it is finished
      */
     public void hide() {
-        if(getProgram().fadeOut()) {
+        if (getProgram().fadeOut()) {
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
@@ -131,7 +132,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      * action of the wrong button - tells the program that the current buzzer gave a wrong answer
      */
     public void wrongButtonAction() {
-        if(!getSimpleOutputView().isRight()) {
+        if (!getSimpleOutputView().isRight()) {
             getProgram().wrongAnswer();
         }
     }

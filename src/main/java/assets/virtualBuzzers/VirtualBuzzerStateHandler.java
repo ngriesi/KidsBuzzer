@@ -1,7 +1,7 @@
-package programs.quizOverlay.main.view.virtualBuzzers;
+package assets.virtualBuzzers;
 
+import assets.virtualBuzzers.chageHandlers.*;
 import presentationWindow.animations.AnimationQueue;
-import programs.quizOverlay.main.view.virtualBuzzers.chageHandlers.*;
 
 /**
  * state handler for the virtual buzzer

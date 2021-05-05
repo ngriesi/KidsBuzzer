@@ -1,29 +1,34 @@
-package programs.quizOverlay.main.view.virtualBuzzers.chageHandlers;
+package assets.virtualBuzzers.chageHandlers;
 
-import presentationWindow.assets.Color;
+import assets.virtualBuzzers.StateHandler;
+import assets.virtualBuzzers.VirtualBuzzer;
 import presentationWindow.animations.AnimationQueue;
-import programs.quizOverlay.main.view.virtualBuzzers.StateHandler;
-import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
+import presentationWindow.assets.Color;
 import savedataHandler.SaveDataHandler;
 
 /**
  * <code>StateHandler</code> that changes the state of the buzzer from the <code>INVISIBLE_DEFAULT</code> state
  * to any other state
  */
-public class ChangeFromRightTo extends StateHandler {
+public class ChangeFromPressedNotOnTurnTo extends StateHandler {
 
-    public ChangeFromRightTo(VirtualBuzzer virtualBuzzer) {
+    public ChangeFromPressedNotOnTurnTo(VirtualBuzzer virtualBuzzer) {
         super(virtualBuzzer);
     }
 
     @Override
     protected void changeToPressedNotOnTurn(AnimationQueue.AnimationQueueItem animationQueueItem) {
-
     }
 
+    /**
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>PRESSED_NOT_ON_TURN</code>
+     * to <code>ON_TURN</code>
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
+     */
     @Override
     protected void changeToOnTurn(AnimationQueue.AnimationQueueItem animationQueueItem) {
-
+        virtualBuzzer.moveAndScale((1f + index * 2f) / (buzzerCount * 2f), 0.8f, 1f / buzzerCount, 0.4f, changeAnimationDuration, animationQueueItem);
     }
 
     @Override
@@ -37,8 +42,8 @@ public class ChangeFromRightTo extends StateHandler {
     }
 
     /**
-     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>RIGHT</code>
-     * to <code>INVISIBLE_DEFAULT</code>
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>INVISIBLE_DEFAULT</code>
+     * to <code>ON_TURN</code>
      *
      * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
@@ -51,7 +56,7 @@ public class ChangeFromRightTo extends StateHandler {
     }
 
     /**
-     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>RIGHT</code>
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>PRESSED_NOT_ON_TURN</code>
      * to <code>VISIBLE_DEFAULT</code>
      *
      * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
@@ -65,12 +70,13 @@ public class ChangeFromRightTo extends StateHandler {
         });
 
         virtualBuzzer.fadeInQuad(changeAnimationDuration, animationQueueItem);
-        virtualBuzzer.fadeInIcon(changeAnimationDuration, animationQueueItem);
+        virtualBuzzer.fadeOutNumber(changeAnimationDuration / 2, animationQueueItem).addOnFinishedAction(() -> virtualBuzzer.fadeInIcon(changeAnimationDuration / 2, animationQueueItem));
 
         Color unpressed = new Color(SaveDataHandler.BUZZER_COLORS_PRESSED[index]);
         unpressed.setAlpha(unpressedTransparency);
 
         virtualBuzzer.fadeColor(unpressed, changeAnimationDuration, animationQueueItem);
     }
+
 
 }

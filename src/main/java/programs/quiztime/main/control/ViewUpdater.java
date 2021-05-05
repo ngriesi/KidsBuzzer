@@ -23,7 +23,7 @@ class ViewUpdater {
      * creates a new view updater with both views
      *
      * @param presentationView presentation view
-     * @param quizTimeProgram reference to the program to access the simple output view
+     * @param quizTimeProgram  reference to the program to access the simple output view
      */
     ViewUpdater(QuizTimeProgramPresentationView presentationView, QuizTimeProgram quizTimeProgram) {
         this.presentationView = presentationView;
@@ -32,9 +32,10 @@ class ViewUpdater {
 
     /**
      * update for a buzzer that gets pressed an is immediately on turn
-     *  @param buzzerNumber number of the buzzer
-     * @param buzzerPosition press position of the buzzer
-     * @param animationQueueItem
+     *
+     * @param buzzerNumber       number of the buzzer
+     * @param buzzerPosition     press position of the buzzer
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     void firstBuzzerPress(int buzzerNumber, int buzzerPosition, AnimationQueue.AnimationQueueItem animationQueueItem) {
         presentationView.firstBuzzerPress(buzzerNumber, buzzerPosition, animationQueueItem);
@@ -43,9 +44,10 @@ class ViewUpdater {
 
     /**
      * update for a buzzer that gets pressed an is not immediately on turn
-     *  @param buzzerNumber number of the buzzer
-     * @param buzzerPosition press position of the buzzer
-     * @param animationQueueItem
+     *
+     * @param buzzerNumber       number of the buzzer
+     * @param buzzerPosition     press position of the buzzer
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     void followBuzzerPress(int buzzerNumber, int buzzerPosition, AnimationQueue.AnimationQueueItem animationQueueItem) {
         presentationView.followBuzzerPress(buzzerNumber, buzzerPosition, animationQueueItem);
@@ -55,19 +57,20 @@ class ViewUpdater {
     /**
      * updates the view if a buzzer gives a wrong answer
      *
-     * @param buzzerNumber number of the buzzer
+     * @param buzzerNumber       number of the buzzer
      * @param animationQueueItem animation queue item
      */
     void wrongAnswerGiven(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        presentationView.wrongAnswerGiven(buzzerNumber,animationQueueItem);
+        presentationView.wrongAnswerGiven(buzzerNumber, animationQueueItem);
         simpleOutputView.wrong(buzzerNumber);
     }
 
     /**
      * updates the view if a new buzzer is on turn
-     *  @param buzzerNumber number of the buzzer
-     * @param position position of the buzzer
-     * @param animationQueueItem
+     *
+     * @param buzzerNumber       number of the buzzer
+     * @param position           position of the buzzer
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     void newBuzzerOnTurn(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
         presentationView.newBuzzerOnTurn(buzzerNumber, animationQueueItem);
@@ -77,7 +80,7 @@ class ViewUpdater {
     /**
      * updates the view if a buzzer gives a right answer
      *
-     * @param buzzerNumber number of the buzzer
+     * @param buzzerNumber       number of the buzzer
      * @param animationQueueItem animation queue item
      */
     void rightAnswerGiven(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
@@ -88,7 +91,7 @@ class ViewUpdater {
     /**
      * updates the view if the next question should be displayed
      *
-     * @param questionNumber number of the question displayed
+     * @param questionNumber     number of the question displayed
      * @param animationQueueItem animation queue item
      */
     void nextQuestion(int questionNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {

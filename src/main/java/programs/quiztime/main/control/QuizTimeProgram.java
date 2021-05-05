@@ -47,7 +47,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      */
     @Override
     public QuizTimeProgramSettingsController createSettingsController() {
-        return new QuizTimeProgramSettingsController(this,getProgramModel());
+        return new QuizTimeProgramSettingsController(this, getProgramModel());
     }
 
     /**
@@ -55,7 +55,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      */
     @Override
     public QuizTimeProgramControlController createControlController() {
-        return new QuizTimeProgramControlController(this,getProgramModel());
+        return new QuizTimeProgramControlController(this, getProgramModel());
     }
 
     /**
@@ -82,7 +82,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      * action of the wrong button
      */
     public void wrongAnswer() {
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.WRONG)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.WRONG)) {
             stateChanger.wrongAnswerGiven();
         }
     }
@@ -91,7 +91,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      * action of the right button
      */
     public void rightAnswer() {
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.RIGHT)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.RIGHT)) {
             stateChanger.rightAnswerGiven();
         }
     }
@@ -119,7 +119,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      */
     public void nextQuestion() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
             stateChanger.nextQuestion(animationQueueItem, () -> getProgramController().setQuestionNumber(generalState.getQuestionNumber() + 1));
         }
     }
@@ -129,7 +129,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      */
     public boolean fadeOut() {
         boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
-        if(result) {
+        if (result) {
             stateChanger.fadeToInvisible();
         }
         return result;

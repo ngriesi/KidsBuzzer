@@ -52,7 +52,6 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
 
     /**
      * creates a new Program model
-     *
      */
     public QuizTimeProgramModel() {
         super(QuizTimeProgramSaveFile.class);
@@ -69,7 +68,7 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
     @Override
     public void loadResources(LoadingHandler loadingHandler, OpenGlRenderer openGlRenderer) {
 
-        for(int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             int finalI = i;
             openGlRenderer.addActionToOpenGlThread(() -> {
                 try {
@@ -84,7 +83,7 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
 
         openGlRenderer.addActionToOpenGlThread(() -> {
             try {
-                backgroundTexture = Texture.loadTexture(new File(getSaveFile().getBackground()),loadingHandler);
+                backgroundTexture = Texture.loadTexture(new File(getSaveFile().getBackground()), loadingHandler);
             } catch (FileNotFoundException e) {
                 backgroundTexture = new Texture(SaveDataHandler.DEFAULT_IMAGE);
                 getSaveFile().setBackground("default");
@@ -93,23 +92,23 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
 
         new Thread(() -> {
             introSound = loadAudio(getSaveFile().getIntroSound(), loadingHandler, getSaveFile().getIntroVolume());
-            if(introSound==null) getSaveFile().setIntroSound("default");
+            if (introSound == null) getSaveFile().setIntroSound("default");
         }).start();
         new Thread(() -> {
             questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
-            if(questionSound==null) getSaveFile().setQuestionSound("default");
+            if (questionSound == null) getSaveFile().setQuestionSound("default");
         }).start();
         new Thread(() -> {
             rightSound = loadAudio(getSaveFile().getRightSound(), loadingHandler, getSaveFile().getRightVolume());
-            if(rightSound==null) getSaveFile().setRightSound("default");
+            if (rightSound == null) getSaveFile().setRightSound("default");
         }).start();
         new Thread(() -> {
             buzzerSound = loadAudio(getSaveFile().getBuzzerSound(), loadingHandler, getSaveFile().getBuzzerVolume());
-            if(buzzerSound==null) getSaveFile().setBuzzerSound("default");
+            if (buzzerSound == null) getSaveFile().setBuzzerSound("default");
         }).start();
         new Thread(() -> {
             wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
-            if(wrongSound==null) getSaveFile().setWrongSound("default");
+            if (wrongSound == null) getSaveFile().setWrongSound("default");
         }).start();
     }
 
@@ -122,6 +121,9 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
+    /**
+     * fades out <code>introSound</code>
+     */
     public void fadeOutIntroSound() {
         if (introSound != null) {
             introSound.fadeOut(1);
@@ -137,6 +139,9 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
+    /**
+     * fades out <code>questionSound</code>
+     */
     public void fadeOutQuestionSound() {
         if (questionSound != null) {
             questionSound.fadeOut(1);
@@ -152,6 +157,9 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
+    /**
+     * fades out <code>rightSound</code>
+     */
     public void fadeOutRightSound() {
         if (rightSound != null) {
             rightSound.fadeOut(1);
@@ -176,6 +184,12 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
             wrongSound.play();
         }
     }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public Texture getIcon(int buzzer) {
         return icons[buzzer - 1];
