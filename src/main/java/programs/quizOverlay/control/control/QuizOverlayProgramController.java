@@ -142,6 +142,12 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
         this.simpleOutputView = simpleOutputView;
     }
 
+    /**
+     * Method gets called when a native key release event occurs. Performs the same
+     * actions as the normal key bindings in <code>QuizOverlayControlView</code>
+     *
+     * @param keyCode code of the key released
+     */
     public void nativeKeyAction(int keyCode) {
         switch (keyCode) {
             case NativeKeyEvent.VC_V:

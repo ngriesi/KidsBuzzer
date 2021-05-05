@@ -32,6 +32,6 @@ public class SimpleViewPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        simpleOutputView.drawImage(g,this.getWidth(),this.getHeight());
+        simpleOutputView.drawImage(g, this.getWidth(), this.getHeight());
     }
 }

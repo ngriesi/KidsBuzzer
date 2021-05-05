@@ -54,7 +54,7 @@ public class SimpleOutputView {
     /**
      * performs the action of the first buzzer press in the simple preview
      *
-     * @param buzzer buzzer that was pressed
+     * @param buzzer   buzzer that was pressed
      * @param position position of the buzzer that was pressed
      */
     public void firstPress(int buzzer, int position) {
@@ -66,7 +66,7 @@ public class SimpleOutputView {
     /**
      * performs the action of a buzzer pressed after one is already pressed
      *
-     * @param buzzer buzzer that was pressed
+     * @param buzzer   buzzer that was pressed
      * @param position position of the buzzer pressed
      */
     public void followPress(int buzzer, int position) {
@@ -104,7 +104,7 @@ public class SimpleOutputView {
         simpleVirtualBuzzers[buzzer - 1].setState(SimpleVirtualBuzzer.State.RIGHT);
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
             if (i != buzzer - 1) {
-                hide(i+1);
+                hide(i + 1);
             }
         }
         right = true;
@@ -159,7 +159,8 @@ public class SimpleOutputView {
      */
     private void drawText(Graphics g) {
         if (right) {
-            g.drawString("Richtig", SimpleOutputView.WIDTH/3, SimpleOutputView.HEIGHT/4);
+            //noinspection SpellCheckingInspection
+            g.drawString("Richtig", SimpleOutputView.WIDTH / 3, SimpleOutputView.HEIGHT / 4);
         }
     }
 
@@ -170,7 +171,7 @@ public class SimpleOutputView {
      */
     private void handleTextDrawing(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(new Font("arial",Font.PLAIN,30));
+        g.setFont(new Font("arial", Font.PLAIN, 30));
         drawText(g);
     }
 
@@ -188,11 +189,11 @@ public class SimpleOutputView {
      * draws the image to a graphic context from a swing component
      *
      * @param graphics graphics context of the component
-     * @param width width of the component
-     * @param height height of the component
+     * @param width    width of the component
+     * @param height   height of the component
      */
     public void drawImage(Graphics graphics, int width, int height) {
-        graphics.drawImage(simpleView, 0,0,width,height, null);
+        graphics.drawImage(simpleView, 0, 0, width, height, null);
     }
 
     /**

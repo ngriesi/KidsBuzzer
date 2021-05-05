@@ -43,6 +43,12 @@ public class BuzzerState {
         position = 0;
     }
 
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
+
     public int getPosition() {
         return position;
     }

@@ -42,7 +42,6 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
 
     /**
      * creates a new Program model
-     *
      */
     public QuizOverlayModel() {
         super(QuizOverlaySaveFile.class);
@@ -59,7 +58,7 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
     @Override
     public void loadResources(LoadingHandler loadingHandler, OpenGlRenderer openGlRenderer) {
 
-        for(int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             int finalI = i;
             openGlRenderer.addActionToOpenGlThread(() -> {
                 try {
@@ -74,19 +73,19 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
 
         new Thread(() -> {
             questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
-            if(questionSound==null) getSaveFile().setQuestionSound("default");
+            if (questionSound == null) getSaveFile().setQuestionSound("default");
         }).start();
         new Thread(() -> {
             rightSound = loadAudio(getSaveFile().getRightSound(), loadingHandler, getSaveFile().getRightVolume());
-            if(rightSound==null) getSaveFile().setRightSound("default");
+            if (rightSound == null) getSaveFile().setRightSound("default");
         }).start();
         new Thread(() -> {
             buzzerSound = loadAudio(getSaveFile().getBuzzerSound(), loadingHandler, getSaveFile().getBuzzerVolume());
-            if(buzzerSound==null) getSaveFile().setBuzzerSound("default");
+            if (buzzerSound == null) getSaveFile().setBuzzerSound("default");
         }).start();
         new Thread(() -> {
             wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
-            if(wrongSound==null) getSaveFile().setWrongSound("default");
+            if (wrongSound == null) getSaveFile().setWrongSound("default");
         }).start();
     }
 
@@ -99,6 +98,9 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
         }
     }
 
+    /**
+     * fades out <code>questionSound</code>
+     */
     public void fadeOutQuestionSound() {
         if (questionSound != null) {
             questionSound.fadeOut(1);
@@ -114,6 +116,9 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
         }
     }
 
+    /**
+     * fades out <code>rightSound</code>
+     */
     public void fadeOutRightSound() {
         if (rightSound != null) {
             rightSound.fadeOut(1);
@@ -137,6 +142,12 @@ public class QuizOverlayModel extends ProgramModel<QuizOverlaySaveFile> {
             wrongSound.play();
         }
     }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public Texture getIcon(int buzzer) {
         return icons[buzzer - 1];

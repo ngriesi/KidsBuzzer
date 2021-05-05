@@ -6,6 +6,10 @@ import programs.quizOverlay.main.view.virtualBuzzers.StateHandler;
 import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
 import savedataHandler.SaveDataHandler;
 
+/**
+ * <code>StateHandler</code> that changes the state of the buzzer from the <code>INVISIBLE_DEFAULT</code> state
+ * to any other state
+ */
 public class ChangeFromRightTo extends StateHandler {
 
     public ChangeFromRightTo(VirtualBuzzer virtualBuzzer) {
@@ -32,6 +36,12 @@ public class ChangeFromRightTo extends StateHandler {
 
     }
 
+    /**
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>RIGHT</code>
+     * to <code>INVISIBLE_DEFAULT</code>
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
+     */
     @Override
     protected void changeToInvisibleDefault(AnimationQueue.AnimationQueueItem animationQueueItem) {
         virtualBuzzer.fadeOutNumber(changeAnimationDuration, animationQueueItem);
@@ -40,9 +50,15 @@ public class ChangeFromRightTo extends StateHandler {
         virtualBuzzer.fadeOutQuad(changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> virtualBuzzer.reset());
     }
 
+    /**
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>RIGHT</code>
+     * to <code>VISIBLE_DEFAULT</code>
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
+     */
     @Override
     protected void changeToVisibleDefault(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        virtualBuzzer.moveAndScale((1f + index * 2f) / (buzzerCount * 2f),0.85f,1f/buzzerCount,0.3f,changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
+        virtualBuzzer.moveAndScale((1f + index * 2f) / (buzzerCount * 2f), 0.85f, 1f / buzzerCount, 0.3f, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
             virtualBuzzer.getColorQuad().deactivateManualDepth();
             virtualBuzzer.getNumber().deactivateManualDepth();
             virtualBuzzer.getIcon().deactivateManualDepth();
@@ -54,7 +70,7 @@ public class ChangeFromRightTo extends StateHandler {
         Color unpressed = new Color(SaveDataHandler.BUZZER_COLORS_PRESSED[index]);
         unpressed.setAlpha(unpressedTransparency);
 
-        virtualBuzzer.fadeColor(unpressed,changeAnimationDuration, animationQueueItem);
+        virtualBuzzer.fadeColor(unpressed, changeAnimationDuration, animationQueueItem);
     }
 
 }

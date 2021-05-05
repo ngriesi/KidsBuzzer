@@ -93,6 +93,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
      */
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
+            //noinspection SpellCheckingInspection
             case "Dont block":
                 getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 

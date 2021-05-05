@@ -42,7 +42,7 @@ class StateChanger {
     /**
      * creates a new state changer
      *
-     * @param program program this is the state changer of
+     * @param program      program this is the state changer of
      * @param generalState general state of the program
      */
     StateChanger(QuizOverlayProgram program, GeneralState generalState) {
@@ -71,7 +71,7 @@ class StateChanger {
     /**
      * method called when a buzzer press should invoke a state change
      *
-     * @param buzzerNumber number of the buzzer that was pressed
+     * @param buzzerNumber       number of the buzzer that was pressed
      * @param animationQueueItem animation queue item
      */
     void buzzerPressed(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {

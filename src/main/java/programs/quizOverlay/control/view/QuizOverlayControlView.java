@@ -15,7 +15,7 @@ import static java.awt.GridBagConstraints.*;
 /**
  * control view of the quiz time program
  */
-public class QuizOverlayControlView extends ProgramControllerView {
+public class QuizOverlayControlView extends ProgramControllerView<QuizOverlayProgramController> {
 
     /**
      * size of the buttons
@@ -36,7 +36,7 @@ public class QuizOverlayControlView extends ProgramControllerView {
         setupKeyBindings(programController);
 
 
-        GridBagConstraints gc = new GridBagConstraints(2,0,1,2,1,1,CENTER,BOTH,new Insets(0,0,0,0),0,0);
+        GridBagConstraints gc = new GridBagConstraints(2, 0, 1, 2, 1, 1, CENTER, BOTH, new Insets(0, 0, 0, 0), 0, 0);
 
         SimpleOutputView simpleOutputView = programController.getSimpleOutputView();
         this.add(new SimpleViewPanel(simpleOutputView), gc);
@@ -82,10 +82,10 @@ public class QuizOverlayControlView extends ProgramControllerView {
     /**
      * adds a control button to the view
      *
-     * @param buttonText text of the button
-     * @param actionCommand action command of the button
+     * @param buttonText     text of the button
+     * @param actionCommand  action command of the button
      * @param actionListener action listener of the button
-     * @param gbc constraint of the button
+     * @param gbc            constraint of the button
      */
     private void addButton(String buttonText, String actionCommand, ActionListener actionListener, GridBagConstraints gbc) {
         MyButton button = new MyButton(buttonText);

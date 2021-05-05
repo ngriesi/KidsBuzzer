@@ -4,6 +4,10 @@ import presentationWindow.animations.AnimationQueue;
 import programs.quizOverlay.main.view.virtualBuzzers.StateHandler;
 import programs.quizOverlay.main.view.virtualBuzzers.VirtualBuzzer;
 
+/**
+ * <code>StateHandler</code> that changes the state of the buzzer from the <code>INVISIBLE_DEFAULT</code> state
+ * to any other state
+ */
 public class ChangeFromInvisibleState extends StateHandler {
 
     public ChangeFromInvisibleState(VirtualBuzzer virtualBuzzer) {
@@ -35,6 +39,12 @@ public class ChangeFromInvisibleState extends StateHandler {
 
     }
 
+    /**
+     * Method called when the <code>VirtualBuzzer</code> changes its state from <code>INVISIBLE_DEFAULT</code>
+     * to <code>VISIBLE_DEFAULT</code>
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
+     */
     @Override
     protected void changeToVisibleDefault(AnimationQueue.AnimationQueueItem animationQueueItem) {
         virtualBuzzer.moveAndScale((1f + index * 2f) / (buzzerCount * 2f), 0.85f, 1f / buzzerCount, 0.3f, changeAnimationDuration, animationQueueItem);

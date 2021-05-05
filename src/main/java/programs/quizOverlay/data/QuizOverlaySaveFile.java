@@ -8,34 +8,79 @@ import utils.saveFile.SaveFile;
 @SuppressWarnings("unused")
 public class QuizOverlaySaveFile extends SaveFile {
 
+    /**
+     * file paths of the icons of the teams
+     */
     private String[] icons = {"default", "default", "default"};
 
-    private int[] mainTextColor = {255, 255, 0, 255};
+    /**
+     * color of the main text (right, question and title)
+     */
+    private int[] mainTextColor = {255, 255, 255, 255};
 
+    /**
+     * flag determines if the main text is bold
+     */
     private boolean mainTextBold = false;
 
+    /**
+     * font of the main text
+     */
     private String mainFont = "Arial";
 
+    /**
+     * color of the buzzer text (numbers)
+     */
     private int[] buzzerTextColor = {255, 255, 255, 255};
 
+    /**
+     * flag determines if the numbers are bold
+     */
     private boolean buzzerTextBold = true;
 
+    /**
+     * font of the numbers
+     */
     private String buzzerFont = "Arial";
 
+    /**
+     * file path of the question sound
+     */
     private String questionSound = "default";
 
+    /**
+     * volume of the question sound
+     */
     private int questionVolume = 100;
 
+    /**
+     * file path of the right sound
+     */
     private String rightSound = "default";
 
+    /**
+     * volume of the right sound
+     */
     private int rightVolume = 100;
 
+    /**
+     * file path of the buzzer sound
+     */
     private String buzzerSound = "default";
 
+    /**
+     * volume of the buzzer sound
+     */
     private int buzzerVolume = 100;
 
+    /**
+     * file path of the wrong sound
+     */
     private String wrongSound = "default";
 
+    /**
+     * volume of the wrongs sound
+     */
     private int wrongVolume = 100;
 
     /**
@@ -44,6 +89,12 @@ public class QuizOverlaySaveFile extends SaveFile {
     public QuizOverlaySaveFile() {
         super("quizoverlay");
     }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public String getBuzzerSound() {
         return buzzerSound;

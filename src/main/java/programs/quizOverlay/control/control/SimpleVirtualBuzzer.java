@@ -13,7 +13,7 @@ public class SimpleVirtualBuzzer {
      * states the buzzer can be in
      */
     enum State {
-        NORMAL,PRESSED_FIRST,PRESSED_FOLLOW,DEACTIVATED,RIGHT,INVISIBLE
+        NORMAL, PRESSED_FIRST, PRESSED_FOLLOW, DEACTIVATED, RIGHT, INVISIBLE
     }
 
     /**
@@ -67,11 +67,21 @@ public class SimpleVirtualBuzzer {
      */
     void drawBuzzer(Graphics g) {
         switch (state) {
-            case NORMAL: drawNormal(g);break;
-            case PRESSED_FIRST: drawPressedFirst(g);break;
-            case PRESSED_FOLLOW: drawPressedFollow(g);break;
-            case DEACTIVATED: drawDeactivated(g);break;
-            case RIGHT: drawRight(g);break;
+            case NORMAL:
+                drawNormal(g);
+                break;
+            case PRESSED_FIRST:
+                drawPressedFirst(g);
+                break;
+            case PRESSED_FOLLOW:
+                drawPressedFollow(g);
+                break;
+            case DEACTIVATED:
+                drawDeactivated(g);
+                break;
+            case RIGHT:
+                drawRight(g);
+                break;
 
         }
     }
@@ -83,7 +93,7 @@ public class SimpleVirtualBuzzer {
      */
     private void drawRight(Graphics g) {
         g.setColor(SaveDataHandler.BUZZER_COLORS_PRESSED[index]);
-        g.fillRect(SimpleOutputView.WIDTH / 2 - SimpleOutputView.WIDTH/4, SimpleOutputView.HEIGHT / 20 * 13 - SimpleOutputView.HEIGHT/4, SimpleOutputView.WIDTH / 2, SimpleOutputView.HEIGHT / 2);
+        g.fillRect(SimpleOutputView.WIDTH / 2 - SimpleOutputView.WIDTH / 4, SimpleOutputView.HEIGHT / 20 * 13 - SimpleOutputView.HEIGHT / 4, SimpleOutputView.WIDTH / 2, SimpleOutputView.HEIGHT / 2);
     }
 
     /**
@@ -95,8 +105,8 @@ public class SimpleVirtualBuzzer {
         g.setColor(SaveDataHandler.BUZZER_COLORS_DISABLED[index]);
         g.fillRect(SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT * index, SimpleOutputView.HEIGHT / 3 * 2, SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT, SimpleOutputView.HEIGHT / 3);
         g.setColor(Color.WHITE);
-        g.setFont(new Font("arial",Font.PLAIN,40));
-        g.drawString("" + position, SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 10), (int) (SimpleOutputView.HEIGHT/3* 2.7f));
+        g.setFont(new Font("arial", Font.PLAIN, 40));
+        g.drawString("" + position, SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 10), (int) (SimpleOutputView.HEIGHT / 3 * 2.7f));
     }
 
     /**
@@ -108,8 +118,8 @@ public class SimpleVirtualBuzzer {
         g.setColor(SaveDataHandler.BUZZER_COLORS_PRESSED[index]);
         g.fillRect(SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT * index, SimpleOutputView.HEIGHT / 3 * 2, SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT, SimpleOutputView.HEIGHT / 3);
         g.setColor(Color.WHITE);
-        g.setFont(new Font("arial",Font.PLAIN,40));
-        g.drawString("" + position, SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 10), (int) (SimpleOutputView.HEIGHT/3 * 2.7f));
+        g.setFont(new Font("arial", Font.PLAIN, 40));
+        g.drawString("" + position, SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 10), (int) (SimpleOutputView.HEIGHT / 3 * 2.7f));
     }
 
     /**
@@ -121,8 +131,8 @@ public class SimpleVirtualBuzzer {
         g.setColor(SaveDataHandler.BUZZER_COLORS_PRESSED[index]);
         g.fillRect(SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT * index, SimpleOutputView.HEIGHT / 10 * 6, SimpleOutputView.WIDTH / SaveDataHandler.BUZZER_COUNT, SimpleOutputView.HEIGHT / 10 * 4);
         g.setColor(Color.WHITE);
-        g.setFont(new Font("arial",Font.PLAIN,50));
-        g.drawString("" + position, SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH/(SaveDataHandler.BUZZER_COUNT * 8), (int) (SimpleOutputView.HEIGHT/10 * 8.8f));
+        g.setFont(new Font("arial", Font.PLAIN, 50));
+        g.drawString("" + position, SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 2) * (1 + index * 2) - SimpleOutputView.WIDTH / (SaveDataHandler.BUZZER_COUNT * 8), (int) (SimpleOutputView.HEIGHT / 10 * 8.8f));
     }
 
     /**

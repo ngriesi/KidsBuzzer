@@ -29,6 +29,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      * creates a new program
      */
     public QuizOverlayProgram() {
+        //noinspection SpellCheckingInspection
         super(true, "Quizoverlay");
         generalState = new GeneralState();
         stateChanger = new StateChanger(this, generalState);
@@ -47,7 +48,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     @Override
     public QuizOverlaySettingsController createSettingsController() {
-        return new QuizOverlaySettingsController(this,getProgramModel());
+        return new QuizOverlaySettingsController(this, getProgramModel());
     }
 
     /**
@@ -55,7 +56,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     @Override
     public QuizOverlayProgramController createControlController() {
-        return new QuizOverlayProgramController(this,getProgramModel());
+        return new QuizOverlayProgramController(this, getProgramModel());
     }
 
     /**
@@ -82,7 +83,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      * action of the wrong button
      */
     public void wrongAnswer() {
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.WRONG)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.WRONG)) {
             stateChanger.wrongAnswerGiven();
         }
     }
@@ -91,7 +92,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      * action of the right button
      */
     public void rightAnswer() {
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.RIGHT)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.RIGHT)) {
             stateChanger.rightAnswerGiven();
         }
     }
@@ -101,7 +102,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     public void nextQuestion() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
             stateChanger.nextQuestion(animationQueueItem);
         }
     }
@@ -111,7 +112,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     public void fadeIn() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        if(generalState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
+        if (generalState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
             stateChanger.nextQuestion(animationQueueItem);
         }
     }
@@ -121,7 +122,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     public boolean fadeOut() {
         boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
-        if(result) {
+        if (result) {
             stateChanger.fadeToInvisible();
         }
         return result;
@@ -148,6 +149,11 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
         getProgramPresentationView().updateBuzzerCount();
     }
 
+    /**
+     * method called through the naive key listener when a key gets released
+     *
+     * @param keyCode code of the key that was released
+     */
     @Override
     public void nativeKeyAction(int keyCode) {
         getProgramController().nativeKeyAction(keyCode);

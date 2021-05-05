@@ -27,7 +27,7 @@ class GeneralState {
     /**
      * true if the right view is currently displayed
      */
-    private boolean right= false;
+    private boolean right = false;
 
     /**
      * true if a buzzer is currently pressed and active
@@ -48,7 +48,7 @@ class GeneralState {
     private boolean checkAction(QuizAction action) {
         switch (action) {
             case BUZZER_PRESS:
-                return !right && !invisible  && buzzerReady;
+                return !right && !invisible && buzzerReady;
             case WRONG:
                 return !right && !invisible && buzzerActive > 0;
             case RIGHT:
@@ -68,12 +68,12 @@ class GeneralState {
     /**
      * checks the action and performs it if the check returns true
      *
-     * @param action action to check and perform
+     * @param action             action to check and perform
      * @param animationQueueItem animation queue item
      */
     boolean checkAndPerformAction(QuizAction action, AnimationQueue.AnimationQueueItem animationQueueItem) {
         boolean result = checkAction(action);
-        if(result) {
+        if (result) {
             performAction(action, animationQueueItem);
         }
         return result;
@@ -91,20 +91,24 @@ class GeneralState {
     /**
      * performs the given action in the general state
      *
-     * @param action action to be performed
+     * @param action             action to be performed
      * @param animationQueueItem animation queue item
      */
     private void performAction(QuizAction action, AnimationQueue.AnimationQueueItem animationQueueItem) {
         switch (action) {
             case BUZZER_PRESS:
-                addActiveBuzzer(); break;
+                addActiveBuzzer();
+                break;
             case WRONG:
-                removeActiveBuzzer(); break;
+                removeActiveBuzzer();
+                break;
             case RIGHT:
-                changeToRightState(); break;
+                changeToRightState();
+                break;
             case NEXT_QUESTION:
             case FADE_IN:
-                changeToQuestionState(animationQueueItem); break;
+                changeToQuestionState(animationQueueItem);
+                break;
         }
     }
 
@@ -112,7 +116,7 @@ class GeneralState {
      * changes the state to the invisible state
      *
      * @param animationQueueItem animation queue item in which on finished action this gets performed
-     * @param stateChanger state changer of the quiztime program
+     * @param stateChanger       state changer of the quiztime program
      */
     void changeToInvisibleState(AnimationQueue.AnimationQueueItem animationQueueItem, StateChanger stateChanger) {
         buzzerReady = false;
