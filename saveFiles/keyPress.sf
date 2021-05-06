@@ -1,7 +1,6 @@
 key=[0, 0, 0]
 blockingBehaviour=Dont block
-displayMouseTracker=true
-unblockBuzzer=3
-useClick=[false, false, false]
+useKey=[false, false, false]
 blockingTime=1
+unblockBuzzer=3
 

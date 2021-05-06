@@ -146,6 +146,8 @@ public class AudioClip {
 
             while (progress <= steps) {
 
+                System.out.println(saveGain - (saveGain / steps) * progress);
+
                 setGain(saveGain - (saveGain / steps) * progress);
 
                 try {
@@ -168,7 +170,7 @@ public class AudioClip {
      * Set the volume to a value between 0 and 1.
      */
     public void setGain(double value) {
-        value = (value <= 0.0) ? 0.0001 : (Math.min(value, 1.0));
+        value = (value <= 0.0001) ? 0.0001 : (Math.min(value, 1.0));
         try {
             float dB = (float) (Math.log(value) / Math.log(10.0) * 20.0);
             gainControl.setValue(dB);

@@ -25,7 +25,7 @@ public class StandardAssetFields {
     /**
      * effect color
      */
-    public static Color ROLLOVER_COLOR = new Color(100, 100, 250);
+    public static Color ROLLOVER_COLOR = new Color(50, 150, 250);
 
     /**
      * foreground color for texts or icons
