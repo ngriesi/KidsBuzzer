@@ -3,7 +3,6 @@ package startupApp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.net.URL;
 
 /**
