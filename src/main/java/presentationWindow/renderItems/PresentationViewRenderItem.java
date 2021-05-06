@@ -119,7 +119,7 @@ public class PresentationViewRenderItem {
 
     /**
      * sets a manual depth for the component, must be in the range of:
-     * 0 to {@value MAX_DEPTH} - 2
+     * 0 to MAX_DEPTH - 2
      *
      * @param manualDepth new depth of the item
      */

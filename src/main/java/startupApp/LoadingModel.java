@@ -17,11 +17,7 @@ import programs.testProgram.main.TestProgram;
 import savedataHandler.SaveDataHandler;
 import utils.saveFile.SaveFileLoader;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * controller of the loading window at the startup of the application
@@ -62,20 +58,15 @@ public class LoadingModel {
      * creates a new loading model
      * loads all the resources for the programs
      *
-     * @throws IOException if the loading screen image cant be loaded
      */
-    public LoadingModel() throws IOException {
-
-
-        //noinspection SpellCheckingInspection
-        BufferedImage backgroundImage = ImageIO.read(new File("anktarktis.jpg"));
+    public LoadingModel() {
 
         loadingHandler = new LoadingHandler();
 
         initializeLoading = new LoadingMonitor("initialize");
         loadingHandler.addLoadingProcess(initializeLoading);
 
-        loadingView = new LoadingView(backgroundImage, this);
+        loadingView = new LoadingView( this);
 
 
         new Thread(() -> {
@@ -160,13 +151,15 @@ public class LoadingModel {
      * method updates the process bar and finishes the loading when it is full
      */
     void updateProgressBar() {
-        StringBuilder sb = new StringBuilder();
-        for (String s : loadingHandler.getCurrentBufferContent()) {
-            sb.append(s);
-        }
-        loadingView.updateProgressBar(loadingHandler.getProgress(), sb.toString());
-        if (loadingHandler.getProgress() == 1) {
-            loadingFinished();
+        if(loadingView != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : loadingHandler.getCurrentBufferContent()) {
+                sb.append(s);
+            }
+            loadingView.updateProgressBar(loadingHandler.getProgress(), sb.toString());
+            if (loadingHandler.getProgress() == 1) {
+                loadingFinished();
+            }
         }
     }
 }

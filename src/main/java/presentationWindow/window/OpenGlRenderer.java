@@ -110,7 +110,7 @@ public class OpenGlRenderer implements IGameLogic {
     /**
      * executes the actions from the open gl thread actions list
      */
-    private synchronized void handlerOnOpenGLThreadActions() {
+    private void handlerOnOpenGLThreadActions() {
         while (!executeOnOpenGlThread.isEmpty()) {
             executeOnOpenGlThread.remove().execute();
         }
