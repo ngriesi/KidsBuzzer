@@ -5,11 +5,16 @@ import programs.abstractProgram.ProgramView;
 
 import java.awt.*;
 
+/**
+ * Control view of the test program
+ */
 class TestProgramControlView extends ProgramView {
 
-
-
-
+    /**
+     * creates the view with its 3 buttons
+     *
+     * @param testProgramController controller of this view
+     */
     TestProgramControlView(TestProgramController testProgramController) {
         super(testProgramController);
 

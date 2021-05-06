@@ -8,23 +8,41 @@ import presentationWindow.renderItems.QuadItem;
 import presentationWindow.renderItems.TextItem;
 import programs.abstractProgram.ProgramPresentationView;
 
+/**
+ * Class representing the presentation view of the test program
+ */
 public class TestProgramView extends ProgramPresentationView<TestProgram> {
 
-    private QuadItem red,green, black;
+    /**
+     * quads showing the colors of the buzzers when they are pressed
+     */
+    private QuadItem red, green, black;
 
-    private TextItem redText,greenText, blackText;
+    /**
+     * text items showing the numbers of the buzzers
+     */
+    private TextItem redText, greenText, blackText;
 
-
+    /**
+     * Constructor sets the reference to the main class of the program
+     *
+     * @param program main class of the program
+     */
     TestProgramView(TestProgram program) {
         super(program);
     }
 
 
+    /**
+     * creates the output view of the test program
+     *
+     * @param mainItem main item of the presentation scene
+     */
     @Override
     public void setupView(MainItem mainItem) {
         red = new QuadItem();
-        red.setSize(1/3f, 1);
-        red.setPosition(1/6f, 0.5f);
+        red.setSize(1 / 3f, 1);
+        red.setPosition(1 / 6f, 0.5f);
         red.setColorScheme(new ColorScheme(Color.WHITE));
         red.setEdgeSize(0.01f);
         mainItem.addItem(red);
@@ -35,7 +53,7 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
         red.addItem(redText);
 
         green = new QuadItem();
-        green.setSize(1f/3f, 1);
+        green.setSize(1f / 3f, 1);
         green.setPosition(0.5f, 0.5f);
         green.setColorScheme(new ColorScheme(Color.WHITE));
         green.setEdgeSize(0.01f);
@@ -47,8 +65,8 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
         green.addItem(greenText);
 
         black = new QuadItem();
-        black.setSize(1f/3f, 1);
-        black.setPosition(5f/6f, 0.5f);
+        black.setSize(1f / 3f, 1);
+        black.setPosition(5f / 6f, 0.5f);
         black.setColorScheme(new ColorScheme(Color.WHITE));
         black.setEdgeSize(0.01f);
         mainItem.addItem(black);
@@ -59,10 +77,13 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
         black.addItem(blackText);
 
 
-
-
     }
 
+    /**
+     * shows a buzzer press on the output screen for one second
+     *
+     * @param buzzer pressed buzzer
+     */
     void press(int buzzer) {
         switch (buzzer) {
             case 1:

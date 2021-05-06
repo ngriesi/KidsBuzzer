@@ -6,12 +6,26 @@ import programs.testProgram.data.TestProgramModel;
 
 import java.awt.event.ActionEvent;
 
+/**
+ * controller of the settings of the test program
+ */
 public class TestProgramSettingsController extends ProgramController<TestProgram, TestProgramSettingsView, TestProgramModel> {
 
+    /**
+     * creates a new controller
+     *
+     * @param testProgram      program this controller belongs to
+     * @param testProgramModel model of this program
+     */
     public TestProgramSettingsController(TestProgram testProgram, TestProgramModel testProgramModel) {
-        super(testProgram,testProgramModel);
+        super(testProgram, testProgramModel);
     }
 
+    /**
+     * creates the view of the controller
+     *
+     * @return returns a newly created <code>TestProgramSettingsView</code>
+     */
     @Override
     protected TestProgramSettingsView createView() {
         return new TestProgramSettingsView(this);
@@ -22,13 +36,17 @@ public class TestProgramSettingsController extends ProgramController<TestProgram
 
     }
 
+    /**
+     * Action performed method that gets called for every action that happens on the view
+     * of this controller
+     *
+     * @param e <code>ActionEvent</code> created by the component
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "back":
-                getProgram().setView(getProgram().getProgramController().getProgramView());
-                getProgram().getProgramModel().getSaveFile().saveFile();
-                break;
+        if ("back".equals(e.getActionCommand())) {
+            getProgram().setView(getProgram().getProgramController().getProgramView());
+            getProgram().getProgramModel().getSaveFile().saveFile();
         }
     }
 }

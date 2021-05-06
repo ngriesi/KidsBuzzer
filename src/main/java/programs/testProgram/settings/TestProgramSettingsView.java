@@ -5,11 +5,17 @@ import programs.abstractProgram.ProgramView;
 
 import java.awt.*;
 
-public class TestProgramSettingsView extends ProgramView {
+/**
+ * test settings view with a button to return to the control view
+ */
+class TestProgramSettingsView extends ProgramView {
 
-
-
-    public TestProgramSettingsView(TestProgramSettingsController testProgramSettingsController) {
+    /**
+     * creates the settings view
+     *
+     * @param testProgramSettingsController controller of the view
+     */
+    TestProgramSettingsView(TestProgramSettingsController testProgramSettingsController) {
         super(testProgramSettingsController);
 
         MyButton back = new MyButton("back");

@@ -1,8 +1,8 @@
-font=Impact
-buzzerSound=default
-icons=[default, default, default]
-teamNames=[BAUM, ENTE, GANS]
-textColor=[0, 0, 0, 255]
-textBold=false
 buzzerSoundVolume=0
+font=Impact
+icons=[default, default, default]
+buzzerSound=default
+textColor=[0, 0, 0, 255]
+teamNames=[BAUM, ENTE, GANS]
+textBold=false
 
