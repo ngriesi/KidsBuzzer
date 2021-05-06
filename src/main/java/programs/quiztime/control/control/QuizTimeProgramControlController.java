@@ -123,7 +123,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
                             getSimpleOutputView().changeToDefaultState();
                         }
                     },
-                    1000
+                    2000
             );
         }
     }
