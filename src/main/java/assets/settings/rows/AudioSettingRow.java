@@ -68,7 +68,7 @@ public class AudioSettingRow extends SettingsRow {
     private MyPanel createInteractionPanel(SettingsChangeListener settingsChangeListener, String name, JFileChooser fileChooser) {
         MyPanel interaction = new MyPanel(new GridBagLayout());
         interaction.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 5, Toolkit.getDefaultToolkit().getScreenSize().height / 10));
-        interaction.addComponent(interaction, createFileChooserButton(settingsChangeListener, name, fileChooser), 2, 1, 0, 0, 1, 1);
+        interaction.addComponent(interaction, createFileChooserButton(settingsChangeListener, name, fileChooser), 1, 2, 0, 0, 1, 1);
         interaction.addComponent(interaction, createLabel(), 0, 1, 1, 1);
         interaction.addComponent(interaction, createSlider(settingsChangeListener, name), 1, 1, 1, 1);
         return interaction;

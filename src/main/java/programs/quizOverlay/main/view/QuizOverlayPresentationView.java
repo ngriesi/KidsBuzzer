@@ -72,7 +72,7 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             Texture icon = getProgram().getProgramModel().getIcon(i + 1);
-            virtualBuzzers[i] = new VirtualBuzzer(mainItem, i,font,textColor, icon, SaveDataHandler.BUZZER_COUNT,getProgram().getRenderer());
+            virtualBuzzers[i] = new VirtualBuzzer(mainItem, i, font, textColor, icon, SaveDataHandler.BUZZER_COUNT, getProgram().getRenderer());
         }
     }
 

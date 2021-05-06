@@ -2,26 +2,41 @@ package programs.scoreBoard.main.view.animations;
 
 import presentationWindow.animations.AnimationQueue;
 import presentationWindow.window.ExponentialAnimator;
-import presentationWindow.window.LinearAnimator;
 import programs.scoreBoard.main.view.items.ViewItems;
 import savedataHandler.SaveDataHandler;
 
-
+/**
+ * Animation played when the score board enters the screen
+ */
 public class EnteredAnimation {
 
+    /**
+     * view items class that contains the items that get animated
+     */
     private ViewItems viewItems;
 
-    private LinearAnimator linearAnimator;
-
+    /**
+     * <code>ExponentialAnimator</code> of the <code>OpenGlRenderer</code> to create exponential animations
+     */
     private ExponentialAnimator exponentialAnimator;
 
-    public EnteredAnimation(ViewItems viewItems, LinearAnimator linearAnimator, ExponentialAnimator exponentialAnimator) {
+    /**
+     * Constructor sets teh references for the animators and the <code>ViewItem</code> object
+     *
+     * @param viewItems           reference to all the components that get animated
+     * @param exponentialAnimator exponential animator of the renderer
+     */
+    public EnteredAnimation(ViewItems viewItems, ExponentialAnimator exponentialAnimator) {
 
         this.viewItems = viewItems;
-        this.linearAnimator = linearAnimator;
         this.exponentialAnimator = exponentialAnimator;
     }
 
+    /**
+     * Method executes the animation this class is for
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> to queue the animation
+     */
     public void executeAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             exponentialAnimator.moveXTo((1/(SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i)),viewItems.getTeamYellowBacks()[i],70);

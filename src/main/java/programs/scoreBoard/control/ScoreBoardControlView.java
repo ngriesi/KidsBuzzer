@@ -12,12 +12,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * control view of the score board program
+ */
 class ScoreBoardControlView extends ProgramView {
 
-    private MyButton show,hide;
+    /**
+     * show and hide buttons to show or hide the output window
+     */
+    private MyButton show, hide;
 
+    /**
+     * <code>TextFields</code> containing the current scores of the teams.
+     * They can be used to change the scores
+     */
     private MyTextField[] scores;
 
+    /**
+     * Labels containing the names of the teams
+     */
     private MyLabel[] teamNames;
 
     /**
@@ -30,47 +43,59 @@ class ScoreBoardControlView extends ProgramView {
 
         MyPanel topBar = new MyPanel(new GridBagLayout());
 
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"),"show");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("V"),"hide");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "show");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("V"), "hide");
 
         this.getActionMap().put("show", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actionListener.actionPerformed(new ActionEvent(show,
-                        ActionEvent.ACTION_PERFORMED,
-                        "show"));
+                actionListener.actionPerformed(new ActionEvent(show, ActionEvent.ACTION_PERFORMED, "show"));
             }
         });
 
         this.getActionMap().put("hide", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actionListener.actionPerformed(new ActionEvent(hide,
-                        ActionEvent.ACTION_PERFORMED,
-                        "hide"));
+                actionListener.actionPerformed(new ActionEvent(hide, ActionEvent.ACTION_PERFORMED, "hide"));
             }
         });
 
-        show = new MyButton("Anzeigen");
-        show.setActionCommand("show");
-        show.addActionListener(actionListener);
-        this.addComponent(topBar,show,0,0,1,1, GridBagConstraints.NONE);
+        show = createButton(actionListener, topBar, "Anzeigen", "show", 0);
 
-        hide = new MyButton("Verstecken");
-        hide.setActionCommand("hide");
-        hide.addActionListener(actionListener);
-        this.addComponent(topBar,hide,1,0,1,1, GridBagConstraints.NONE);
+        hide = createButton(actionListener, topBar, "Verstecken", "hide", 1);
 
-        MyButton settings = new MyButton("Einstellungen");
-        settings.setActionCommand("settings");
-        settings.addActionListener(actionListener);
-        this.addComponent(topBar,settings,2,0,1,1, GridBagConstraints.NONE);
+        createButton(actionListener, topBar, "Einstellungen", "settings", 2);
 
-        this.addComponent(this,topBar,1,2,0,0,1f,1f);
+        this.addComponent(this, topBar, 1, 2, 0, 0, 1f, 1f);
 
         createTextFields(actionListener);
     }
 
+    /**
+     * creates a button of the top bar
+     *
+     * @param actionListener <code>ActionListener</code> of al components in this view
+     * @param topBar         parent component of the created button
+     * @param text           text that is displayed on the button
+     * @param actionCommand  action command of the button used to identify the action in the action performed
+     *                       method of the <code>ActionListener</code>
+     * @param gridX          x position of the button in the <code>GridBagLayout</code>
+     * @return returns the build button
+     */
+    private MyButton createButton(ActionListener actionListener, MyPanel topBar, String text, String actionCommand, int gridX) {
+        MyButton button = new MyButton(text);
+        button.setActionCommand(actionCommand);
+        button.addActionListener(actionListener);
+        this.addComponent(topBar, button, gridX, 0, 1, 1, GridBagConstraints.NONE);
+        return button;
+    }
+
+    /**
+     * Method creates the labels containing the team names and the
+     * <code>TextFields</code> containing their scores
+     *
+     * @param actionListener <code>ActionListener</code> for all components in this view
+     */
     private void createTextFields(ActionListener actionListener) {
         teamNames = new MyLabel[SaveDataHandler.MAX_BUZZER_COUNT];
         scores = new MyTextField[SaveDataHandler.MAX_BUZZER_COUNT];
@@ -86,19 +111,31 @@ class ScoreBoardControlView extends ProgramView {
         }
     }
 
+    /**
+     * @return returns the show button of the view
+     */
     public MyButton getShow() {
         return show;
     }
 
+    /**
+     * @return returns the hide button of the view
+     */
     public MyButton getHide() {
         return hide;
     }
 
-    public MyLabel[] getTeamNames() {
+    /**
+     * @return returns the array of the labels displaying the team names
+     */
+    MyLabel[] getTeamNames() {
         return teamNames;
     }
 
-    public MyTextField[] getScore() {
+    /**
+     * @return returns the array of the <code>TextFields</code> displaying the team scores
+     */
+    MyTextField[] getScore() {
         return scores;
     }
 }

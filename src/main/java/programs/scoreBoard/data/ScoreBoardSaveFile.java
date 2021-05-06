@@ -2,21 +2,45 @@ package programs.scoreBoard.data;
 
 import utils.saveFile.SaveFile;
 
+/**
+ * Save file of the score board program
+ */
 @SuppressWarnings({"unused"})
 public class ScoreBoardSaveFile extends SaveFile {
 
-    private String[] icons = {"team12.png", "team2.png", "team3.png"};
+    /**
+     * file paths of the icons displayed behind the scores of the teams
+     */
+    private String[] icons = {"default", "default", "default"};
 
+    /**
+     * names of the teams
+     */
     private String[] teamNames = {"team 1", "team 2", "team 3"};
 
+    /**
+     * font of the team names and score
+     */
     private String font = "Arial";
 
+    /**
+     * flag indicating if the text of the team names and score is bold
+     */
     private boolean textBold = false;
 
+    /**
+     * color of the text
+     */
     private int[] textColor = {255, 255, 255, 255};
 
+    /**
+     * file path of the buzzer press
+     */
     private String buzzerSound = "default";
 
+    /**
+     * volume of the sound
+     */
     private int buzzerSoundVolume;
 
     /**
@@ -25,6 +49,12 @@ public class ScoreBoardSaveFile extends SaveFile {
     public ScoreBoardSaveFile() {
         super("scoreBoard");
     }
+
+    /*
+    *******************************************
+            PUBLIC GETTERS AND SETTERS
+    *******************************************
+     */
 
     public String[] getIcons() {
         return icons;

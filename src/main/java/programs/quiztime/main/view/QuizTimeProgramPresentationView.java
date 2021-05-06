@@ -114,7 +114,7 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             Texture icon = getProgram().getProgramModel().getIcon(i + 1);
-            virtualBuzzers[i] = new VirtualBuzzer(background, i,font,textColor, icon, SaveDataHandler.BUZZER_COUNT,getProgram().getRenderer());
+            virtualBuzzers[i] = new VirtualBuzzer(background, i, font, textColor, icon, SaveDataHandler.BUZZER_COUNT, getProgram().getRenderer());
         }
     }
 

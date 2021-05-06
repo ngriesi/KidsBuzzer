@@ -11,8 +11,7 @@ import assets.standardAssets.StandardAssetFields;
 import javax.swing.*;
 import java.awt.*;
 
-import static java.awt.GridBagConstraints.BOTH;
-import static java.awt.GridBagConstraints.CENTER;
+import static java.awt.GridBagConstraints.*;
 
 /**
  * settings row used to layout a font used in the program. It can update the
@@ -76,12 +75,17 @@ public class FontChooserRow extends SettingsRow {
     private JPanel createInteractionPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        GridBagConstraints c = new GridBagConstraints(0, 0, 1, 1, 1, 1, CENTER, BOTH, new Insets(0, 10, 0, 10), 0, 0);
+        GridBagConstraints c = new GridBagConstraints(0, 0, 1, 1, 1, 1, CENTER, NONE, new Insets(0, 10, 0, 10), 0, 0);
         panel.add(new MyLabel("Fett"), c);
+        c.gridx = 1;
         panel.add(bold, c);
+        c.gridx = 2;
         panel.add(new MyLabel("Style"));
+        c.gridx = 3;
         panel.add(comboBox, c);
+        c.gridx = 4;
         panel.add(new MyLabel("Farbe"));
+        c.gridx = 5;
         panel.add(colorSelector, c);
         return panel;
     }
