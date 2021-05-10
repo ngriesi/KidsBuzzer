@@ -89,6 +89,7 @@ public class LoadingHandler {
     /**
      * @return returns the currently running loading processes
      */
+    @SuppressWarnings("unused")
     CopyOnWriteArrayList<LoadingMonitor> getLoadingProcesses() {
         return loadingProcesses;
     }

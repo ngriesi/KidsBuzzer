@@ -6,6 +6,7 @@ import controlWindow.settings.SettingsSaveFile;
 import org.jnativehook.GlobalScreen;
 import presentationWindow.engine.Engine;
 import presentationWindow.window.OpenGlRenderer;
+import programs.abstractProgram.Program;
 import programs.instantButton.main.InstantButtonProgram;
 import programs.keyPresser.main.KeyPressProgram;
 import programs.mouseClicker.main.MouseClickerProgram;
@@ -57,7 +58,6 @@ public class LoadingModel {
     /**
      * creates a new loading model
      * loads all the resources for the programs
-     *
      */
     public LoadingModel() {
 
@@ -66,7 +66,7 @@ public class LoadingModel {
         initializeLoading = new LoadingMonitor("initialize");
         loadingHandler.addLoadingProcess(initializeLoading);
 
-        loadingView = new LoadingView( this);
+        loadingView = new LoadingView(this);
 
 
         new Thread(() -> {
@@ -86,8 +86,9 @@ public class LoadingModel {
                 settingsSaveFile.setOutputScreen(1);
             }
 
-            createPrograms();
+            openGlRenderer = new OpenGlRenderer();
 
+            createPrograms();
 
             startOpenGlThread();
         }).start();
@@ -99,13 +100,55 @@ public class LoadingModel {
      * creates the sub programs of the application
      */
     private void createPrograms() {
-        programHandler.addProgram(new QuizTimeProgram());
-        programHandler.addProgram(new ScoreBoardProgram());
-        programHandler.addProgram(new InstantButtonProgram());
-        programHandler.addProgram(new TestProgram("test"));
-        programHandler.addProgram(new MouseClickerProgram());
-        programHandler.addProgram(new KeyPressProgram());
-        programHandler.addProgram(new QuizOverlayProgram());
+        createAndLoadProgram("QuizOverlayProgram");
+        createAndLoadProgram("QuizTimeProgram");
+        createAndLoadProgram("MouseClickerProgram");
+        createAndLoadProgram("KeyPressProgram");
+        createAndLoadProgram("TestProgram");
+        createAndLoadProgram("ScoreBoardProgram");
+        createAndLoadProgram("InstantButtonProgram");
+
+    }
+
+    /**
+     * creates and loads a program
+     */
+    private void createAndLoadProgram(String name) {
+        new Thread(() -> {
+            LoadingMonitor loadingMonitor = new LoadingMonitor(name);
+            loadingHandler.addLoadingProcess(loadingMonitor);
+            Program program = createProgram(name);
+            programHandler.addProgram(program);
+            program.loadProgram(openGlRenderer, loadingHandler);
+            loadingMonitor.finishedProcess(loadingHandler);
+        }).start();
+    }
+
+    /**
+     * creates the right program according to the given name
+     *
+     * @param name name of the program to create the right object
+     * @return created program
+     */
+    private synchronized Program createProgram(String name) {
+        switch (name) {
+            case "QuizOverlayProgram":
+                return new QuizOverlayProgram();
+            case "QuizTimeProgram":
+                return new QuizTimeProgram();
+            case "MouseClickerProgram":
+                return new MouseClickerProgram();
+            case "KeyPressProgram":
+                return new KeyPressProgram();
+            case "TestProgram":
+                return new TestProgram("Test");
+            case "ScoreBoardProgram":
+                return new ScoreBoardProgram();
+            case "InstantButtonProgram":
+                return new InstantButtonProgram();
+            default:
+                return new TestProgram("Failure");
+        }
     }
 
     /**
@@ -116,11 +159,6 @@ public class LoadingModel {
 
             LoadingMonitor loadingMonitor = new LoadingMonitor("mainOpenGL");
             loadingHandler.addLoadingProcess(loadingMonitor);
-
-            openGlRenderer = new OpenGlRenderer();
-
-            programHandler.loadPrograms(openGlRenderer, loadingHandler);
-
 
             Engine gameEngine = null;
             try {
@@ -151,10 +189,10 @@ public class LoadingModel {
      * method updates the process bar and finishes the loading when it is full
      */
     void updateProgressBar() {
-        if(loadingView != null) {
+        if (loadingView != null) {
             StringBuilder sb = new StringBuilder();
             for (String s : loadingHandler.getCurrentBufferContent()) {
-                sb.append(s);
+                sb.append(s).append("  -  ");
             }
             loadingView.updateProgressBar(loadingHandler.getProgress(), sb.toString());
             if (loadingHandler.getProgress() == 1) {

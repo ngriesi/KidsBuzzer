@@ -1,27 +1,24 @@
 package programs.programChooser;
 
-import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.Program;
-import startupApp.LoadingHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * handler contains the list of the programs
  */
 public class ProgramHandler {
 
+    private static final int PROGRAM_COUNT = 7;
+
     /**
      * list of the programs
      */
-    private List<Program> programs;
+    private Program[] programs;
 
     /**
      * creates a new program list
      */
     public ProgramHandler() {
-        programs = new ArrayList<>();
+        programs = new Program[PROGRAM_COUNT];
     }
 
     /**
@@ -30,18 +27,26 @@ public class ProgramHandler {
      * @param program program to be added
      */
     public void addProgram(Program program) {
-        programs.add(program);
+        programs[getProgramIndex(program.getName())] = program;
     }
 
     /**
-     * loads the programs, calls the loading methods form the programs in the programs list
+     * returns the position a program has in the left panel list
      *
-     * @param openGlRenderer for loading of open gl resources
-     * @param loadingHandler for handling the loading
+     * @param name name of the program
+     * @return position in the list
      */
-    public void loadPrograms(OpenGlRenderer openGlRenderer, LoadingHandler loadingHandler) {
-        for (Program program : programs) {
-            program.loadProgram(openGlRenderer, loadingHandler);
+    private int getProgramIndex(String name) {
+        System.out.println(name);
+        switch (name) {
+            case "Quiztime": return 0;
+            case "Score Board": return 1;
+            case "Instant Button": return 2;
+            case "Quizoverlay": return 3;
+            case "Mouse Clicker": return 4;
+            case "Key Presser": return 5;
+            case "Test": return 6;
+            default: return -1;
         }
     }
 
@@ -49,10 +54,10 @@ public class ProgramHandler {
      * @return returns a list of the program names list
      */
     public String[] getProgramNamesList() {
-        String[] result = new String[programs.size()];
+        String[] result = new String[programs.length];
 
-        for (int i = 0; i < programs.size(); i++) {
-            result[i] = programs.get(i).getName();
+        for (int i = 0; i < programs.length; i++) {
+            result[i] = programs[i].getName();
         }
 
         return result;
@@ -77,7 +82,7 @@ public class ProgramHandler {
      * resets the programs list
      */
     public void reset() {
-        programs.clear();
+        programs = new Program[PROGRAM_COUNT];
     }
 
     /**
@@ -96,6 +101,6 @@ public class ProgramHandler {
      * @return the program at the given position
      */
     public Program getByNumber(int i) {
-        return programs.get(i);
+        return programs[i];
     }
 }
