@@ -152,8 +152,12 @@ public class OpenGlRenderer implements IGameLogic {
      */
     @Override
     public void cleanup() {
-        renderer.cleanup();
-        scene.getMainItem().cleanup();
+        if(renderer != null) {
+            renderer.cleanup();
+        }
+        if(scene != null && scene.getMainItem() != null) {
+            scene.getMainItem().cleanup();
+        }
     }
 
     /**

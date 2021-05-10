@@ -60,8 +60,11 @@ public class LoadingView extends JPanel {
      * @param screenSize size of the screen
      */
     private void setupFrame(Dimension screenSize) {
-        window.setSize(screenSize.width / 3, (int) (screenSize.height / 1.5f));
-        window.setLocation(screenSize.width / 3, screenSize.height / 6);
+
+        int width = (int) ((screenSize.width / 3) * ((16f/9) * (screenSize.height/(float)screenSize.width)));
+
+        window.setSize(width, (int) (screenSize.height / 1.5f));
+        window.setLocation((screenSize.width - width)/2, screenSize.height / 6);
         window.setUndecorated(true);
         window.getContentPane().add(this);
         window.setBackground(new Color(0,0,0,0));
