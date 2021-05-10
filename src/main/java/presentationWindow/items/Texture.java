@@ -1,6 +1,7 @@
 package presentationWindow.items;
 
 import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
 import startupApp.LoadingHandler;
 import startupApp.LoadingMonitor;
 
@@ -13,6 +14,8 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
+import static org.lwjgl.opengl.GL42.GL_ALL_BARRIER_BITS;
+import static org.lwjgl.opengl.GL42.glMemoryBarrier;
 import static org.lwjgl.stb.STBImage.*;
 
 /**
@@ -20,6 +23,7 @@ import static org.lwjgl.stb.STBImage.*;
  */
 @SuppressWarnings("WeakerAccess")
 public class Texture {
+
 
     /**
      * static method to load a <code>Texture</code> from a file
@@ -154,7 +158,8 @@ public class Texture {
         filterMode = FilterMode.LINEAR;
         int[] pixels = new int[image.getWidth() * image.getHeight()];
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
-        ByteBuffer buffer = ByteBuffer.allocateDirect(image.getWidth() * image.getHeight() * 4);
+
+        ByteBuffer buffer = MemoryUtil.memAlloc(image.getWidth() * image.getHeight() * 4);
 
         for (int h = 0; h < image.getHeight(); h++) {
             for (int w = 0; w < image.getWidth(); w++) {
@@ -260,7 +265,7 @@ public class Texture {
      * @param buf image data
      * @return texture id
      */
-    private int createTexture(ByteBuffer buf) {
+    private synchronized int createTexture(ByteBuffer buf) {
         //Create an openGl texture
         int textureId = glGenTextures();
         //Bind the texture
@@ -285,6 +290,9 @@ public class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
         //Generate MipMap
         glGenerateMipmap(GL_TEXTURE_2D);
+
+        System.out.println(width + " : " + height);
+        System.out.println(buf.capacity());
 
         stbi_image_free(buf);
 

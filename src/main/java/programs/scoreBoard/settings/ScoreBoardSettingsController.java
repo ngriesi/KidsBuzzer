@@ -104,6 +104,7 @@ public class ScoreBoardSettingsController extends ProgramController<ScoreBoardPr
     private void updateTeamNames(SettingsEvent settingsEvent) {
         int buzzerNumber = SaveDataHandler.getNumberByName(settingsEvent.getName().substring(4));
         getProgramModel().getSaveFile().getTeamNames()[buzzerNumber] = (String) settingsEvent.getValue();
+        getProgram().getProgramController().updateNames();
         getProgram().getRenderer().addActionToOpenGlThread(() -> getProgram().getProgramPresentationView().updateText());
     }
 

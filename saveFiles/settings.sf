@@ -1,9 +1,9 @@
-windowHeight=685
-buzzerNumber=3
-windowWidth=1145
 outputScreen=1
-windowPositionY=211
-useNativeKeyListener=false
 desiredOutputScreen=1
-windowPositionX=217
+windowPositionY=146
+windowPositionX=382
+useNativeKeyListener=false
+windowHeight=689
+buzzerNumber=3
+windowWidth=988
 

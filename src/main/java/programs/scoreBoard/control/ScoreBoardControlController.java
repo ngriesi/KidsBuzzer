@@ -118,4 +118,13 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
                 break;
         }
     }
+
+    /**
+     * updates the names of the teams in the control view
+     */
+    public void updateNames() {
+        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getTeamNames()[i]);
+        }
+    }
 }

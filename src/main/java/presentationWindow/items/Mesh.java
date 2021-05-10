@@ -1,5 +1,8 @@
 package presentationWindow.items;
 
+import org.lwjgl.stb.STBTTAlignedQuad;
+import org.lwjgl.stb.STBTTBakedChar;
+import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
@@ -13,6 +16,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.stb.STBTruetype.stbtt_GetBakedQuad;
 
 @SuppressWarnings({"WeakerAccess"})
 public class Mesh {
@@ -49,7 +53,6 @@ public class Mesh {
     public Mesh(float[] positions, float[] textCords, float[] normals, int[] indices) {
         this(positions, textCords, normals, new float[0], new float[0], new int[0], new float[0], indices);
     }
-
 
     /**
      * creates a float vbo from a float array
