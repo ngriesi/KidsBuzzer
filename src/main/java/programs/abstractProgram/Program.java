@@ -96,10 +96,7 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
         programController = createControlController();
         programPresentationView = createPresentationView();
         setView(getProgramController().getProgramView());
-        addClosedAction(() -> {
-            System.out.println(getProgramModel().getSaveFile());
-            getProgramModel().getSaveFile().saveFile();
-        });
+        addClosedAction(() -> getProgramModel().getSaveFile().saveFile());
     }
 
     /**

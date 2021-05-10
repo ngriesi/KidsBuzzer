@@ -127,7 +127,7 @@ public class LoadingView extends JPanel {
     void updateProgressBar(float newProgress, String newFinishedActions) {
         this.loadingProgress = newProgress;
         if (!newFinishedActions.equals("")) {
-            this.finishedStep = newFinishedActions;
+            this.finishedStep = newFinishedActions + " finished loading";
         }
     }
 

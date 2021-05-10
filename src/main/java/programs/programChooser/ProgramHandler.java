@@ -37,7 +37,6 @@ public class ProgramHandler {
      * @return position in the list
      */
     private int getProgramIndex(String name) {
-        System.out.println(name);
         switch (name) {
             case "Quiztime": return 0;
             case "Score Board": return 1;

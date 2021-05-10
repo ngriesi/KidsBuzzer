@@ -46,15 +46,11 @@ public class Texture {
             IntBuffer w = stack.mallocInt(1);
             IntBuffer h = stack.mallocInt(1);
             IntBuffer channels = stack.mallocInt(1);
-            loadingMonitor.setText("test1");
             buf = stbi_load(file.getAbsolutePath(), w, h, channels, 4);
-            loadingMonitor.setText("tes5");
             if (buf == null) {
                 loadingMonitor.finishedProcess(loadingHandler);
                 throw new FileNotFoundException("Cant find file " + file.getAbsolutePath());
             }
-
-            loadingMonitor.setText("tes6");
 
             return new Texture(w.get(), h.get(), buf, loadingHandler, loadingMonitor);
         }
@@ -288,9 +284,6 @@ public class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
         //Generate MipMap
         glGenerateMipmap(GL_TEXTURE_2D);
-
-        System.out.println(width + " : " + height);
-        System.out.println(buf.capacity());
 
         stbi_image_free(buf);
 

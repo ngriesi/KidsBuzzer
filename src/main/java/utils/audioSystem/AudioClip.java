@@ -142,11 +142,7 @@ public class AudioClip {
 
             float saveGain = (float) Math.pow(Math.E, (gainControl.getValue() / 20.0 * Math.log(10)));
 
-            System.out.println(saveGain);
-
             while (progress <= steps) {
-
-                System.out.println(saveGain - (saveGain / steps) * progress);
 
                 setGain(saveGain - (saveGain / steps) * progress);
 
