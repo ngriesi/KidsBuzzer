@@ -4,6 +4,9 @@ import assets.combobox.MyComboBox;
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsEvent;
 
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+
 /**
  * creates a settings row with a combo box
  */
@@ -27,12 +30,30 @@ public class ComboBoxSettingsRow<T> extends SettingsRow {
 
         comboBox = new MyComboBox<>(values);
         comboBox.setSelectedItem(startValue);
-        comboBox.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name)));
+        comboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name));
+            }
+        });
 
         super.addInteractionElement(comboBox);
     }
 
+    /**
+     * updates the displayed value of this settings row
+     *
+     * @param value selected value
+     */
     public void setSetting(T value) {
         comboBox.setSelectedItem(value);
+    }
+
+    /**
+     * sets the possible values of this settings row
+     *
+     * @param values possible values
+     */
+    public void setPossibleValues(T[] values) {
+        comboBox.setModel(new DefaultComboBoxModel<>(values));
     }
 }

@@ -14,6 +14,12 @@ public class SettingsSaveFile extends SaveFile {
     private int outputScreen = 1;
 
     /**
+     * stores the desired output screen, in contrast to <code>outputScreen</code>
+     * this value can not be changed by connecting or disconnecting a screen
+     */
+    private int desiredOutputScreen = 2;
+
+    /**
      * stores the width of the application when it was closed
      */
     private int windowWidth = 1000;
@@ -55,6 +61,14 @@ public class SettingsSaveFile extends SaveFile {
             PUBLIC GETTERS AND SETTERS
     *******************************************
      */
+
+    public int getDesiredOutputScreen() {
+        return desiredOutputScreen;
+    }
+
+    public void setDesiredOutputScreen(int desiredOutputScreen) {
+        this.desiredOutputScreen = desiredOutputScreen;
+    }
 
     public int getBuzzerNumber() {
         return buzzerNumber;

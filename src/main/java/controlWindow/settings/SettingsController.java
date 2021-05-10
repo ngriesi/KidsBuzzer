@@ -30,7 +30,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
     /**
      * creates a new settings controller
      *
-     * @param mainController     reference to the main application model
+     * @param mainController   reference to the main application model
      * @param settingsSaveFile save file that was loaded at the start of the application
      */
     public SettingsController(MainController mainController, SettingsSaveFile settingsSaveFile) {
@@ -93,6 +93,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     private void cancelButtonAction() {
         saveFileHandler.rollbackChanges();
+        mainController.updateOutputScreen(saveFileHandler.getSaveFile().getOutputScreen());
         mainController.displayControlView();
     }
 
@@ -118,7 +119,9 @@ public class SettingsController extends assets.settings.general.SettingsControll
         switch (settingsEvent.getName()) {
             case outputScreen:
                 saveFileHandler.getSaveFile().setOutputScreen((int) settingsEvent.getValue());
-                mainController.updateOutputScreen();
+                saveFileHandler.getSaveFile().setDesiredOutputScreen((int) settingsEvent.getValue());
+                System.out.println("test");
+                mainController.updateOutputScreen((int) settingsEvent.getValue());
                 break;
             case buzzerCount:
                 saveFileHandler.getSaveFile().setBuzzerNumber((int) settingsEvent.getValue());
@@ -141,6 +144,16 @@ public class SettingsController extends assets.settings.general.SettingsControll
             result[i] = i + 1;
         }
         return result;
+    }
+
+    /**
+     * changes the possible values of the combo box to select
+     * the output screen
+     *
+     * @param screens possible output screens
+     */
+    public void setPossibleScreens(Integer[] screens) {
+        getSettingsView().getOutputScreen().setPossibleValues(screens);
     }
 
 

@@ -116,4 +116,11 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     CheckBoxSettingsRow getNativeKeySettingsRow() {
         return useNativeKeyListener;
     }
+
+    /**
+     * used to update the number of output screens that can be selected
+     */
+    ComboBoxSettingsRow<Integer> getOutputScreen() {
+        return outputScreen;
+    }
 }

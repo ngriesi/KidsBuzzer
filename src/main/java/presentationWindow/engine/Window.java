@@ -400,11 +400,12 @@ public class Window {
      * @param outputScreen index of the screen this window should be placed in
      */
     public void setScreen(int outputScreen) {
+        System.out.println(outputScreen);
         screen = outputScreen;
         PointerBuffer monitors = glfwGetMonitors();
         long monitor = 0;
         if (monitors != null) {
-            monitor = monitors.get(outputScreen - 1);
+            monitor = monitors.get(screen - 1);
         }
 
         //get Resolution of the primary monitor
@@ -418,19 +419,17 @@ public class Window {
         int[] yPos = new int[1];
         glfwGetMonitorPos(monitor, xPos, yPos);
 
-        if (monitor != glfwGetPrimaryMonitor()) {
 
+        if (monitor != glfwGetPrimaryMonitor()) {
             width = monitorData.width();
             height = monitorData.height() + 1;
-
-            glfwSetWindowPos(windowHandle, xPos[0] + width / 2, yPos[0] + height / 2);
-
-            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
         } else {
-            windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
-
-            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
+            width = monitorData.width() / 4;
+            height = monitorData.height() / 4 + 1;
         }
+
+        glfwSetWindowPos(windowHandle, xPos[0], yPos[0]);
+        glfwSetWindowSize(windowHandle, width, height);
 
 
     }

@@ -91,6 +91,7 @@ public class ControlModel {
 
         mainController.setProgram(programHandler.getByName(programHandler.getProgramNamesList()[0]));
 
+        new ScreenHandler(mainController);
 
     }
 

@@ -25,6 +25,8 @@ public class MainController {
      */
     MainController(ControlModel controlModel) {
         this.controlModel = controlModel;
+
+
     }
 
     /**
@@ -38,9 +40,11 @@ public class MainController {
 
     /**
      * changes the output screen used by the <code>OpenGlRenderer</code>
+     *
+     * @param value index of the new output screen
      */
-    public void updateOutputScreen() {
-        controlModel.getOpenGlRenderer().changeScreen(controlModel.getSaveDataHandler().getSettings().getOutputScreen());
+    public void updateOutputScreen(int value) {
+        controlModel.getOpenGlRenderer().changeScreen(value);
     }
 
     /**
