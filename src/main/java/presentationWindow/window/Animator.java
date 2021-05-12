@@ -83,6 +83,7 @@ public abstract class Animator {
      * starts a new animation
      *
      * @param animation animation to start
+     * @return returns the started animation
      */
     @SuppressWarnings("unused")
     Animation startAnimation(Animation animation) {

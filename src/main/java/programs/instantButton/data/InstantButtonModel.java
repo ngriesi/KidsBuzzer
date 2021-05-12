@@ -44,6 +44,9 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
 
     /**
      * plays the sound if it exists
+     *
+     * @param buzzer buzzer for which the sound gets played
+     * @return true if the sound exists
      */
     public boolean playSound(int buzzer) {
         if (audioClips[buzzer] != null) {

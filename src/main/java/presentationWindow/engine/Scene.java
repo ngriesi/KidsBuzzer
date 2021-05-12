@@ -16,6 +16,8 @@ public class Scene {
 
     /**
      * constructor creates hashMap and lightHandler
+     *
+     * @param window the window the scene is inside
      */
     public Scene(Window window) {
         mainItem = new MainItem(window);

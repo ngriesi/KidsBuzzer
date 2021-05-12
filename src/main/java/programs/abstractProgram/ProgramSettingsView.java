@@ -9,6 +9,7 @@ import assets.standardAssets.StandardAssetFields;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import static java.awt.BorderLayout.*;
 import static java.awt.GridBagConstraints.BOTH;
@@ -40,9 +41,16 @@ public abstract class ProgramSettingsView extends ProgramView {
     private JPanel centerPanel;
 
     /**
+     * panel which sits on the bottom of the page and contains the back button
+     */
+    private JPanel bottomBar;
+
+    /**
      * creates a new view
      *
-     * @param actionListener sets the actionListener of the view
+     * @param actionListener         sets the actionListener of the view
+     * @param settingsChangeListener settings change listener for this settings view
+     * @param panelNames             names of the panels, displayed in the buttons to select them
      */
     public ProgramSettingsView(ActionListener actionListener, SettingsChangeListener settingsChangeListener, String[] panelNames) {
         super(actionListener);
@@ -66,9 +74,11 @@ public abstract class ProgramSettingsView extends ProgramView {
             i++;
         }
 
+        bottomBar = createBottomBar(actionListener);
+
         this.add(createTopBar(panelNames), PAGE_START);
         this.add(centerPanel, CENTER);
-        this.add(createBottomBar(actionListener), PAGE_END);
+        this.add(bottomBar, PAGE_END);
 
 
         center.show(centerPanel, "0");
@@ -125,6 +135,7 @@ public abstract class ProgramSettingsView extends ProgramView {
      * @param newIndex index of the pressed button
      */
     private void selectNewLayer(int newIndex) {
+
         layerSelectors[selectedIndex].setSelected(false);
         layerSelectors[selectedIndex].setEnabled(true);
         layerSelectors[newIndex].setEnabled(false);
@@ -162,5 +173,41 @@ public abstract class ProgramSettingsView extends ProgramView {
         bottomBar.add(new MyPanel(new GridBagLayout()), c);
 
         return bottomBar;
+    }
+
+    /**
+     * Method adds a new layer to the settings view
+     *
+     * @param name  name of the panel displayed in the layer selection button
+     * @param panel panel containing the new settings page
+     */
+    public void createNewSettingsPage(String name, MyPanel panel) {
+
+        this.removeAll();
+
+        this.setLayout(new BorderLayout());
+
+        panel.setBorder(createShadowBorder());
+        centerPanel.add(panel, "" + layerSelectors.length);
+
+        String[] layerNames = new String[layerSelectors.length + 1];
+        for (int i = 0; i < layerNames.length; i++) {
+            if (i < layerSelectors.length) {
+                layerNames[i] = layerSelectors[i].getText();
+            } else {
+                layerNames[i] = name;
+            }
+        }
+
+        this.add(createTopBar(layerNames), PAGE_START);
+        this.add(centerPanel, CENTER);
+        this.add(bottomBar, PAGE_END);
+
+        center.show(centerPanel, "0");
+
+        selectedIndex = 0;
+        layerSelectors[0].setSelected(true);
+
+        this.setBorder(BorderFactory.createEmptyBorder());
     }
 }

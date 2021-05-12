@@ -11,6 +11,7 @@ class SaveFileCopy {
     /**
      * copy method for any child classes of SaveFile
      *
+     * @param <T>      type of the save file
      * @param saveFile saveFile to be copied
      * @return returns a new instance of the save file with the same values
      */

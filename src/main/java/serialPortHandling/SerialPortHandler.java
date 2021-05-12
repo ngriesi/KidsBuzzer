@@ -51,6 +51,8 @@ class SerialPortHandler {
 
     /**
      * listens for the initial input the receiver sends after it has finished its setup
+     *
+     * @throws SerialPortException if the serial port cant be red
      */
     private void listenForInitialSerialInput() throws SerialPortException {
 
@@ -77,6 +79,8 @@ class SerialPortHandler {
 
     /**
      * creates the port
+     *
+     * @throws SerialPortException if the serial port cant be set up
      */
     private void createAndSetupPort() throws SerialPortException {
         serialPort = new SerialPort(portName);

@@ -166,6 +166,7 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
      * shows the first buzzer press for this question
      *
      * @param buzzerNumber       number of the buzzer pressed
+     * @param position           position of the buzzer
      * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     public void firstBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
@@ -205,6 +206,8 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
 
     /**
      * Method fads out the title and resets the view to the next question
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> used to queue the animation
      */
     public void resetToQuestionView(AnimationQueue.AnimationQueueItem animationQueueItem) {
         if (title.getOpacity() > 0) {

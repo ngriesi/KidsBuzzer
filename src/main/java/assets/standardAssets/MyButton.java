@@ -25,7 +25,8 @@ public class MyButton extends CleanButton {
     /**
      * creates a standard clean button with a text
      *
-     * @param text of the button
+     * @param text      of the button
+     * @param textColor color of the text of the button
      */
     private MyButton(String text, Color textColor) {
         super();

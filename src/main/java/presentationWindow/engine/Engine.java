@@ -66,6 +66,9 @@ public class Engine implements Runnable {
      * @param vSync          for window
      * @param gameLogic      the game
      * @param loadingHandler loading handler
+     * @param transparent    transparency of the window
+     * @param fullScreen     flag determines if the window should be full screen
+     * @param screen         screen the window should be inside
      */
     public Engine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic, LoadingHandler loadingHandler, boolean transparent, boolean fullScreen, int screen) {
         window = new Window(windowTitle, width, height, vSync, this, transparent, fullScreen, screen);

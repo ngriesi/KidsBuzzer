@@ -17,6 +17,8 @@ public class MyToggleButton extends JToggleButton {
 
     /**
      * creates a custom check box and sets the attributes
+     *
+     * @param text text of the toggle button
      */
     public MyToggleButton(String text) {
 

@@ -63,11 +63,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "show":
-                if (getProgram().getMainController().isShowingPresentation()) {
-                    hide();
-                } else {
-                    show();
-                }
+                showHideAction();
                 break;
             case "wrong":
                 wrongButtonAction();
@@ -81,6 +77,18 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
             case "settings":
                 getProgram().setView(getProgram().getSettingsController().getProgramView());
                 break;
+        }
+    }
+
+    /**
+     * hides the output when it is visible and shows it
+     * when it is invisible
+     */
+    public void showHideAction() {
+        if (getProgram().getMainController().isShowingPresentation()) {
+            hide();
+        } else {
+            show();
         }
     }
 
@@ -114,9 +122,7 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      * action of the wrong button - tells the program that the current buzzer gave a wrong answer
      */
     public void wrongButtonAction() {
-        if (!getSimpleOutputView().isRight()) {
-            getProgram().wrongAnswer();
-        }
+        getProgram().wrongAnswer();
     }
 
     /**

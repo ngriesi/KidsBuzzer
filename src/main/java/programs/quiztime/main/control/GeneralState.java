@@ -80,6 +80,7 @@ class GeneralState {
      *
      * @param action             action to check and perform
      * @param animationQueueItem animation queue item
+     * @return the result of the check of the action
      */
     boolean checkAndPerformAction(QuizAction action, AnimationQueue.AnimationQueueItem animationQueueItem) {
         boolean result = checkAction(action);
@@ -93,6 +94,7 @@ class GeneralState {
      * checks the action and performs it if the check returns true
      *
      * @param action action to check and perform
+     * @return the result of the action check
      */
     boolean checkAndPerformAction(QuizAction action) {
         return checkAndPerformAction(action, null);

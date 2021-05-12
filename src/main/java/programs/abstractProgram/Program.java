@@ -3,6 +3,7 @@ package programs.abstractProgram;
 import controlWindow.MainController;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.window.OpenGlRenderer;
+import remoteHandler.RemoteHandler;
 import startupApp.LoadingHandler;
 import startupApp.LoadingMonitor;
 
@@ -81,6 +82,11 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     private List<presentationWindow.engine.Action> programClosedActions;
 
     /**
+     * Handler for the remote
+     */
+    private RemoteHandler remoteHandler;
+
+    /**
      * creates a new program
      *
      * @param blockBuzzers determines if the buzzer blocking should be used
@@ -95,19 +101,60 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
         settingsController = createSettingsController();
         programController = createControlController();
         programPresentationView = createPresentationView();
+        setupRemoteHandler();
         setView(getProgramController().getProgramView());
-        addClosedAction(() -> getProgramModel().getSaveFile().saveFile());
+        addClosedAction(() -> {
+            getProgramModel().getSaveFile().saveFile();
+            remoteHandler.saveSettings();
+        });
     }
 
     /**
-     * abstract creation methods
+     * sets up the handler for the remote of the program
+     */
+    private void setupRemoteHandler() {
+        remoteHandler = new RemoteHandler();
+        createRemoteActions(remoteHandler);
+        remoteHandler.setActions(name);
+        if (settingsController != null) {
+            remoteHandler.createAndAddRemoteSettingsView(settingsController.getProgramView());
+        }
+    }
+
+    /**
+     * creates the actions that can be bound to the remote specifically in this program
+     *
+     * @param remoteHandler <code>RemoteHandler</code> of this program
+     */
+    protected void createRemoteActions(RemoteHandler remoteHandler) {
+    }
+
+    /**
+     * abstract creation method for the program model
+     *
+     * @return returns the created program model
      */
     public abstract M createModel();
 
+    /**
+     * abstract creation method for the settings controller
+     *
+     * @return returns the created settings controller
+     */
     public abstract SC createSettingsController();
 
+    /**
+     * abstract creation method for the program controller
+     *
+     * @return returns the created program controller
+     */
     public abstract C createControlController();
 
+    /**
+     * abstract creation method for the presentation view
+     *
+     * @return returns the created presentation view
+     */
     public abstract P createPresentationView();
 
     /**
@@ -290,6 +337,14 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
      * @param keyCode code of the key that was released
      */
     public void nativeKeyAction(int keyCode) {
+    }
 
+    /**
+     * method gets called when a button on the remote was pressed
+     *
+     * @param pressedButton button that was pressed on the remote
+     */
+    public void remotePressedAction(RemoteHandler.RemoteButton pressedButton) {
+        remoteHandler.pressedAction(pressedButton);
     }
 }

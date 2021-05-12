@@ -64,6 +64,7 @@ public abstract class Animation<T> {
      * @param endValue        end position of the animation
      * @param duration        duration of the animation
      * @param animationAction action of the animation performed every frame
+     * @param animationCurve  curve of the animation
      */
     Animation(T startValue, T endValue, int duration, AnimationAction<T> animationAction, AnimationCurve animationCurve) {
         onFinishedActions = new ArrayList<>();
@@ -143,6 +144,8 @@ public abstract class Animation<T> {
 
     /**
      * method is called to update animation value
+     *
+     * @param progress progress of the animation in the range form 0 to 1
      */
     public abstract void stepAction(float progress);
 

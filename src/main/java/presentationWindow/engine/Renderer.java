@@ -79,6 +79,7 @@ public class Renderer {
      * updates the main matrices with the camera and calls the three rendering methods
      *
      * @param window in witch the rendering happens
+     * @param scene  scene containing all the elements of the view
      */
     public void render(Window window, Scene scene) {
         clear();
@@ -100,6 +101,7 @@ public class Renderer {
      * rendering is done in the hud components classes
      *
      * @param window window to render in
+     * @param scene  scene that gets rendered
      */
     @SuppressWarnings("unused")
     private void renderScreen(Window window, Scene scene) {

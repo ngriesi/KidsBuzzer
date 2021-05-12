@@ -52,6 +52,7 @@ public class MyJFrame extends ResizeWindowPanel {
      *
      * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
+     * @param state        state used to determine which border should be chosen
      */
     private void chooseWindowBorder(int screenWidth, int screenHeight, int state) {
 

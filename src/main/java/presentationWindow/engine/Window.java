@@ -81,10 +81,14 @@ public class Window {
     /**
      * Constructor sets all parameters except windowHandle and update mode
      *
-     * @param title  window title
-     * @param width  window width in pixels
-     * @param height window height in pixels
-     * @param vSync  should use vSync
+     * @param title       window title
+     * @param width       window width in pixels
+     * @param height      window height in pixels
+     * @param vSync       should use vSync
+     * @param engine      engine that uses this window
+     * @param transparent transparency of the window
+     * @param fullScreen  flag determines if the window should be full screen
+     * @param screen      screen the window should be inside
      */
 
     public Window(String title, int width, int height, boolean vSync, Engine engine, boolean transparent, boolean fullScreen, int screen) {
@@ -383,12 +387,19 @@ public class Window {
     }
 
     /**
-     * Setter for Actions
+     * Setter for the Close Action
+     *
+     * @param closedAction new close action of the window
      */
     public void setClosedAction(Action closedAction) {
         this.closedAction = closedAction;
     }
 
+    /**
+     * Setter for the Focus Action
+     *
+     * @param onFocusAction new focus action of the window
+     */
     public void setOnFocusAction(Action onFocusAction) {
         this.onFocusAction = onFocusAction;
     }

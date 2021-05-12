@@ -112,6 +112,8 @@ public class LoadingModel {
 
     /**
      * creates and loads a program
+     *
+     * @param name of the program that gets created
      */
     private void createAndLoadProgram(String name) {
         new Thread(() -> {

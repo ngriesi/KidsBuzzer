@@ -113,6 +113,8 @@ public class MainController {
 
     /**
      * returns true if the presentation window is visible
+     *
+     * @return true if the output window is visible
      */
     public boolean isShowingPresentation() {
         return controlModel.getOpenGlRenderer().getWindow().isShown();

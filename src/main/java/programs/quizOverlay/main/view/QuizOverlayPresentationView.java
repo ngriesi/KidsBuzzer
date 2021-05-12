@@ -103,6 +103,7 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
      * shows the first buzzer press for this question
      *
      * @param buzzerNumber       number of the buzzer pressed
+     * @param position           position of the buzzer
      * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
      */
     public void firstBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
@@ -142,6 +143,8 @@ public class QuizOverlayPresentationView extends ProgramPresentationView<QuizOve
 
     /**
      * resets the view for the next question
+     *
+     * @param animationQueueItem <code>AnimationQueueItem</code> used to queue the animation
      */
     public void resetToQuestionView(AnimationQueue.AnimationQueueItem animationQueueItem) {
 

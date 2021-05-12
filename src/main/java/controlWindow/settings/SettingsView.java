@@ -119,6 +119,8 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
 
     /**
      * used to update the number of output screens that can be selected
+     *
+     * @return returns the combo box settings row used to select the output screen
      */
     ComboBoxSettingsRow<Integer> getOutputScreen() {
         return outputScreen;

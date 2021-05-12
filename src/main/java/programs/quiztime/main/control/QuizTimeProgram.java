@@ -8,6 +8,8 @@ import programs.quiztime.control.control.SimpleOutputView;
 import programs.quiztime.data.QuizTimeProgramModel;
 import programs.quiztime.main.view.QuizTimeProgramPresentationView;
 import programs.quiztime.settings.QuizTimeProgramSettingsController;
+import remoteHandler.RemoteHandler;
+import remoteHandler.actions.RemoteAction;
 
 /**
  * main class of the quiz time program
@@ -126,6 +128,8 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
 
     /**
      * fades out the presentation view
+     *
+     * @return returns the result of the check of the TO_INVISIBLE action
      */
     public boolean fadeOut() {
         boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
@@ -154,5 +158,21 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
         getProgramController().setSimpleOutputView(new SimpleOutputView(getProgramController()));
         getProgramController().getProgramView().repaint();
         getProgramPresentationView().updateBuzzerCount();
+    }
+
+    /**
+     * creates the actions that can be bound to the
+     * buttons of the remote
+     *
+     * @param remoteHandler <code>RemoteHandler</code> of this program
+     */
+    @Override
+    protected void createRemoteActions(RemoteHandler remoteHandler) {
+        super.createRemoteActions(remoteHandler);
+
+        remoteHandler.addRemoteAction("Nächste Frage", new RemoteAction(this::nextQuestion));
+        remoteHandler.addRemoteAction("Richtig", new RemoteAction(this::rightAnswer));
+        remoteHandler.addRemoteAction("Falsch", new RemoteAction(this::wrongAnswer));
+        remoteHandler.addRemoteAction("Anzeigen/Verstecken", new RemoteAction(() -> getProgramController().showHideAction()));
     }
 }

@@ -82,6 +82,7 @@ public class ScoreBoardPresentationView extends ProgramPresentationView<ScoreBoa
      * Plays the buzzer press animation
      *
      * @param animationQueueItem <code>AnimationQueueItem</code> to queue the animation
+     * @param buzzer             buzzer of which the animation gets played
      */
     public void buzzerAnimation(AnimationQueue.AnimationQueueItem animationQueueItem, int buzzer) {
         buzzerPressedAnimation.executeAnimation(animationQueueItem, buzzer);

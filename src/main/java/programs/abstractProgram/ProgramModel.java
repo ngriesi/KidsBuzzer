@@ -76,6 +76,11 @@ public abstract class ProgramModel<S extends SaveFile> {
 
     /**
      * method should be called in an extra Thread to load a audio file
+     *
+     * @param path           path of the audio file
+     * @param loadingHandler <code>LoadingHandler</code> of the program
+     * @param volume         volume of the audio in the range form 0 to 100
+     * @return the loaded audio clip
      */
     protected AudioClip loadAudio(String path, LoadingHandler loadingHandler, int volume) {
         AudioClip audioClip = AudioClip.load(new File(path), loadingHandler);

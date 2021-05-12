@@ -116,6 +116,8 @@ public class Mesh {
      * @param normals    normal vectors
      * @param tangents   tangent vectors
      * @param biTangents biTangent vectors
+     * @param jointIDs   ids of the joints
+     * @param weights    weights of the vertices
      * @param indices    indices of the vertices
      */
 

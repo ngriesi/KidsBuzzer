@@ -72,6 +72,10 @@ public class ControlModel {
     /**
      * Constructor creates the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
      * Gets the SaveDataHandler form the loading model containing all the loaded resources
+     *
+     * @param saveDataHandler <code>SaveDataHandler</code> that contains general information the program uses
+     * @param openGlRenderer  the renderer for the output window
+     * @param programHandler  handler that contains references to all the programs the application uses
      */
     public ControlModel(SaveDataHandler saveDataHandler, OpenGlRenderer openGlRenderer, ProgramHandler programHandler) {
         applicationRunning = true;

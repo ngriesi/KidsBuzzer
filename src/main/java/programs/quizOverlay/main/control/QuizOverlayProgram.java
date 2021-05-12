@@ -8,6 +8,8 @@ import programs.quizOverlay.data.QuizOverlayModel;
 import presentationWindow.animations.AnimationQueue;
 import programs.quizOverlay.main.view.QuizOverlayPresentationView;
 import programs.quizOverlay.settings.QuizOverlaySettingsController;
+import remoteHandler.RemoteHandler;
+import remoteHandler.actions.RemoteAction;
 
 /**
  * main class of the quiz time program
@@ -119,6 +121,8 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
 
     /**
      * fades out the presentation view
+     *
+     * @return returns the result of the check
      */
     public boolean fadeOut() {
         boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
@@ -157,5 +161,21 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     @Override
     public void nativeKeyAction(int keyCode) {
         getProgramController().nativeKeyAction(keyCode);
+    }
+
+    /**
+     * creates the actions that can be bound to the
+     * buttons of the remote
+     *
+     * @param remoteHandler <code>RemoteHandler</code> of this program
+     */
+    @Override
+    protected void createRemoteActions(RemoteHandler remoteHandler) {
+        super.createRemoteActions(remoteHandler);
+
+        remoteHandler.addRemoteAction("Nächste Frage", new RemoteAction(this::nextQuestion));
+        remoteHandler.addRemoteAction("Richtig", new RemoteAction(this::rightAnswer));
+        remoteHandler.addRemoteAction("Falsch", new RemoteAction(this::wrongAnswer));
+        remoteHandler.addRemoteAction("Anzeigen/Verstecken", new RemoteAction(() -> getProgramController().showHideAction()));
     }
 }

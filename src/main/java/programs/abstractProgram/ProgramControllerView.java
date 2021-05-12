@@ -34,6 +34,9 @@ public abstract class ProgramControllerView<T extends ProgramController> extends
 
     /**
      * adds a new key action
+     *
+     * @param keyStroke key stroke for which an action should be added
+     * @param action    action that gets performed when the key gets pressed
      */
     protected void addKeyAction(KeyStroke keyStroke, Action action) {
         this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "" + keyBindingID);

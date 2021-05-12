@@ -288,6 +288,7 @@ public class ColorScheme {
     /**
      * checks if two color schemes are equal
      *
+     * @param colorScheme color scheme that gets compared to this color scheme
      * @return true if the two color schemes are equal
      */
     public boolean equals(ColorScheme colorScheme) {

@@ -43,6 +43,8 @@ public abstract class ProgramController<P extends Program, V extends ProgramView
 
     /**
      * abstract creation method
+     *
+     * @return returns the created view of the controller
      */
     protected abstract V createView();
 

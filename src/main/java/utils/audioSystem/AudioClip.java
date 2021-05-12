@@ -133,6 +133,8 @@ public class AudioClip {
 
     /**
      * fades out the audio
+     *
+     * @param time the time the fade out takes in seconds
      */
     public void fadeOut(int time) {
         new Thread(() -> {
@@ -164,6 +166,8 @@ public class AudioClip {
 
     /**
      * Set the volume to a value between 0 and 1.
+     *
+     * @param value new volume
      */
     public void setGain(double value) {
         value = (value <= 0.0001) ? 0.0001 : (Math.min(value, 1.0));
@@ -175,6 +179,11 @@ public class AudioClip {
         }
     }
 
+    /**
+     * sets the on finished action for the audio
+     *
+     * @param action new on finished actiond
+     */
     public void setOnFinishedAction(Action action) {
         this.onFinishedAction = action;
     }

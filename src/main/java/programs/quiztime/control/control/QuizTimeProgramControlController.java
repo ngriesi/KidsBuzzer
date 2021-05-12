@@ -64,11 +64,7 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "show":
-                if (getProgram().getMainController().isShowingPresentation()) {
-                    hide();
-                } else {
-                    show();
-                }
+                showHideAction();
                 break;
             case "wrong":
                 wrongButtonAction();
@@ -89,6 +85,18 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
             case "settings":
                 getProgram().setView(getProgram().getSettingsController().getProgramView());
                 break;
+        }
+    }
+
+    /**
+     * hides the output when it is visible and shows it
+     * when it is invisible
+     */
+    public void showHideAction() {
+        if (getProgram().getMainController().isShowingPresentation()) {
+            hide();
+        } else {
+            show();
         }
     }
 

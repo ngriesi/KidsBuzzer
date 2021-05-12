@@ -35,7 +35,7 @@ public class ControlWindow {
     /**
      * custom JFrame
      */
-    private MyJFrame myJFrame;
+    public static MyJFrame myJFrame;
 
     /**
      * main controller of the application

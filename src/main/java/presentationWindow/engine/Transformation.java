@@ -33,6 +33,8 @@ public class Transformation {
      * making the left top the origin by setting left and top to 0 and the right and bottom can be applied to any number
      * setting right to one means an object with the x coordinate 1 has its origin at the right edge of the window
      *
+     * @param zFar sets the far field value for the matrix. This corresponds to the range of depth values
+     *             that are used
      * @return orthographic Matrix
      */
     final Matrix4f getOrtho2DProjectionMatrix(float zFar) {

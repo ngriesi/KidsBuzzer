@@ -24,6 +24,7 @@ public class ComboBoxSettingsRow<T> extends SettingsRow {
      * @param name                   name to identify the setting in the listener
      * @param description            description that gets displayed in the settings
      * @param startValue             start value of the settings
+     * @param values                 possible values of the settings row
      */
     public ComboBoxSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, T startValue, T[] values) {
         super(description);

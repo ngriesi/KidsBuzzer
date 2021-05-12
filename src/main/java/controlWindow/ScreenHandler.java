@@ -32,6 +32,8 @@ class ScreenHandler {
     /**
      * Method gets called when the number of screens changes and an update
      * needs to be made
+     *
+     * @param screens the number of screens that are currently connected
      */
     private void updateScreen(int screens) {
         mainController.getControlModel().getSettingsController().setPossibleScreens(createScreensArray(screens));

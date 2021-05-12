@@ -1,9 +1,11 @@
 package controlWindow;
 
+import remoteHandler.RemoteHandler;
 import serialPortHandling.SerialPortReader;
 import serialPortHandling.SerialPortReaderInterface;
 
 import javax.swing.*;
+import java.util.regex.Pattern;
 
 /**
  * Class handles the serial input coming form the SerialPortReader by passing the information about the
@@ -15,6 +17,11 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
      * main model of the application
      */
     private ControlModel controlModel;
+
+    /**
+     * String replacement pattern
+     */
+    private Pattern pattern = Pattern.compile("\\s+");
 
     /**
      * constructor sets the reference to the main model and creates the <code>SerialPortReader</code>
@@ -64,15 +71,75 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
     @Override
     public void handleData(String data) {
         SwingUtilities.invokeLater(() -> {
+            String temp = pattern.matcher(data).replaceAll("");
             try {
-                handleBuzzerInput(Integer.parseInt(data.trim()));
+                if (temp.length() == 1) {
+                    handleBuzzerInput(Integer.parseInt(temp));
+                } else {
+                    Integer.parseInt(temp);
+                    for (char c : data.toCharArray()) {
+                        handleBuzzerInput(Integer.parseInt("" + c));
+                    }
+                }
             } catch (NumberFormatException ignored) {
+                performMultipleActions(temp);
             }
         });
     }
 
     /**
-     * Handles the Button number input coming from the SerialBuffer (Part of the Serial Port Reader). The
+     * called when the input from the buzzers is not just a number but also contains
+     * chars
+     *
+     * @param data data coming from the serial port
+     */
+    private void performMultipleActions(String data) {
+        for (char c : data.toCharArray()) {
+            try {
+                handleBuzzerInput(Integer.parseInt("" + c));
+            } catch (NumberFormatException e) {
+                handleRemotePress(c);
+            }
+        }
+    }
+
+    /**
+     * Handles a char input coming from the serial buffer. This char corresponds to a
+     * button on the remote that was pressed.
+     *
+     * @param c button that was pressed
+     */
+    private void handleRemotePress(char c) {
+        controlModel.getCurrentProgram().remotePressedAction(getRemoteButton(c));
+    }
+
+    /**
+     * returns the button of a remote from a char:
+     * a = TOP_LEFT
+     * b = TOP_RIGHT
+     * c = BOTTOM_LEFT
+     * d = BOTTOM_RIGHT
+     *
+     * @param c char that comes from the serial input
+     * @return returns the button this char represents
+     */
+    private RemoteHandler.RemoteButton getRemoteButton(char c) {
+        switch (c) {
+            case 'a':
+                return RemoteHandler.RemoteButton.TOP_LEFT;
+            case 'b':
+                return RemoteHandler.RemoteButton.TOP_RIGHT;
+            case 'c':
+                return RemoteHandler.RemoteButton.BOTTOM_LEFT;
+            case 'd':
+                return RemoteHandler.RemoteButton.BOTTOM_RIGHT;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Handles the Buzzer number input coming from the SerialBuffer (Part of the Serial Port Reader). The
      * Method is called with SwingUtilities.invokeLater() for it to be able to do changes on the UI
      * <p>
      * The Method calls the methods to handle a buzzer press in the <code>BuzzerModel</code> and the

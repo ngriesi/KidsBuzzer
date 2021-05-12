@@ -26,6 +26,7 @@ public class FileChooserSettingsRow extends SettingsRow {
      * @param name                   name to identify the setting in the listener
      * @param description            description that gets displayed in the settings
      * @param startValue             start value of the setting
+     * @param filterName             name of the filter for the files
      * @param fileExtensions         extensions of the files visible in the file chooser
      */
     public FileChooserSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, File startValue, String filterName, String... fileExtensions) {
