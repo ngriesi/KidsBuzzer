@@ -17,12 +17,17 @@ class TitleBar extends JPanel {
     /**
      * stores the position difference between the mouse when it was pressed in this component and the top left corner of the window
      */
-    private int framePositionXDiff = 0, framePositionYDiff = 0;
+    private float framePositionXDiff = 0, framePositionYDiff = 0;
 
     /**
      * the window of which this is the title bar of
      */
     private JFrame frame;
+
+    /**
+     * Maximize button of the title bar
+     */
+    private MaximizeButton maximizeButton;
 
     /**
      * creates a new title bar with a title and close, minimize and maximize buttons
@@ -66,8 +71,15 @@ class TitleBar extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                framePositionXDiff = e.getXOnScreen() - frame.getX();
-                framePositionYDiff = e.getYOnScreen() - frame.getY();
+                framePositionXDiff = (e.getXOnScreen() - frame.getX())/(float)frame.getWidth();
+                framePositionYDiff = (e.getYOnScreen() - frame.getY())/(float)frame.getHeight();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getYOnScreen() == 0) {
+                    frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+                }
             }
         };
     }
@@ -79,7 +91,10 @@ class TitleBar extends JPanel {
         return new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                frame.setLocation(e.getXOnScreen() - framePositionXDiff, e.getYOnScreen() - framePositionYDiff);
+                if (frame.getExtendedState() == Frame.MAXIMIZED_BOTH) {
+                    maximizeButton.normalizeAction();
+                }
+                frame.setLocation((int)(e.getXOnScreen() - framePositionXDiff * frame.getWidth()), (int) (e.getYOnScreen() - framePositionYDiff * frame.getHeight()));
             }
         };
     }
@@ -114,7 +129,8 @@ class TitleBar extends JPanel {
         JPanel buttonBack = new JPanel(createButtonBackLayout());
 
         buttonBack.add(new MinimizeButton(frame));
-        buttonBack.add(new MaximizeButton(frame));
+        maximizeButton = new MaximizeButton(frame);
+        buttonBack.add(maximizeButton);
         buttonBack.add(new CloseButton(frame));
 
         return buttonBack;

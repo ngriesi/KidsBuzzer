@@ -39,7 +39,12 @@ public class MyJFrame extends ResizeWindowPanel {
         setFrameSettings(screenWidth, screenHeight, x, y, width, height);
 
         createShadowBorder();
-        chooseWindowBorder(screenWidth, screenHeight, getFrame().getState());
+        if (getFrame().getHeight() == screenHeight && getFrame().getWidth() == screenWidth) {
+            getFrame().setExtendedState(Frame.MAXIMIZED_BOTH);
+            this.setBorder(BorderFactory.createLineBorder(StandardAssetFields.NORMAL_COLOR, 1));
+        } else {
+            chooseWindowBorder(screenWidth, screenHeight, getFrame().getState());
+        }
 
         this.setBackground(new Color(0, 0, 0, 0));
         this.add(new TitleBar(super.getFrame()), BorderLayout.PAGE_START);

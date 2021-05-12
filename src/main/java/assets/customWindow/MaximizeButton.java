@@ -55,7 +55,7 @@ public class MaximizeButton extends TitleBarButton {
     /**
      * action performed if the button gets clicked when the window was maximized
      */
-    private void normalizeAction() {
+    void normalizeAction() {
         getFrame().setExtendedState(Frame.NORMAL);
         if (getFrame().getHeight() == Toolkit.getDefaultToolkit().getScreenSize().height && getFrame().getWidth() == Toolkit.getDefaultToolkit().getScreenSize().width) {
             getFrame().setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
