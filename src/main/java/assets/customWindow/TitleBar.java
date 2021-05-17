@@ -15,7 +15,8 @@ import static java.awt.GridBagConstraints.LINE_START;
 class TitleBar extends JPanel {
 
     /**
-     * stores the position difference between the mouse when it was pressed in this component and the top left corner of the window
+     * stores the position difference between the mouse when it was pressed in this component and the top left corner of the window relative to the windows
+     * size
      */
     private float framePositionXDiff = 0, framePositionYDiff = 0;
 
@@ -71,8 +72,8 @@ class TitleBar extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                framePositionXDiff = (e.getXOnScreen() - frame.getX())/(float)frame.getWidth();
-                framePositionYDiff = (e.getYOnScreen() - frame.getY())/(float)frame.getHeight();
+                framePositionXDiff = (e.getXOnScreen() - frame.getX()) / (float) frame.getWidth();
+                framePositionYDiff = (e.getYOnScreen() - frame.getY()) / (float) frame.getHeight();
             }
 
             @Override
@@ -94,7 +95,7 @@ class TitleBar extends JPanel {
                 if (frame.getExtendedState() == Frame.MAXIMIZED_BOTH) {
                     maximizeButton.normalizeAction();
                 }
-                frame.setLocation((int)(e.getXOnScreen() - framePositionXDiff * frame.getWidth()), (int) (e.getYOnScreen() - framePositionYDiff * frame.getHeight()));
+                frame.setLocation((int) (e.getXOnScreen() - framePositionXDiff * frame.getWidth()), (int) (e.getYOnScreen() - framePositionYDiff * frame.getHeight()));
             }
         };
     }
