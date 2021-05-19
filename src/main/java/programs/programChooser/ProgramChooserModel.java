@@ -93,4 +93,11 @@ public class ProgramChooserModel implements ActionListener {
             mainController.displayCredits();
         }
     }
+
+    /**
+     * recreates the program chooser view
+     */
+    public void updateView() {
+        programChooserView = new ProgramChooserView(this);
+    }
 }

@@ -26,7 +26,6 @@ public class LoadingHandler {
     /**
      * stores the current loading processes for debugging purposes
      */
-    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private CopyOnWriteArrayList<LoadingMonitor> loadingProcesses;
 
     /**

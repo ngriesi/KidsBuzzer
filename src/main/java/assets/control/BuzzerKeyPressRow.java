@@ -4,6 +4,7 @@ import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyTextField;
 import assets.standardAssets.StandardAssetFields;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +62,7 @@ public class BuzzerKeyPressRow extends ControlViewRow {
      * @see savedataHandler.SaveDataHandler for the buzzer names
      */
     public BuzzerKeyPressRow(String buzzerColor, ActionListener actionListener) {
-        super(buzzerColor + " buzzer press key");
+        super(buzzerColor + " " + Text.BUZZER_PRESS_KEY);
 
         JPanel interactionElementsContainer = new JPanel(new GridBagLayout());
         interactionElementsContainer.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -84,12 +85,12 @@ public class BuzzerKeyPressRow extends ControlViewRow {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(0, 0, 0, spacing);
         c.gridx = 0;
-        interactionElementsContainer.add(new MyLabel("Taste:"), c);
+        interactionElementsContainer.add(new MyLabel(Text.KEY + ":"), c);
         c.gridx = 1;
         interactionElementsContainer.add(key, c);
         c.gridx = 2;
         //noinspection SpellCheckingInspection
-        interactionElementsContainer.add(new MyLabel(" Aktiv:"), c);
+        interactionElementsContainer.add(new MyLabel(" " + Text.ACTIVE + ":"), c);
         c.gridx = 3;
         interactionElementsContainer.add(checkBox, c);
     }

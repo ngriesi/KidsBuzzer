@@ -5,6 +5,7 @@ import programs.emptyClasses.EmptyPresentationView;
 import programs.keyPresser.control.controller.KeyPressController;
 import programs.keyPresser.data.KeyPressModel;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import java.awt.*;
 
@@ -17,7 +18,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
      * creates a new program
      */
     public KeyPressProgram() {
-        super(true, "Key Presser");
+        super(true, Text.KEY_PRESSER);
     }
 
     /**
@@ -99,14 +100,14 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             //noinspection SpellCheckingInspection
-            case "Dont block":
+            case 0:
                 getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
                 break;
-            case "Block until Released":
+            case 1:
 
                 break;
-            case "Block for Time":
+            case 2:
                 new Thread(() -> {
                     try {
                         Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
@@ -118,7 +119,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
                     }
                 }).start();
                 break;
-            case "Unblock with Buzzer":
+            case 3:
                 if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
                     for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
                         getMainController().getControlModel().getBuzzerControl().unblockBuzzer(i + 1);

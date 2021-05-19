@@ -61,6 +61,8 @@ public class SimpleOutputView {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             simpleVirtualBuzzers[i] = new SimpleVirtualBuzzer(i);
         }
+
+        drawOutputView();
     }
 
     /**
@@ -164,7 +166,9 @@ public class SimpleOutputView {
 
         drawSimpleVirtualBuzzers(g);
 
-        controller.getProgramView().repaint();
+        if (controller.getProgramView() != null) {
+            controller.getProgramView().repaint();
+        }
     }
 
     /**

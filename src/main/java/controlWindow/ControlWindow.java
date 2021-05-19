@@ -95,7 +95,7 @@ public class ControlWindow {
     /**
      * creates the main layout of the window
      */
-    private void setupWindow() {
+    void setupWindow() {
         mainLayout = new UnoptimizedPanel(new GridBagLayout());
         mainLayout.setLayout(new OverlayLayout(mainLayout));
         mainLayout.add(createChooserExpanded());
@@ -178,7 +178,7 @@ public class ControlWindow {
      *
      * @param panel new content of the window
      */
-    void setView(JPanel panel) {
+    public void setView(JPanel panel) {
         myJFrame.setView(panel);
     }
 

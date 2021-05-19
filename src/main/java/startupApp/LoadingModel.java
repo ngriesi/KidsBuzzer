@@ -1,5 +1,6 @@
 package startupApp;
 
+import assets.standardAssets.StandardAssetFields;
 import controlWindow.ControlModel;
 import controlWindow.NativeKeyListener;
 import controlWindow.settings.SettingsSaveFile;
@@ -16,6 +17,7 @@ import programs.quiztime.main.control.QuizTimeProgram;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.testProgram.main.TestProgram;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 import utils.saveFile.SaveFileLoader;
 
 import java.awt.*;
@@ -72,13 +74,23 @@ public class LoadingModel {
         new Thread(() -> {
 
 
+
+
             programHandler = new ProgramHandler();
 
             SettingsSaveFile settingsSaveFile = SaveFileLoader.loadFile("settings", SettingsSaveFile.class);
             if (settingsSaveFile == null) {
                 settingsSaveFile = new SettingsSaveFile();
             }
+
+
+            StandardAssetFields.ROLLOVER_COLOR = new Color(settingsSaveFile.getEffectColor()[0], settingsSaveFile.getEffectColor()[1], settingsSaveFile.getEffectColor()[2]);
+
+            StandardAssetFields.PRESSED_COLOR = new Color(settingsSaveFile.getEffectColor()[0], settingsSaveFile.getEffectColor()[1], settingsSaveFile.getEffectColor()[2]).brighter();
+
             saveDataHandler = new SaveDataHandler(settingsSaveFile);
+
+            new Text(settingsSaveFile.getLanguage());
 
             GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice[] devices = g.getScreenDevices();

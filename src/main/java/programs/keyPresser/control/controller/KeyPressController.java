@@ -149,7 +149,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
                 buzzerSelectorAction(e.getActionCommand().split(":")[2]);
                 break;
             case BlockingBehaviourRow.MAIN_SELECTOR:
-                mainBlockingBehaviourSelectorAction((String) ((MyComboBox) e.getSource()).getSelectedItem());
+                mainBlockingBehaviourSelectorAction(((MyComboBox) e.getSource()).getSelectedIndex());
         }
     }
 
@@ -159,7 +159,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      *
      * @param item name of the item from the selector that was selected
      */
-    private void mainBlockingBehaviourSelectorAction(String item) {
+    private void mainBlockingBehaviourSelectorAction(int item) {
         getProgramModel().getSaveFile().setBlockingBehaviour(item);
         if (getProgram().getMainController() != null)
             getProgram().getMainController().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);

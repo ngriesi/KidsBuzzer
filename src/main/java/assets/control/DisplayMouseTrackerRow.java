@@ -2,6 +2,7 @@ package assets.control;
 
 import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.StandardAssetFields;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class DisplayMouseTrackerRow extends ControlViewRow {
      * @param actionListener action listener for all components in this view element
      */
     public DisplayMouseTrackerRow(ActionListener actionListener) {
-        super("Display Mouse Tracker");
+        super(Text.DISPLAY_MOUSE_TRACKER);
 
         JPanel interactionElementsContainer = new JPanel(new GridBagLayout());
         interactionElementsContainer.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);

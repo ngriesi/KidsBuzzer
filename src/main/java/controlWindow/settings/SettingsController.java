@@ -2,12 +2,15 @@ package controlWindow.settings;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsEvent;
+import assets.standardAssets.StandardAssetFields;
 import controlWindow.MainController;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 /**
  * controller of the main settings of the application
@@ -25,7 +28,14 @@ public class SettingsController extends assets.settings.general.SettingsControll
     private final String outputScreen = "outputScreen";
     private final String buzzerCount = "buzzerCount";
     private final String nativeKey = "nativeKey";
+    private final String language = "language";
+    private final String effectColor = "effectColor";
 
+    /**
+     * stores the old values for fields where the whole view needs to be updatet if they change
+     */
+    private int[] oldColor;
+    private String oldLanguage;
 
     /**
      * creates a new settings controller
@@ -73,10 +83,35 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * buzzer count in the application.
      */
     private void saveButtonAction() {
+
         saveFileHandler.applyChanges();
         saveFileHandler.saveToFile();
+
+        if(changesMadeToView()) {
+            mainController.updateView();
+        }
         mainController.displayControlView();
+
         updateBuzzerCount();
+    }
+
+    /**
+     * chacks if changes where made that require the whole view to update
+     *
+     * @return returns true if the view needs an update
+     */
+    private boolean changesMadeToView() {
+        System.out.println(oldLanguage);
+        System.out.println(saveFileHandler.getSaveFile().getLanguage());
+        if (!oldLanguage.equals(saveFileHandler.getSaveFile().getLanguage())) {
+            return true;
+        }
+        System.out.println(Arrays.toString(oldColor));
+        System.out.println(Arrays.toString(saveFileHandler.getSaveFile().getEffectColor()));
+        return !(oldColor[0] == saveFileHandler.getSaveFile().getEffectColor()[0]
+                && oldColor[1] == saveFileHandler.getSaveFile().getEffectColor()[1]
+                && oldColor[2] == saveFileHandler.getSaveFile().getEffectColor()[2]);
+
     }
 
     /**
@@ -93,6 +128,10 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     private void cancelButtonAction() {
         saveFileHandler.rollbackChanges();
+        Color color = new Color(saveFileHandler.getSaveFile().getEffectColor()[0], saveFileHandler.getSaveFile().getEffectColor()[1], saveFileHandler.getSaveFile().getEffectColor()[2]);
+        StandardAssetFields.ROLLOVER_COLOR = color;
+        StandardAssetFields.PRESSED_COLOR = color;
+        new Text(saveFileHandler.getSaveFile().getLanguage());
         mainController.updateOutputScreen(saveFileHandler.getSaveFile().getOutputScreen());
         mainController.displayControlView();
     }
@@ -111,6 +150,12 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * SettingsName: "nativeKey":
      * updates the <code>useNativeKeyListener</code> flag in the <code>SaveFileHandler</code> and
      * updates the behaviour of the program by settings the flag in <code>ControlModel</code>
+     * <p>
+     * SettingsName: "language":
+     * updates the language of the application by reinstanciating the <code>Text</code> class
+     * <p>
+     * SettingsName: "effectColor":
+     * updates the effect color of the application
      *
      * @param settingsEvent settings event containing the setting identification name and the new value of the setting
      */
@@ -129,6 +174,21 @@ public class SettingsController extends assets.settings.general.SettingsControll
             case nativeKey:
                 saveFileHandler.getSaveFile().setUseNativeKeyListener((boolean) settingsEvent.getValue());
                 mainController.getControlModel().setEnableNativeKeyListener((boolean) settingsEvent.getValue());
+                break;
+            case language:
+                saveFileHandler.getSaveFile().setLanguage((String) settingsEvent.getValue());
+                new Text((String) settingsEvent.getValue());
+                this.setSettingsView(new SettingsView());
+                mainController.getControlModel().getView().setView(getSettingsView());
+                break;
+            case effectColor:
+                Color color = (Color) settingsEvent.getValue();
+                saveFileHandler.getSaveFile().setEffectColor(new int[]{color.getRed(), color.getGreen(), color.getBlue()});
+                StandardAssetFields.ROLLOVER_COLOR = (Color) settingsEvent.getValue();
+                StandardAssetFields.PRESSED_COLOR = ((Color) settingsEvent.getValue()).brighter();
+                this.setSettingsView(new SettingsView());
+                mainController.getControlModel().getView().setView(getSettingsView());
+                break;
         }
     }
 
@@ -179,6 +239,20 @@ public class SettingsController extends assets.settings.general.SettingsControll
     }
 
     /**
+     * @return returns the identification name of the language setting
+     */
+    String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @return returns the identification name of the effect color setting
+     */
+    String getEffectColor() {
+        return effectColor;
+    }
+
+    /**
      * Changes the nativeKeyListener Settings. This method sets the useNativeKeyListener setting and
      * saves it to a file
      *
@@ -189,5 +263,20 @@ public class SettingsController extends assets.settings.general.SettingsControll
         saveFileHandler.applyChanges();
         saveFileHandler.saveToFile();
         getSettingsView().getNativeKeySettingsRow().setSetting(useNativeKeyListener);
+    }
+
+    /**
+     * updates the view of the settings
+     */
+    public void updateSettingsView() {
+        setSettingsView(new SettingsView());
+    }
+
+    /**
+     * updates the old values of the settings
+     */
+    public void setOldValues() {
+        oldColor = saveFileHandler.getSaveFile().getEffectColor();
+        oldLanguage = saveFileHandler.getSaveFile().getLanguage();
     }
 }

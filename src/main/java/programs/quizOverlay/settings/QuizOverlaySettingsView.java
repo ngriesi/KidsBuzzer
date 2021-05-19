@@ -6,6 +6,7 @@ import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramSettingsView;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,7 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
      * @param programController sets the controller of the view
      */
     QuizOverlaySettingsView(QuizOverlaySettingsController programController) {
-        super(programController, programController, new String[]{"Bilder", "Schrift", "Audio"});
+        super(programController, programController, new String[]{Text.IMAGES, Text.FONT, Text.AUDIO});
     }
 
     /**
@@ -69,19 +70,19 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
         MyPanel panel = new MyPanel(new GridBagLayout());
 
 
-        questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", "Frage Sound");
+        questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", Text.QUESTION_SOUND);
 
         panel.addComponent(panel, questionSound, 0, 0, 1, 1);
 
-        rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", "Richtig Sound");
+        rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", Text.RIGHT_SOUND);
 
         panel.addComponent(panel, rightSound, 0, 1, 1, 1);
 
-        buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", "Buzzer Sound");
+        buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", Text.BUZZER_SOUND);
 
         panel.addComponent(panel, buzzerSound, 0, 2, 1, 1);
 
-        wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", "Falsch Sound");
+        wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", Text.WRONG_SOUND);
 
         panel.addComponent(panel, wrongSound, 0, 3, 1, 1);
 
@@ -98,11 +99,11 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
 
         MyPanel panel = new MyPanel(new GridBagLayout());
 
-        mainFontChooserRow = new FontChooserRow(settingsChangeListener, "fontmain", "Haupschriftart", new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
+        mainFontChooserRow = new FontChooserRow(settingsChangeListener, "fontmain", Text.MAIN_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
 
         panel.addComponent(panel, mainFontChooserRow, 0, 0, 1, 1);
 
-        buzzerFontChooserRow = new FontChooserRow(settingsChangeListener, "fontbuzzer", "Buzzerschriftart", new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
+        buzzerFontChooserRow = new FontChooserRow(settingsChangeListener, "fontbuzzer", Text.BUZZER_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
 
         panel.addComponent(panel, buzzerFontChooserRow, 0, 1, 1, 1);
 
@@ -127,7 +128,7 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
         icons = new FileChooserSettingsRow[SaveDataHandler.BUZZER_COUNT];
 
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            icons[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + i, "Icon für Buzzer " + (i + 1) + " auswählen", new File("default"), "Bilder", "png", "jpg");
+            icons[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + i, Text.SELECT_ICON_BUZZER + " " + (i + 1), new File("default"), Text.IMAGES, "png", "jpg");
 
             panel.addComponent(panel, icons[i], 0, i, 1, 1);
         }

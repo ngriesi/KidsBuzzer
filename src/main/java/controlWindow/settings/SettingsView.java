@@ -1,11 +1,13 @@
 package controlWindow.settings;
 
 import assets.settings.rows.CheckBoxSettingsRow;
+import assets.settings.rows.ColorSelectionRow;
 import assets.settings.rows.ComboBoxSettingsRow;
-import assets.settings.rows.EmptySettingsRow;
 import assets.standardAssets.MyButton;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * creates  the main settings view for the whole application
@@ -28,6 +30,8 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     private ComboBoxSettingsRow<Integer> outputScreen;
     private ComboBoxSettingsRow<Integer> buzzerNumber;
     private CheckBoxSettingsRow useNativeKeyListener;
+    private ComboBoxSettingsRow<String> language;
+    private ColorSelectionRow effectColorSeector;
 
     /**
      * updates the settings views
@@ -37,6 +41,8 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     public void updateSettings(SettingsSaveFile settingsSaveFile) {
         outputScreen.setSetting(settingsSaveFile.getOutputScreen());
         buzzerNumber.setSetting(settingsSaveFile.getBuzzerNumber());
+        language.setSetting(settingsSaveFile.getLanguage());
+        effectColorSeector.setSetting(new Color(settingsSaveFile.getEffectColor()[0], settingsSaveFile.getEffectColor()[1], settingsSaveFile.getEffectColor()[2]));
     }
 
     /**
@@ -51,14 +57,16 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
 
         createBottomBar(settingsController);
 
-        outputScreen = new ComboBoxSettingsRow<>(settingsController, settingsController.getOutputScreen(), "Choose the output screen", settingsController.getSettingsSaveFile().getOutputScreen(), settingsController.getPossibleScreens());
+        outputScreen = new ComboBoxSettingsRow<>(settingsController, settingsController.getOutputScreen(), Text.CHOOSE_OUTPUT_SCREEN, settingsController.getSettingsSaveFile().getOutputScreen(), settingsController.getPossibleScreens());
         super.addComponent(mainPanel, outputScreen, 0, 1, 1, 1);
-        buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.getBuzzerCount(), "Select the number of buzzers", settingsController.getSettingsSaveFile().getBuzzerNumber(), new Integer[]{1, 2, 3});
+        buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.getBuzzerCount(), Text.SELECT_BUZZER_NUMBER, settingsController.getSettingsSaveFile().getBuzzerNumber(), new Integer[]{1, 2, 3});
         super.addComponent(mainPanel, buzzerNumber, 0, 2, 1, 1);
-        useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.getNativeKey(), "Use the Native Key Listener", settingsController.getSettingsSaveFile().isUseNativeKeyListener());
+        useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.getNativeKey(), Text.USE_NATIVE_KEYS, settingsController.getSettingsSaveFile().isUseNativeKeyListener());
         super.addComponent(mainPanel, useNativeKeyListener, 0, 3, 1, 1);
-        super.addComponent(mainPanel, new EmptySettingsRow(), 0, 4, 1, 1);
-
+        language = new ComboBoxSettingsRow<>(settingsController, settingsController.getLanguage(), Text.LANGUAGE_SELECTION, settingsController.getSettingsSaveFile().getLanguage(), Text.LANGUAGES);
+        super.addComponent(mainPanel, language, 0, 4, 1, 1);
+        effectColorSeector = new ColorSelectionRow(settingsController, settingsController.getEffectColor(), Text.EFFECT_COLOR_SELECTION, new Color(settingsController.getSettingsSaveFile().getEffectColor()[0], settingsController.getSettingsSaveFile().getEffectColor()[1], settingsController.getSettingsSaveFile().getEffectColor()[2]));
+        super.addComponent(mainPanel, effectColorSeector, 0, 5, 1, 1);
 
     }
 
@@ -79,7 +87,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
      * @param settingsController action listener of the button
      */
     private void createSaveButton(SettingsController settingsController) {
-        MyButton save = new MyButton("Save");
+        MyButton save = new MyButton(Text.SAVE);
         save.setActionCommand("save");
         save.addActionListener(settingsController);
         super.addComponent(this, save, 2, 1, bottom_button_width, bottom_height);
@@ -100,7 +108,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
      * @param settingsController action listener of the button
      */
     private void createBackButton(SettingsController settingsController) {
-        MyButton back = new MyButton("Cancel");
+        MyButton back = new MyButton(Text.CANCEL);
         back.setActionCommand("cancel");
         back.addActionListener(settingsController);
         super.addComponent(this, back, 0, 1, bottom_button_width, bottom_height);

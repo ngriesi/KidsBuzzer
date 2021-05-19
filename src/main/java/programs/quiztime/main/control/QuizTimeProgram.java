@@ -10,6 +10,7 @@ import programs.quiztime.main.view.QuizTimeProgramPresentationView;
 import programs.quiztime.settings.QuizTimeProgramSettingsController;
 import remoteHandler.RemoteHandler;
 import remoteHandler.actions.RemoteAction;
+import savedataHandler.languages.Text;
 
 /**
  * main class of the quiz time program
@@ -31,7 +32,7 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
      * creates a new program
      */
     public QuizTimeProgram() {
-        super(true, "Quiztime");
+        super(true, Text.QUIZTIME);
         generalState = new GeneralState();
         stateChanger = new StateChanger(this, generalState);
     }
@@ -170,9 +171,9 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
     protected void createRemoteActions(RemoteHandler remoteHandler) {
         super.createRemoteActions(remoteHandler);
 
-        remoteHandler.addRemoteAction("Nächste Frage", new RemoteAction(this::nextQuestion));
-        remoteHandler.addRemoteAction("Richtig", new RemoteAction(this::rightAnswer));
-        remoteHandler.addRemoteAction("Falsch", new RemoteAction(this::wrongAnswer));
-        remoteHandler.addRemoteAction("Anzeigen/Verstecken", new RemoteAction(() -> getProgramController().showHideAction()));
+        remoteHandler.addRemoteAction(Text.NEXT_QUESTION, new RemoteAction(this::nextQuestion));
+        remoteHandler.addRemoteAction(Text.RIGHT, new RemoteAction(this::rightAnswer));
+        remoteHandler.addRemoteAction(Text.WRONG, new RemoteAction(this::wrongAnswer));
+        remoteHandler.addRemoteAction(Text.SHOW_OR_HIDE, new RemoteAction(() -> getProgramController().showHideAction()));
     }
 }

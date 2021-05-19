@@ -10,6 +10,7 @@ import programs.quizOverlay.main.view.QuizOverlayPresentationView;
 import programs.quizOverlay.settings.QuizOverlaySettingsController;
 import remoteHandler.RemoteHandler;
 import remoteHandler.actions.RemoteAction;
+import savedataHandler.languages.Text;
 
 /**
  * main class of the quiz time program
@@ -32,7 +33,7 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     public QuizOverlayProgram() {
         //noinspection SpellCheckingInspection
-        super(true, "Quizoverlay");
+        super(true, Text.QUIZ_OVERLAY);
         generalState = new GeneralState();
         stateChanger = new StateChanger(this, generalState);
     }
@@ -173,9 +174,9 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     protected void createRemoteActions(RemoteHandler remoteHandler) {
         super.createRemoteActions(remoteHandler);
 
-        remoteHandler.addRemoteAction("Nächste Frage", new RemoteAction(this::nextQuestion));
-        remoteHandler.addRemoteAction("Richtig", new RemoteAction(this::rightAnswer));
-        remoteHandler.addRemoteAction("Falsch", new RemoteAction(this::wrongAnswer));
-        remoteHandler.addRemoteAction("Anzeigen/Verstecken", new RemoteAction(() -> getProgramController().showHideAction()));
+        remoteHandler.addRemoteAction(Text.NEXT_QUESTION, new RemoteAction(this::nextQuestion));
+        remoteHandler.addRemoteAction(Text.RIGHT, new RemoteAction(this::rightAnswer));
+        remoteHandler.addRemoteAction(Text.WRONG, new RemoteAction(this::wrongAnswer));
+        remoteHandler.addRemoteAction(Text.SHOW_OR_HIDE, new RemoteAction(() -> getProgramController().showHideAction()));
     }
 }

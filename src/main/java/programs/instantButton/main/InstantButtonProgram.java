@@ -5,6 +5,7 @@ import programs.emptyClasses.EmptyController;
 import programs.emptyClasses.EmptyPresentationView;
 import programs.instantButton.control.InstantButtonController;
 import programs.instantButton.data.InstantButtonModel;
+import savedataHandler.languages.Text;
 
 /**
  * main class of the instant button program
@@ -15,7 +16,7 @@ public class InstantButtonProgram extends Program<InstantButtonController, Empty
      * creates a new program
      */
     public InstantButtonProgram() {
-        super(true, "Instant Button");
+        super(true, Text.INSTANT_BUTTON);
     }
 
     /**

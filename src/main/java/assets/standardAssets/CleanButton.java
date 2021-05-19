@@ -9,7 +9,7 @@ import java.awt.*;
  * or painted focus
  * can have text
  */
-@SuppressWarnings({"unused", "FieldCanBeLocal", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class CleanButton extends JButton {
 
     /**

@@ -1,5 +1,6 @@
-bottomRightButtonActionName=Nichts
-bottomLeftButtonActionName=Tastendruck:9
-topRightButtonActionName=Falsch:
-topLeftButtonActionName=Tastendruck:a
+keys=[A, a, A, A]
+topLeftButtonActionIndex=0
+bottomRightButtonActionIndex=0
+topRightButtonActionIndex=1
+bottomLeftButtonActionIndex=0
 

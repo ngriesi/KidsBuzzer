@@ -12,8 +12,11 @@ public class MyToggleButton extends JToggleButton {
     /**
      * colors for the different states of the button
      */
+    private Color pressedColor = StandardAssetFields.PRESSED_COLOR;
+    private Color selectedColor = StandardAssetFields.ROLLOVER_COLOR;
+    private Color normalColor = StandardAssetFields.NORMAL_COLOR;
     @SuppressWarnings("FieldCanBeLocal")
-    private Color pressedColor = StandardAssetFields.PRESSED_COLOR, selectedColor = StandardAssetFields.ROLLOVER_COLOR, normalColor = StandardAssetFields.NORMAL_COLOR, textColor = StandardAssetFields.FOREGROUND_COLOR;
+    private Color textColor = StandardAssetFields.FOREGROUND_COLOR;
 
     /**
      * creates a custom check box and sets the attributes

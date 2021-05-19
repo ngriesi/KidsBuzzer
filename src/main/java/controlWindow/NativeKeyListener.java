@@ -2,9 +2,6 @@ package controlWindow;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * a native key listener that is not dependent on the window being in focus. This is used to
  * control the application for example above a PowerPoint presentation

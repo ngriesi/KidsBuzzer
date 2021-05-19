@@ -5,6 +5,7 @@ import programs.scoreBoard.control.ScoreBoardControlController;
 import programs.scoreBoard.data.ScoreBoardModel;
 import programs.scoreBoard.main.view.ScoreBoardPresentationView;
 import programs.scoreBoard.settings.ScoreBoardSettingsController;
+import savedataHandler.languages.Text;
 
 public class ScoreBoardProgram extends Program<ScoreBoardControlController, ScoreBoardSettingsController, ScoreBoardModel, ScoreBoardPresentationView> {
 
@@ -15,7 +16,7 @@ public class ScoreBoardProgram extends Program<ScoreBoardControlController, Scor
      * creates a new program
      */
     public ScoreBoardProgram() {
-        super(false, "Score Board");
+        super(false, Text.SCOREBOARD);
         mainController = new MainScoreBoardController(this);
     }
 

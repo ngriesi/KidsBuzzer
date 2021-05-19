@@ -9,6 +9,7 @@ import programs.abstractProgram.ProgramController;
 import programs.scoreBoard.data.ScoreBoardModel;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 import utils.audioSystem.AudioClip;
 
 import java.awt.*;
@@ -113,7 +114,7 @@ public class ScoreBoardSettingsController extends ProgramController<ScoreBoardPr
      */
     @Override
     protected ScoreBoardSettingsView createView() {
-        return new ScoreBoardSettingsView(this, this, new String[]{"Generell", "Icons"});
+        return new ScoreBoardSettingsView(this, this, new String[]{Text.GENERAL, Text.IMAGES});
     }
 
     /**

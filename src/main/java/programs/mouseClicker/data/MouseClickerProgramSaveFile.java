@@ -32,7 +32,7 @@ public class MouseClickerProgramSaveFile extends SaveFile {
      * Positions of the main selector of the blocking behaviour contorl view row
      */
     @SuppressWarnings("SpellCheckingInspection")
-    private String blockingBehaviour = "Dont block";
+    private int blockingBehaviour = 0;
 
     /**
      * Blocking time for the buzzers
@@ -90,11 +90,11 @@ public class MouseClickerProgramSaveFile extends SaveFile {
         this.clickY = clickY;
     }
 
-    public String getBlockingBehaviour() {
+    public int getBlockingBehaviour() {
         return blockingBehaviour;
     }
 
-    public void setBlockingBehaviour(String blockingBehaviour) {
+    public void setBlockingBehaviour(int blockingBehaviour) {
         this.blockingBehaviour = blockingBehaviour;
     }
 

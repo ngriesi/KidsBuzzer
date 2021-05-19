@@ -91,4 +91,11 @@ public abstract class ProgramController<P extends Program, V extends ProgramView
     public void setProgramModel(M programModel) {
         this.programModel = programModel;
     }
+
+    /**
+     * recreates the view
+     */
+    void recreateView() {
+        this.programView = createView();
+    }
 }

@@ -30,26 +30,21 @@ class RemoteSettingsView extends MyPanel {
      */
     private RemoteSettingsViewBlock bottomRight;
 
-    /**
-     * center panel containing the virtual representation of the remote
-     */
-    private VirtualRemoteView remoteView;
-
 
     /**
      * creates Panel with Layout
      *
      * @param actionListener  <code>ActionListener</code> of all the elements in this view
      * @param possibleActions possible actions of the remote
-     * @param startValues     start values of the selection combo boxes
+     * @param startIndices    start indices of the selection combo boxes
      * @param keys            keys used if the key press action is selected
      */
-    RemoteSettingsView(ActionListener actionListener, String[] possibleActions, String[] startValues, String[] keys) {
+    RemoteSettingsView(ActionListener actionListener, String[] possibleActions, int[] startIndices, String[] keys) {
         super(new GridBagLayout());
 
-        createButtonBlocks(actionListener, possibleActions, startValues, keys);
+        createButtonBlocks(actionListener, possibleActions, startIndices, keys);
 
-        remoteView = new VirtualRemoteView();
+        VirtualRemoteView remoteView = new VirtualRemoteView();
         this.addComponent(this, remoteView, 3, 1, 1, 0, 1f, 1f);
     }
 
@@ -58,17 +53,17 @@ class RemoteSettingsView extends MyPanel {
      *
      * @param actionListener  <code>ActionListener</code> of all the elements in this view
      * @param possibleActions possible actions of the remote
-     * @param startValues     start values of the selection combo boxes
+     * @param startIndices    start indices of the selection combo boxes
      * @param keys            keys used if the key press action is selected
      */
-    private void createButtonBlocks(ActionListener actionListener, String[] possibleActions, String[] startValues, String[] keys) {
-        topLeft = new RemoteSettingsViewBlock(actionListener, possibleActions, startValues[0], keys[0], RemoteHandler.RemoteButton.TOP_LEFT);
+    private void createButtonBlocks(ActionListener actionListener, String[] possibleActions, int[] startIndices, String[] keys) {
+        topLeft = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[0], keys[0], RemoteHandler.RemoteButton.TOP_LEFT);
         this.addComponent(this, topLeft, 0, 0, 0.1f, 1);
-        topRight = new RemoteSettingsViewBlock(actionListener, possibleActions, startValues[1], keys[1], RemoteHandler.RemoteButton.TOP_RIGHT);
+        topRight = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[1], keys[1], RemoteHandler.RemoteButton.TOP_RIGHT);
         this.addComponent(this, topRight, 2, 0, 0.1f, 1);
-        bottomLeft = new RemoteSettingsViewBlock(actionListener, possibleActions, startValues[2], keys[2], RemoteHandler.RemoteButton.BOTTOM_LEFT);
+        bottomLeft = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[2], keys[2], RemoteHandler.RemoteButton.BOTTOM_LEFT);
         this.addComponent(this, bottomLeft, 0, 2, 0.1f, 1);
-        bottomRight = new RemoteSettingsViewBlock(actionListener, possibleActions, startValues[3], keys[3], RemoteHandler.RemoteButton.BOTTOM_RIGHT);
+        bottomRight = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[3], keys[3], RemoteHandler.RemoteButton.BOTTOM_RIGHT);
         this.addComponent(this, bottomRight, 2, 2, 0.1f, 1);
     }
 

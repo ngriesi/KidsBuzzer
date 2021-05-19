@@ -7,6 +7,7 @@ import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.MyColorSelector;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.StandardAssetFields;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,15 +77,15 @@ public class FontChooserRow extends SettingsRow {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
         GridBagConstraints c = new GridBagConstraints(0, 0, 1, 1, 1, 1, CENTER, NONE, new Insets(0, 10, 0, 10), 0, 0);
-        panel.add(new MyLabel("Fett"), c);
+        panel.add(new MyLabel(Text.BOLD), c);
         c.gridx = 1;
         panel.add(bold, c);
         c.gridx = 2;
-        panel.add(new MyLabel("Style"));
+        panel.add(new MyLabel(Text.STYLE));
         c.gridx = 3;
         panel.add(comboBox, c);
         c.gridx = 4;
-        panel.add(new MyLabel("Farbe"));
+        panel.add(new MyLabel(Text.COLOR));
         c.gridx = 5;
         panel.add(colorSelector, c);
         return panel;

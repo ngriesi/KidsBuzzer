@@ -1,0 +1,61 @@
+LANGUAGE;English;Deutsch
+LANGUAGE_SELECTION;Language selection;Sprachauswahl
+EFFECT_COLOR_SELECTION;Effect Color selection;Effekt Farben Auswahl
+SETTINGS;Settings;Einstellungen
+QUIZTIME;Quiztime;Quiztime
+SHOW;Show;Anzeigen
+WRONG;Wrong;Falsch
+RIGHT;Right;Richtig
+NEXT_QUESTION;Next Question;Nächste Frage
+IMAGES;Images;Bilder
+CHOOSE_BACKGROUND;Choose a Background;Hintergrund auswählen
+SELECT_ICON_BUZZER;Select the Icon for Buzzer;Icon wählen, Buzzer
+FONT;Font;Schriftart
+MAIN_FONT;Main Font;Haupfschriftart
+BUZZER_FONT;Buzzer Font;Buzzerschriftart
+BOLD;Bold;Fett
+STYLE;Style;Stil
+COLOR;Color;Farbe
+AUDIO;Audio;Audio
+INTRO_SOUND;Choose Intro Sound;Intro Sound auswählen
+QUESTION_SOUND;Choose Question Sound;Frage-Sound auswählen
+RIGHT_SOUND;Choose Right Sound;Richtig-Sound auswählen
+WRONG_SOUND;Choose Wrong Sound;Falsch-Sound auswählen
+BUZZER_SOUND;Choose Buzzer Sound;Buzzer-Sound auswählen
+VOLUME;Volume;Lautstärke
+REMOTE;Remote;Fernbedienung
+NOTHING;Nothing;Nichts
+KEY_PRESS;Key Press;Tastendruck
+SHOW_OR_HIDE;Show/Hide;Anzeigen/Verstecken
+BACK;Back;Zurück
+CREDITS;Credits;Credits
+CREDITS_TEXT;For Questions and Support write to niels.griesu@gmail.com;Fragen und Porbleme gerne an niels.griesu@gmail.com
+CHOOSE_OUTPUT_SCREEN;Choose Output Screen;Ausgabebildschirm wählen
+SELECT_BUZZER_NUMBER;Select the number of Buzzers;Anzahl an Buzzern auswählen
+USE_NATIVE_KEYS;Use Global Key Listener;Globale Tastenevents verwenden
+CANCEL;Cancel;Abbruch
+SAVE;Save;Speichern
+HIDE;Hide;Verstecken
+SCOREBOARD;Scoreboard;Scoreboard
+GENERAL;General;Allgemein
+SOUND_WHEN_SCORED;Select Sound played when scored;Ton für erziehlten Punkt wählen
+NAME_OF_TEAM;Name of Team;Name von Team
+SELECT_ICON_TEAM;Select Icon of Team;Icon auswählen von Team
+INSTANT_BUTTON;Instant Button;Instant Button
+BUZZER;Buzzer;Buzzer
+SEARCHING;Searching;Sucht
+SOUND_OF_BUZZER;Sound of Buzzer;Ton von Buzzer
+QUIZ_OVERLAY;Quiz Overlay;Quiz Overlay
+MOUSE_CLICKER;Mouse Clicker;Maus Klicker
+DISPLAY_MOUSE_TRACKER;Display the Mouse Tracker;Maus Tracker anzeigen
+BUZZER_CLICK_CORDS;Buzzer Click Coordinates;Buzzer Klick Koordinaten
+BLOCKING_BEHAVIOUR;Blocking Behaviour;Block-Verhalten
+DONT_BLOCK;Don't Block;Nicht Blocken
+BLOCK_UNTIL_RELEASED;Block until released;Manuel Befreien
+RESET_BUZZER;Reset;Zurücksetzen
+BLOCK_FOR_TIME;Block for Time;Für Zeit blockieren
+UNBLOCK_WITH_BUZZER;Unblock with Buzzer;Mit Buzzer Befreien
+KEY_PRESSER;Key Presser;Tastendruck
+BUZZER_PRESS_KEY;Buzzer Key;Buzzer Taste
+KEY;Key;Taste
+ACTIVE;Active;Aktive

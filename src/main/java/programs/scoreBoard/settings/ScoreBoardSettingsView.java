@@ -5,6 +5,7 @@ import assets.settings.rows.*;
 import assets.standardAssets.MyPanel;
 import programs.abstractProgram.ProgramSettingsView;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,7 +72,7 @@ public class ScoreBoardSettingsView extends ProgramSettingsView {
         iconSettingRows = new FileChooserSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
 
         for (int i = 0; i < iconSettingRows.length; i++) {
-            iconSettingRows[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + SaveDataHandler.BUZZER_NAMES[i], SaveDataHandler.BUZZER_NAMES[i] + " Buzzer Icon", new File("default"), "Bilder", "png", "jpg");
+            iconSettingRows[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + SaveDataHandler.BUZZER_NAMES[i], Text.SELECT_ICON_TEAM + " " + (i + 1), new File("default"), "Bilder", "png", "jpg");
 
             panel.addComponent(panel, iconSettingRows[i], 0, i, 1, 1);
         }
@@ -92,18 +93,18 @@ public class ScoreBoardSettingsView extends ProgramSettingsView {
     private JPanel createGeneralSettingsPanel(SettingsChangeListener settingsChangeListener) {
         MyPanel panel = new MyPanel(new GridBagLayout());
 
-        teamsFontChooserRow = new FontChooserRow(settingsChangeListener, "font", "Schriftart", new FontData(new Font("arial", Font.PLAIN, 30), Color.WHITE));
+        teamsFontChooserRow = new FontChooserRow(settingsChangeListener, "font", Text.FONT, new FontData(new Font("arial", Font.PLAIN, 30), Color.WHITE));
 
         panel.addComponent(panel, teamsFontChooserRow, 0, 0, 1, 1);
 
-        buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", "Sound bei Punkt");
+        buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", Text.SOUND_WHEN_SCORED);
 
         panel.addComponent(panel, buzzerPressedSound, 0, 1, 1, 1);
 
         teamNames = new TextFieldSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
 
         for (int i = 0; i < teamNames.length; i++) {
-            teamNames[i] = new TextFieldSettingsRow(settingsChangeListener, "name" + SaveDataHandler.BUZZER_NAMES[i], "Name von Team " + (1 + i), "default");
+            teamNames[i] = new TextFieldSettingsRow(settingsChangeListener, "name" + SaveDataHandler.BUZZER_NAMES[i], Text.NAME_OF_TEAM + " " + (1 + i), "default");
 
             panel.addComponent(panel, teamNames[i], 0, 2 + i, 1, 1);
         }

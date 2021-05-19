@@ -4,6 +4,7 @@ import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyTextField;
 import assets.standardAssets.StandardAssetFields;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,7 @@ public class BuzzerClickPositionRow extends ControlViewRow {
      * @param actionListener action listener for all components in this view element
      */
     public BuzzerClickPositionRow(String buzzerColor, ActionListener actionListener) {
-        super(buzzerColor + " buzzer click cords");
+        super(buzzerColor + " " + Text.BUZZER_CLICK_CORDS);
 
         JPanel interactionElementsContainer = new JPanel(new GridBagLayout());
         interactionElementsContainer.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -85,7 +86,7 @@ public class BuzzerClickPositionRow extends ControlViewRow {
         c.gridx = 3;
         interactionElementsContainer.add(yCord, c);
         c.gridx = 4;
-        interactionElementsContainer.add(new MyLabel(" active:"), c);
+        interactionElementsContainer.add(new MyLabel(" "+Text.ACTIVE+":"), c);
         c.gridx = 5;
         interactionElementsContainer.add(checkBox, c);
     }

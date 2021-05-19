@@ -7,16 +7,15 @@ import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
 import presentationWindow.items.Texture;
-import presentationWindow.renderItems.*;
+import presentationWindow.renderItems.ImageItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
+import presentationWindow.renderItems.QuadItem;
+import presentationWindow.renderItems.TextItem;
 import presentationWindow.window.LinearAnimator;
 import presentationWindow.window.OpenGlRenderer;
-import programs.abstractProgram.Program;
-import programs.quizOverlay.main.control.QuizOverlayProgram;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
-
-import static java.awt.Font.PLAIN;
 
 /**
  * The <code>VirtualBuzzer</code> class represents a buzzer virtually in the

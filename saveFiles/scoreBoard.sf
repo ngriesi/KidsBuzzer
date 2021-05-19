@@ -1,8 +1,8 @@
+teamNames=[test, ENTE, GANS]
+textBold=false
 font=Impact
 textColor=[0, 0, 0, 255]
 buzzerSound=default
 icons=[default, default, default]
 buzzerSoundVolume=0
-teamNames=[BAUMestest, ENTE, GANS]
-textBold=false
 

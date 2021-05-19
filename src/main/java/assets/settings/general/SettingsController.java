@@ -61,4 +61,10 @@ public abstract class SettingsController<T extends SaveFile, V extends SettingsV
     protected V getViewWithoutUpdate() {
         return settingsView;
     }
+
+    protected void setSettingsView(V settingsView) {
+        this.settingsView = settingsView;
+        settingsView.setSettingsController(this);
+        settingsView.createSettings();
+    }
 }

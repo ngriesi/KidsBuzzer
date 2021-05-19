@@ -14,6 +14,16 @@ public class SettingsSaveFile extends SaveFile {
     private int outputScreen = 1;
 
     /**
+     * language of the Application
+     */
+    private String language = "English";
+
+    /**
+     * Effect color of the application
+     */
+    private int[] effectColor = {50, 150, 250};
+
+    /**
      * stores the desired output screen, in contrast to <code>outputScreen</code>
      * this value can not be changed by connecting or disconnecting a screen
      */
@@ -124,5 +134,21 @@ public class SettingsSaveFile extends SaveFile {
 
     public void setUseNativeKeyListener(boolean useNativeKeyListener) {
         this.useNativeKeyListener = useNativeKeyListener;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public int[] getEffectColor() {
+        return effectColor;
+    }
+
+    public void setEffectColor(int[] effectColor) {
+        this.effectColor = effectColor;
     }
 }

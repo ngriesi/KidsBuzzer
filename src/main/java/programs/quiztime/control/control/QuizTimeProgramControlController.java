@@ -37,7 +37,9 @@ public class QuizTimeProgramControlController extends ProgramController<QuizTime
      */
     @Override
     protected QuizTimeProgramControlView createView() {
-        simpleOutputView = new SimpleOutputView(this);
+        if (simpleOutputView == null) {
+            simpleOutputView = new SimpleOutputView(this);
+        }
         return new QuizTimeProgramControlView(this);
     }
 

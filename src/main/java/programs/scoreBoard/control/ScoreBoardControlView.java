@@ -6,6 +6,7 @@ import assets.standardAssets.MyPanel;
 import assets.standardAssets.MyTextField;
 import programs.abstractProgram.ProgramView;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,11 +61,11 @@ class ScoreBoardControlView extends ProgramView {
             }
         });
 
-        show = createButton(actionListener, topBar, "Anzeigen", "show", 0);
+        show = createButton(actionListener, topBar, Text.SHOW, "show", 0);
 
-        hide = createButton(actionListener, topBar, "Verstecken", "hide", 1);
+        hide = createButton(actionListener, topBar, Text.HIDE, "hide", 1);
 
-        createButton(actionListener, topBar, "Einstellungen", "settings", 2);
+        createButton(actionListener, topBar, Text.SETTINGS, "settings", 2);
 
         this.addComponent(this, topBar, 1, 2, 0, 0, 1f, 1f);
 

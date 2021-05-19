@@ -3,6 +3,7 @@ package controlWindow.credits;
 import assets.standardAssets.MyButton;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyPanel;
+import savedataHandler.languages.Text;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -32,7 +33,7 @@ class CreditsView extends MyPanel {
      */
     private void createBackButton(ActionListener creditsController) {
         //noinspection SpellCheckingInspection
-        MyButton back = new MyButton("Zurück");
+        MyButton back = new MyButton(Text.BACK);
         back.addActionListener(creditsController);
         back.setActionCommand("back");
         this.add(back, BorderLayout.PAGE_END);
@@ -43,8 +44,7 @@ class CreditsView extends MyPanel {
      */
     private void createMainText() {
         //noinspection SpellCheckingInspection
-        MyLabel mainLabel = new MyLabel("Bei Problemen und Fragen an " +
-                "niels.griesu@gmail.com schreiben");
+        MyLabel mainLabel = new MyLabel(Text.CREDITS_TEXT);
         this.add(mainLabel, BorderLayout.CENTER);
     }
 }

@@ -2,6 +2,7 @@ package buzzerHandler;
 
 import assets.standardAssets.MyButton;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +60,7 @@ public class BuzzerControlView extends JPanel {
      * @param i number of the buzzer
      */
     private void createVirtualBuzzer(int i) {
-        virtualBuzzers[i] = new JLabel("BUZZER " + (i + 1));
+        virtualBuzzers[i] = new JLabel(Text.BUZZER + " " + (i + 1));
         virtualBuzzers[i].setFont(new Font("arial", Font.BOLD, 20));
         virtualBuzzers[i].setForeground(Color.WHITE);
         virtualBuzzers[i].setHorizontalAlignment(SwingConstants.CENTER);

@@ -3,6 +3,7 @@ package assets.control;
 import assets.combobox.MyComboBox;
 import assets.standardAssets.*;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,7 +95,7 @@ public class BlockingBehaviourRow extends ControlViewRow {
      * @param actionListener action listener used by all the components in this view element
      */
     public BlockingBehaviourRow(ActionListener actionListener) {
-        super("Blocking behaviour");
+        super(Text.BLOCKING_BEHAVIOUR);
 
         createLayoutElements(actionListener);
 
@@ -128,7 +129,7 @@ public class BlockingBehaviourRow extends ControlViewRow {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(0, spacing, 0, spacing * 3);
         c.gridx = 0;
-        center.add(new MyLabel("Blocking Behaviour"), c);
+        center.add(new MyLabel(Text.BLOCKING_BEHAVIOUR), c);
         c.gridx = 1;
         center.add(mainSelector, c);
 
@@ -226,7 +227,7 @@ public class BlockingBehaviourRow extends ControlViewRow {
      * @param actionListener action listener used by all the components in this view element
      */
     private void createReleaseButton(ActionListener actionListener) {
-        releaseButton = new MyButton("Reset Buzzer");
+        releaseButton = new MyButton(Text.RESET_BUZZER);
         releaseButton.setActionCommand(BLOCKING_BEHAVIOUR + ":" + RESET);
         releaseButton.addActionListener(actionListener);
         releaseButton.setVisible(false);
@@ -241,7 +242,7 @@ public class BlockingBehaviourRow extends ControlViewRow {
      * @param actionListener action listener used by all the components in this view element
      */
     private void createMainSelector(ActionListener actionListener) {
-        mainSelector = new MyComboBox<>(new String[]{"Don't block", "Block until Released", "Block for Time", "Unblock with Buzzer"});
+        mainSelector = new MyComboBox<>(new String[]{Text.DONT_BLOCK, Text.BLOCK_UNTIL_RELEASED, Text.BLOCK_FOR_TIME, Text.UNBLOCK_WITH_BUZZER});
         mainSelector.setFont(new Font("arial", Font.PLAIN, 20));
         mainSelector.setPreferredSize(new Dimension(250, 40));
         mainSelector.setActionCommand(BLOCKING_BEHAVIOUR + ":" + MAIN_SELECTOR);
@@ -260,7 +261,7 @@ public class BlockingBehaviourRow extends ControlViewRow {
      *
      * @param buzzerName name of the buzzer that was pressed
      */
-    public void buzzerAction(String buzzerName) {
+    private void buzzerAction(String buzzerName) {
         for (int i = 0; i < 3; i++) {
             buzzer[i].setSelected(buzzerName.equals(BUZZER_NAMES[i]));
             buzzer[i].setEnabled(!buzzerName.equals(BUZZER_NAMES[i]));
@@ -275,6 +276,16 @@ public class BlockingBehaviourRow extends ControlViewRow {
      */
     public void setMainSelectorItem(String item) {
         mainSelector.setSelectedItem(item);
+    }
+
+    /**
+     * sets the selected item of the main selector from an index
+     * Possible values: 0, 1, 2, 3
+     *
+     * @param item item that is now the selected item
+     */
+    public void setMainSelectorItem(int item) {
+        mainSelector.setSelectedIndex(item);
     }
 
     /**
@@ -319,8 +330,8 @@ public class BlockingBehaviourRow extends ControlViewRow {
      *                  possible values: "Don't block", "Block until Released", "Block for Time", "Unblock with Buzzer"
      */
     private void changeBlockingBehaviour(String behaviour) {
-        releaseButton.setVisible(behaviour.equals("Block until Released"));
-        blockTime.setVisible(behaviour.equals("Block for Time"));
-        buzzerChooserBack.setVisible(behaviour.equals("Unblock with Buzzer"));
+        releaseButton.setVisible(behaviour.equals(Text.BLOCK_UNTIL_RELEASED));
+        blockTime.setVisible(behaviour.equals(Text.BLOCK_FOR_TIME));
+        buzzerChooserBack.setVisible(behaviour.equals(Text.UNBLOCK_WITH_BUZZER));
     }
 }

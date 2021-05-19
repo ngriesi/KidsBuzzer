@@ -7,6 +7,7 @@ import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramView;
 import programs.quiztime.control.control.QuizTimeProgramControlController;
 import programs.quiztime.control.control.SimpleOutputView;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,24 +58,24 @@ public class QuizTimeProgramControlView extends ProgramView {
         gc.gridwidth = 2;
         gc.gridheight = 1;
         gc.fill = NONE;
-        addButton("Einstellungen", "settings", programController, gc);
+        addButton(Text.SETTINGS, "settings", programController, gc);
 
         gc.gridy = 1;
-        addButton("Anzeigen", "show", programController, gc);
+        addButton(Text.SHOW, "show", programController, gc);
 
         gc.gridy = 2;
-        addButton("Falsch", "wrong", programController, gc);
+        addButton(Text.WRONG, "wrong", programController, gc);
 
         gc.gridx = 2;
-        addButton("Richtig", "right", programController, gc);
+        addButton(Text.RIGHT, "right", programController, gc);
 
         gc.gridy = 3;
-        addButton("Nächste Frage", "next", programController, gc);
+        addButton(Text.NEXT_QUESTION, "next", programController, gc);
 
         gc.gridx = 0;
         gc.weightx = 0.5f;
         gc.gridwidth = 1;
-        MyLabel nextQuestion = new MyLabel("Nächste Frage:");
+        MyLabel nextQuestion = new MyLabel(Text.NEXT_QUESTION);
         this.add(nextQuestion, gc);
 
         gc.gridx = 1;

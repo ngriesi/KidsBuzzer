@@ -4,6 +4,7 @@ import programs.abstractProgram.Program;
 import programs.emptyClasses.EmptyPresentationView;
 import programs.mouseClicker.control.controller.MouseClickerProgramController;
 import programs.mouseClicker.data.MouseClickerProgramModel;
+import savedataHandler.languages.Text;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -16,7 +17,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
      * creates a new program
      */
     public MouseClickerProgram() {
-        super(true, "Mouse Clicker");
+        super(true, Text.MOUSE_CLICKER);
 
         screenScalar = Toolkit.getDefaultToolkit().getScreenResolution() / 96f;
     }
@@ -94,14 +95,14 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
     private void handleReset(int buzzerNumber) {
         switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
             //noinspection SpellCheckingInspection
-            case "Dont block":
+            case 0:
                 getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
                 break;
-            case "Block until Released":
+            case 1:
 
                 break;
-            case "Block for Time":
+            case 2:
                 new Thread(() -> {
                     try {
                         Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
@@ -113,7 +114,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
                     }
                 }).start();
                 break;
-            case "Unblock with Buzzer":
+            case 3:
                 if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
                     getMainController().getControlModel().getBuzzerControl().unblockBuzzer(1);
                     getMainController().getControlModel().getBuzzerControl().unblockBuzzer(2);

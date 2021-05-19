@@ -9,7 +9,6 @@ import assets.standardAssets.StandardAssetFields;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 import static java.awt.BorderLayout.*;
 import static java.awt.GridBagConstraints.BOTH;

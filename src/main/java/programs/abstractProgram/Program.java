@@ -347,4 +347,20 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     public void remotePressedAction(RemoteHandler.RemoteButton pressedButton) {
         remoteHandler.pressedAction(pressedButton);
     }
+
+    /**
+     * updates the view of the settings and the controller
+     */
+    public void updateView() {
+        if (settingsController != null) {
+            settingsController.recreateView();
+            settingsController.updateView();
+        }
+        if (programController != null) {
+            programController.recreateView();
+            programController.updateView();
+            setView(programController.getProgramView());
+        }
+
+    }
 }

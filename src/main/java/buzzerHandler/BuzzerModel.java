@@ -144,4 +144,11 @@ public class BuzzerModel {
     public MainController getMainController() {
         return mainController;
     }
+
+    /**
+     * updates the view of the bottom bar
+     */
+    public void updateView() {
+        buzzerControlView = new BuzzerControlView(this);
+    }
 }

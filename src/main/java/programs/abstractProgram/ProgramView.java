@@ -2,12 +2,10 @@ package programs.abstractProgram;
 
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
-import presentationWindow.engine.Action;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**

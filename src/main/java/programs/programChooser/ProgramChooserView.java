@@ -3,6 +3,7 @@ package programs.programChooser;
 import assets.standardAssets.MyButton;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +82,7 @@ public class ProgramChooserView extends MyPanel {
      * @return credits button
      */
     private MyButton createCreditsButton(ProgramChooserModel programChooserModel) {
-        MyButton creditsButton = new MyButton("Credits");
+        MyButton creditsButton = new MyButton(Text.CREDITS);
         creditsButton.setActionCommand("credits");
         creditsButton.addActionListener(programChooserModel);
         return creditsButton;
@@ -110,7 +111,7 @@ public class ProgramChooserView extends MyPanel {
      * @return settings button
      */
     private MyButton createSettingsButton(ProgramChooserModel programChooserModel) {
-        MyButton settingsButton = new MyButton("Settings");
+        MyButton settingsButton = new MyButton(Text.SETTINGS);
         settingsButton.setActionCommand("settings");
         settingsButton.addActionListener(programChooserModel);
         return settingsButton;

@@ -1,6 +1,7 @@
 package programs.programChooser;
 
 import programs.abstractProgram.Program;
+import savedataHandler.languages.Text;
 
 /**
  * handler contains the list of the programs
@@ -37,16 +38,14 @@ public class ProgramHandler {
      * @return position in the list
      */
     private int getProgramIndex(String name) {
-        switch (name) {
-            case "Quiztime": return 0;
-            case "Score Board": return 1;
-            case "Instant Button": return 2;
-            case "Quizoverlay": return 3;
-            case "Mouse Clicker": return 4;
-            case "Key Presser": return 5;
-            case "Test": return 6;
-            default: return -1;
-        }
+        if(name.equals(Text.QUIZTIME)) return 0;
+        if(name.equals(Text.SCOREBOARD)) return 1;
+        if(name.equals(Text.INSTANT_BUTTON)) return 2;
+        if(name.equals(Text.QUIZ_OVERLAY)) return 3;
+        if(name.equals(Text.MOUSE_CLICKER)) return 4;
+        if(name.equals(Text.KEY_PRESSER)) return 5;
+        if(name.equals("Test")) return 6;
+        return -1;
     }
 
     /**
@@ -101,5 +100,14 @@ public class ProgramHandler {
      */
     public Program getByNumber(int i) {
         return programs[i];
+    }
+
+    /**
+     * updaes the control and settings views of a program
+     */
+    public void updateProgramViews() {
+        for (Program program : programs) {
+            program.updateView();
+        }
     }
 }

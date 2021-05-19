@@ -93,6 +93,7 @@ public class MainController {
      * displays the main settings view in the control frame
      */
     public void displaySettings() {
+        controlModel.getSettingsController().setOldValues();
         controlModel.getView().setView(controlModel.getSettingsController().getSettingsView());
     }
 
@@ -139,6 +140,23 @@ public class MainController {
      */
     public void displayControlView() {
         controlModel.getView().setView(controlModel.getView().getMainLayout());
+    }
+
+    /**
+     * Updates the view of the whole application
+     */
+    public void updateView() {
+        controlModel.getView().getMyJFrame().recreate();
+        controlModel.getCreditsController().updateView();
+        controlModel.getSettingsController().updateSettingsView();
+        controlModel.getProgramChooserModel().updateView();
+        controlModel.getBuzzerControl().updateView();
+        controlModel.getView().setupWindow();
+        controlModel.getProgramChooserModel().getProgramHandler().updateProgramViews();
+
+
+        setProgram(controlModel.getCurrentProgram());
+
     }
 
 }

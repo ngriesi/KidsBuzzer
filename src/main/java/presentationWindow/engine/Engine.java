@@ -11,7 +11,7 @@ import startupApp.LoadingMonitor;
  */
 public class Engine implements Runnable {
 
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    @SuppressWarnings({"unused"})
     private static long lastTime;
 
     /**

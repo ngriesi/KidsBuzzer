@@ -157,9 +157,10 @@ public class MyJFrame extends ResizeWindowPanel {
     }
 
     /**
-     * @return returns the window
+     * recreates the windows title bar
      */
-    public JFrame getFrame() {
-        return super.getFrame();
+    public void recreate() {
+        this.remove(((BorderLayout)this.getLayout()).getLayoutComponent(BorderLayout.PAGE_START));
+        this.add(new TitleBar(super.getFrame()), BorderLayout.PAGE_START);
     }
 }

@@ -8,22 +8,27 @@ public class RemoteSaveFile extends SaveFile {
     /**
      * Action of the top left button
      */
-    private String topLeftButtonActionName = "Nichts";
+    private int topLeftButtonActionIndex = 0;
 
     /**
      * Action of the top right button
      */
-    private String topRightButtonActionName = "Nichts";
+    private int topRightButtonActionIndex = 0;
 
     /**
      * Action of the bottom left button
      */
-    private String bottomLeftButtonActionName = "Nichts";
+    private int bottomLeftButtonActionIndex = 0;
 
     /**
      * Action of the bottom right button
      */
-    private String bottomRightButtonActionName = "Nichts";
+    private int bottomRightButtonActionIndex = 0;
+
+    /**
+     * Selected Keys of the key selector
+     */
+    private String[] keys = {"A", "A", "A", "A"};
 
     /**
      * creates a save file with a name
@@ -47,35 +52,43 @@ public class RemoteSaveFile extends SaveFile {
     *******************************************
      */
 
-    public String getTopLeftButtonActionName() {
-        return topLeftButtonActionName;
+    public int getTopLeftButtonActionIndex() {
+        return topLeftButtonActionIndex;
     }
 
-    public void setTopLeftButtonActionName(String topLeftButtonActionName) {
-        this.topLeftButtonActionName = topLeftButtonActionName;
+    public void setTopLeftButtonActionIndex(int topLeftButtonActionIndex) {
+        this.topLeftButtonActionIndex = topLeftButtonActionIndex;
     }
 
-    public String getTopRightButtonActionName() {
-        return topRightButtonActionName;
+    public int getTopRightButtonActionIndex() {
+        return topRightButtonActionIndex;
     }
 
-    public void setTopRightButtonActionName(String topRightButtonActionName) {
-        this.topRightButtonActionName = topRightButtonActionName;
+    public void setTopRightButtonActionIndex(int topRightButtonActionIndex) {
+        this.topRightButtonActionIndex = topRightButtonActionIndex;
     }
 
-    public String getBottomLeftButtonActionName() {
-        return bottomLeftButtonActionName;
+    public int getBottomLeftButtonActionIndex() {
+        return bottomLeftButtonActionIndex;
     }
 
-    public void setBottomLeftButtonActionName(String bottomLeftButtonActionName) {
-        this.bottomLeftButtonActionName = bottomLeftButtonActionName;
+    public void setBottomLeftButtonActionIndex(int bottomLeftButtonActionIndex) {
+        this.bottomLeftButtonActionIndex = bottomLeftButtonActionIndex;
     }
 
-    public String getBottomRightButtonActionName() {
-        return bottomRightButtonActionName;
+    public int getBottomRightButtonActionIndex() {
+        return bottomRightButtonActionIndex;
     }
 
-    public void setBottomRightButtonActionName(String bottomRightButtonActionName) {
-        this.bottomRightButtonActionName = bottomRightButtonActionName;
+    public void setBottomRightButtonActionIndex(int bottomRightButtonActionIndex) {
+        this.bottomRightButtonActionIndex = bottomRightButtonActionIndex;
+    }
+
+    public String[] getKeys() {
+        return keys;
+    }
+
+    public void setKeys(String[] keys) {
+        this.keys = keys;
     }
 }

@@ -1,6 +1,7 @@
 package controlWindow;
 
 import remoteHandler.RemoteHandler;
+import savedataHandler.languages.Text;
 import serialPortHandling.SerialPortReader;
 import serialPortHandling.SerialPortReaderInterface;
 
@@ -59,7 +60,7 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
      */
     @Override
     public void searchingForReceiver() {
-        SwingUtilities.invokeLater(() -> controlModel.getBuzzerControl().changeButtonText("searching"));
+        SwingUtilities.invokeLater(() -> controlModel.getBuzzerControl().changeButtonText(Text.SEARCHING));
     }
 
     /**

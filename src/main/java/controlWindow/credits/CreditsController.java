@@ -58,4 +58,11 @@ public class CreditsController implements ActionListener {
             mainController.displayControlView();
         }
     }
+
+    /**
+     * recreates the creadits view
+     */
+    public void updateView() {
+        creditsView = new CreditsView(this);
+    }
 }

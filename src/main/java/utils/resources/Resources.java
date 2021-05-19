@@ -65,7 +65,7 @@ public class Resources {
     public static List<String> readAllLines(String filename) throws Exception {
         List<String> list = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(Class.forName(Resources.class.getName()).getResourceAsStream(filename), StandardCharsets.ISO_8859_1))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(Class.forName(Resources.class.getName()).getResourceAsStream(filename), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 list.add(line);

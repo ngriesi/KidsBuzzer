@@ -3,7 +3,6 @@ package programs.mouseClicker.control.view;
 import assets.control.BlockingBehaviourRow;
 import assets.control.BuzzerClickPositionRow;
 import assets.control.DisplayMouseTrackerRow;
-import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramView;
 import programs.mouseClicker.control.controller.MouseClickerProgramController;
 

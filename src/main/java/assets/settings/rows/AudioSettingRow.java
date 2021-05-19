@@ -6,6 +6,7 @@ import assets.standardAssets.MyButton;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.MySlider;
+import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -80,7 +81,7 @@ public class AudioSettingRow extends SettingsRow {
      * @return returns the volume label
      */
     private MyLabel createLabel() {
-        MyLabel label = new MyLabel("Volume   ");
+        MyLabel label = new MyLabel(Text.VOLUME + "   ");
         label.setPreferredSize(new Dimension(1, 1));
         return label;
     }

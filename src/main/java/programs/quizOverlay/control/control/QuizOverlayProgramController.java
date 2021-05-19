@@ -36,7 +36,9 @@ public class QuizOverlayProgramController extends ProgramController<QuizOverlayP
      */
     @Override
     protected QuizOverlayControlView createView() {
-        simpleOutputView = new SimpleOutputView(this);
+        if (simpleOutputView == null) {
+            simpleOutputView = new SimpleOutputView(this);
+        }
         return new QuizOverlayControlView(this);
     }
 

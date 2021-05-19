@@ -1,9 +1,11 @@
-outputScreen=1
-desiredOutputScreen=1
-windowPositionX=555
-windowPositionY=180
-useNativeKeyListener=false
+language=Deutsch
 windowHeight=540
-buzzerNumber=3
+buzzerNumber=2
 windowWidth=960
+effectColor=[0, 102, 204]
+outputScreen=1
+windowPositionX=523
+desiredOutputScreen=1
+windowPositionY=259
+useNativeKeyListener=false
 
