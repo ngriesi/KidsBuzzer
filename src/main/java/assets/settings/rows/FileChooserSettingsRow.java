@@ -65,7 +65,7 @@ public class FileChooserSettingsRow extends SettingsRow {
     private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener, String name) {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             button.setText(fileChooser.getSelectedFile().getName());
-            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name));
+            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name, SettingsEvent.RowKind.FILECHOOSER, "", getPageIdentificationName()));
         }
     }
 

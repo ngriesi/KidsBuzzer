@@ -1,6 +1,7 @@
 package programs.abstractProgram;
 
 import controlWindow.MainController;
+import midi.MidiHandler;
 import presentationWindow.renderItems.MainItem;
 import presentationWindow.window.OpenGlRenderer;
 import remoteHandler.RemoteHandler;
@@ -70,6 +71,11 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
      * main controller of the control window
      */
     private MainController mainController;
+
+    /**
+     * midi handler of the applicaiton
+     */
+    private MidiHandler midiHandler;
 
     /**
      * main item in the presentation window
@@ -179,8 +185,15 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
                 getProgramModel().updateChangeListener();
             });
 
-
+            afterLoadingAction();
         }).start();
+    }
+
+    /**
+     * action performed after loading
+     */
+    protected void afterLoadingAction() {
+
     }
 
     /**
@@ -285,12 +298,13 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
     }
 
     /**
-     * sets the main controller of the control window
+     * sets the main controller of the control window and the midi controller
      *
      * @param mainController main controller of the control window
      */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+        midiHandler = mainController.getControlModel().getMidiHandler();
     }
 
     /**
@@ -362,5 +376,9 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
             setView(programController.getProgramView());
         }
 
+    }
+
+    public MidiHandler getMidiHandler() {
+        return midiHandler;
     }
 }

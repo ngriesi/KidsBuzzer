@@ -59,3 +59,13 @@ KEY_PRESSER;Key Presser;Tastendruck
 BUZZER_PRESS_KEY;Buzzer Key;Buzzer Taste
 KEY;Key;Taste
 ACTIVE;Active;Aktive
+LIGHT_CONTROL;Light Control;Lichtsteuerung
+MIDI_RIGHT_DESCRIPTION;Right Button Light Action;Richtig-Button Licht Aktion
+MIDI_INTRO_DESCRIPTION;Intro Light Action;Intro Licht Aktion
+MIDI_WRONG_DESCRIPTION;Wrong Button Light Action;Falsch-Button Licht Aktion
+MIDI_NEXT_DESCRIPTION;Next Question Button Light Action;Nächste Frage-Button Licht Aktion
+MIDI_POINT_SCORED;Point scored Light Action;Punkt erzielt Licht Aktion
+MIDI_BUZZER_DESCRIPTION;Buzzer Pressed Light Action;Buzzer Licht Aktion
+RED;Red;Roter
+GREEN;Green;Grüner
+BLACK;Black;Schwarzer

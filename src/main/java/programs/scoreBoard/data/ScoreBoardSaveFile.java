@@ -44,6 +44,21 @@ public class ScoreBoardSaveFile extends SaveFile {
     private int buzzerSoundVolume;
 
     /**
+     * x coord of the executor button of the midi action
+     */
+    private int midiX = 1;
+
+    /**
+     * y coord of the executor button of the midi action
+     */
+    private int midiY = 1;
+
+    /**
+     * activation flag for the midi action
+     */
+    private boolean midiActivate = false;
+
+    /**
      * creates a save file with a name
      */
     public ScoreBoardSaveFile() {
@@ -110,5 +125,29 @@ public class ScoreBoardSaveFile extends SaveFile {
 
     public void setBuzzerSoundVolume(int buzzerSoundVolume) {
         this.buzzerSoundVolume = buzzerSoundVolume;
+    }
+
+    public int getMidiX() {
+        return midiX;
+    }
+
+    public void setMidiX(int midiX) {
+        this.midiX = midiX;
+    }
+
+    public int getMidiY() {
+        return midiY;
+    }
+
+    public void setMidiY(int midiY) {
+        this.midiY = midiY;
+    }
+
+    public boolean isMidiActivate() {
+        return midiActivate;
+    }
+
+    public void setMidiActivate(boolean midiActivate) {
+        this.midiActivate = midiActivate;
     }
 }

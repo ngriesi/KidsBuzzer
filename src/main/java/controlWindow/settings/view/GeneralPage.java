@@ -1,28 +1,17 @@
-package controlWindow.settings;
+package controlWindow.settings.view;
 
+import assets.settings.general.SettingsPage;
 import assets.settings.rows.CheckBoxSettingsRow;
 import assets.settings.rows.ColorSelectionRow;
 import assets.settings.rows.ComboBoxSettingsRow;
-import assets.standardAssets.MyButton;
+import controlWindow.settings.SettingsController;
+import controlWindow.settings.SettingsSaveFile;
 import savedataHandler.languages.Text;
 
-import javax.swing.*;
 import java.awt.*;
 
-/**
- * creates  the main settings view for the whole application
- */
-public class SettingsView extends assets.settings.general.SettingsView<SettingsSaveFile> {
+public class GeneralPage extends SettingsPage {
 
-    /**
-     * width of the buttons at the bottom
-     */
-    private final float bottom_button_width = 0.15f;
-
-    /**
-     * height of the bottom bar
-     */
-    private final float bottom_height = 0.05f;
 
     /**
      * settings rows
@@ -34,11 +23,19 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     private ColorSelectionRow effectColorSeector;
 
     /**
+     * creates Panel with Layout
+     */
+    GeneralPage(SettingsController settingsController) {
+        super(Text.GENERAL, "general");
+        createSettingsRows(settingsController);
+    }
+
+    /**
      * updates the settings views
      *
      * @param settingsSaveFile save file with the values
      */
-    public void updateSettings(SettingsSaveFile settingsSaveFile) {
+    void updateSettings(SettingsSaveFile settingsSaveFile) {
         outputScreen.setSetting(settingsSaveFile.getOutputScreen());
         buzzerNumber.setSetting(settingsSaveFile.getBuzzerNumber());
         language.setSetting(settingsSaveFile.getLanguage());
@@ -47,71 +44,19 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
 
     /**
      * creates the settings rows and adds them to the <code>JPanel</code> passed to the method
-     *
-     * @param mainPanel main panel, back of the rows
      */
-    @Override
-    protected void createSettingsRows(JPanel mainPanel) {
-
-        SettingsController settingsController = (SettingsController) this.settingsController;
-
-        createBottomBar(settingsController);
+    private void createSettingsRows(SettingsController settingsController) {
 
         outputScreen = new ComboBoxSettingsRow<>(settingsController, settingsController.getOutputScreen(), Text.CHOOSE_OUTPUT_SCREEN, settingsController.getSettingsSaveFile().getOutputScreen(), settingsController.getPossibleScreens());
-        super.addComponent(mainPanel, outputScreen, 0, 1, 1, 1);
+        super.addRow(outputScreen);
         buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.getBuzzerCount(), Text.SELECT_BUZZER_NUMBER, settingsController.getSettingsSaveFile().getBuzzerNumber(), new Integer[]{1, 2, 3});
-        super.addComponent(mainPanel, buzzerNumber, 0, 2, 1, 1);
+        super.addRow(buzzerNumber);
         useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.getNativeKey(), Text.USE_NATIVE_KEYS, settingsController.getSettingsSaveFile().isUseNativeKeyListener());
-        super.addComponent(mainPanel, useNativeKeyListener, 0, 3, 1, 1);
+        super.addRow(useNativeKeyListener);
         language = new ComboBoxSettingsRow<>(settingsController, settingsController.getLanguage(), Text.LANGUAGE_SELECTION, settingsController.getSettingsSaveFile().getLanguage(), Text.LANGUAGES);
-        super.addComponent(mainPanel, language, 0, 4, 1, 1);
+        super.addRow(language);
         effectColorSeector = new ColorSelectionRow(settingsController, settingsController.getEffectColor(), Text.EFFECT_COLOR_SELECTION, new Color(settingsController.getSettingsSaveFile().getEffectColor()[0], settingsController.getSettingsSaveFile().getEffectColor()[1], settingsController.getSettingsSaveFile().getEffectColor()[2]));
-        super.addComponent(mainPanel, effectColorSeector, 0, 5, 1, 1);
-
-    }
-
-    /**
-     * creates the bottom bar of the view with the back and save button
-     *
-     * @param settingsController controller handling changes to the settings
-     */
-    private void createBottomBar(SettingsController settingsController) {
-        createBackButton(settingsController);
-        createBottomSpacing();
-        createSaveButton(settingsController);
-    }
-
-    /**
-     * creates the save button
-     *
-     * @param settingsController action listener of the button
-     */
-    private void createSaveButton(SettingsController settingsController) {
-        MyButton save = new MyButton(Text.SAVE);
-        save.setActionCommand("save");
-        save.addActionListener(settingsController);
-        super.addComponent(this, save, 2, 1, bottom_button_width, bottom_height);
-    }
-
-    /**
-     * creates an empty panel as spacing at the bottom of the screen
-     */
-    private void createBottomSpacing() {
-        JPanel bottomSpacing = new JPanel();
-        bottomSpacing.setOpaque(false);
-        super.addComponent(this, bottomSpacing, 1, 1, 1f, bottom_height);
-    }
-
-    /**
-     * creates the back button for the settings view
-     *
-     * @param settingsController action listener of the button
-     */
-    private void createBackButton(SettingsController settingsController) {
-        MyButton back = new MyButton(Text.CANCEL);
-        back.setActionCommand("cancel");
-        back.addActionListener(settingsController);
-        super.addComponent(this, back, 0, 1, bottom_button_width, bottom_height);
+        super.addRow(effectColorSeector);
     }
 
     /**
@@ -121,7 +66,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
      * @return returns the settings row used for the useNativeKeyListener settings
      * @see controlWindow.NativeKeyListener for the update with keys
      */
-    CheckBoxSettingsRow getNativeKeySettingsRow() {
+    public CheckBoxSettingsRow getNativeKeySettingsRow() {
         return useNativeKeyListener;
     }
 
@@ -130,7 +75,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
      *
      * @return returns the combo box settings row used to select the output screen
      */
-    ComboBoxSettingsRow<Integer> getOutputScreen() {
+    public ComboBoxSettingsRow<Integer> getOutputScreen() {
         return outputScreen;
     }
 }

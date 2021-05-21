@@ -47,9 +47,10 @@ public class CheckBoxSettingsRow extends SettingsRow {
         return e -> {
             int state = e.getStateChange();
             if (state == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(true, name));
+                settingsChangeListener.settingChanged(new SettingsEvent<>(true, name, SettingsEvent.RowKind.CHECK_BOX, "", getPageIdentificationName()));
             } else {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(false, name));
+                settingsChangeListener.settingChanged(new SettingsEvent<>(false, name, SettingsEvent.RowKind.CHECK_BOX, "", getPageIdentificationName()));
+
             }
         };
     }

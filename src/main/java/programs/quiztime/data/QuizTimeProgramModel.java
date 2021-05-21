@@ -3,6 +3,7 @@ package programs.quiztime.data;
 import presentationWindow.items.Texture;
 import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.ProgramModel;
+import programs.quiztime.main.control.MidiHandler;
 import savedataHandler.SaveDataHandler;
 import startupApp.LoadingHandler;
 import utils.audioSystem.AudioClip;
@@ -51,6 +52,11 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
     private AudioClip wrongSound;
 
     /**
+     * Midi controller of the program
+     */
+    private MidiHandler midiHandler;
+
+    /**
      * creates a new Program model
      */
     public QuizTimeProgramModel() {
@@ -67,6 +73,8 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
      */
     @Override
     public void loadResources(LoadingHandler loadingHandler, OpenGlRenderer openGlRenderer) {
+
+        midiHandler = new MidiHandler(getSaveFile());
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             int finalI = i;
@@ -179,10 +187,16 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
      * plays the wrong sound if it exists
      */
     public void playWrongSound() {
-        System.out.println(wrongSound);
         if (wrongSound != null) {
             wrongSound.play();
         }
+    }
+
+    /**
+     * @return returns the midi handler of the program
+     */
+    public MidiHandler getQuizTimeMidiHandler() {
+        return midiHandler;
     }
 
     /*

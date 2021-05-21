@@ -1,5 +1,6 @@
 package assets.settings.general;
 
+import assets.standardAssets.LayerPanel;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
 import utils.saveFile.SaveFile;
@@ -12,15 +13,16 @@ import java.awt.*;
  *
  * @param <T> type of the save file
  */
-public abstract class SettingsView<T extends SaveFile> extends MyPanel {
+public abstract class SettingsView<T extends SaveFile> extends LayerPanel {
 
-    protected SettingsController settingsController;
+    private SettingsController settingsController;
 
     /**
      * creates a new settings view
      */
-    public SettingsView() {
-        super(new GridBagLayout());
+    public SettingsView(SettingsController settingsController) {
+        super(settingsController, settingsController, new String[0]);
+        this.settingsController = settingsController;
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
     }
 
@@ -40,21 +42,4 @@ public abstract class SettingsView<T extends SaveFile> extends MyPanel {
      */
     public abstract void updateSettings(T saveFile);
 
-    /**
-     * creates the layout for the settings view
-     */
-    void createSettings() {
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-        this.addComponent(this, mainPanel, 1, 3, 0, 0, 1f, 1f);
-
-        createSettingsRows(mainPanel);
-    }
-
-    /**
-     * creates the rows with the different settings
-     *
-     * @param mainPanel main panel for the settings rows
-     */
-    protected abstract void createSettingsRows(JPanel mainPanel);
 }

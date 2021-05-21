@@ -61,11 +61,21 @@ public class MainScoreBoardController {
         program.getProgramModel().getScores()[buzzer - 1]++;
         program.getProgramController().updateScores();
         program.getProgramModel().playBuzzerSound();
+        performMidiAction();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().buzzerAnimation(animationQueueItem, buzzer));
         animationQueueItem.addOnFinishedAction(this::buzzerAnimationFinished);
         animationQueue.addAnimation(animationQueueItem);
 
+    }
+
+    /**
+     * performs the midi action for the scored action
+     */
+    private void performMidiAction() {
+        if (program.getProgramModel().getSaveFile().isMidiActivate()) {
+            program.getMainController().getControlModel().getMidiHandler().sendMessageToPressExecuter(program.getProgramModel().getSaveFile().getMidiX(), program.getProgramModel().getSaveFile().getMidiY());
+        }
     }
 
     /**

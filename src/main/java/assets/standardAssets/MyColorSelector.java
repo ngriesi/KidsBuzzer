@@ -18,7 +18,7 @@ public class MyColorSelector extends CleanButton {
     public MyColorSelector(Color start) {
         super(start, start, start);
         this.setPreferredSize(new Dimension(40, 40));
-
+        this.setMinimumSize(new Dimension(40,40));
         this.addActionListener((e) -> buttonAction());
     }
 

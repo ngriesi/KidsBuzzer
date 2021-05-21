@@ -1,16 +1,16 @@
+rightSound=default
+wrongSound=default
+buzzerSound=default
+questionSound=default
+rightVolume=100
+buzzerVolume=100
+wrongVolume=100
+icons=[default, default, default]
+buzzerFont=Arial
+buzzerTextBold=true
 mainFont=Arial
 mainTextBold=false
-icons=[default, default, default]
 mainTextColor=[255, 255, 0, 255]
-questionVolume=100
 buzzerTextColor=[255, 255, 255, 255]
-wrongVolume=100
-questionSound=default
-buzzerTextBold=true
-buzzerVolume=100
-rightSound=default
-buzzerSound=default
-buzzerFont=Arial
-wrongSound=default
-rightVolume=100
+questionVolume=100
 

@@ -1,6 +1,7 @@
 package controlWindow;
 
 import remoteHandler.RemoteHandler;
+import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 import serialPortHandling.SerialPortReader;
 import serialPortHandling.SerialPortReaderInterface;
@@ -152,9 +153,11 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
         if (!controlModel.getBuzzerControl().isBlockAllBuzzer()) {
             int buzzerNum = buzzerID / 2;
 
-            boolean blockedSave = controlModel.getBuzzerControl().isBuzzerBlocked(buzzerNum);
-            controlModel.getBuzzerControl().pressBuzzer(buzzerNum);
-            controlModel.getCurrentProgram().handleBuzzerInput(buzzerNum, blockedSave);
+            if(buzzerNum <= SaveDataHandler.BUZZER_COUNT) {
+                boolean blockedSave = controlModel.getBuzzerControl().isBuzzerBlocked(buzzerNum);
+                controlModel.getBuzzerControl().pressBuzzer(buzzerNum);
+                controlModel.getCurrentProgram().handleBuzzerInput(buzzerNum, blockedSave);
+            }
         }
     }
 }

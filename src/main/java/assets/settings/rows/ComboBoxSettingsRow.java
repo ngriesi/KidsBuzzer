@@ -33,7 +33,7 @@ public class ComboBoxSettingsRow<T> extends SettingsRow {
         comboBox.setSelectedItem(startValue);
         comboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name));
+                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name, SettingsEvent.RowKind.COMBO_BOX, "", getPageIdentificationName()));
             }
         });
 

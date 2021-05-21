@@ -3,6 +3,7 @@ package controlWindow;
 import buzzerHandler.BuzzerModel;
 import controlWindow.credits.CreditsController;
 import controlWindow.settings.SettingsController;
+import midi.MidiHandler;
 import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.Program;
 import programs.programChooser.ProgramChooserModel;
@@ -70,6 +71,11 @@ public class ControlModel {
     private BuzzerPressHandler buzzerPressHandler;
 
     /**
+     * Handler for midi messages
+     */
+    private MidiHandler midiController;
+
+    /**
      * Constructor creates the ControlWindow, the Presentation Window and the serialPortHandling.SerialPortReader
      * Gets the SaveDataHandler form the loading model containing all the loaded resources
      *
@@ -79,6 +85,9 @@ public class ControlModel {
      */
     public ControlModel(SaveDataHandler saveDataHandler, OpenGlRenderer openGlRenderer, ProgramHandler programHandler) {
         applicationRunning = true;
+
+        midiController = new MidiHandler();
+        midiController.sendMessageToPressExecuter(1,1);
 
         MainController mainController = new MainController(this);
 
@@ -251,5 +260,12 @@ public class ControlModel {
      */
     public BuzzerPressHandler getBuzzerPressHandler() {
         return buzzerPressHandler;
+    }
+
+    /**
+     * @return returns the midi contorller of the application
+     */
+    public MidiHandler getMidiHandler() {
+        return midiController;
     }
 }

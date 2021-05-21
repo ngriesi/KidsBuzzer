@@ -41,6 +41,11 @@ class StateChanger {
     private GeneralState generalState;
 
     /**
+     * Midi handler of the quiz time program
+     */
+    private MidiHandler midiHandler;
+
+    /**
      * creates a new state changer
      *
      * @param program      program this is the state changer of
@@ -86,6 +91,7 @@ class StateChanger {
     void wrongAnswerGiven() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playWrongSound();
+        midiHandler.performWrongMidiAction();
         animationQueueItem.setAnimationAction(() -> buzzerStateHandler.wrong(animationQueueItem));
         animationQueue.addAnimation(animationQueueItem);
     }
@@ -97,6 +103,7 @@ class StateChanger {
         programModel.fadeOutQuestionSound();
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playRightSound();
+        midiHandler.performRightMidiAction();
         animationQueueItem.setAnimationAction(() -> buzzerStateHandler.right(animationQueueItem));
         animationQueue.addAnimation(animationQueueItem);
     }
@@ -107,6 +114,7 @@ class StateChanger {
     void changeToIntro() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         programModel.playIntroSound();
+        midiHandler.performIntroMidiAction();
         animationQueueItem.setAnimationAction(() -> viewUpdater.introAnimation(animationQueueItem));
         animationQueueItem.addOnFinishedAction(() -> generalState.changeToIntroState());
         animationQueue.addAnimation(animationQueueItem);
@@ -136,6 +144,7 @@ class StateChanger {
     void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
         programModel.fadeOutIntroSound();
         programModel.playQuestionSound();
+        midiHandler.performNextMidiAction();
         animationQueueItem.setAnimationAction(() -> {
 
             action.execute();
@@ -154,6 +163,16 @@ class StateChanger {
 
         buzzerStateHandler.reset();
         mainController.getControlModel().getBuzzerControl().resetBuzzers();
+    }
+
+    /**
+     * Setter for the midi handler
+     *
+     * @param midiHandler new midi handler
+     */
+    void setMidiHandler(MidiHandler midiHandler) {
+        this.midiHandler = midiHandler;
+        buzzerStateHandler.setMidiHandler(midiHandler);
     }
 }
 

@@ -1,5 +1,6 @@
 package savedataHandler.languages;
 
+import savedataHandler.SaveDataHandler;
 import utils.resources.Resources;
 
 import java.util.List;
@@ -74,8 +75,22 @@ public class Text {
     public static String BUZZER_PRESS_KEY;
     public static String KEY;
     public static String ACTIVE;
+    public static String LIGHT_CONTROL;
+    public static String MIDI_RIGHT_DESCRIPTION;
+    public static String MIDI_INTRO_DESCRIPTION;
+    public static String MIDI_WRONG_DESCRIPTION;
+    public static String MIDI_NEXT_DESCRIPTION;
+    public static String MIDI_POINT_SCORED;
+    public static String MIDI_BUZZER_DESCRIPTION;
+    @SuppressWarnings("WeakerAccess")
+    public static String RED;
+    @SuppressWarnings("WeakerAccess")
+    public static String GREEN;
+    @SuppressWarnings("WeakerAccess")
+    public static String BLACK;
 
     public static String[] LANGUAGES;
+
 
 
 
@@ -114,6 +129,8 @@ public class Text {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        SaveDataHandler.BUZZER_NAMES = new String[]{RED, GREEN, BLACK};
 
     }
 }

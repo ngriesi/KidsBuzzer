@@ -5,6 +5,9 @@ import assets.settings.rows.*;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramSettingsView;
+import programs.quizOverlay.settings.pages.AudioSettingsPage;
+import programs.quizOverlay.settings.pages.FontSettingsPage;
+import programs.quizOverlay.settings.pages.ImageSettingsPage;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 
@@ -16,27 +19,22 @@ import java.io.File;
 /**
  * view of the settings of the quiz time program
  */
-class QuizOverlaySettingsView extends ProgramSettingsView {
+public class QuizOverlaySettingsView extends ProgramSettingsView {
 
     /**
-     * Settings rows to select the images for the icons
+     * Settings page for the audio settings
      */
-    private FileChooserSettingsRow[] icons;
+    private AudioSettingsPage audioSettingsPage;
 
     /**
-     * Settings row to layout teh main font
+     * settings page for the font selection
      */
-    private FontChooserRow mainFontChooserRow;
+    private FontSettingsPage fontSettingsPage;
 
     /**
-     * settings row to layout the buzzer font
+     * settings page for the image selection
      */
-    private FontChooserRow buzzerFontChooserRow;
-
-    /**
-     * settings rows to select the audio file and change their volume
-     */
-    private AudioSettingRow questionSound, rightSound, buzzerSound, wrongSound;
+    private ImageSettingsPage imageSettingsPage;
 
     /**
      * creates a new view
@@ -56,135 +54,33 @@ class QuizOverlaySettingsView extends ProgramSettingsView {
      */
     @Override
     protected JPanel[] createPanels(ActionListener actionListener, SettingsChangeListener settingsChangeListener) {
-        return new JPanel[]{createImageSelectionView(settingsChangeListener), createFontSelectionView(settingsChangeListener), createAudioSelectionView(settingsChangeListener)};
+        audioSettingsPage = new AudioSettingsPage(settingsChangeListener);
+        fontSettingsPage = new FontSettingsPage(settingsChangeListener);
+        imageSettingsPage = new ImageSettingsPage(settingsChangeListener);
+        return new JPanel[]{imageSettingsPage, fontSettingsPage, audioSettingsPage};
     }
 
     /**
-     * creates the audio settings rows
-     *
-     * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
-     * @return a panel containing the <code>AudioSettingsRows</code>
+     * @return returns the audio settings page containing the settings rows to select
+     * the audios of the program
      */
-    private JPanel createAudioSelectionView(SettingsChangeListener settingsChangeListener) {
-
-        MyPanel panel = new MyPanel(new GridBagLayout());
-
-
-        questionSound = new AudioSettingRow(settingsChangeListener, "soundQuestion", Text.QUESTION_SOUND);
-
-        panel.addComponent(panel, questionSound, 0, 0, 1, 1);
-
-        rightSound = new AudioSettingRow(settingsChangeListener, "soundRight", Text.RIGHT_SOUND);
-
-        panel.addComponent(panel, rightSound, 0, 1, 1, 1);
-
-        buzzerSound = new AudioSettingRow(settingsChangeListener, "soundBuzzer", Text.BUZZER_SOUND);
-
-        panel.addComponent(panel, buzzerSound, 0, 2, 1, 1);
-
-        wrongSound = new AudioSettingRow(settingsChangeListener, "soundWrong", Text.WRONG_SOUND);
-
-        panel.addComponent(panel, wrongSound, 0, 3, 1, 1);
-
-        return panel;
+    public AudioSettingsPage getAudioSettingsPage() {
+        return audioSettingsPage;
     }
 
     /**
-     * creates the <code>FontChooserRows</code>
-     *
-     * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
-     * @return a panel containing the <code>FontChooserRows</code>
+     * @return returns the font settings page containing the settings rows to select
+     * the fonts of the program
      */
-    private JPanel createFontSelectionView(SettingsChangeListener settingsChangeListener) {
-
-        MyPanel panel = new MyPanel(new GridBagLayout());
-
-        mainFontChooserRow = new FontChooserRow(settingsChangeListener, "fontmain", Text.MAIN_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
-
-        panel.addComponent(panel, mainFontChooserRow, 0, 0, 1, 1);
-
-        buzzerFontChooserRow = new FontChooserRow(settingsChangeListener, "fontbuzzer", Text.BUZZER_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
-
-        panel.addComponent(panel, buzzerFontChooserRow, 0, 1, 1, 1);
-
-        for (int i = 2; i < 5; i++) {
-            panel.addComponent(panel, new EmptySettingsRow(), 0, i, 1, 1);
-        }
-
-        return panel;
+    public FontSettingsPage getFontSettingsPage() {
+        return fontSettingsPage;
     }
 
     /**
-     * creates the settings rows for the image settings
-     *
-     * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
-     * @return a panel containing the settings rows for the images
+     * @return returns the image settings page containing the settings rows to select
+     * the images of the program
      */
-    private JPanel createImageSelectionView(SettingsChangeListener settingsChangeListener) {
-        MyPanel panel = new MyPanel(new GridBagLayout());
-
-        panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
-
-        icons = new FileChooserSettingsRow[SaveDataHandler.BUZZER_COUNT];
-
-        for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            icons[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + i, Text.SELECT_ICON_BUZZER + " " + (i + 1), new File("default"), Text.IMAGES, "png", "jpg");
-
-            panel.addComponent(panel, icons[i], 0, i, 1, 1);
-        }
-
-        panel.addComponent(panel, new EmptySettingsRow(), 0, SaveDataHandler.BUZZER_COUNT, 1, 1);
-        panel.addComponent(panel, new EmptySettingsRow(), 0, SaveDataHandler.BUZZER_COUNT + 1, 1, 1);
-
-        return panel;
-    }
-
-    /**
-     * @return returns the array of <code>FileChooserSettingsRows</code> for the icons
-     */
-    FileChooserSettingsRow[] getIcons() {
-        return icons;
-    }
-
-    /**
-     * @return returns the settings row that sets up the main font
-     */
-    FontChooserRow getMainFontChooserRow() {
-        return mainFontChooserRow;
-    }
-
-    /**
-     * @return returns the settings row that sets up the buzzer font
-     */
-    FontChooserRow getBuzzerFontChooserRow() {
-        return buzzerFontChooserRow;
-    }
-
-    /**
-     * @return returns the settings row for the question sound
-     */
-    AudioSettingRow getQuestionSound() {
-        return questionSound;
-    }
-
-    /**
-     * @return returns the settings row for the right sound
-     */
-    AudioSettingRow getRightSound() {
-        return rightSound;
-    }
-
-    /**
-     * @return returns the settings row for the buzzer sound
-     */
-    AudioSettingRow getBuzzerSound() {
-        return buzzerSound;
-    }
-
-    /**
-     * @return returns the settings row for the wrong sound
-     */
-    AudioSettingRow getWrongSound() {
-        return wrongSound;
+    public ImageSettingsPage getImageSettingsPage() {
+        return imageSettingsPage;
     }
 }

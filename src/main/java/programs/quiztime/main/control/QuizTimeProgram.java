@@ -12,6 +12,8 @@ import remoteHandler.RemoteHandler;
 import remoteHandler.actions.RemoteAction;
 import savedataHandler.languages.Text;
 
+import javax.swing.*;
+
 /**
  * main class of the quiz time program
  */
@@ -149,6 +151,8 @@ public class QuizTimeProgram extends Program<QuizTimeProgramControlController, Q
     public void setMainController(MainController mainController) {
         super.setMainController(mainController);
         stateChanger.setMainController(mainController);
+        getProgramModel().getQuizTimeMidiHandler().setMidiHandler(getMidiHandler());
+        stateChanger.setMidiHandler(getProgramModel().getQuizTimeMidiHandler());
     }
 
     /**

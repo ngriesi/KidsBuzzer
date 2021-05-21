@@ -27,6 +27,7 @@ public class BuzzerStateHandler {
      * view updater for updating both presentation and control view
      */
     private ViewUpdater viewUpdater;
+    private MidiHandler midiHandler;
 
     /**
      * creates a new buzzer state handler
@@ -56,6 +57,7 @@ public class BuzzerStateHandler {
             if (buzzerState.isPressed() && buzzerState.getPosition() == (buzzerPositionPressed - 1)) {
                 if (buzzerState.getPosition() == buzzerOnTurn) {
                     viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
+                    midiHandler.performBuzzerMidiAction(buzzerNumber - 1);
                 } else {
                     viewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 }
@@ -80,6 +82,7 @@ public class BuzzerStateHandler {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
                 viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
+                midiHandler.performBuzzerMidiAction(buzzerState.getBuzzerNumber() - 1);
             }
         }
     }
@@ -106,5 +109,14 @@ public class BuzzerStateHandler {
         for (BuzzerState buzzerState : buzzerStates) {
             buzzerState.reset();
         }
+    }
+
+    /**
+     * setter for the midi handler
+     *
+     * @param midiHandler new midi handler
+     */
+    void setMidiHandler(MidiHandler midiHandler) {
+        this.midiHandler = midiHandler;
     }
 }

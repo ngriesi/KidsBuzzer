@@ -35,6 +35,11 @@ import static java.awt.GridBagConstraints.*;
 public class FontChooserRow extends SettingsRow {
 
     /**
+     * Identification names of the components of this row
+     */
+    public static final String COLOR = "Color", STYLE = "Style", FONT = "Font";
+
+    /**
      * combo box
      */
     private MyComboBox<String> comboBox;
@@ -101,7 +106,7 @@ public class FontChooserRow extends SettingsRow {
      */
     private void createColorSelector(SettingsChangeListener settingsChangeListener, String name, FontData startValue) {
         colorSelector = new MyColorSelector(startValue.getColor());
-        colorSelector.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(colorSelector.getPressedColor(), name + "color")));
+        colorSelector.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(colorSelector.getPressedColor(), name, SettingsEvent.RowKind.FONT, COLOR, getPageIdentificationName())));
     }
 
     /**
@@ -115,7 +120,7 @@ public class FontChooserRow extends SettingsRow {
     private void createBoldCheckBox(SettingsChangeListener settingsChangeListener, String name, FontData startValue) {
         bold = new MyCheckBox();
         bold.setSelected(startValue.getFont().isBold());
-        bold.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(bold.isSelected(), name + "style")));
+        bold.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(bold.isSelected(), name, SettingsEvent.RowKind.FONT, STYLE, getPageIdentificationName())));
     }
 
     /**
@@ -130,7 +135,7 @@ public class FontChooserRow extends SettingsRow {
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         comboBox = new MyComboBox<>(fonts);
         comboBox.setSelectedItem(startValue.getFont().getName());
-        comboBox.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(comboBox.getSelectedItem(), name + "font")));
+        comboBox.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(comboBox.getSelectedItem(), name, SettingsEvent.RowKind.FONT, FONT, getPageIdentificationName())));
     }
 
 

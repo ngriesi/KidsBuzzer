@@ -4,6 +4,7 @@ import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsEvent;
 import assets.standardAssets.StandardAssetFields;
 import controlWindow.MainController;
+import controlWindow.settings.view.SettingsView;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 
@@ -44,7 +45,8 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @param settingsSaveFile save file that was loaded at the start of the application
      */
     public SettingsController(MainController mainController, SettingsSaveFile settingsSaveFile) {
-        super(settingsSaveFile, new SettingsView());
+        super(settingsSaveFile);
+        setSettingsView(new SettingsView(this));
         this.mainController = mainController;
     }
 
@@ -101,13 +103,9 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @return returns true if the view needs an update
      */
     private boolean changesMadeToView() {
-        System.out.println(oldLanguage);
-        System.out.println(saveFileHandler.getSaveFile().getLanguage());
         if (!oldLanguage.equals(saveFileHandler.getSaveFile().getLanguage())) {
             return true;
         }
-        System.out.println(Arrays.toString(oldColor));
-        System.out.println(Arrays.toString(saveFileHandler.getSaveFile().getEffectColor()));
         return !(oldColor[0] == saveFileHandler.getSaveFile().getEffectColor()[0]
                 && oldColor[1] == saveFileHandler.getSaveFile().getEffectColor()[1]
                 && oldColor[2] == saveFileHandler.getSaveFile().getEffectColor()[2]);
@@ -165,7 +163,6 @@ public class SettingsController extends assets.settings.general.SettingsControll
             case outputScreen:
                 saveFileHandler.getSaveFile().setOutputScreen((int) settingsEvent.getValue());
                 saveFileHandler.getSaveFile().setDesiredOutputScreen((int) settingsEvent.getValue());
-                System.out.println("test");
                 mainController.updateOutputScreen((int) settingsEvent.getValue());
                 break;
             case buzzerCount:
@@ -178,7 +175,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
             case language:
                 saveFileHandler.getSaveFile().setLanguage((String) settingsEvent.getValue());
                 new Text((String) settingsEvent.getValue());
-                this.setSettingsView(new SettingsView());
+                this.setSettingsView(new SettingsView(this));
                 mainController.getControlModel().getView().setView(getSettingsView());
                 break;
             case effectColor:
@@ -186,7 +183,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
                 saveFileHandler.getSaveFile().setEffectColor(new int[]{color.getRed(), color.getGreen(), color.getBlue()});
                 StandardAssetFields.ROLLOVER_COLOR = (Color) settingsEvent.getValue();
                 StandardAssetFields.PRESSED_COLOR = ((Color) settingsEvent.getValue()).brighter();
-                this.setSettingsView(new SettingsView());
+                this.setSettingsView(new SettingsView(this));
                 mainController.getControlModel().getView().setView(getSettingsView());
                 break;
         }
@@ -195,7 +192,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
     /**
      * @return returns an array of integers representing the connected screens
      */
-    Integer[] getPossibleScreens() {
+    public Integer[] getPossibleScreens() {
 
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] devices = env.getScreenDevices();
@@ -213,42 +210,42 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @param screens possible output screens
      */
     public void setPossibleScreens(Integer[] screens) {
-        getSettingsView().getOutputScreen().setPossibleValues(screens);
+        getSettingsView().getGeneralPage().getOutputScreen().setPossibleValues(screens);
     }
 
 
     /**
      * @return returns the identification name of the output screen setting
      */
-    String getOutputScreen() {
+    public String getOutputScreen() {
         return outputScreen;
     }
 
     /**
      * @return returns the identification name of the buzzer number setting
      */
-    String getBuzzerCount() {
+    public String getBuzzerCount() {
         return buzzerCount;
     }
 
     /**
      * @return returns the identification name of the native key setting
      */
-    String getNativeKey() {
+    public String getNativeKey() {
         return nativeKey;
     }
 
     /**
      * @return returns the identification name of the language setting
      */
-    String getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
     /**
      * @return returns the identification name of the effect color setting
      */
-    String getEffectColor() {
+    public String getEffectColor() {
         return effectColor;
     }
 
@@ -262,14 +259,14 @@ public class SettingsController extends assets.settings.general.SettingsControll
         saveFileHandler.getSaveFile().setUseNativeKeyListener(useNativeKeyListener);
         saveFileHandler.applyChanges();
         saveFileHandler.saveToFile();
-        getSettingsView().getNativeKeySettingsRow().setSetting(useNativeKeyListener);
+        getSettingsView().getGeneralPage().getNativeKeySettingsRow().setSetting(useNativeKeyListener);
     }
 
     /**
      * updates the view of the settings
      */
     public void updateSettingsView() {
-        setSettingsView(new SettingsView());
+        setSettingsView(new SettingsView(this));
     }
 
     /**

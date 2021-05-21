@@ -22,6 +22,7 @@ public class MyComboBox<S> extends JComboBox<S> {
 
         this.setBackground(StandardAssetFields.NORMAL_COLOR);
         this.setPreferredSize(new Dimension(200,40));
+        this.setMinimumSize(new Dimension(200,40));
         this.setFont(new Font("Arial", Font.PLAIN, 30));
         this.setForeground(StandardAssetFields.FOREGROUND_COLOR);
         this.setFocusable(false);

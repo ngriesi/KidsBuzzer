@@ -11,12 +11,17 @@ import java.awt.*;
 /**
  * abstract super class for the settings rows
  */
-abstract class SettingsRow extends MyPanel {
+public abstract class SettingsRow extends MyPanel {
 
     /**
      * thickness of the border
      */
     private final int BORDER_THICKNESS = 10;
+
+    /**
+     * identification name of the page this settings row is inside
+     */
+    private String pageIdentificationName;
 
     /**
      * creates an empty settings row
@@ -33,7 +38,7 @@ abstract class SettingsRow extends MyPanel {
      *
      * @param description description of the setting displayed in the view
      */
-    SettingsRow(String description) {
+    protected SettingsRow(String description) {
         this();
         createStandardElements(description);
     }
@@ -43,7 +48,7 @@ abstract class SettingsRow extends MyPanel {
      *
      * @param component interaction element to change the setting
      */
-    void addInteractionElement(JComponent component) {
+    protected void addInteractionElement(JComponent component) {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(StandardAssetFields.PANEL_BACKGROUND_COLOR, BORDER_THICKNESS * 2));
         panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -58,10 +63,6 @@ abstract class SettingsRow extends MyPanel {
      */
     private void createStandardElements(String description) {
         this.add(createLabel(description), BorderLayout.LINE_START);
-
-
-        MySeparator bottomSeparator = new MySeparator();
-        this.add(bottomSeparator, BorderLayout.PAGE_END);
     }
 
     /**
@@ -78,4 +79,19 @@ abstract class SettingsRow extends MyPanel {
         return label;
     }
 
+    /**
+     * @return returns the identification name of the page this row is inside
+     */
+    protected String getPageIdentificationName() {
+        return pageIdentificationName;
+    }
+
+    /**
+     * sets a new identification name
+     *
+     * @param pageIdentificationName new identification name
+     */
+    public void setPageIdentificationName(String pageIdentificationName) {
+        this.pageIdentificationName = pageIdentificationName;
+    }
 }

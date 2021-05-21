@@ -29,6 +29,10 @@ import java.io.File;
  */
 public class AudioSettingRow extends SettingsRow {
 
+    /**
+     * component identifications
+     */
+    public static String VOLUME = "Volume", FILE = "File";
 
     /**
      * button, opening the file chooser for the audio file
@@ -96,7 +100,7 @@ public class AudioSettingRow extends SettingsRow {
      */
     private MySlider createSlider(SettingsChangeListener settingsChangeListener, String name) {
         slider = new MySlider(100);
-        slider.addActionListener((e) -> settingsChangeListener.settingChanged(new SettingsEvent<>(((MySlider) e.getSource()).getRelativeValue(), name + "Volume")));
+        slider.addActionListener((e) -> settingsChangeListener.settingChanged(new SettingsEvent<>(((MySlider) e.getSource()).getRelativeValue(), name, SettingsEvent.RowKind.AUDIO, VOLUME, getPageIdentificationName())));
         slider.setPreferredSize(new Dimension(1, 1));
         return slider;
     }
@@ -143,7 +147,7 @@ public class AudioSettingRow extends SettingsRow {
     private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener, String name) {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             button.setText(fileChooser.getSelectedFile().getName());
-            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name + "File"));
+            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name, SettingsEvent.RowKind.AUDIO, FILE, getPageIdentificationName()));
         }
     }
 

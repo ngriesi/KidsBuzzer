@@ -9,9 +9,31 @@ package assets.settings.general;
 public class SettingsEvent<T> {
 
     /**
+     * enums for the possible settings rows
+     */
+    public enum RowKind {
+        MIDI, AUDIO, FILECHOOSER, CHECK_BOX, COLOR_SELECTION, COMBO_BOX, FONT, TEXT_FIELD
+    }
+
+    /**
      * name to identify the setting in the settings changed method
      */
     private String name;
+
+    /**
+     * Kind of the settings row this event was generated at
+     */
+    private RowKind rowKind;
+
+    /**
+     * Component inside the row this event was created in
+     */
+    private String componentName;
+
+    /**
+     * Name of the settings page the row that created this event is inside
+     */
+    private String pageName;
 
     /**
      * new value of the setting
@@ -21,13 +43,18 @@ public class SettingsEvent<T> {
     /**
      * constructor creating the settings event
      *
-     * @param newValue new value of the setting
-     * @param name     name of the setting
+     * @param newValue      new value of the setting
+     * @param name          name of the setting
+     * @param rowKind       kind of the row that created the settings event
+     * @param componentName name of the component that created the settings event
+     * @param pageName      name of the page
      */
-    public SettingsEvent(T newValue, String name) {
+    public SettingsEvent(T newValue, String name, RowKind rowKind, String componentName, String pageName) {
         this.value = newValue;
         this.name = name;
-
+        this.rowKind = rowKind;
+        this.componentName = componentName;
+        this.pageName = pageName;
     }
 
     /**
@@ -46,5 +73,32 @@ public class SettingsEvent<T> {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * getter to access the row kind of the setting
+     *
+     * @return returns the row kind of the setting
+     */
+    public RowKind getRowKind() {
+        return rowKind;
+    }
+
+    /**
+     * getter to access the component name of the setting
+     *
+     * @return returns the component name of the setting
+     */
+    public String getComponentName() {
+        return componentName;
+    }
+
+    /**
+     * getter to access the page name of the setting
+     *
+     * @return returns the page name of the setting
+     */
+    public String getPageName() {
+        return pageName;
     }
 }

@@ -25,7 +25,7 @@ public class SaveDataHandler {
     /**
      * names of the buzzers
      */
-    public static final String[] BUZZER_NAMES = {"red", "green", "black"};
+    public static String[] BUZZER_NAMES = {"red", "green", "black"};
 
     /**
      * colors of the buzzers when they are in the unpressed state

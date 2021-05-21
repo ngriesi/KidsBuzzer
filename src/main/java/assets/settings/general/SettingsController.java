@@ -28,15 +28,9 @@ public abstract class SettingsController<T extends SaveFile, V extends SettingsV
      * creates a new settings controller
      *
      * @param saveFile     save file of the settings
-     * @param settingsView view of the settings
      */
-    public SettingsController(T saveFile, V settingsView) {
+    public SettingsController(T saveFile) {
         this.saveFileHandler = new SaveFileHandler<>(saveFile);
-        this.settingsView = settingsView;
-
-        settingsView.setSettingsController(this);
-
-        settingsView.createSettings();
     }
 
     /**
@@ -65,6 +59,5 @@ public abstract class SettingsController<T extends SaveFile, V extends SettingsV
     protected void setSettingsView(V settingsView) {
         this.settingsView = settingsView;
         settingsView.setSettingsController(this);
-        settingsView.createSettings();
     }
 }

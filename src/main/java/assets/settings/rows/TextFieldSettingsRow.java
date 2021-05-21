@@ -62,7 +62,7 @@ public class TextFieldSettingsRow extends SettingsRow {
             }
 
             private void updateValue() {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(textField.getText(), name));
+                settingsChangeListener.settingChanged(new SettingsEvent<>(textField.getText(), name, SettingsEvent.RowKind.TEXT_FIELD, "", getPageIdentificationName()));
             }
         };
     }

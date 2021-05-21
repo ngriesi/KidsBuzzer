@@ -1,8 +1,11 @@
-teamNames=[test, ENTE, GANS]
-textBold=false
 font=Impact
-textColor=[0, 0, 0, 255]
-buzzerSound=default
 icons=[default, default, default]
+buzzerSound=default
+midiY=1
+midiActivate=false
+midiX=1
+textBold=false
+teamNames=[test, ENTE, GANS]
+textColor=[0, 0, 0, 255]
 buzzerSoundVolume=0
 

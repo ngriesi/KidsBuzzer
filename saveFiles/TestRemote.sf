@@ -1,5 +1,6 @@
-bottomRightButtonActionName=Nichts
-bottomLeftButtonActionName=Nichts
-topRightButtonActionName=Nichts
-topLeftButtonActionName=Nichts
+keys=[A, A, A, A]
+bottomLeftButtonActionIndex=0
+topLeftButtonActionIndex=0
+topRightButtonActionIndex=0
+bottomRightButtonActionIndex=0
 

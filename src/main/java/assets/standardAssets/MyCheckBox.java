@@ -22,6 +22,7 @@ public class MyCheckBox extends JToggleButton {
         this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
         this.setBackground(StandardAssetFields.NORMAL_COLOR);
         this.setPreferredSize(new Dimension(40, 40));
+        this.setMinimumSize(new Dimension(40,40));
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);
         this.setOpaque(true);

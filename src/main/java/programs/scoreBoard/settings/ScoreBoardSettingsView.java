@@ -4,6 +4,9 @@ import assets.settings.general.SettingsChangeListener;
 import assets.settings.rows.*;
 import assets.standardAssets.MyPanel;
 import programs.abstractProgram.ProgramSettingsView;
+import programs.scoreBoard.settings.pages.GeneralSettingsPage;
+import programs.scoreBoard.settings.pages.ImageSettingsPage;
+import programs.scoreBoard.settings.pages.MidiSettingsPage;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 
@@ -18,24 +21,19 @@ import java.io.File;
 public class ScoreBoardSettingsView extends ProgramSettingsView {
 
     /**
-     * settings row used to layout the font of the output view
+     * Settings page for the general settings
      */
-    private FontChooserRow teamsFontChooserRow;
+    private GeneralSettingsPage generalSettingsPage;
 
     /**
-     * settings row to select the audio played on a buzzer press and to change its volume
+     * Settings page for the images
      */
-    private AudioSettingRow buzzerPressedSound;
+    private ImageSettingsPage imageSettingsPage;
 
     /**
-     * settings rows to choose the icons of the teams
+     * Settings page for the midi controls
      */
-    private FileChooserSettingsRow[] iconSettingRows;
-
-    /**
-     * settings rows to enter the team names
-     */
-    private TextFieldSettingsRow[] teamNames;
+    private MidiSettingsPage midiSettingsPage;
 
     /**
      * creates a new view
@@ -57,86 +55,34 @@ public class ScoreBoardSettingsView extends ProgramSettingsView {
      */
     @Override
     protected JPanel[] createPanels(ActionListener actionListener, SettingsChangeListener settingsChangeListener) {
-        return new JPanel[]{createGeneralSettingsPanel(settingsChangeListener), createIconsSettingsPanel(settingsChangeListener)};
+        generalSettingsPage = new GeneralSettingsPage(settingsChangeListener);
+        imageSettingsPage = new ImageSettingsPage(settingsChangeListener);
+        midiSettingsPage = new MidiSettingsPage(settingsChangeListener);
+        return new JPanel[]{generalSettingsPage, imageSettingsPage, midiSettingsPage};
     }
 
     /**
-     * creates the settings rows to select the icons
-     *
-     * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
-     * @return a panel containing the <code>FileChooserSettingsRow</code>
+     * @return returns the image settings page containing the settings rows to select
+     * the images of the program
      */
-    private JPanel createIconsSettingsPanel(SettingsChangeListener settingsChangeListener) {
-        MyPanel panel = new MyPanel(new GridBagLayout());
-
-        iconSettingRows = new FileChooserSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
-
-        for (int i = 0; i < iconSettingRows.length; i++) {
-            iconSettingRows[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + SaveDataHandler.BUZZER_NAMES[i], Text.SELECT_ICON_TEAM + " " + (i + 1), new File("default"), "Bilder", "png", "jpg");
-
-            panel.addComponent(panel, iconSettingRows[i], 0, i, 1, 1);
-        }
-
-        for (int i = iconSettingRows.length; i < 5; i++) {
-            panel.addComponent(panel, new EmptySettingsRow(), 0, i, 1, 1);
-        }
-
-        return panel;
+    public ImageSettingsPage getImageSettingsPage() {
+        return imageSettingsPage;
     }
 
     /**
-     * creates the settings rows for the general settings (audio, font and team names)
-     *
-     * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
-     * @return a panel containing the settings rows
+     * @return returns the general settings page containing the settings rows to select
+     * the general settings of the program
      */
-    private JPanel createGeneralSettingsPanel(SettingsChangeListener settingsChangeListener) {
-        MyPanel panel = new MyPanel(new GridBagLayout());
-
-        teamsFontChooserRow = new FontChooserRow(settingsChangeListener, "font", Text.FONT, new FontData(new Font("arial", Font.PLAIN, 30), Color.WHITE));
-
-        panel.addComponent(panel, teamsFontChooserRow, 0, 0, 1, 1);
-
-        buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", Text.SOUND_WHEN_SCORED);
-
-        panel.addComponent(panel, buzzerPressedSound, 0, 1, 1, 1);
-
-        teamNames = new TextFieldSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
-
-        for (int i = 0; i < teamNames.length; i++) {
-            teamNames[i] = new TextFieldSettingsRow(settingsChangeListener, "name" + SaveDataHandler.BUZZER_NAMES[i], Text.NAME_OF_TEAM + " " + (1 + i), "default");
-
-            panel.addComponent(panel, teamNames[i], 0, 2 + i, 1, 1);
-        }
-
-        return panel;
+    public GeneralSettingsPage getGeneralSettingsPage() {
+        return generalSettingsPage;
     }
 
     /**
-     * @return returns the settings row that selects the font
+     * @return returns the midi settings page containing the settings rows to select
+     * the midi settings of the program
      */
-    FontChooserRow getTeamsFontChooserRow() {
-        return teamsFontChooserRow;
+    public MidiSettingsPage getMidiSettingsPage() {
+        return midiSettingsPage;
     }
 
-    /**
-     * @return returns the settings row that selects the sound
-     */
-    AudioSettingRow getBuzzerPressedSound() {
-        return buzzerPressedSound;
-    }
-
-    /**
-     * @return returns the settings rows that are used to select the icons of the teams
-     */
-    FileChooserSettingsRow[] getIconSettingRows() {
-        return iconSettingRows;
-    }
-
-    /**
-     * @return returns the settings rows that are used to select the names of the teams
-     */
-    TextFieldSettingsRow[] getTeamNames() {
-        return teamNames;
-    }
 }

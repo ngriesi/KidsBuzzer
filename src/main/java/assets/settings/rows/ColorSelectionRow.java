@@ -2,7 +2,6 @@ package assets.settings.rows;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsEvent;
-import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.MyColorSelector;
 
 import java.awt.*;
@@ -50,7 +49,7 @@ public class ColorSelectionRow extends SettingsRow {
             int state = e.getStateChange();
 
             if (state == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(((MyColorSelector)e.getSource()).getBackground(), name));
+                settingsChangeListener.settingChanged(new SettingsEvent<>(((MyColorSelector)e.getSource()).getBackground(), name, SettingsEvent.RowKind.COLOR_SELECTION, "", getPageIdentificationName()));
             }
         };
     }

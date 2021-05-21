@@ -1,6 +1,6 @@
 key=[0, 0, 0]
-unblockBuzzer=3
-blockingTime=1
 blockingBehaviour=0
+blockingTime=1
+unblockBuzzer=3
 useKey=[false, false, false]
 
