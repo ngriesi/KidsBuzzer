@@ -1,11 +1,11 @@
 language=Deutsch
-outputScreen=1
 effectColor=[0, 102, 255]
+outputScreen=1
 buzzerNumber=3
-windowWidth=1144
-windowHeight=910
-windowPositionX=443
-windowPositionY=98
+windowWidth=993
+windowHeight=552
+windowPositionX=480
+windowPositionY=270
 useNativeKeyListener=false
 desiredOutputScreen=2
 

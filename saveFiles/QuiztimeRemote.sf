@@ -1,6 +1,6 @@
 keys=[A, a, A, A]
-topLeftButtonActionIndex=0
-topRightButtonActionIndex=1
-bottomRightButtonActionIndex=0
-bottomLeftButtonActionIndex=0
+bottomLeftButtonActionIndex=2
+topRightButtonActionIndex=2
+bottomRightButtonActionIndex=2
+topLeftButtonActionIndex=5
 

@@ -1,7 +1,7 @@
 package programs.scoreBoard.main.view;
 
 import presentationWindow.animations.AnimationQueue;
-import presentationWindow.renderItems.MainItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
 import programs.abstractProgram.ProgramPresentationView;
 import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.scoreBoard.main.view.animations.BuzzerPressedAnimation;
@@ -52,7 +52,7 @@ public class ScoreBoardPresentationView extends ProgramPresentationView<ScoreBoa
      * @param mainItem main item of the presentation scene
      */
     @Override
-    public void setupView(MainItem mainItem) {
+    public void setupView(PresentationViewRenderItem mainItem) {
         enteredAnimation = new EnteredAnimation(viewItems, getProgram().getRenderer().getExponentialAnimator());
         exitedAnimation = new ExitedAnimation(viewItems, getProgram().getRenderer().getExponentialAnimator());
         buzzerPressedAnimation = new BuzzerPressedAnimation(viewItems, getProgram().getRenderer().getLinearAnimator(), getProgram().getRenderer().getExponentialAnimator());

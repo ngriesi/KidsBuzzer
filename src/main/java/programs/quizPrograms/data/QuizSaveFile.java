@@ -1,4 +1,4 @@
-package programs.quizOverlay.data;
+package programs.quizPrograms.data;
 
 import utils.saveFile.SaveFile;
 
@@ -6,7 +6,7 @@ import utils.saveFile.SaveFile;
  * contains the save data of the quiztime program
  */
 @SuppressWarnings("unused")
-public class QuizOverlaySaveFile extends SaveFile {
+public class QuizSaveFile extends SaveFile {
 
     /**
      * file paths of the icons of the teams
@@ -84,10 +84,77 @@ public class QuizOverlaySaveFile extends SaveFile {
     private int wrongVolume = 100;
 
     /**
+     * x coord of the executor button of the right midi action
+     */
+    private int rightMidiX = 1;
+
+    /**
+     * y coord of the executor button of the right midi action
+     */
+    private int rightMidiY = 1;
+
+    /**
+     * activation flag for the right midi action
+     */
+    private boolean rightMidiActivate = false;
+
+    /**
+     * x coord of the executor button of the wrong midi action
+     */
+    private int wrongMidiX = 1;
+
+    /**
+     * y coord of the executor button of the wrong midi action
+     */
+    private int wrongMidiY = 1;
+
+    /**
+     * activation flag for the wrong midi action
+     */
+    private boolean wrongMidiActivate = false;
+
+    /**
+     * x coord of the executor button of the next midi action
+     */
+    private int nextMidiX = 1;
+
+    /**
+     * y coord of the executor button of the next midi action
+     */
+    private int nextMidiY = 1;
+
+    /**
+     * activation flag for the next midi action
+     */
+    private boolean nextMidiActivate = false;
+
+    /**
+     * x coord of the executor button of the buzzer midi action
+     */
+    private int[] buzzerMidiX = new int[]{1, 1, 1};
+
+    /**
+     * y coord of the executor button of the buzzer midi action
+     */
+    private int[] buzzerMidiY = new int[]{1, 1, 1};
+
+    /**
+     * activation flag for the buzzer midi action
+     */
+    private boolean[] buzzerMidiActivate = new boolean[]{false, false, false};
+
+    /**
      * creates a save file with a name
      */
-    public QuizOverlaySaveFile() {
+    public QuizSaveFile() {
         super("quizoverlay");
+    }
+
+    /**
+     * creates a save file with a name passed form a sub class
+     */
+    public QuizSaveFile(String name) {
+        super(name);
     }
 
     /*
@@ -214,5 +281,101 @@ public class QuizOverlaySaveFile extends SaveFile {
 
     public void setBuzzerFont(String buzzerFont) {
         this.buzzerFont = buzzerFont;
+    }
+
+    public int getRightMidiX() {
+        return rightMidiX;
+    }
+
+    public void setRightMidiX(int rightMidiX) {
+        this.rightMidiX = rightMidiX;
+    }
+
+    public int getRightMidiY() {
+        return rightMidiY;
+    }
+
+    public void setRightMidiY(int rightMidiY) {
+        this.rightMidiY = rightMidiY;
+    }
+
+    public boolean isRightMidiActivate() {
+        return rightMidiActivate;
+    }
+
+    public void setRightMidiActivate(boolean rightMidiActivate) {
+        this.rightMidiActivate = rightMidiActivate;
+    }
+
+    public int getWrongMidiX() {
+        return wrongMidiX;
+    }
+
+    public void setWrongMidiX(int wrongMidiX) {
+        this.wrongMidiX = wrongMidiX;
+    }
+
+    public int getWrongMidiY() {
+        return wrongMidiY;
+    }
+
+    public void setWrongMidiY(int wrongMidiY) {
+        this.wrongMidiY = wrongMidiY;
+    }
+
+    public boolean isWrongMidiActivate() {
+        return wrongMidiActivate;
+    }
+
+    public void setWrongMidiActivate(boolean wrongMidiActivate) {
+        this.wrongMidiActivate = wrongMidiActivate;
+    }
+
+    public int getNextMidiX() {
+        return nextMidiX;
+    }
+
+    public void setNextMidiX(int nextMidiX) {
+        this.nextMidiX = nextMidiX;
+    }
+
+    public int getNextMidiY() {
+        return nextMidiY;
+    }
+
+    public void setNextMidiY(int nextMidiY) {
+        this.nextMidiY = nextMidiY;
+    }
+
+    public boolean isNextMidiActivate() {
+        return nextMidiActivate;
+    }
+
+    public void setNextMidiActivate(boolean nextMidiActivate) {
+        this.nextMidiActivate = nextMidiActivate;
+    }
+
+    public int[] getBuzzerMidiX() {
+        return buzzerMidiX;
+    }
+
+    public void setBuzzerMidiX(int[] buzzerMidiX) {
+        this.buzzerMidiX = buzzerMidiX;
+    }
+
+    public int[] getBuzzerMidiY() {
+        return buzzerMidiY;
+    }
+
+    public void setBuzzerMidiY(int[] buzzerMidiY) {
+        this.buzzerMidiY = buzzerMidiY;
+    }
+
+    public boolean[] getBuzzerMidiActivate() {
+        return buzzerMidiActivate;
+    }
+
+    public void setBuzzerMidiActivate(boolean[] buzzerMidiActivate) {
+        this.buzzerMidiActivate = buzzerMidiActivate;
     }
 }

@@ -7,6 +7,8 @@ import serialPortHandling.SerialPortReader;
 import serialPortHandling.SerialPortReaderInterface;
 
 import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 /**
@@ -24,6 +26,11 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
      * String replacement pattern
      */
     private Pattern pattern = Pattern.compile("\\s+");
+
+    /**
+     * remote button blocks
+     */
+    private boolean topLeft = false, topRight = false, bottomLeft = false, bottomRight = false;
 
     /**
      * constructor sets the reference to the main model and creates the <code>SerialPortReader</code>
@@ -112,7 +119,84 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
      * @param c button that was pressed
      */
     private void handleRemotePress(char c) {
-        controlModel.getCurrentProgram().remotePressedAction(getRemoteButton(c));
+        RemoteHandler.RemoteButton remoteButton = getRemoteButton(c);
+        if (checkRemoteAction(remoteButton)) {
+            controlModel.getCurrentProgram().remotePressedAction(getRemoteButton(c));
+        }
+    }
+
+    /**
+     * checks if a specific button can be pressed and is not blocked
+     *
+     * @param remoteButton button that gets checked
+     * @return true if the button is not blocked
+     */
+    private boolean checkRemoteAction(RemoteHandler.RemoteButton remoteButton) {
+        if (checkRemoteBlock(remoteButton)) {
+            return false;
+        }
+
+        switch (remoteButton) {
+            case TOP_LEFT:
+                topLeft = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        topLeft = false;
+                    }
+                }, 100);
+                return true;
+            case TOP_RIGHT:
+                topRight = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        topRight = false;
+                    }
+                }, 100);
+                return true;
+            case BOTTOM_LEFT:
+                bottomLeft = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        bottomLeft = false;
+                    }
+                }, 100);
+                return true;
+            case BOTTOM_RIGHT:
+                bottomRight = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        bottomRight = false;
+                    }
+                }, 100);
+                return true;
+
+        }
+        return false;
+    }
+
+    /**
+     * checks if a specific button is blocked
+     *
+     * @param remoteButton button that gets checked
+     * @return true if the button is blocked
+     */
+    private boolean checkRemoteBlock(RemoteHandler.RemoteButton remoteButton) {
+        switch (remoteButton) {
+            case TOP_LEFT:
+                return topLeft;
+            case TOP_RIGHT:
+                return topRight;
+            case BOTTOM_RIGHT:
+                return bottomRight;
+            case BOTTOM_LEFT:
+                return bottomLeft;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     /**
@@ -153,7 +237,7 @@ public class BuzzerPressHandler implements SerialPortReaderInterface {
         if (!controlModel.getBuzzerControl().isBlockAllBuzzer()) {
             int buzzerNum = buzzerID / 2;
 
-            if(buzzerNum <= SaveDataHandler.BUZZER_COUNT) {
+            if (buzzerNum <= SaveDataHandler.BUZZER_COUNT) {
                 boolean blockedSave = controlModel.getBuzzerControl().isBuzzerBlocked(buzzerNum);
                 controlModel.getBuzzerControl().pressBuzzer(buzzerNum);
                 controlModel.getCurrentProgram().handleBuzzerInput(buzzerNum, blockedSave);

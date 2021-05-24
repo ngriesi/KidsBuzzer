@@ -1,4 +1,4 @@
-package programs.quizOverlay.control.control;
+package programs.quizPrograms.control.control;
 
 import savedataHandler.SaveDataHandler;
 
@@ -65,7 +65,7 @@ public class SimpleVirtualBuzzer {
      *
      * @param g graphic context of the image
      */
-    void drawBuzzer(Graphics g) {
+    public void drawBuzzer(Graphics g) {
         switch (state) {
             case NORMAL:
                 drawNormal(g);

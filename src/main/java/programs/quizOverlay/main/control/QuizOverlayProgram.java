@@ -1,32 +1,17 @@
 package programs.quizOverlay.main.control;
 
-import controlWindow.MainController;
-import programs.abstractProgram.Program;
 import programs.quizOverlay.control.control.QuizOverlayProgramController;
-import programs.quizOverlay.control.control.SimpleOutputView;
 import programs.quizOverlay.data.QuizOverlayModel;
 import presentationWindow.animations.AnimationQueue;
 import programs.quizOverlay.main.view.QuizOverlayPresentationView;
 import programs.quizOverlay.settings.QuizOverlaySettingsController;
-import remoteHandler.RemoteHandler;
-import remoteHandler.actions.RemoteAction;
+import programs.quizPrograms.main.control.QuizProgram;
 import savedataHandler.languages.Text;
 
 /**
  * main class of the quiz time program
  */
-public class QuizOverlayProgram extends Program<QuizOverlayProgramController, QuizOverlaySettingsController, QuizOverlayModel, QuizOverlayPresentationView> {
-
-
-    /**
-     * handles the general state of the program
-     */
-    private GeneralState generalState;
-
-    /**
-     * handles the state changing
-     */
-    private StateChanger stateChanger;
+public class QuizOverlayProgram extends QuizProgram<QuizOverlayProgramController, QuizOverlaySettingsController, QuizOverlayModel, QuizOverlayPresentationView> {
 
     /**
      * creates a new program
@@ -34,8 +19,8 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     public QuizOverlayProgram() {
         //noinspection SpellCheckingInspection
         super(true, Text.QUIZ_OVERLAY);
-        generalState = new GeneralState();
-        stateChanger = new StateChanger(this, generalState);
+        quizGeneralState = new GeneralState();
+        quizStateChanger = new StateChanger(this, quizGeneralState);
     }
 
     /**
@@ -71,42 +56,13 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
     }
 
     /**
-     * action of the buzzer
-     *
-     * @param buzzerNumber number of the buzzer pressed
-     */
-    @Override
-    protected void buzzerAction(int buzzerNumber) {
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.BUZZER_PRESS)) {
-            stateChanger.buzzerPressed(buzzerNumber, new AnimationQueue.AnimationQueueItem());
-        }
-    }
-
-    /**
-     * action of the wrong button
-     */
-    public void wrongAnswer() {
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.WRONG)) {
-            stateChanger.wrongAnswerGiven();
-        }
-    }
-
-    /**
-     * action of the right button
-     */
-    public void rightAnswer() {
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.RIGHT)) {
-            stateChanger.rightAnswerGiven();
-        }
-    }
-
-    /**
      * next button action
      */
+    @Override
     public void nextQuestion() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
-            stateChanger.nextQuestion(animationQueueItem);
+        if (quizGeneralState.checkAndPerformAction(GeneralState.QuizAction.NEXT_QUESTION, animationQueueItem)) {
+            quizStateChanger.nextQuestion(animationQueueItem, null);
         }
     }
 
@@ -115,68 +71,12 @@ public class QuizOverlayProgram extends Program<QuizOverlayProgramController, Qu
      */
     public void fadeIn() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        if (generalState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
-            stateChanger.nextQuestion(animationQueueItem);
+        if (quizGeneralState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
+            quizStateChanger.nextQuestion(animationQueueItem, null);
         }
     }
 
-    /**
-     * fades out the presentation view
-     *
-     * @return returns the result of the check
-     */
-    public boolean fadeOut() {
-        boolean result = generalState.checkAndPerformAction(GeneralState.QuizAction.TO_INVISIBLE);
-        if (result) {
-            stateChanger.fadeToInvisible();
-        }
-        return result;
-    }
 
-    /**
-     * updates the controlModel of the stateChanger
-     *
-     * @param mainController main controller of the control window
-     */
-    @Override
-    public void setMainController(MainController mainController) {
-        super.setMainController(mainController);
-        stateChanger.setMainController(mainController);
-    }
 
-    /**
-     * updates the number of buzzers
-     */
-    @Override
-    public void updateBuzzerCount() {
-        getProgramController().setSimpleOutputView(new SimpleOutputView(getProgramController()));
-        getProgramController().getProgramView().repaint();
-        getProgramPresentationView().updateBuzzerCount();
-    }
 
-    /**
-     * method called through the naive key listener when a key gets released
-     *
-     * @param keyCode code of the key that was released
-     */
-    @Override
-    public void nativeKeyAction(int keyCode) {
-        getProgramController().nativeKeyAction(keyCode);
-    }
-
-    /**
-     * creates the actions that can be bound to the
-     * buttons of the remote
-     *
-     * @param remoteHandler <code>RemoteHandler</code> of this program
-     */
-    @Override
-    protected void createRemoteActions(RemoteHandler remoteHandler) {
-        super.createRemoteActions(remoteHandler);
-
-        remoteHandler.addRemoteAction(Text.NEXT_QUESTION, new RemoteAction(this::nextQuestion));
-        remoteHandler.addRemoteAction(Text.RIGHT, new RemoteAction(this::rightAnswer));
-        remoteHandler.addRemoteAction(Text.WRONG, new RemoteAction(this::wrongAnswer));
-        remoteHandler.addRemoteAction(Text.SHOW_OR_HIDE, new RemoteAction(() -> getProgramController().showHideAction()));
-    }
 }

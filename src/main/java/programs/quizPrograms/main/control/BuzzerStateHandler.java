@@ -1,4 +1,4 @@
-package programs.quiztime.main.control;
+package programs.quizPrograms.main.control;
 
 import presentationWindow.animations.AnimationQueue;
 import savedataHandler.SaveDataHandler;
@@ -26,16 +26,16 @@ public class BuzzerStateHandler {
     /**
      * view updater for updating both presentation and control view
      */
-    private ViewUpdater viewUpdater;
+    private QuizViewUpdater quizViewUpdater;
     private MidiHandler midiHandler;
 
     /**
      * creates a new buzzer state handler
      *
-     * @param viewUpdater view updater used by the handler
+     * @param quizViewUpdater view updater used by the handler
      */
-    BuzzerStateHandler(ViewUpdater viewUpdater) {
-        this.viewUpdater = viewUpdater;
+    BuzzerStateHandler(QuizViewUpdater quizViewUpdater) {
+        this.quizViewUpdater = quizViewUpdater;
         buzzerStates = new BuzzerState[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             buzzerStates[i] = new BuzzerState(i + 1);
@@ -56,10 +56,10 @@ public class BuzzerStateHandler {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.isPressed() && buzzerState.getPosition() == (buzzerPositionPressed - 1)) {
                 if (buzzerState.getPosition() == buzzerOnTurn) {
-                    viewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
+                    quizViewUpdater.firstBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                     midiHandler.performBuzzerMidiAction(buzzerNumber - 1);
                 } else {
-                    viewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
+                    quizViewUpdater.followBuzzerPress(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 }
             }
         }
@@ -73,7 +73,7 @@ public class BuzzerStateHandler {
     void wrong(AnimationQueue.AnimationQueueItem animationQueueItem) {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.wrongAnswerGiven(buzzerState.getBuzzerNumber(), animationQueueItem);
+                quizViewUpdater.wrongAnswerGiven(buzzerState.getBuzzerNumber(), animationQueueItem);
                 buzzerOnTurn++;
                 break;
             }
@@ -81,7 +81,7 @@ public class BuzzerStateHandler {
 
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
+                quizViewUpdater.newBuzzerOnTurn(buzzerState.getBuzzerNumber(), buzzerState.getPosition(), animationQueueItem);
                 midiHandler.performBuzzerMidiAction(buzzerState.getBuzzerNumber() - 1);
             }
         }
@@ -95,7 +95,7 @@ public class BuzzerStateHandler {
     void right(AnimationQueue.AnimationQueueItem animationQueueItem) {
         for (BuzzerState buzzerState : buzzerStates) {
             if (buzzerState.getPosition() == buzzerOnTurn) {
-                viewUpdater.rightAnswerGiven(buzzerState.getBuzzerNumber(), animationQueueItem);
+                quizViewUpdater.rightAnswerGiven(buzzerState.getBuzzerNumber(), animationQueueItem);
             }
         }
     }

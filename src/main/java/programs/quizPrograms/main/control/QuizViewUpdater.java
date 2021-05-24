@@ -1,33 +1,34 @@
-package programs.quizOverlay.main.control;
+package programs.quizPrograms.main.control;
 
-import programs.quizOverlay.control.control.SimpleOutputView;
 import presentationWindow.animations.AnimationQueue;
-import programs.quizOverlay.main.view.QuizOverlayPresentationView;
+import programs.quizPrograms.control.control.QuizControlController;
+import programs.quizPrograms.control.control.SimpleOutputView;
+import programs.quizPrograms.main.view.QuizPresentationView;
 
 /**
  * updates the views of the program
  */
-class ViewUpdater {
+public class QuizViewUpdater {
 
     /**
      * presentation view
      */
-    private QuizOverlayPresentationView presentationView;
+    protected QuizPresentationView presentationView;
 
     /**
      * simple output preview
      */
-    private SimpleOutputView simpleOutputView;
+    protected SimpleOutputView simpleOutputView;
 
     /**
      * creates a new view updater with both views
      *
      * @param presentationView presentation view
-     * @param quizTimeProgram  reference to the program to access the simple output view
+     * @param quizProgram  reference to the program to access the simple output view
      */
-    ViewUpdater(QuizOverlayPresentationView presentationView, QuizOverlayProgram quizTimeProgram) {
+    public QuizViewUpdater(QuizPresentationView presentationView, QuizProgram quizProgram) {
         this.presentationView = presentationView;
-        this.simpleOutputView = quizTimeProgram.getProgramController().getSimpleOutputView();
+        this.simpleOutputView = ((QuizControlController)quizProgram.getProgramController()).getSimpleOutputView();
     }
 
     /**
@@ -93,9 +94,9 @@ class ViewUpdater {
      *
      * @param animationQueueItem animation queue item
      */
-    void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem) {
+    public void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem) {
         presentationView.resetToQuestionView(animationQueueItem);
-        simpleOutputView.resetToQuestionView();
+        simpleOutputView.changeToDefaultState();
     }
 
     /**

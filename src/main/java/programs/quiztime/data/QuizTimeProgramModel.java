@@ -3,6 +3,7 @@ package programs.quiztime.data;
 import presentationWindow.items.Texture;
 import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.ProgramModel;
+import programs.quizPrograms.data.QuizModel;
 import programs.quiztime.main.control.MidiHandler;
 import savedataHandler.SaveDataHandler;
 import startupApp.LoadingHandler;
@@ -14,12 +15,7 @@ import java.io.FileNotFoundException;
 /**
  * handles the resources of the quiztime program
  */
-public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> {
-
-    /**
-     * icons displayed over the virtual buzzers
-     */
-    private Texture[] icons;
+public class QuizTimeProgramModel extends QuizModel<QuizTimeProgramSaveFile> {
 
     /**
      * background of the output screen
@@ -31,38 +27,12 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
      */
     private AudioClip introSound;
 
-    /**
-     * question sound
-     */
-    private AudioClip questionSound;
-
-    /**
-     * right sound
-     */
-    private AudioClip rightSound;
-
-    /**
-     * buzzer sound
-     */
-    private AudioClip buzzerSound;
-
-    /**
-     * wrong sound
-     */
-    private AudioClip wrongSound;
-
-    /**
-     * Midi controller of the program
-     */
-    private MidiHandler midiHandler;
 
     /**
      * creates a new Program model
      */
     public QuizTimeProgramModel() {
         super(QuizTimeProgramSaveFile.class);
-
-        icons = new Texture[SaveDataHandler.MAX_BUZZER_COUNT];
     }
 
     /**
@@ -76,18 +46,7 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
 
         midiHandler = new MidiHandler(getSaveFile());
 
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            int finalI = i;
-            openGlRenderer.addActionToOpenGlThread(() -> {
-                try {
-                    icons[finalI] = Texture.loadTexture(new File(getSaveFile().getIcons()[finalI]), loadingHandler);
-                } catch (FileNotFoundException e) {
-                    icons[finalI] = new Texture(SaveDataHandler.DEFAULT_IMAGE);
-                    getSaveFile().getIcons()[finalI] = "default";
-                }
-
-            });
-        }
+        super.loadResources(loadingHandler,openGlRenderer);
 
         openGlRenderer.addActionToOpenGlThread(() -> {
             try {
@@ -101,22 +60,6 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         new Thread(() -> {
             introSound = loadAudio(getSaveFile().getIntroSound(), loadingHandler, getSaveFile().getIntroVolume());
             if (introSound == null) getSaveFile().setIntroSound("default");
-        }).start();
-        new Thread(() -> {
-            questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
-            if (questionSound == null) getSaveFile().setQuestionSound("default");
-        }).start();
-        new Thread(() -> {
-            rightSound = loadAudio(getSaveFile().getRightSound(), loadingHandler, getSaveFile().getRightVolume());
-            if (rightSound == null) getSaveFile().setRightSound("default");
-        }).start();
-        new Thread(() -> {
-            buzzerSound = loadAudio(getSaveFile().getBuzzerSound(), loadingHandler, getSaveFile().getBuzzerVolume());
-            if (buzzerSound == null) getSaveFile().setBuzzerSound("default");
-        }).start();
-        new Thread(() -> {
-            wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
-            if (wrongSound == null) getSaveFile().setWrongSound("default");
         }).start();
     }
 
@@ -138,66 +81,6 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         }
     }
 
-    /**
-     * plays the question sound if it exists
-     */
-    public void playQuestionSound() {
-        if (questionSound != null) {
-            questionSound.play();
-        }
-    }
-
-    /**
-     * fades out <code>questionSound</code>
-     */
-    public void fadeOutQuestionSound() {
-        if (questionSound != null) {
-            questionSound.fadeOut(1);
-        }
-    }
-
-    /**
-     * plays the right sound if it exists
-     */
-    public void playRightSound() {
-        if (rightSound != null) {
-            rightSound.play();
-        }
-    }
-
-    /**
-     * fades out <code>rightSound</code>
-     */
-    public void fadeOutRightSound() {
-        if (rightSound != null) {
-            rightSound.fadeOut(1);
-        }
-    }
-
-    /**
-     * plays the buzzer sound if it exists
-     */
-    public void playBuzzerSound() {
-        if (buzzerSound != null) {
-            buzzerSound.play();
-        }
-    }
-
-    /**
-     * plays the wrong sound if it exists
-     */
-    public void playWrongSound() {
-        if (wrongSound != null) {
-            wrongSound.play();
-        }
-    }
-
-    /**
-     * @return returns the midi handler of the program
-     */
-    public MidiHandler getQuizTimeMidiHandler() {
-        return midiHandler;
-    }
 
     /*
     *******************************************
@@ -205,16 +88,8 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
     *******************************************
      */
 
-    public Texture getIcon(int buzzer) {
-        return icons[buzzer - 1];
-    }
-
     public Texture getBackgroundTexture() {
         return backgroundTexture;
-    }
-
-    public void setIcons(Texture icon, int number) {
-        this.icons[number] = icon;
     }
 
     public void setBackgroundTexture(Texture backgroundTexture) {
@@ -225,39 +100,7 @@ public class QuizTimeProgramModel extends ProgramModel<QuizTimeProgramSaveFile> 
         this.introSound = introSound;
     }
 
-    public void setQuestionSound(AudioClip questionSound) {
-        this.questionSound = questionSound;
-    }
-
-    public void setRightSound(AudioClip rightSound) {
-        this.rightSound = rightSound;
-    }
-
-    public AudioClip getBuzzerSound() {
-        return buzzerSound;
-    }
-
-    public void setBuzzerSound(AudioClip buzzerSound) {
-        this.buzzerSound = buzzerSound;
-    }
-
-    public AudioClip getWrongSound() {
-        return wrongSound;
-    }
-
-    public void setWrongSound(AudioClip wrongSound) {
-        this.wrongSound = wrongSound;
-    }
-
     public AudioClip getIntroSound() {
         return introSound;
-    }
-
-    public AudioClip getQuestionSound() {
-        return questionSound;
-    }
-
-    public AudioClip getRightSound() {
-        return rightSound;
     }
 }

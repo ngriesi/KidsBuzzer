@@ -1,49 +1,21 @@
 package programs.quiztime.main.control;
 
-import controlWindow.MainController;
 import presentationWindow.animations.AnimationQueue;
 import presentationWindow.engine.Action;
+import programs.quizPrograms.main.control.QuizGeneralState;
+import programs.quizPrograms.main.control.QuizProgram;
+import programs.quizPrograms.main.control.QuizStateChanger;
+import programs.quizPrograms.main.control.QuizViewUpdater;
+import programs.quizPrograms.main.view.QuizPresentationView;
 import programs.quiztime.data.QuizTimeProgramModel;
 
 /**
  * changes the state of the quiz time program
  */
-class StateChanger {
+class StateChanger extends QuizStateChanger {
 
-    /**
-     * model of the program to play
-     */
-    private QuizTimeProgramModel programModel;
+    private QuizTimeProgramModel quizTimeProgramModel;
 
-    /**
-     * control model to update the general buzzer view
-     */
-    private MainController mainController;
-
-    /**
-     * handles the states of the buzzers
-     */
-    private BuzzerStateHandler buzzerStateHandler;
-
-    /**
-     * updates the presentation and the simple output view
-     */
-    private ViewUpdater viewUpdater;
-
-    /**
-     * queues the animations of the program
-     */
-    private AnimationQueue animationQueue;
-
-    /**
-     * stores and updates the general state of the program
-     */
-    private GeneralState generalState;
-
-    /**
-     * Midi handler of the quiz time program
-     */
-    private MidiHandler midiHandler;
 
     /**
      * creates a new state changer
@@ -51,61 +23,14 @@ class StateChanger {
      * @param program      program this is the state changer of
      * @param generalState general state of the program
      */
-    StateChanger(QuizTimeProgram program, GeneralState generalState) {
-
-        this.mainController = program.getMainController();
-        this.generalState = generalState;
-
-        this.programModel = program.getProgramModel();
-
-        animationQueue = new AnimationQueue();
-
-        viewUpdater = new ViewUpdater(program.getProgramPresentationView(), program);
-
-        buzzerStateHandler = new BuzzerStateHandler(viewUpdater);
+    public StateChanger(QuizProgram program, QuizGeneralState generalState) {
+        super(program, generalState);
+        quizTimeProgramModel = (QuizTimeProgramModel) program.getProgramModel();
     }
 
-    /**
-     * sets the control model
-     *
-     * @param mainController control model
-     */
-    void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    /**
-     * method called when a buzzer press should invoke a state change
-     *
-     * @param buzzerNumber       number of the buzzer that was pressed
-     * @param animationQueueItem animation queue item
-     */
-    void buzzerPressed(int buzzerNumber, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        programModel.playBuzzerSound();
-        buzzerStateHandler.press(buzzerNumber, animationQueueItem);
-    }
-
-    /**
-     * method called when a buzzer has given a wrong answer and the programs state has to be changed accordingly
-     */
-    void wrongAnswerGiven() {
-        AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playWrongSound();
-        midiHandler.performWrongMidiAction();
-        animationQueueItem.setAnimationAction(() -> buzzerStateHandler.wrong(animationQueueItem));
-        animationQueue.addAnimation(animationQueueItem);
-    }
-
-    /**
-     * method called when a buzzer has given a right answer and the programs state has to be changed accordingly
-     */
-    void rightAnswerGiven() {
-        programModel.fadeOutQuestionSound();
-        AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playRightSound();
-        midiHandler.performRightMidiAction();
-        animationQueueItem.setAnimationAction(() -> buzzerStateHandler.right(animationQueueItem));
-        animationQueue.addAnimation(animationQueueItem);
+    @Override
+    protected QuizViewUpdater createViewUpdater(QuizProgram program) {
+        return new ViewUpdater((QuizPresentationView) program.getProgramPresentationView(), program);
     }
 
     /**
@@ -113,24 +38,20 @@ class StateChanger {
      */
     void changeToIntro() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playIntroSound();
-        midiHandler.performIntroMidiAction();
-        animationQueueItem.setAnimationAction(() -> viewUpdater.introAnimation(animationQueueItem));
-        animationQueueItem.addOnFinishedAction(() -> generalState.changeToIntroState());
+        quizTimeProgramModel.playIntroSound();
+        ((MidiHandler)midiHandler).performIntroMidiAction();
+        animationQueueItem.setAnimationAction(() -> ((ViewUpdater)quizViewUpdater).introAnimation(animationQueueItem));
+        animationQueueItem.addOnFinishedAction(() -> ((GeneralState)generalState).changeToIntroState());
         animationQueue.addAnimation(animationQueueItem);
     }
 
     /**
      * method called and used when the presentation view should fade out
      */
-    void fadeToInvisible() {
-        programModel.fadeOutIntroSound();
-        programModel.fadeOutQuestionSound();
-        programModel.fadeOutRightSound();
-        AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        animationQueueItem.setAnimationAction(() -> viewUpdater.fadeOutAnimation(animationQueueItem));
-        generalState.changeToInvisibleState(animationQueueItem, this);
-        animationQueue.addAnimation(animationQueueItem);
+    @Override
+    public void fadeToInvisible() {
+        quizTimeProgramModel.fadeOutIntroSound();
+        super.fadeToInvisible();
     }
 
     /**
@@ -141,38 +62,19 @@ class StateChanger {
      * @param action             action containing the action of updating the control view of the program which is
      *                           written inside the QuizTimeProgram class
      */
-    void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
-        programModel.fadeOutIntroSound();
+    public void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
+        quizTimeProgramModel.fadeOutIntroSound();
         programModel.playQuestionSound();
         midiHandler.performNextMidiAction();
         animationQueueItem.setAnimationAction(() -> {
 
             action.execute();
 
-            viewUpdater.nextQuestion(generalState.getQuestionNumber(), animationQueueItem);
+            ((ViewUpdater)quizViewUpdater).nextQuestion(((GeneralState)generalState).getQuestionNumber(), animationQueueItem);
 
         });
         animationQueueItem.addOnFinishedAction(this::reset);
         animationQueue.addAnimation(animationQueueItem);
-    }
-
-    /**
-     * resets the states of the program
-     */
-    void reset() {
-
-        buzzerStateHandler.reset();
-        mainController.getControlModel().getBuzzerControl().resetBuzzers();
-    }
-
-    /**
-     * Setter for the midi handler
-     *
-     * @param midiHandler new midi handler
-     */
-    void setMidiHandler(MidiHandler midiHandler) {
-        this.midiHandler = midiHandler;
-        buzzerStateHandler.setMidiHandler(midiHandler);
     }
 }
 

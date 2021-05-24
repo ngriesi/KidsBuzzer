@@ -1,4 +1,4 @@
-package programs.quizOverlay.main.control;
+package programs.quizPrograms.main.control;
 
 /**
  * stores the state of a buzzer

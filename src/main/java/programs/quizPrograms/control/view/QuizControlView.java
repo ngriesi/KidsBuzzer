@@ -1,10 +1,10 @@
-package programs.quizOverlay.control.view;
+package programs.quizPrograms.control.view;
 
 import assets.standardAssets.MyButton;
 import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramControllerView;
-import programs.quizOverlay.control.control.QuizOverlayProgramController;
-import programs.quizOverlay.control.control.SimpleOutputView;
+import programs.quizPrograms.control.control.QuizControlController;
+import programs.quizPrograms.control.control.SimpleOutputView;
 import savedataHandler.languages.Text;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import static java.awt.GridBagConstraints.*;
 /**
  * control view of the quiz time program
  */
-public class QuizOverlayControlView extends ProgramControllerView<QuizOverlayProgramController> {
+public class QuizControlView<Q extends QuizControlController> extends ProgramControllerView<Q> {
 
     /**
      * size of the buttons
@@ -29,7 +29,7 @@ public class QuizOverlayControlView extends ProgramControllerView<QuizOverlayPro
      * @param programController sets the controller of the view
      */
     @SuppressWarnings("SpellCheckingInspection")
-    public QuizOverlayControlView(QuizOverlayProgramController programController) {
+    public QuizControlView(Q programController) {
         super(programController);
 
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -68,7 +68,7 @@ public class QuizOverlayControlView extends ProgramControllerView<QuizOverlayPro
      *
      * @param programController reference to the controller to call the action methods
      */
-    private void setupKeyBindings(QuizOverlayProgramController programController) {
+    private void setupKeyBindings(QuizControlController programController) {
 
         addKeyAction(KeyStroke.getKeyStroke("R"), programController::rightButtonAction);
         addKeyAction(KeyStroke.getKeyStroke("F"), programController::wrongButtonAction);

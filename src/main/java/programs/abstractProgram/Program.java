@@ -378,6 +378,9 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
 
     }
 
+    /**
+     * @return returns the main midi handler of the application
+     */
     public MidiHandler getMidiHandler() {
         return midiHandler;
     }

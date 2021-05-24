@@ -1,4 +1,4 @@
-package programs.quizOverlay.control.control;
+package programs.quizPrograms.control.control;
 
 import savedataHandler.SaveDataHandler;
 
@@ -13,12 +13,13 @@ public class SimpleOutputView {
     /**
      * defines the resolution of the simple preview
      */
-    static int HEIGHT = 180, WIDTH = 320;
+    protected static int HEIGHT = 180;
+    protected static int WIDTH = 320;
 
     /**
      * simple virtual buzzer
      */
-    private SimpleVirtualBuzzer[] simpleVirtualBuzzers;
+    protected SimpleVirtualBuzzer[] simpleVirtualBuzzers;
 
     /**
      * simple view of the output screen
@@ -28,19 +29,19 @@ public class SimpleOutputView {
     /**
      * flag indicates if the currently displayed text says right
      */
-    private boolean right;
+    protected boolean right;
 
     /**
      * reference for repainting
      */
-    private QuizOverlayProgramController controller;
+    private QuizControlController controller;
 
     /**
      * create an object of the simple output view containing a buffered image which is the preview
      *
      * @param controlController controller of the view containing the preview, used for repainting
      */
-    public SimpleOutputView(QuizOverlayProgramController controlController) {
+    public SimpleOutputView(QuizControlController controlController) {
         this.controller = controlController;
         simpleView = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         right = false;
@@ -114,7 +115,7 @@ public class SimpleOutputView {
     /**
      * rests the simple buzzer view to its question view state
      */
-    public void resetToQuestionView() {
+    public void changeToDefaultState() {
         for (SimpleVirtualBuzzer simpleVirtualBuzzer : simpleVirtualBuzzers) {
             simpleVirtualBuzzer.setState(SimpleVirtualBuzzer.State.NORMAL);
             simpleVirtualBuzzer.setPosition(1);
@@ -144,7 +145,7 @@ public class SimpleOutputView {
      *
      * @param g graphic context of the image
      */
-    private void drawSimpleVirtualBuzzers(Graphics g) {
+    protected void drawSimpleVirtualBuzzers(Graphics g) {
 
         for (SimpleVirtualBuzzer simpleVirtualBuzzer : simpleVirtualBuzzers) {
             simpleVirtualBuzzer.drawBuzzer(g);
@@ -157,7 +158,7 @@ public class SimpleOutputView {
      *
      * @param g graphic context of the image
      */
-    private void drawText(Graphics g) {
+    protected void drawText(Graphics g) {
         if (right) {
             //noinspection SpellCheckingInspection
             g.drawString("Richtig", SimpleOutputView.WIDTH / 3, SimpleOutputView.HEIGHT / 4);
@@ -201,5 +202,12 @@ public class SimpleOutputView {
      */
     public boolean isRight() {
         return right;
+    }
+
+    /**
+     * changes the simple view to the state it has when the output is hidden
+     */
+    public void changeToInvisibleState() {
+        changeToDefaultState();
     }
 }

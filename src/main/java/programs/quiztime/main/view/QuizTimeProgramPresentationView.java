@@ -8,8 +8,10 @@ import presentationWindow.engine.Window;
 import presentationWindow.items.Texture;
 import presentationWindow.renderItems.ImageItem;
 import presentationWindow.renderItems.MainItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
 import presentationWindow.renderItems.TextItem;
 import programs.abstractProgram.ProgramPresentationView;
+import programs.quizPrograms.main.view.QuizPresentationView;
 import programs.quiztime.main.control.QuizTimeProgram;
 import savedataHandler.SaveDataHandler;
 
@@ -21,12 +23,7 @@ import static java.awt.Font.PLAIN;
 /**
  * presentation view of the quiz time app
  */
-public class QuizTimeProgramPresentationView extends ProgramPresentationView<QuizTimeProgram> {
-
-    /**
-     * virtual buzzers
-     */
-    private VirtualBuzzer[] virtualBuzzers;
+public class QuizTimeProgramPresentationView extends QuizPresentationView<QuizTimeProgram> {
 
     /**
      * question text
@@ -34,19 +31,9 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
     private TextItem questionText;
 
     /**
-     * right text
-     */
-    private TextItem rightText;
-
-    /**
      * title text
      */
     private TextItem title;
-
-    /**
-     * duration of the change animation
-     */
-    private int changeAnimationDuration = 60;
 
     /**
      * background of the presentation window
@@ -70,7 +57,7 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
      */
     @SuppressWarnings("SpellCheckingInspection")
     @Override
-    public void setupView(MainItem mainItem) {
+    public void setupView(PresentationViewRenderItem mainItem) {
 
         background = new ImageItem(getProgram().getProgramModel().getBackgroundTexture());
         background.setColorScheme(new ColorScheme(Color.WHITE));
@@ -78,6 +65,8 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
         background.setSize(1, 1);
         background.setOpacity(0);
         mainItem.addItem(background);
+
+        super.setupView(background);
 
         questionText = new TextItem("Frage 1");
         questionText.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200));
@@ -88,15 +77,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
         questionText.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
         background.addItem(questionText);
 
-        rightText = new TextItem("Richtig");
-        rightText.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200));
-        rightText.setPosition(0.5f, 1f / 5f);
-        rightText.setSize((rightText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
-        rightText.setOpacity(0);
-        rightText.setVisible(false);
-        rightText.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
-        background.addItem(rightText);
-
         title = new TextItem("Quiztime");
         title.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200));
         title.setPosition(0.5f, 0.5f);
@@ -105,17 +85,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
         title.setVisible(true);
         title.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
         background.addItem(title);
-
-        virtualBuzzers = new VirtualBuzzer[SaveDataHandler.MAX_BUZZER_COUNT];
-
-        Font font = new Font(getProgram().getProgramModel().getSaveFile().getBuzzerFont(), getProgram().getProgramModel().getSaveFile().isBuzzerTextBold() ? Font.BOLD : PLAIN, 200);
-        Color textColor = new Color(getProgram().getProgramModel().getSaveFile().getBuzzerTextColor());
-
-
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            Texture icon = getProgram().getProgramModel().getIcon(i + 1);
-            virtualBuzzers[i] = new VirtualBuzzer(background, i, font, textColor, icon, SaveDataHandler.BUZZER_COUNT, getProgram().getRenderer());
-        }
     }
 
     /**
@@ -163,48 +132,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
     }
 
     /**
-     * shows the first buzzer press for this question
-     *
-     * @param buzzerNumber       number of the buzzer pressed
-     * @param position           position of the buzzer
-     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
-     */
-    public void firstBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedSizeIncrease(position, animationQueueItem));
-    }
-
-    /**
-     * shows all followup buzzer presses with their position
-     *
-     * @param buzzerNumber       number of the buzzer
-     * @param position           position of the buzzer
-     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
-     */
-    public void followBuzzerPress(int buzzerNumber, int position, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[buzzerNumber - 1].pressedColorAndIconChange(position, animationQueueItem));
-    }
-
-    /**
-     * shows that a new buzzer is on turn
-     *
-     * @param newBuzzer          number of the new buzzer
-     * @param animationQueueItem <code>AnimationQueueItem</code> that is used to que this action
-     */
-    public void newBuzzerOnTurn(int newBuzzer, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[newBuzzer - 1].scaleUpBuzzer(animationQueueItem));
-    }
-
-    /**
-     * changes the look of the current buzzer to the disabled look
-     *
-     * @param oldBuzzer          number of the buzzer who gave the wrong answer
-     * @param animationQueueItem animation ques item
-     */
-    public void wrongAnswerGiven(int oldBuzzer, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        getProgram().getRenderer().addActionToOpenGlThread(() -> virtualBuzzers[oldBuzzer - 1].wrongAnswerGiven(animationQueueItem));
-    }
-
-    /**
      * Method fads out the title and resets the view to the next question
      *
      * @param animationQueueItem <code>AnimationQueueItem</code> used to queue the animation
@@ -247,15 +174,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
     }
 
     /**
-     * makes an item update its texture with the texture from the model
-     *
-     * @param index index of the icon that needs to update
-     */
-    public void updateIcon(int index) {
-        virtualBuzzers[index].getIcon().setTexture(getProgram().getProgramModel().getIcon(index + 1));
-    }
-
-    /**
      * method needs to be called to be called when the main font has to be updated
      */
     public void updateMainFont() {
@@ -269,17 +187,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
         questionText.setColorScheme(new ColorScheme(color));
         title.setColorScheme(new ColorScheme(color));
 
-    }
-
-    /**
-     * method needs to be called to be called when the buzzer font has to be updated
-     */
-    public void updateBuzzerFont() {
-        Font font = new Font(getProgram().getProgramModel().getSaveFile().getBuzzerFont(), getProgram().getProgramModel().getSaveFile().isBuzzerTextBold() ? Font.BOLD : PLAIN, 200);
-        Color color = new Color(getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[0], getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[1], getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[2], getProgram().getProgramModel().getSaveFile().getBuzzerTextColor()[3]);
-        for (VirtualBuzzer virtualBuzzer : virtualBuzzers) {
-            virtualBuzzer.updateFont(font, color);
-        }
     }
 
     /**
@@ -325,15 +232,6 @@ public class QuizTimeProgramPresentationView extends ProgramPresentationView<Qui
         questionText.setSize((questionText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
         for (VirtualBuzzer virtualBuzzer : virtualBuzzers) {
             virtualBuzzer.reset();
-        }
-    }
-
-    /**
-     * updates the buzzers if the buzzer count changes
-     */
-    public void updateBuzzerCount() {
-        for (VirtualBuzzer virtualBuzzer : virtualBuzzers) {
-            virtualBuzzer.setBuzzerCount(SaveDataHandler.BUZZER_COUNT);
         }
     }
 }

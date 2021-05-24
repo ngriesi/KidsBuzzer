@@ -107,8 +107,7 @@ public class RemoteHandler implements ActionListener {
      * creates the default actions the remote can perform in every program
      */
     private void createDefaultActions() {
-        addRemoteAction(Text.NOTHING, new RemoteAction(() -> {
-        }));
+        addRemoteAction(Text.NOTHING, new RemoteAction(() -> {}));
         addRemoteAction(Text.KEY_PRESS, new KeyAction(KeyEvent.VK_A));
     }
 
@@ -148,6 +147,13 @@ public class RemoteHandler implements ActionListener {
      */
     public void setActions(String programName) {
         loadSaveFile(programName);
+        updateActionValues();
+    }
+
+    /**
+     * updates the values of the action fields form the save file
+     */
+    private void updateActionValues() {
         topRightButtonAction = possibleActions.get(remoteSaveFile.getTopRightButtonActionIndex());
         topLeftButtonAction = possibleActions.get(remoteSaveFile.getTopLeftButtonActionIndex());
         bottomRightButtonAction = possibleActions.get(remoteSaveFile.getBottomRightButtonActionIndex());
@@ -257,6 +263,7 @@ public class RemoteHandler implements ActionListener {
             case BOTTOM_RIGHT:
                 remoteSaveFile.setBottomRightButtonActionIndex(index);
         }
+        updateActionValues();
     }
 
     /**

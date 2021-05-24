@@ -1,117 +1,64 @@
 package programs.quizOverlay.main.control;
 
 import presentationWindow.animations.AnimationQueue;
+import programs.quizPrograms.main.control.QuizGeneralState;
+import programs.quizPrograms.main.control.QuizStateChanger;
 
 /**
  * general state of the program
  */
-class GeneralState {
+class GeneralState extends QuizGeneralState {
 
-    /**
-     * possible actions that get checked with the current state
-     */
-    enum QuizAction {
-        BUZZER_PRESS, RIGHT, WRONG, NEXT_QUESTION, TO_INVISIBLE, FADE_IN
+    @Override
+    protected boolean fadeInCheck() {
+        return invisible;
     }
 
-    /**
-     * true if the program is currently in the question view
-     */
-    private boolean question = true;
-
-    /**
-     * true if the output screen is invisible
-     */
-    private boolean invisible = true;
-
-    /**
-     * true if the right view is currently displayed
-     */
-    private boolean right = false;
-
-    /**
-     * true if a buzzer is currently pressed and active
-     */
-    private int buzzerActive = 0;
-
-    /**
-     * true if buzzers can currently be pressed
-     */
-    private boolean buzzerReady = false;
-
-    /**
-     * checks an action if it should be performed
-     *
-     * @param action action to check
-     * @return true if the action can be performed
-     */
-    private boolean checkAction(QuizAction action) {
-        switch (action) {
-            case BUZZER_PRESS:
-                return !right && !invisible && buzzerReady;
-            case WRONG:
-                return !right && !invisible && buzzerActive > 0;
-            case RIGHT:
-                return !invisible && buzzerActive > 0 && !right;
-            case NEXT_QUESTION:
-                return (right || question) && !invisible;
-            case TO_INVISIBLE:
-                return !invisible;
-            case FADE_IN:
-                return invisible;
-
-        }
-
-        return false;
+    @Override
+    protected boolean nextQuestionCheck() {
+        return (right || question) && !invisible;
     }
 
-    /**
-     * checks the action and performs it if the check returns true
-     *
-     * @param action             action to check and perform
-     * @param animationQueueItem animation queue item
-     * @return returns the result of the check
-     */
-    boolean checkAndPerformAction(QuizAction action, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        boolean result = checkAction(action);
-        if (result) {
-            performAction(action, animationQueueItem);
-        }
-        return result;
+    @Override
+    protected boolean rightCheck() {
+        return !invisible && buzzerActive > 0 && !right;
     }
 
-    /**
-     * checks the action and performs it if the check returns true
-     *
-     * @param action action to check and perform
-     * @return returns the result of the check
-     */
-    boolean checkAndPerformAction(QuizAction action) {
-        return checkAndPerformAction(action, null);
+    @Override
+    protected boolean wrongCheck() {
+        return !right && !invisible && buzzerActive > 0;
     }
 
-    /**
-     * performs the given action in the general state
-     *
-     * @param action             action to be performed
-     * @param animationQueueItem animation queue item
-     */
-    private void performAction(QuizAction action, AnimationQueue.AnimationQueueItem animationQueueItem) {
-        switch (action) {
-            case BUZZER_PRESS:
-                addActiveBuzzer();
-                break;
-            case WRONG:
-                removeActiveBuzzer();
-                break;
-            case RIGHT:
-                changeToRightState();
-                break;
-            case NEXT_QUESTION:
-            case FADE_IN:
-                changeToQuestionState(animationQueueItem);
-                break;
-        }
+    @Override
+    protected boolean buzzerPressCheck() {
+        return !right && !invisible && buzzerReady;
+    }
+
+    @Override
+    protected void nextQuestionAction(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        changeToQuestionState(animationQueueItem);
+    }
+
+    @Override
+    protected void fadeInAction(AnimationQueue.AnimationQueueItem animationQueueItem) {
+        changeToQuestionState(animationQueueItem);
+    }
+
+    @Override
+    protected void rightAction() {
+        question = false;
+        right = true;
+        buzzerReady = false;
+    }
+
+    @Override
+    protected void wrongAction() {
+        buzzerActive--;
+    }
+
+    @Override
+    protected void buzzerPressAction() {
+        buzzerActive++;
     }
 
     /**
@@ -120,7 +67,8 @@ class GeneralState {
      * @param animationQueueItem animation queue item in which on finished action this gets performed
      * @param stateChanger       state changer of the quiztime program
      */
-    void changeToInvisibleState(AnimationQueue.AnimationQueueItem animationQueueItem, StateChanger stateChanger) {
+    @Override
+    public void changeToInvisibleState(AnimationQueue.AnimationQueueItem animationQueueItem, QuizStateChanger stateChanger) {
         buzzerReady = false;
         animationQueueItem.addOnFinishedAction(() -> {
             invisible = true;
@@ -144,28 +92,5 @@ class GeneralState {
             buzzerReady = true;
             invisible = false;
         });
-    }
-
-    /**
-     * changes the state to the right state
-     */
-    private void changeToRightState() {
-        question = false;
-        right = true;
-        buzzerReady = false;
-    }
-
-    /**
-     * adds an active buzzer
-     */
-    private void addActiveBuzzer() {
-        buzzerActive++;
-    }
-
-    /**
-     * removes an active buzzer
-     */
-    private void removeActiveBuzzer() {
-        buzzerActive--;
     }
 }

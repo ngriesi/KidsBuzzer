@@ -1,6 +1,6 @@
-package programs.quiztime.control.view;
+package programs.quizPrograms.control.view;
 
-import programs.quiztime.control.control.SimpleOutputView;
+import programs.quizPrograms.control.control.SimpleOutputView;
 
 import javax.swing.*;
 import java.awt.*;

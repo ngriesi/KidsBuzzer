@@ -7,9 +7,9 @@ import java.util.List;
 
 /**
  * class contains all the text that is displayed in the application
- *
+ * <p>
  * the text is set from a resource file in the passed language
- *
+ * <p>
  * possible languages are: English, Deutsch
  */
 public class Text {
@@ -92,15 +92,18 @@ public class Text {
     public static String[] LANGUAGES;
 
 
-
-
+    /**
+     * updates the fields of this class with the content of the languages resource file
+     *
+     * @param language the language defines the column where the text values are red from
+     */
     public Text(String language) {
 
         try {
             List<String> lines = Resources.readAllLines("/languages.txt");
             String[] languageColumns = lines.get(0).split(";");
             LANGUAGES = new String[languageColumns.length - 1];
-            System.arraycopy(languageColumns,1,LANGUAGES,0,languageColumns.length-1);
+            System.arraycopy(languageColumns, 1, LANGUAGES, 0, languageColumns.length - 1);
             int languageIndex = 1;
             for (int i = 0; i < languageColumns.length; i++) {
                 if (languageColumns[i].equals(language)) {
@@ -113,7 +116,7 @@ public class Text {
                 String fieldName = line.split(";")[0];
                 String value = line.split(";")[languageIndex];
                 try {
-                    if(!value.equals("")) {
+                    if (!value.equals("")) {
                         this.getClass().getField(fieldName).set(this, value);
                     } else {
                         this.getClass().getField(fieldName).set(this, "NOT_FOUND");

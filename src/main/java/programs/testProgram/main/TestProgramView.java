@@ -3,7 +3,7 @@ package programs.testProgram.main;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.TimedAction;
-import presentationWindow.renderItems.MainItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
 import presentationWindow.renderItems.QuadItem;
 import presentationWindow.renderItems.TextItem;
 import programs.abstractProgram.ProgramPresentationView;
@@ -39,7 +39,7 @@ public class TestProgramView extends ProgramPresentationView<TestProgram> {
      * @param mainItem main item of the presentation scene
      */
     @Override
-    public void setupView(MainItem mainItem) {
+    public void setupView(PresentationViewRenderItem mainItem) {
         red = new QuadItem();
         red.setSize(1 / 3f, 1);
         red.setPosition(1 / 6f, 0.5f);

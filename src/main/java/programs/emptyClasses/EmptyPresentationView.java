@@ -1,6 +1,6 @@
 package programs.emptyClasses;
 
-import presentationWindow.renderItems.MainItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
 import programs.abstractProgram.Program;
 import programs.abstractProgram.ProgramPresentationView;
 
@@ -19,7 +19,7 @@ public class EmptyPresentationView extends ProgramPresentationView<Program> {
     }
 
     @Override
-    public void setupView(MainItem mainItem) {
+    public void setupView(PresentationViewRenderItem mainItem) {
 
     }
 }

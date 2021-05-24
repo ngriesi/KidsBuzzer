@@ -3,10 +3,7 @@ package programs.scoreBoard.main.view.items;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
-import presentationWindow.renderItems.ImageItem;
-import presentationWindow.renderItems.MainItem;
-import presentationWindow.renderItems.QuadItem;
-import presentationWindow.renderItems.TextItem;
+import presentationWindow.renderItems.*;
 import programs.scoreBoard.data.ScoreBoardModel;
 import savedataHandler.SaveDataHandler;
 
@@ -61,7 +58,7 @@ public class ViewItems {
      *
      * @param mainItem main item of the output window
      */
-    public void setupView(MainItem mainItem) {
+    public void setupView(PresentationViewRenderItem mainItem) {
 
         teamMetalBacks = new MetalQuad[SaveDataHandler.MAX_BUZZER_COUNT];
 

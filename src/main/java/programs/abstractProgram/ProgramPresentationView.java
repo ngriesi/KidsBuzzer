@@ -1,6 +1,7 @@
 package programs.abstractProgram;
 
 import presentationWindow.renderItems.MainItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
 
 /**
  * presentation view of the program
@@ -28,7 +29,7 @@ public abstract class ProgramPresentationView<P extends Program> {
      *
      * @param mainItem main item of the presentation scene
      */
-    public abstract void setupView(MainItem mainItem);
+    public abstract void setupView(PresentationViewRenderItem mainItem);
 
     /**
      * @return returns the program of the view
