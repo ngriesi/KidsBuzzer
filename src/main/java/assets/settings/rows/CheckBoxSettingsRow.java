@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 /**
  * creates a settings row with a check box for boolean values
  */
-public class CheckBoxSettingsRow extends SettingsRow {
+public class CheckBoxSettingsRow extends SettingsRow<Boolean> {
 
     /**
      * check box
@@ -26,31 +26,29 @@ public class CheckBoxSettingsRow extends SettingsRow {
      * @param startValue             start value of the settings
      */
     public CheckBoxSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, boolean startValue) {
-        super(description);
+        super(name, description);
 
         checkBox = new MyCheckBox();
         checkBox.setSelected(startValue);
 
         super.addInteractionElement(checkBox);
 
-        checkBox.addItemListener(createItemListener(settingsChangeListener, name));
+        checkBox.addItemListener(createItemListener(settingsChangeListener));
     }
 
     /**
      * creates an item listener for this check box to update the setting
      *
      * @param settingsChangeListener settings changed listener
-     * @param name                   name to identify the setting in the listener
      * @return ItemListener for the check box
      */
-    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener, String name) {
+    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener) {
         return e -> {
             int state = e.getStateChange();
             if (state == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(true, name, SettingsEvent.RowKind.CHECK_BOX, "", getPageIdentificationName()));
+                settingsChangeListener.settingChanged(createSettingsEvent("", true, SettingsEvent.RowKind.CHECK_BOX));
             } else {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(false, name, SettingsEvent.RowKind.CHECK_BOX, "", getPageIdentificationName()));
-
+                settingsChangeListener.settingChanged(createSettingsEvent("", false, SettingsEvent.RowKind.CHECK_BOX));
             }
         };
     }
@@ -61,6 +59,7 @@ public class CheckBoxSettingsRow extends SettingsRow {
      * @param value new value
      */
     public void setSetting(Boolean value) {
+        super.setSetting(value);
         checkBox.setSelected(value);
     }
 }

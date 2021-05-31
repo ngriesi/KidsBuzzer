@@ -2,9 +2,10 @@ package programs.scoreBoard.settings.pageControllers;
 
 import assets.settings.general.SettingsEvent;
 import midi.MidiSettingsRow;
-import org.joml.Vector2i;
 import programs.abstractProgram.ProgramSettingsPageController;
 import programs.scoreBoard.settings.ScoreBoardSettingsController;
+
+import static programs.scoreBoard.data.ScoreBoardModel.MIDI;
 
 /**
  * settings controller for the midi settings page of the score board program
@@ -27,13 +28,7 @@ public class MidiSettingsPageController extends ProgramSettingsPageController<Sc
      */
     @Override
     public void settingChangedAction(SettingsEvent event) {
-        if (event.getComponentName().equals(MidiSettingsRow.ACTIVE)) {
-            mainSettingsController.getProgramModel().getSaveFile().setMidiActivate((Boolean) event.getValue());
-        } else if (event.getComponentName().equals(MidiSettingsRow.X)) {
-            mainSettingsController.getProgramModel().getSaveFile().setMidiX((Integer) event.getValue());
-        } else {
-            mainSettingsController.getProgramModel().getSaveFile().setMidiY((Integer) event.getValue());
-        }
+        mainSettingsController.getProgramModel().getSaveFile().putMidiSettingsRowData(MIDI, (MidiSettingsRow.MidiSettingsRowData) event.getValue());
     }
 
     /**
@@ -41,10 +36,6 @@ public class MidiSettingsPageController extends ProgramSettingsPageController<Sc
      */
     @Override
     public void updateView() {
-        mainSettingsController.getProgramView().getMidiSettingsPage().getScored().setSetting(
-                new MidiSettingsRow.MidiSettingsRowData(
-                        new Vector2i(mainSettingsController.getProgramModel().getSaveFile().getMidiX(),
-                                mainSettingsController.getProgramModel().getSaveFile().getMidiY()),
-                        mainSettingsController.getProgramModel().getSaveFile().isMidiActivate()));
+        mainSettingsController.getProgramView().getMidiSettingsPage().getScored().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI));
     }
 }

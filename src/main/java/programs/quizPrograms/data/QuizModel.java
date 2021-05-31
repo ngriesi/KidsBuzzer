@@ -14,7 +14,17 @@ import java.io.FileNotFoundException;
 /**
  * handles the resources of the quiz programs program
  */
-public class QuizModel<Q extends  QuizSaveFile> extends ProgramModel<Q> {
+public class QuizModel extends ProgramModel {
+
+    /**
+     * Identification Strings for the settings fields
+     */
+    public static final String ICON = "Icon";
+    public static final String QUESTION_SOUND = "Question Sound", RIGHT_SOUND = "Right Sound", WRONG_SOUND = "Wrong Sound", BUZZER_SOUND = "Buzzer Sound";
+    public static final String RIGHT_MIDI = "Right Midi", WRONG_MIDI = "Wrong Midi", BUZZER_MIDI = "Buzzer Midi", NEXT_MIDI = "Next Midi";
+    public static final String MAIN_FONT = "Main Font", BUZZER_FONT = "Buzzer Font";
+    public static final String MIDI_RIGHT = "Midi Right", MIDI_WRONG = "Midi Wrong", MIDI_BUZZER = "Midi Question", MIDI_NEXT = "Midi Next";
+
 
     /**
      * icons displayed over the virtual buzzers
@@ -49,8 +59,8 @@ public class QuizModel<Q extends  QuizSaveFile> extends ProgramModel<Q> {
     /**
      * creates a new Program model
      */
-    public QuizModel(Class<Q> type) {
-        super(type);
+    public QuizModel(String name) {
+        super(name);
 
         icons = new Texture[SaveDataHandler.MAX_BUZZER_COUNT];
     }
@@ -69,31 +79,19 @@ public class QuizModel<Q extends  QuizSaveFile> extends ProgramModel<Q> {
             int finalI = i;
             openGlRenderer.addActionToOpenGlThread(() -> {
                 try {
-                    icons[finalI] = Texture.loadTexture(new File(getSaveFile().getIcons()[finalI]), loadingHandler);
+                    icons[finalI] = Texture.loadTexture(new File(getSaveFile().getString(ICON + finalI)), loadingHandler);
                 } catch (FileNotFoundException e) {
                     icons[finalI] = new Texture(SaveDataHandler.DEFAULT_IMAGE);
-                    getSaveFile().getIcons()[finalI] = "default";
+                    getSaveFile().putString(ICON + finalI, "default");
                 }
 
             });
         }
 
-        new Thread(() -> {
-            questionSound = loadAudio(getSaveFile().getQuestionSound(), loadingHandler, getSaveFile().getQuestionVolume());
-            if (questionSound == null) getSaveFile().setQuestionSound("default");
-        }).start();
-        new Thread(() -> {
-            rightSound = loadAudio(getSaveFile().getRightSound(), loadingHandler, getSaveFile().getRightVolume());
-            if (rightSound == null) getSaveFile().setRightSound("default");
-        }).start();
-        new Thread(() -> {
-            buzzerSound = loadAudio(getSaveFile().getBuzzerSound(), loadingHandler, getSaveFile().getBuzzerVolume());
-            if (buzzerSound == null) getSaveFile().setBuzzerSound("default");
-        }).start();
-        new Thread(() -> {
-            wrongSound = loadAudio(getSaveFile().getWrongSound(), loadingHandler, getSaveFile().getWrongVolume());
-            if (wrongSound == null) getSaveFile().setWrongSound("default");
-        }).start();
+        new Thread(() -> questionSound = loadAudio(QUESTION_SOUND, loadingHandler)).start();
+        new Thread(() -> rightSound = loadAudio(RIGHT_SOUND, loadingHandler)).start();
+        new Thread(() -> buzzerSound = loadAudio(BUZZER_SOUND, loadingHandler)).start();
+        new Thread(() -> wrongSound = loadAudio(WRONG_SOUND, loadingHandler)).start();
     }
 
     /**

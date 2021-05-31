@@ -1,11 +1,10 @@
-language=Deutsch
-effectColor=[0, 102, 255]
-outputScreen=1
-buzzerNumber=3
-windowWidth=993
-windowHeight=552
-windowPositionX=480
-windowPositionY=270
-useNativeKeyListener=false
-desiredOutputScreen=2
+Integer Window Height = 540
+Integer Window Width = 960
+Integer Buzzer Count = 3
+Integer Effect Colorblue = 255
+Integer Effect Coloralpha = 255
+Integer Window Y = 1
+Integer Window X = 1
+Integer Effect Colorgreen = 51
+Integer Effect Colorred = 51
 

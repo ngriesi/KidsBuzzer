@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
 /**
  * creates a settings row with a color selector
  */
-public class ColorSelectionRow extends SettingsRow {
+public class ColorSelectionRow extends SettingsRow<Color> {
 
     /**
      * check box
@@ -27,29 +27,28 @@ public class ColorSelectionRow extends SettingsRow {
      * @param startValue             start value of the settings
      */
     public ColorSelectionRow(SettingsChangeListener settingsChangeListener, String name, String description, Color startValue) {
-        super(description);
+        super(name, description);
 
         colorSelector = new MyColorSelector(startValue);
         colorSelector.setColor(startValue);
 
         super.addInteractionElement(colorSelector);
 
-        colorSelector.addItemListener(createItemListener(settingsChangeListener, name));
+        colorSelector.addItemListener(createItemListener(settingsChangeListener));
     }
 
     /**
      * creates an item listener for this check box to update the setting
      *
      * @param settingsChangeListener settings changed listener
-     * @param name                   name to identify the setting in the listener
      * @return ItemListener for the check box
      */
-    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener, String name) {
+    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener) {
         return e -> {
             int state = e.getStateChange();
 
             if (state == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(((MyColorSelector)e.getSource()).getBackground(), name, SettingsEvent.RowKind.COLOR_SELECTION, "", getPageIdentificationName()));
+                settingsChangeListener.settingChanged(createSettingsEvent("", ((MyColorSelector) e.getSource()).getBackground(), SettingsEvent.RowKind.COLOR_SELECTION));
             }
         };
     }
@@ -60,6 +59,7 @@ public class ColorSelectionRow extends SettingsRow {
      * @param value new value
      */
     public void setSetting(Color value) {
+        super.setSetting(value);
         colorSelector.setColor(value);
     }
 }

@@ -82,6 +82,7 @@ public class Text {
     public static String MIDI_NEXT_DESCRIPTION;
     public static String MIDI_POINT_SCORED;
     public static String MIDI_BUZZER_DESCRIPTION;
+    public static String QUESTION;
     @SuppressWarnings("WeakerAccess")
     public static String RED;
     @SuppressWarnings("WeakerAccess")
@@ -90,6 +91,7 @@ public class Text {
     public static String BLACK;
 
     public static String[] LANGUAGES;
+
 
 
     /**

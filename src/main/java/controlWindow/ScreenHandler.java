@@ -1,6 +1,12 @@
 package controlWindow;
 
+import controlWindow.settings.SettingsController;
+import utils.save.SaveFile;
+
 import java.awt.*;
+
+import static controlWindow.settings.SettingsController.DESIRED_OUTPUT_SCREEN;
+import static controlWindow.settings.SettingsController.OUTPUT_SCREEN;
 
 /**
  * class listens for changes to the number of screens
@@ -37,18 +43,15 @@ class ScreenHandler {
      */
     private void updateScreen(int screens) {
         mainController.getControlModel().getSettingsController().setPossibleScreens(createScreensArray(screens));
-        if (mainController.getControlModel().getSettingsController().getSettingsSaveFile().getOutputScreen() > screens) {
-            mainController.getControlModel().getSettingsController().getSettingsSaveFile().setOutputScreen(1);
+        SaveFile saveFile = mainController.getControlModel().getSettingsController().getSettingsSaveFile();
+        if (saveFile.getInteger(OUTPUT_SCREEN) > screens) {
+            saveFile.putInteger(OUTPUT_SCREEN, 1);
             mainController.updateOutputScreen(1);
         } else if (
-                mainController.getControlModel().getSettingsController().getSettingsSaveFile().getDesiredOutputScreen() <= screens
-                        && mainController.getControlModel().getSettingsController().getSettingsSaveFile().getOutputScreen()
-                        != mainController.getControlModel().getSettingsController().getSettingsSaveFile().getDesiredOutputScreen()
+                saveFile.getInteger(DESIRED_OUTPUT_SCREEN) <= screens && saveFile.getInteger(OUTPUT_SCREEN) != saveFile.getInteger(DESIRED_OUTPUT_SCREEN)
         ) {
-            mainController.getControlModel().getSettingsController().getSettingsSaveFile().setOutputScreen(
-                    mainController.getControlModel().getSettingsController().getSettingsSaveFile().getDesiredOutputScreen()
-            );
-            mainController.updateOutputScreen(mainController.getControlModel().getSettingsController().getSettingsSaveFile().getOutputScreen());
+            saveFile.putInteger(OUTPUT_SCREEN, saveFile.getInteger(DESIRED_OUTPUT_SCREEN));
+            mainController.updateOutputScreen(saveFile.getInteger(OUTPUT_SCREEN));
         }
     }
 

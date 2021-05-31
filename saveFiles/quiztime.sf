@@ -1,7 +1,15 @@
-background=default
-introMidiX=1
-introMidiY=1
-introSound=C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\sounds\Hauptsound.WAV
-introVolume=100
-introMidiActivate=false
+String Question Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Icon0 = default
+String Background = default
+String Right Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Wrong Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Intro Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Buzzer Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Icon2 = default
+String Icon1 = default
+Integer Right Soundvolume = 100
+Integer Intro Soundvolume = 100
+Integer Buzzer Soundvolume = 100
+Integer Question Soundvolume = 100
+Integer Wrong Soundvolume = 100
 

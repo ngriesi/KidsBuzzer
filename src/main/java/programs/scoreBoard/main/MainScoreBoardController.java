@@ -1,7 +1,10 @@
 package programs.scoreBoard.main;
 
 
+import midi.MidiSettingsRow;
 import presentationWindow.animations.AnimationQueue;
+
+import static programs.scoreBoard.data.ScoreBoardModel.MIDI;
 
 /**
  * main controller of the score board program
@@ -73,8 +76,9 @@ public class MainScoreBoardController {
      * performs the midi action for the scored action
      */
     private void performMidiAction() {
-        if (program.getProgramModel().getSaveFile().isMidiActivate()) {
-            program.getMainController().getControlModel().getMidiHandler().sendMessageToPressExecuter(program.getProgramModel().getSaveFile().getMidiX(), program.getProgramModel().getSaveFile().getMidiY());
+        MidiSettingsRow.MidiSettingsRowData midiData = program.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI);
+        if (midiData.isActive()) {
+            program.getMainController().getControlModel().getMidiHandler().sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 

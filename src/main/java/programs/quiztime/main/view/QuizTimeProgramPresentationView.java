@@ -5,19 +5,17 @@ import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
-import presentationWindow.items.Texture;
 import presentationWindow.renderItems.ImageItem;
-import presentationWindow.renderItems.MainItem;
 import presentationWindow.renderItems.PresentationViewRenderItem;
 import presentationWindow.renderItems.TextItem;
-import programs.abstractProgram.ProgramPresentationView;
 import programs.quizPrograms.main.view.QuizPresentationView;
 import programs.quiztime.main.control.QuizTimeProgram;
 import savedataHandler.SaveDataHandler;
+import savedataHandler.languages.Text;
 
 import java.awt.*;
 
-import static java.awt.Font.PLAIN;
+import static programs.quizPrograms.data.QuizModel.MAIN_FONT;
 
 
 /**
@@ -55,7 +53,6 @@ public class QuizTimeProgramPresentationView extends QuizPresentationView<QuizTi
      *
      * @param mainItem main item of the presentation scene
      */
-    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public void setupView(PresentationViewRenderItem mainItem) {
 
@@ -68,22 +65,22 @@ public class QuizTimeProgramPresentationView extends QuizPresentationView<QuizTi
 
         super.setupView(background);
 
-        questionText = new TextItem("Frage 1");
-        questionText.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200));
+        questionText = new TextItem(Text.QUESTION + " 1");
+        questionText.changeFont(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getFont());
         questionText.setPosition(0.5f, 1f / 3f);
         questionText.setSize((questionText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
         questionText.setVisible(false);
         questionText.setOpacity(0);
-        questionText.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
+        questionText.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getColor())));
         background.addItem(questionText);
 
-        title = new TextItem("Quiztime");
-        title.changeFont(new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200));
+        title = new TextItem(Text.QUIZTIME);
+        title.changeFont(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getFont());
         title.setPosition(0.5f, 0.5f);
         title.setSize((rightText.getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
         title.setOpacity(0);
         title.setVisible(true);
-        title.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor())));
+        title.setColorScheme(new ColorScheme(new Color(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getColor())));
         background.addItem(title);
     }
 
@@ -178,11 +175,11 @@ public class QuizTimeProgramPresentationView extends QuizPresentationView<QuizTi
      */
     public void updateMainFont() {
 
-        Font font = new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200);
+        Font font = getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getFont();
         rightText.changeFont(font);
         questionText.changeFont(font);
         title.changeFont(font);
-        Color color = new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor()[0], getProgram().getProgramModel().getSaveFile().getMainTextColor()[1], getProgram().getProgramModel().getSaveFile().getMainTextColor()[2], getProgram().getProgramModel().getSaveFile().getMainTextColor()[3]);
+        Color color = new Color(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getColor());
         rightText.setColorScheme(new ColorScheme(color));
         questionText.setColorScheme(new ColorScheme(color));
         title.setColorScheme(new ColorScheme(color));

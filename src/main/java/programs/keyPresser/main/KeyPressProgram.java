@@ -9,6 +9,8 @@ import savedataHandler.languages.Text;
 
 import java.awt.*;
 
+import static programs.keyPresser.control.controller.KeyPressController.*;
+
 /**
  * main class of the key press program handling the buzzer input
  */
@@ -75,15 +77,15 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
      * @param buzzer number of the pressed buzzer (starting with 1)
      */
     private void keyPress(int buzzer) {
-        if (getProgramModel().getSaveFile().getUseKey()[buzzer - 1]) {
+        if (getProgramModel().getSaveFile().getBoolean(USE_KEY + (buzzer - 1))) {
 
             new Thread(() -> {
                 Robot bot;
                 try {
                     bot = new Robot();
-                    bot.keyPress(getProgramModel().getSaveFile().getKey()[buzzer - 1]);
+                    bot.keyPress(getProgramModel().getSaveFile().getInteger(KEY + (buzzer - 1)));
                     Thread.sleep(100);
-                    bot.keyRelease(getProgramModel().getSaveFile().getKey()[buzzer - 1]);
+                    bot.keyRelease(getProgramModel().getSaveFile().getInteger(KEY + (buzzer - 1)));
                 } catch (AWTException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -98,8 +100,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
      * @param buzzerNumber number of the buzzer pressed (starting with 1)
      */
     private void handleReset(int buzzerNumber) {
-        switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
-            //noinspection SpellCheckingInspection
+        switch (getProgramModel().getSaveFile().getInteger(BLOCKING_BEHAVIOUR)) {
             case 0:
                 getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
@@ -110,7 +111,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
             case 2:
                 new Thread(() -> {
                     try {
-                        Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
+                        Thread.sleep(getProgramModel().getSaveFile().getInteger(BLOCKING_TIME));
 
                         getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
                         getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
@@ -120,7 +121,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
                 }).start();
                 break;
             case 3:
-                if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
+                if (buzzerNumber == getProgramModel().getSaveFile().getInteger(UNBLOCK_BUZZER)) {
                     for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
                         getMainController().getControlModel().getBuzzerControl().unblockBuzzer(i + 1);
                     }

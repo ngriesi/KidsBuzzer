@@ -8,6 +8,8 @@ import savedataHandler.SaveDataHandler;
 
 import java.io.File;
 
+import static programs.scoreBoard.data.ScoreBoardModel.ICON;
+
 /**
  * Controller of the image settings page of the score boarc program
  */
@@ -30,9 +32,9 @@ public class ImageSettingsPageController extends ProgramSettingsPageController<S
     @Override
     public void settingChangedAction(SettingsEvent settingsEvent) {
         int buzzerNumber = SaveDataHandler.getNumberByName(settingsEvent.getName().substring(4));
-        mainSettingsController.getProgramModel().getSaveFile().getIcons()[buzzerNumber] = ((File) settingsEvent.getValue()).getAbsolutePath();
+        mainSettingsController.getProgramModel().getSaveFile().putString(ICON + buzzerNumber, ((File) settingsEvent.getValue()).getAbsolutePath());
         mainSettingsController.getProgram().getRenderer().addActionToOpenGlThread(() -> {
-            mainSettingsController.getProgramModel().setIcon(Texture.loadTexture(new File(mainSettingsController.getProgramModel().getSaveFile().getIcons()[buzzerNumber])), buzzerNumber);
+            mainSettingsController.getProgramModel().setIcon(Texture.loadTexture(new File(mainSettingsController.getProgramModel().getSaveFile().getString(ICON + buzzerNumber))), buzzerNumber);
             mainSettingsController.getProgram().getProgramPresentationView().updateIcon(buzzerNumber);
         });
     }
@@ -43,7 +45,7 @@ public class ImageSettingsPageController extends ProgramSettingsPageController<S
     @Override
     public void updateView() {
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            mainSettingsController.getProgramView().getImageSettingsPage().getIconSettingRows()[i].setSetting(mainSettingsController.getProgramModel().getSaveFile().getIcons()[i]);
+            mainSettingsController.getProgramView().getImageSettingsPage().getIconSettingRows()[i].setSetting(new File(mainSettingsController.getProgramModel().getSaveFile().getString(ICON + i)));
         }
     }
 }

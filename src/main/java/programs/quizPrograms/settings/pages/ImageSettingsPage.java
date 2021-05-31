@@ -1,4 +1,4 @@
-package programs.quizOverlay.settings.pages;
+package programs.quizPrograms.settings.pages;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsPage;
@@ -26,6 +26,7 @@ public class ImageSettingsPage extends SettingsPage {
     public ImageSettingsPage(SettingsChangeListener settingsChangeListener) {
         super(Text.IMAGES, "images");
         createImageSelectionView(settingsChangeListener);
+
     }
 
     /**
@@ -33,7 +34,7 @@ public class ImageSettingsPage extends SettingsPage {
      *
      * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
      */
-    private void createImageSelectionView(SettingsChangeListener settingsChangeListener) {
+    protected void createImageSelectionView(SettingsChangeListener settingsChangeListener) {
 
         icons = new FileChooserSettingsRow[SaveDataHandler.BUZZER_COUNT];
 
@@ -43,8 +44,7 @@ public class ImageSettingsPage extends SettingsPage {
             super.addRow(icons[i]);
         }
 
-        addEmpty();
-        addEmpty();
+        super.addEmptyTo(5);
     }
 
     /**

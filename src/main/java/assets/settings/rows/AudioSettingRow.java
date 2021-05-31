@@ -27,7 +27,7 @@ import java.io.File;
  * Settings event used to set the volume of the audio
  * this settings event contains an int as value (between 0 and 100)
  */
-public class AudioSettingRow extends SettingsRow {
+public class AudioSettingRow extends SettingsRow<AudioSettingRow.AudioData> {
 
     /**
      * component identifications
@@ -52,11 +52,11 @@ public class AudioSettingRow extends SettingsRow {
      * @param description            description that gets displayed in the settings
      */
     public AudioSettingRow(SettingsChangeListener settingsChangeListener, String name, String description) {
-        super(description);
+        super(name, description);
 
         JFileChooser fileChooser = createFileChooser();
 
-        MyPanel interaction = createInteractionPanel(settingsChangeListener, name, fileChooser);
+        MyPanel interaction = createInteractionPanel(settingsChangeListener, fileChooser);
 
         super.addInteractionElement(interaction);
     }
@@ -65,17 +65,15 @@ public class AudioSettingRow extends SettingsRow {
      * creates the panel that contains all the interaction elements of this view element
      *
      * @param settingsChangeListener change Listener of the settings that get notified when the settings has changed
-     * @param name                   name of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @param fileChooser            file chooser used to select the audio file
      * @return return the completely build panel containing all the interaction elements
      */
-    private MyPanel createInteractionPanel(SettingsChangeListener settingsChangeListener, String name, JFileChooser fileChooser) {
+    private MyPanel createInteractionPanel(SettingsChangeListener settingsChangeListener, JFileChooser fileChooser) {
         MyPanel interaction = new MyPanel(new GridBagLayout());
         interaction.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 5, Toolkit.getDefaultToolkit().getScreenSize().height / 10));
-        interaction.addComponent(interaction, createFileChooserButton(settingsChangeListener, name, fileChooser), 1, 2, 0, 0, 1, 1);
+        interaction.addComponent(interaction, createFileChooserButton(settingsChangeListener, fileChooser), 1, 2, 0, 0, 1, 1);
         interaction.addComponent(interaction, createLabel(), 0, 1, 1, 1);
-        interaction.addComponent(interaction, createSlider(settingsChangeListener, name), 1, 1, 1, 1);
+        interaction.addComponent(interaction, createSlider(settingsChangeListener), 1, 1, 1, 1);
         return interaction;
     }
 
@@ -94,13 +92,11 @@ public class AudioSettingRow extends SettingsRow {
      * creates the slide that sets the volume of the audio
      *
      * @param settingsChangeListener change listener of this settings row
-     * @param name                   name of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @return returns the slider
      */
-    private MySlider createSlider(SettingsChangeListener settingsChangeListener, String name) {
+    private MySlider createSlider(SettingsChangeListener settingsChangeListener) {
         slider = new MySlider(100);
-        slider.addActionListener((e) -> settingsChangeListener.settingChanged(new SettingsEvent<>(((MySlider) e.getSource()).getRelativeValue(), name, SettingsEvent.RowKind.AUDIO, VOLUME, getPageIdentificationName())));
+        slider.addActionListener((e) -> settingsChangeListener.settingChanged(createSettingsEvent(VOLUME, new AudioData(currentValue.filePath, slider.getRelativeValue()), SettingsEvent.RowKind.AUDIO)));
         slider.setPreferredSize(new Dimension(1, 1));
         return slider;
     }
@@ -109,14 +105,12 @@ public class AudioSettingRow extends SettingsRow {
      * creates the button that opens the file chooser view
      *
      * @param settingsChangeListener change listener of the settings row
-     * @param name                   of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @param fileChooser            file chooser used to select the audio file
      * @return returns the button that opens the file chooser
      */
-    private MyButton createFileChooserButton(SettingsChangeListener settingsChangeListener, String name, JFileChooser fileChooser) {
+    private MyButton createFileChooserButton(SettingsChangeListener settingsChangeListener, JFileChooser fileChooser) {
         button = new MyButton("default");
-        button.addActionListener(e -> buttonAction(fileChooser, button, settingsChangeListener, name));
+        button.addActionListener(e -> buttonAction(fileChooser, button, settingsChangeListener));
         button.setPreferredSize(new Dimension(1, 1));
         button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 5, Toolkit.getDefaultToolkit().getScreenSize().height / 20));
         return button;
@@ -141,13 +135,11 @@ public class AudioSettingRow extends SettingsRow {
      * @param fileChooser            file chooser, that gets opened by the button
      * @param button                 button this is the action of
      * @param settingsChangeListener change listener of the settings row
-     * @param name                   name of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      */
-    private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener, String name) {
+    private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener) {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             button.setText(fileChooser.getSelectedFile().getName());
-            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name, SettingsEvent.RowKind.AUDIO, FILE, getPageIdentificationName()));
+            settingsChangeListener.settingChanged(createSettingsEvent(FILE, new AudioData(fileChooser.getSelectedFile(), currentValue.volume), SettingsEvent.RowKind.AUDIO));
         }
     }
 
@@ -157,6 +149,7 @@ public class AudioSettingRow extends SettingsRow {
      * @param value new value that gets set to this view
      */
     public void setSetting(AudioData value) {
+        super.setSetting(value);
         button.setText(value.getFile().getName());
         slider.setRelativeValue(value.getVolume());
     }
@@ -203,7 +196,7 @@ public class AudioSettingRow extends SettingsRow {
          *
          * @return returns the volume of the audio
          */
-        float getVolume() {
+        public float getVolume() {
             return volume;
         }
     }

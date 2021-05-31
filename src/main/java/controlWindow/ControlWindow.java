@@ -3,6 +3,7 @@ package controlWindow;
 import assets.standardAssets.StandardAssetFields;
 import assets.standardAssets.UnoptimizedPanel;
 import assets.customWindow.MyJFrame;
+import controlWindow.settings.SettingsController;
 import org.joml.Vector4i;
 
 import javax.swing.*;
@@ -85,10 +86,10 @@ public class ControlWindow {
      */
     private Vector4i getSavedWindowBounds() {
         Vector4i result = new Vector4i();
-        result.x = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowPositionX();
-        result.y = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowPositionY();
-        result.z = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowWidth();
-        result.w = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getWindowHeight();
+        result.x = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(SettingsController.WINDOW_X);
+        result.y = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(SettingsController.WINDOW_Y);
+        result.z = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(SettingsController.WINDOW_WIDTH);
+        result.w = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(SettingsController.WINDOW_HEIGHT);
         return result;
     }
 

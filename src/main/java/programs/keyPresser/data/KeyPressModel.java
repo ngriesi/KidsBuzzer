@@ -7,13 +7,13 @@ import startupApp.LoadingHandler;
 /**
  * Model of the <code>KeyPressProgram</code>. Holds a reference to the save file
  */
-public class KeyPressModel extends ProgramModel<KeyPressSaveFile> {
+public class KeyPressModel extends ProgramModel {
 
     /**
      * creates a new Program model
      */
     public KeyPressModel() {
-        super(KeyPressSaveFile.class);
+        super("KeyPresser");
     }
 
 

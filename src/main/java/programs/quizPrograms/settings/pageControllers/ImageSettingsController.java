@@ -1,26 +1,29 @@
-package programs.quizOverlay.settings.pageControllers;
+package programs.quizPrograms.settings.pageControllers;
 
 import assets.settings.general.SettingsEvent;
 import presentationWindow.items.Texture;
 import programs.abstractProgram.ProgramSettingsPageController;
-import programs.quizOverlay.data.QuizOverlayModel;
-import programs.quizOverlay.main.control.QuizOverlayProgram;
-import programs.quizOverlay.settings.QuizOverlaySettingsController;
+import programs.quizPrograms.data.QuizModel;
+import programs.quizPrograms.main.control.QuizProgram;
+import programs.quizPrograms.main.view.QuizPresentationView;
+import programs.quizPrograms.settings.QuizSettingsController;
 import savedataHandler.SaveDataHandler;
 
 import java.io.File;
 
+import static programs.quizPrograms.data.QuizModel.ICON;
+
 /**
  * settings controller for the image selection of the quiz overlay program
  */
-public class ImageSettingsPageController extends ProgramSettingsPageController<QuizOverlaySettingsController> {
+public class ImageSettingsController extends ProgramSettingsPageController<QuizSettingsController> {
 
     /**
      * creates a new controller
      *
      * @param mainSettingsController main settings controller of the quiz overlay program
      */
-    public ImageSettingsPageController(QuizOverlaySettingsController mainSettingsController) {
+    public ImageSettingsController(QuizSettingsController mainSettingsController) {
         super(mainSettingsController);
     }
 
@@ -40,7 +43,7 @@ public class ImageSettingsPageController extends ProgramSettingsPageController<Q
     @Override
     public void updateView() {
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            mainSettingsController.getProgramView().getImageSettingsPage().getIcons()[i].setSetting(mainSettingsController.getProgramModel().getSaveFile().getIcons()[i]);
+            mainSettingsController.getProgramView().getImageSettingsPage().getIcons()[i].setSetting(new File(mainSettingsController.getProgramModel().getSaveFile().getString(ICON + i)));
         }
     }
 
@@ -49,14 +52,14 @@ public class ImageSettingsPageController extends ProgramSettingsPageController<Q
      *
      * @param se settings event created by the settings view element, containing a name to identify the settings and
      */
-    private void changeIconSetting(SettingsEvent se) {
-        QuizOverlayProgram program = mainSettingsController.getProgram();
-        QuizOverlayModel programModel = mainSettingsController.getProgramModel();
+    protected void changeIconSetting(SettingsEvent se) {
+        QuizProgram program = mainSettingsController.getProgram();
+        QuizModel programModel = mainSettingsController.getProgramModel();
         int index = Integer.parseInt(se.getName().substring(4, 5));
-        programModel.getSaveFile().getIcons()[index] = ((File) se.getValue()).getAbsolutePath();
+        programModel.getSaveFile().putString(ICON + index, ((File) se.getValue()).getAbsolutePath());
         program.getRenderer().addActionToOpenGlThread(() -> {
-            programModel.setIcons(Texture.loadTexture(new File(programModel.getSaveFile().getIcons()[index])), index);
-            program.getProgramPresentationView().updateIcon(index);
+            programModel.setIcons(Texture.loadTexture(new File(programModel.getSaveFile().getString(ICON + index))), index);
+            ((QuizPresentationView) program.getProgramPresentationView()).updateIcon(index);
         });
     }
 }

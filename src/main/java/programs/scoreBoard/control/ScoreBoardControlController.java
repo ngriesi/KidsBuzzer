@@ -8,6 +8,8 @@ import savedataHandler.SaveDataHandler;
 
 import java.awt.event.ActionEvent;
 
+import static programs.scoreBoard.data.ScoreBoardModel.TEAM_NAMES;
+
 /**
  * controller for the control view of the score board program
  */
@@ -46,7 +48,7 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
     @Override
     protected void updateView() {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getTeamNames()[i]);
+            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getString(TEAM_NAMES + i));
         }
     }
 
@@ -124,7 +126,7 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
      */
     public void updateNames() {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getTeamNames()[i]);
+            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getString(TEAM_NAMES + i));
         }
     }
 }

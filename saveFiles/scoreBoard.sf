@@ -1,11 +1,9 @@
-font=Impact
-icons=[default, default, default]
-buzzerSound=default
-midiY=1
-midiActivate=false
-midiX=1
-textBold=false
-teamNames=[test, ENTE, GANS]
-textColor=[0, 0, 0, 255]
-buzzerSoundVolume=0
+String Team Names2 = default
+String Team Names1 = default
+String Icon0 = default
+String Team Names0 = default
+String Buzzer Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String Icon2 = default
+String Icon1 = default
+Integer Buzzer Soundvolume = 100
 

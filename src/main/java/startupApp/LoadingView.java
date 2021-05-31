@@ -2,6 +2,7 @@ package startupApp;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.net.URL;
 
@@ -50,6 +51,16 @@ public class LoadingView extends JPanel {
         this.loadingModel = loadingModel;
         this.setOpaque(false);
         this.setBackground(new Color(0,0,0,0));
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "test");
+        this.getActionMap().put("test", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("test");
+                for(LoadingMonitor s : loadingModel.getLoadingHandler().getLoadingProcesses()) {
+                    System.out.println(s.getProcessName());
+                }
+            }
+        });
         window = new JFrame();
         setupFrame(screenSize);
     }

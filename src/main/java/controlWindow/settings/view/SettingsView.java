@@ -1,12 +1,11 @@
 package controlWindow.settings.view;
 
 import assets.settings.general.SettingsChangeListener;
-import assets.standardAssets.LayerPanel;
 import assets.standardAssets.MyButton;
 import assets.standardAssets.MyPanel;
 import controlWindow.settings.SettingsController;
-import controlWindow.settings.SettingsSaveFile;
 import savedataHandler.languages.Text;
+import utils.save.SaveFile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * creates  the main settings view for the whole application
  */
-public class SettingsView extends assets.settings.general.SettingsView<SettingsSaveFile> {
+public class SettingsView extends assets.settings.general.SettingsView {
 
     /**
      * width of the buttons at the bottom
@@ -107,7 +106,7 @@ public class SettingsView extends assets.settings.general.SettingsView<SettingsS
     }
 
     @Override
-    public void updateSettings(SettingsSaveFile saveFile) {
+    public void updateSettings(SaveFile saveFile) {
         generalPage.updateSettings(saveFile);
     }
 }

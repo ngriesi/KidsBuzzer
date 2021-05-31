@@ -3,6 +3,7 @@ package startupApp;
 import assets.standardAssets.StandardAssetFields;
 import controlWindow.ControlModel;
 import controlWindow.NativeKeyListener;
+import controlWindow.settings.SettingsController;
 import controlWindow.settings.SettingsSaveFile;
 import org.jnativehook.GlobalScreen;
 import presentationWindow.engine.Engine;
@@ -18,6 +19,7 @@ import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.testProgram.main.TestProgram;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
+import utils.save.SaveFile;
 import utils.saveFile.SaveFileLoader;
 
 import java.awt.*;
@@ -78,24 +80,22 @@ public class LoadingModel {
 
             programHandler = new ProgramHandler();
 
-            SettingsSaveFile settingsSaveFile = SaveFileLoader.loadFile("settings", SettingsSaveFile.class);
-            if (settingsSaveFile == null) {
-                settingsSaveFile = new SettingsSaveFile();
-            }
+            SaveFile settingsSaveFile = new SaveFile("settings");
 
+            System.out.println(settingsSaveFile.getColor(SettingsController.EFFECT_COLOR));
 
-            StandardAssetFields.ROLLOVER_COLOR = new Color(settingsSaveFile.getEffectColor()[0], settingsSaveFile.getEffectColor()[1], settingsSaveFile.getEffectColor()[2]);
+            StandardAssetFields.ROLLOVER_COLOR = settingsSaveFile.getColor(SettingsController.EFFECT_COLOR);
 
-            StandardAssetFields.PRESSED_COLOR = new Color(settingsSaveFile.getEffectColor()[0], settingsSaveFile.getEffectColor()[1], settingsSaveFile.getEffectColor()[2]).brighter();
+            StandardAssetFields.PRESSED_COLOR = settingsSaveFile.getColor(SettingsController.EFFECT_COLOR).brighter();
 
             saveDataHandler = new SaveDataHandler(settingsSaveFile);
 
-            new Text(settingsSaveFile.getLanguage());
+            new Text(settingsSaveFile.getString(SettingsController.LANGUAGE));
 
             GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice[] devices = g.getScreenDevices();
-            if (settingsSaveFile.getOutputScreen() > devices.length) {
-                settingsSaveFile.setOutputScreen(1);
+            if (settingsSaveFile.getInteger(SettingsController.OUTPUT_SCREEN) > devices.length) {
+                settingsSaveFile.putInteger(SettingsController.OUTPUT_SCREEN, 1);
             }
 
             openGlRenderer = new OpenGlRenderer();
@@ -176,7 +176,7 @@ public class LoadingModel {
 
             Engine gameEngine = null;
             try {
-                gameEngine = new Engine("Buzzer", 800, 450, false, openGlRenderer, loadingHandler, true, saveDataHandler.getSettings().getOutputScreen() != 1, saveDataHandler.getSettings().getOutputScreen());
+                gameEngine = new Engine("Buzzer", 800, 450, false, openGlRenderer, loadingHandler, true, saveDataHandler.getSettings().getInteger(SettingsController.OUTPUT_SCREEN) != 1, saveDataHandler.getSettings().getInteger(SettingsController.OUTPUT_SCREEN));
                 Thread.sleep(10);
                 loadingMonitor.finishedProcess(loadingHandler);
                 initializeLoading.finishedProcess(loadingHandler);
@@ -213,5 +213,12 @@ public class LoadingModel {
                 loadingFinished();
             }
         }
+    }
+
+    /**
+     * @return returns the loading handler
+     */
+    public LoadingHandler getLoadingHandler() {
+        return loadingHandler;
     }
 }

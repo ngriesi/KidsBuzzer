@@ -1,5 +1,6 @@
 package programs.scoreBoard.data;
 
+import assets.settings.rows.AudioSettingRow;
 import presentationWindow.items.Texture;
 import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.ProgramModel;
@@ -13,7 +14,14 @@ import java.io.FileNotFoundException;
 /**
  * Model of the score board program
  */
-public class ScoreBoardModel extends ProgramModel<ScoreBoardSaveFile> {
+public class ScoreBoardModel extends ProgramModel {
+
+    /**
+     * Identification Strings for the settings fields
+     */
+    public static String ICON = "Icon", BUZZER_SOUND = "Buzzer Sound", TEAM_NAMES = "Team Names";
+    public static String FONT = "Font";
+    public static String MIDI = "Midi";
 
     /**
      * Icons of the teams displayed behind their scores
@@ -34,7 +42,7 @@ public class ScoreBoardModel extends ProgramModel<ScoreBoardSaveFile> {
      * creates a new Program model
      */
     public ScoreBoardModel() {
-        super(ScoreBoardSaveFile.class);
+        super("ScoreBoard");
         scores = new int[SaveDataHandler.MAX_BUZZER_COUNT];
     }
 
@@ -51,20 +59,16 @@ public class ScoreBoardModel extends ProgramModel<ScoreBoardSaveFile> {
             int finalI = i;
             openGlRenderer.addActionToOpenGlThread(() -> {
                 try {
-                    icons[finalI] = Texture.loadTexture(new File(getSaveFile().getIcons()[finalI]), loadingHandler);
+                    icons[finalI] = Texture.loadTexture(new File(getSaveFile().getString(ICON + finalI)), loadingHandler);
                 } catch (FileNotFoundException e) {
                     icons[finalI] = new Texture(SaveDataHandler.DEFAULT_IMAGE);
-                    getSaveFile().getIcons()[finalI] = "default";
+                    getSaveFile().putString(ICON + finalI, "default");
                 }
 
             });
         }
 
-        new Thread(() -> {
-            buzzerSound = AudioClip.load(new File(getSaveFile().getBuzzerSound()), loadingHandler);
-            if (buzzerSound == null) getSaveFile().setBuzzerSound("default");
-            else buzzerSound.setGain(getSaveFile().getBuzzerSoundVolume() / 100f);
-        }).start();
+        new Thread(() -> buzzerSound = loadAudio(BUZZER_SOUND, loadingHandler)).start();
     }
 
     /**

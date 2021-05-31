@@ -1,8 +1,10 @@
-blockingBehaviour=0
-displayMouseTracker=false
-clickY=[0, 0, 0]
-useClick=[false, false, false]
-clickX=[0, 0, 0]
-unblockBuzzer=3
-blockingTime=1
+Integer ClickX2 = 1
+Integer ClickX1 = 1
+Integer ClickY2 = 1
+Integer Blocking Time = 1
+Integer ClickX0 = 1
+Integer ClickY1 = 1
+Integer Blocking Behaviour = 1
+Integer ClickY0 = 1
+Boolean Display Mouse Tracker = false
 

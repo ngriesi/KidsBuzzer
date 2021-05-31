@@ -1,6 +1,8 @@
 package programs.quizPrograms.main.control;
 
-import programs.quizPrograms.data.QuizSaveFile;
+import midi.MidiSettingsRow;
+import programs.quizPrograms.data.QuizModel;
+import utils.save.SaveFile;
 
 /**
  * Midi handler for the quiztime program
@@ -15,14 +17,14 @@ public class MidiHandler {
     /**
      * save file of the quiz time application
      */
-    protected QuizSaveFile quizSaveFile;
+    protected SaveFile quizSaveFile;
 
     /**
      * creates a new midi handler
      *
      * @param quizSaveFile save file of the program
      */
-    public MidiHandler(QuizSaveFile quizSaveFile) {
+    public MidiHandler(SaveFile quizSaveFile) {
         this.quizSaveFile = quizSaveFile;
     }
 
@@ -39,8 +41,9 @@ public class MidiHandler {
      * performs the midi aciton of the Right aciton
      */
     void performRightMidiAction() {
-        if (quizSaveFile.isRightMidiActivate()) {
-            midiHandler.sendMessageToPressExecuter(quizSaveFile.getRightMidiX(), quizSaveFile.getRightMidiY());
+        MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.RIGHT_MIDI);
+        if (midiData.isActive()) {
+            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
@@ -48,8 +51,9 @@ public class MidiHandler {
      * performs the midi aciton of the Wrong aciton
      */
     void performWrongMidiAction() {
-        if (quizSaveFile.isWrongMidiActivate()) {
-            midiHandler.sendMessageToPressExecuter(quizSaveFile.getWrongMidiX(), quizSaveFile.getWrongMidiY());
+        MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.WRONG_MIDI);
+        if (midiData.isActive()) {
+            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
@@ -57,8 +61,9 @@ public class MidiHandler {
      * performs the midi aciton of the Next aciton
      */
     public void performNextMidiAction() {
-        if (quizSaveFile.isNextMidiActivate()) {
-            midiHandler.sendMessageToPressExecuter(quizSaveFile.getNextMidiX(), quizSaveFile.getNextMidiY());
+        MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.NEXT_MIDI);
+        if (midiData.isActive()) {
+            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
@@ -68,8 +73,9 @@ public class MidiHandler {
      * @param buzzerIndex index of the buzzer starting with 0
      */
     void performBuzzerMidiAction(int buzzerIndex) {
-        if (quizSaveFile.getBuzzerMidiActivate()[buzzerIndex]) {
-            midiHandler.sendMessageToPressExecuter(quizSaveFile.getBuzzerMidiX()[buzzerIndex], quizSaveFile.getBuzzerMidiY()[buzzerIndex]);
+        MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.BUZZER_MIDI + buzzerIndex);
+        if (midiData.isActive()) {
+            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 

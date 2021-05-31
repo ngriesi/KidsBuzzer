@@ -2,7 +2,6 @@ package programs.quiztime.data;
 
 import presentationWindow.items.Texture;
 import presentationWindow.window.OpenGlRenderer;
-import programs.abstractProgram.ProgramModel;
 import programs.quizPrograms.data.QuizModel;
 import programs.quiztime.main.control.MidiHandler;
 import savedataHandler.SaveDataHandler;
@@ -15,7 +14,13 @@ import java.io.FileNotFoundException;
 /**
  * handles the resources of the quiztime program
  */
-public class QuizTimeProgramModel extends QuizModel<QuizTimeProgramSaveFile> {
+public class QuizTimeProgramModel extends QuizModel {
+
+    /**
+     * Identification Strings for the settings fields
+     */
+    public static final String INTRO_SOUND = "Intro Sound", BACKGROUND = "Background", MIDI_INTRO = "Midi Intro";
+
 
     /**
      * background of the output screen
@@ -32,7 +37,7 @@ public class QuizTimeProgramModel extends QuizModel<QuizTimeProgramSaveFile> {
      * creates a new Program model
      */
     public QuizTimeProgramModel() {
-        super(QuizTimeProgramSaveFile.class);
+        super("Quiztime");
     }
 
     /**
@@ -50,17 +55,14 @@ public class QuizTimeProgramModel extends QuizModel<QuizTimeProgramSaveFile> {
 
         openGlRenderer.addActionToOpenGlThread(() -> {
             try {
-                backgroundTexture = Texture.loadTexture(new File(getSaveFile().getBackground()), loadingHandler);
+                backgroundTexture = Texture.loadTexture(new File(getSaveFile().getString(BACKGROUND)), loadingHandler);
             } catch (FileNotFoundException e) {
                 backgroundTexture = new Texture(SaveDataHandler.DEFAULT_IMAGE);
-                getSaveFile().setBackground("default");
+                getSaveFile().putString(BACKGROUND, "default");
             }
         });
 
-        new Thread(() -> {
-            introSound = loadAudio(getSaveFile().getIntroSound(), loadingHandler, getSaveFile().getIntroVolume());
-            if (introSound == null) getSaveFile().setIntroSound("default");
-        }).start();
+        new Thread(() -> introSound = loadAudio(INTRO_SOUND, loadingHandler)).start();
     }
 
     /**

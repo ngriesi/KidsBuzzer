@@ -18,6 +18,7 @@ public class MessageSettingsRow extends SettingsRow {
      * @param text text of the message
      */
     public MessageSettingsRow(String text) {
+        super("");
         label = new MyLabel(text);
         this.add(label);
     }

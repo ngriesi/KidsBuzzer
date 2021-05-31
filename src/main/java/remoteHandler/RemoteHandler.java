@@ -7,7 +7,7 @@ import programs.abstractProgram.ProgramView;
 import remoteHandler.actions.KeyAction;
 import remoteHandler.actions.RemoteAction;
 import savedataHandler.languages.Text;
-import utils.saveFile.SaveFileLoader;
+import utils.save.SaveFile;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +20,11 @@ import java.util.Map;
  */
 public class RemoteHandler implements ActionListener {
 
+    /**
+     * Strings used to identify the settings
+     */
+    private final String TOP_LEFT_ACTION = "Top Left Action", TOP_RIGHT_ACTION = "Top Right Action", BOTTOM_LEFT_ACTION = "Bottom Left Action", BOTTOM_RIGHT_ACTION = "Bottom Right Action";
+    private final String KEYS = "Keys";
 
     /**
      * enum to identify the different buttons
@@ -56,7 +61,7 @@ public class RemoteHandler implements ActionListener {
     /**
      * save file storing the selected actions for the program
      */
-    private RemoteSaveFile remoteSaveFile;
+    private SaveFile remoteSaveFile;
 
     /**
      * View of this remote handler
@@ -107,7 +112,8 @@ public class RemoteHandler implements ActionListener {
      * creates the default actions the remote can perform in every program
      */
     private void createDefaultActions() {
-        addRemoteAction(Text.NOTHING, new RemoteAction(() -> {}));
+        addRemoteAction(Text.NOTHING, new RemoteAction(() -> {
+        }));
         addRemoteAction(Text.KEY_PRESS, new KeyAction(KeyEvent.VK_A));
     }
 
@@ -122,15 +128,16 @@ public class RemoteHandler implements ActionListener {
         if (programView instanceof ProgramSettingsView) {
             ProgramSettingsView settingsView = (ProgramSettingsView) programView;
 
-            int[] currentSelections = {remoteSaveFile.getTopLeftButtonActionIndex(),
-                    remoteSaveFile.getTopRightButtonActionIndex(),
-                    remoteSaveFile.getBottomLeftButtonActionIndex(),
-                    remoteSaveFile.getBottomRightButtonActionIndex()};
+            int[] currentSelections = {remoteSaveFile.getInteger(TOP_LEFT_ACTION),
+                    remoteSaveFile.getInteger(TOP_RIGHT_ACTION),
+                    remoteSaveFile.getInteger(BOTTOM_LEFT_ACTION),
+                    remoteSaveFile.getInteger(BOTTOM_RIGHT_ACTION)};
 
             String[] selectedKeys = new String[4];
 
             for (int i = 0; i < selectedKeys.length; i++) {
-                selectedKeys[i] = remoteSaveFile.getKeys()[i].length() == 1 ? remoteSaveFile.getKeys()[i] : "A";
+                selectedKeys[i] = remoteSaveFile.getString(KEYS + i).length() == 1 ? remoteSaveFile.getString(KEYS + i) : "A";
+                System.out.println(remoteSaveFile.getString(KEYS + i));
             }
 
             remoteSettingsView = new RemoteSettingsView(this, actions, currentSelections, selectedKeys);
@@ -154,10 +161,10 @@ public class RemoteHandler implements ActionListener {
      * updates the values of the action fields form the save file
      */
     private void updateActionValues() {
-        topRightButtonAction = possibleActions.get(remoteSaveFile.getTopRightButtonActionIndex());
-        topLeftButtonAction = possibleActions.get(remoteSaveFile.getTopLeftButtonActionIndex());
-        bottomRightButtonAction = possibleActions.get(remoteSaveFile.getBottomRightButtonActionIndex());
-        bottomLeftButtonAction = possibleActions.get(remoteSaveFile.getBottomLeftButtonActionIndex());
+        topRightButtonAction = possibleActions.get(remoteSaveFile.getInteger(TOP_RIGHT_ACTION));
+        topLeftButtonAction = possibleActions.get(remoteSaveFile.getInteger(TOP_LEFT_ACTION));
+        bottomRightButtonAction = possibleActions.get(remoteSaveFile.getInteger(BOTTOM_RIGHT_ACTION));
+        bottomLeftButtonAction = possibleActions.get(remoteSaveFile.getInteger(BOTTOM_LEFT_ACTION));
     }
 
     /**
@@ -166,10 +173,7 @@ public class RemoteHandler implements ActionListener {
      * @param name name of the program used to identify the save file
      */
     private void loadSaveFile(String name) {
-        remoteSaveFile = SaveFileLoader.loadFile(name + "Remote", RemoteSaveFile.class);
-        if (remoteSaveFile == null) {
-            new RemoteSaveFile(name + "Remote");
-        }
+        remoteSaveFile = new SaveFile(name + "Remote");
     }
 
     /**
@@ -229,16 +233,16 @@ public class RemoteHandler implements ActionListener {
     private void saveKeyValue(String key, RemoteButton button) {
         switch (button) {
             case TOP_LEFT:
-                remoteSaveFile.getKeys()[0] = key;
+                remoteSaveFile.putString(KEYS + 0, key);
                 break;
             case TOP_RIGHT:
-                remoteSaveFile.getKeys()[1] = key;
+                remoteSaveFile.putString(KEYS + 1, key);
                 break;
             case BOTTOM_LEFT:
-                remoteSaveFile.getKeys()[2] = key;
+                remoteSaveFile.putString(KEYS + 2, key);
                 break;
             case BOTTOM_RIGHT:
-                remoteSaveFile.getKeys()[3] = key;
+                remoteSaveFile.putString(KEYS + 3, key);
         }
     }
 
@@ -252,16 +256,16 @@ public class RemoteHandler implements ActionListener {
     private void setSaveFileValue(int index, RemoteButton button) {
         switch (button) {
             case TOP_LEFT:
-                remoteSaveFile.setTopLeftButtonActionIndex(index);
+                remoteSaveFile.putInteger(TOP_LEFT_ACTION, index);
                 break;
             case TOP_RIGHT:
-                remoteSaveFile.setTopRightButtonActionIndex(index);
+                remoteSaveFile.putInteger(TOP_RIGHT_ACTION, index);
                 break;
             case BOTTOM_LEFT:
-                remoteSaveFile.setBottomLeftButtonActionIndex(index);
+                remoteSaveFile.putInteger(BOTTOM_LEFT_ACTION, index);
                 break;
             case BOTTOM_RIGHT:
-                remoteSaveFile.setBottomRightButtonActionIndex(index);
+                remoteSaveFile.putInteger(BOTTOM_RIGHT_ACTION, index);
         }
         updateActionValues();
     }

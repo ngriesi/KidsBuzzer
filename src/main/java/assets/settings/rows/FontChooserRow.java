@@ -32,7 +32,7 @@ import static java.awt.GridBagConstraints.*;
  * Settings event used to set the color of the font
  * this settings event contains an awt.Color as value
  */
-public class FontChooserRow extends SettingsRow {
+public class FontChooserRow extends SettingsRow<FontData> {
 
     /**
      * Identification names of the components of this row
@@ -63,11 +63,11 @@ public class FontChooserRow extends SettingsRow {
      * @param startValue             start value of the settings
      */
     public FontChooserRow(SettingsChangeListener settingsChangeListener, String name, String description, FontData startValue) {
-        super(description);
+        super(name, description);
 
-        createFontSelector(settingsChangeListener, name, startValue);
-        createBoldCheckBox(settingsChangeListener, name, startValue);
-        createColorSelector(settingsChangeListener, name, startValue);
+        createFontSelector(settingsChangeListener, startValue);
+        createBoldCheckBox(settingsChangeListener, startValue);
+        createColorSelector(settingsChangeListener, startValue);
 
         this.add(createInteractionPanel(), BorderLayout.LINE_END);
     }
@@ -77,7 +77,6 @@ public class FontChooserRow extends SettingsRow {
      *
      * @return return the completely build panel containing all the interaction elements
      */
-    @SuppressWarnings("SpellCheckingInspection")
     private JPanel createInteractionPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -100,42 +99,40 @@ public class FontChooserRow extends SettingsRow {
      * creates the color selector to select the font color
      *
      * @param settingsChangeListener change listener of the settings row
-     * @param name                   of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @param startValue             start value of the color selector
      */
-    private void createColorSelector(SettingsChangeListener settingsChangeListener, String name, FontData startValue) {
+    private void createColorSelector(SettingsChangeListener settingsChangeListener, FontData startValue) {
         colorSelector = new MyColorSelector(startValue.getColor());
-        colorSelector.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(colorSelector.getPressedColor(), name, SettingsEvent.RowKind.FONT, COLOR, getPageIdentificationName())));
+        colorSelector.addItemListener(e -> settingsChangeListener.settingChanged(createSettingsEvent(COLOR, new FontData(currentValue.getFont(), colorSelector.getPressedColor()), SettingsEvent.RowKind.FONT)));
     }
 
     /**
      * creates the check box used to make the font bold
      *
      * @param settingsChangeListener change listener of the settings row
-     * @param name                   of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @param startValue             start value of the check box
      */
-    private void createBoldCheckBox(SettingsChangeListener settingsChangeListener, String name, FontData startValue) {
+    private void createBoldCheckBox(SettingsChangeListener settingsChangeListener, FontData startValue) {
         bold = new MyCheckBox();
         bold.setSelected(startValue.getFont().isBold());
-        bold.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(bold.isSelected(), name, SettingsEvent.RowKind.FONT, STYLE, getPageIdentificationName())));
+        bold.addItemListener(e -> settingsChangeListener.settingChanged(
+                createSettingsEvent(STYLE,
+                        new FontData(new Font(currentValue.getFont().getFontName(), bold.isSelected() ? Font.BOLD : Font.PLAIN, 200), currentValue.getColor()), SettingsEvent.RowKind.FONT)));
     }
 
     /**
      * creates a combo box containing all the fonts of the system to be selected
      *
      * @param settingsChangeListener change listener of the settings row
-     * @param name                   name of the settings to identify the settings event in the settings changed method in
-     *                               the settings changed listener
      * @param startValue             start value of the font selector
      */
-    private void createFontSelector(SettingsChangeListener settingsChangeListener, String name, FontData startValue) {
+    private void createFontSelector(SettingsChangeListener settingsChangeListener, FontData startValue) {
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         comboBox = new MyComboBox<>(fonts);
         comboBox.setSelectedItem(startValue.getFont().getName());
-        comboBox.addItemListener(e -> settingsChangeListener.settingChanged(new SettingsEvent<>(comboBox.getSelectedItem(), name, SettingsEvent.RowKind.FONT, FONT, getPageIdentificationName())));
+        comboBox.addItemListener(e -> settingsChangeListener.settingChanged(
+                createSettingsEvent(FONT,
+                        new FontData(new Font((String) comboBox.getSelectedItem(), currentValue.getFont().getStyle(), 200), currentValue.getColor()), SettingsEvent.RowKind.FONT)));
     }
 
 
@@ -145,6 +142,7 @@ public class FontChooserRow extends SettingsRow {
      * @param value new value that gets set to the view
      */
     public void setSetting(FontData value) {
+        super.setSetting(value);
         comboBox.setSelectedItem(value.getFont().getName());
         bold.setSelected(value.getFont().isBold());
         colorSelector.setColor(value.getColor());

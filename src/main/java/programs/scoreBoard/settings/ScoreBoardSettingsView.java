@@ -1,19 +1,13 @@
 package programs.scoreBoard.settings;
 
 import assets.settings.general.SettingsChangeListener;
-import assets.settings.rows.*;
-import assets.standardAssets.MyPanel;
 import programs.abstractProgram.ProgramSettingsView;
 import programs.scoreBoard.settings.pages.GeneralSettingsPage;
 import programs.scoreBoard.settings.pages.ImageSettingsPage;
 import programs.scoreBoard.settings.pages.MidiSettingsPage;
-import savedataHandler.SaveDataHandler;
-import savedataHandler.languages.Text;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * view of the settings of the score board program

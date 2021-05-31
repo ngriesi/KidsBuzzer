@@ -18,6 +18,11 @@ import java.awt.event.ActionEvent;
 public class KeyPressController extends ProgramController<KeyPressProgram, KeyPressView, KeyPressModel> {
 
     /**
+     * Identification Strings for the settings fields
+     */
+    public static String BLOCKING_BEHAVIOUR = "Blocking Behaviour", BLOCKING_TIME = "Blocking Time", UNBLOCK_BUZZER = "Unblock Buzzer", KEY = "Key", USE_KEY = "Use Key";
+
+    /**
      * creates a new controller
      *
      * @param program      program this controller belongs to
@@ -160,7 +165,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * @param item name of the item from the selector that was selected
      */
     private void mainBlockingBehaviourSelectorAction(int item) {
-        getProgramModel().getSaveFile().setBlockingBehaviour(item);
+        getProgramModel().getSaveFile().putInteger(BLOCKING_BEHAVIOUR, item);
         if (getProgram().getMainController() != null)
             getProgram().getMainController().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);
     }
@@ -169,7 +174,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * sets the block time for buzzers in the save file
      */
     private void saveBlockTime() {
-        getProgramModel().getSaveFile().setBlockingTime(getProgramView().getBlockingBehaviourRow().getBlockTime());
+        getProgramModel().getSaveFile().putInteger(BLOCKING_TIME, getProgramView().getBlockingBehaviourRow().getBlockTime());
     }
 
     /**
@@ -178,7 +183,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * @param s name of the buzzer, used with <code>getBuzzerNum</code> to identify the buzzer
      */
     private void buzzerSelectorAction(String s) {
-        getProgramModel().getSaveFile().setUnblockBuzzer(getBuzzerNum(s));
+        getProgramModel().getSaveFile().putInteger(UNBLOCK_BUZZER, getBuzzerNum(s));
     }
 
     /**
@@ -208,9 +213,9 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * main selector, the content of the block time text field and the unblock buzzer
      */
     private void updateBlockingBehaviourRow() {
-        getProgramView().getBlockingBehaviourRow().setMainSelectorItem(getProgramModel().getSaveFile().getBlockingBehaviour());
-        getProgramView().getBlockingBehaviourRow().setBlockTime(getProgramModel().getSaveFile().getBlockingTime());
-        getProgramView().getBlockingBehaviourRow().setUnblockBuzzer(getProgramModel().getSaveFile().getUnblockBuzzer());
+        getProgramView().getBlockingBehaviourRow().setMainSelectorItem(getProgramModel().getSaveFile().getInteger(BLOCKING_BEHAVIOUR));
+        getProgramView().getBlockingBehaviourRow().setBlockTime(getProgramModel().getSaveFile().getInteger(BLOCKING_TIME));
+        getProgramView().getBlockingBehaviourRow().setUnblockBuzzer(getProgramModel().getSaveFile().getInteger(UNBLOCK_BUZZER));
     }
 
     /**
@@ -219,8 +224,8 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      */
     private void updateKeyPressRows() {
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            getProgramView().getKeyPressRow(i).setKey(getProgramModel().getSaveFile().getKey()[i]);
-            getProgramView().getKeyPressRow(i).setActive(getProgramModel().getSaveFile().getUseKey()[i]);
+            getProgramView().getKeyPressRow(i).setKey(getProgramModel().getSaveFile().getInteger(KEY + i));
+            getProgramView().getKeyPressRow(i).setActive(getProgramModel().getSaveFile().getBoolean(USE_KEY + i));
         }
     }
 
@@ -231,7 +236,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * @param buzzerNumber number of the buzzer of which the key binding has changed
      */
     private void changeKey(int buzzerNumber) {
-        getProgramModel().getSaveFile().getKey()[buzzerNumber - 1] = (getProgramView().getKeyPressRow(buzzerNumber - 1).getKey());
+        getProgramModel().getSaveFile().putInteger(KEY + (buzzerNumber - 1), getProgramView().getKeyPressRow(buzzerNumber - 1).getKey());
     }
 
     /**
@@ -242,7 +247,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      * @param selected     new value for the field
      */
     private void useKeyPress(int buzzerNumber, boolean selected) {
-        getProgramModel().getSaveFile().getUseKey()[buzzerNumber - 1] = selected;
+        getProgramModel().getSaveFile().putBoolean(USE_KEY + (buzzerNumber - 1), selected);
     }
 
 }

@@ -7,11 +7,11 @@ import startupApp.LoadingHandler;
 /**
  * Empty model of the text program
  */
-public class TestProgramModel extends ProgramModel<TestProgramSaveFile> {
+public class TestProgramModel extends ProgramModel {
 
 
     public TestProgramModel() {
-        super(TestProgramSaveFile.class);
+        super("Test");
     }
 
     @Override

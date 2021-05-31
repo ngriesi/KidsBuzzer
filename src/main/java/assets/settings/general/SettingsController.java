@@ -1,23 +1,22 @@
 package assets.settings.general;
 
-import utils.saveFile.SaveFile;
-import utils.saveFile.SaveFileHandler;
+import utils.save.SaveFile;
+import utils.save.SaveFileHandler;
 
 import java.awt.event.ActionListener;
 
 /**
  * parent class for the settings controllers
  *
- * @param <T> type of the Save File
  * @param <V> type of the settings view
  */
-public abstract class SettingsController<T extends SaveFile, V extends SettingsView<T>> implements SettingsChangeListener, ActionListener {
+public abstract class SettingsController<V extends SettingsView> implements SettingsChangeListener, ActionListener {
 
 
     /**
      * handler for the save file
      */
-    protected SaveFileHandler<T> saveFileHandler;
+    protected SaveFileHandler saveFileHandler;
 
     /**
      * view of these settings
@@ -29,14 +28,14 @@ public abstract class SettingsController<T extends SaveFile, V extends SettingsV
      *
      * @param saveFile     save file of the settings
      */
-    public SettingsController(T saveFile) {
-        this.saveFileHandler = new SaveFileHandler<>(saveFile);
+    public SettingsController(SaveFile saveFile) {
+        this.saveFileHandler = new SaveFileHandler(saveFile);
     }
 
     /**
      * @return returns the save file of the settings
      */
-    public T getSettingsSaveFile() {
+    public SaveFile getSettingsSaveFile() {
         return saveFileHandler.getSaveFile();
     }
 

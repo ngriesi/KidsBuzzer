@@ -40,7 +40,7 @@ public class BuzzerModel {
     public BuzzerModel(MainController mainController) {
         this.mainController = mainController;
 
-        buzzerCount = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getBuzzerNumber();
+        buzzerCount = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(mainController.getControlModel().getSettingsController().BUZZER_COUNT);
         buzzerControlView = new BuzzerControlView(this);
         buzzerPressed = new boolean[buzzerCount];
         resetBuzzers();

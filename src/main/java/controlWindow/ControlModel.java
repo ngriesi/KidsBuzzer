@@ -87,7 +87,7 @@ public class ControlModel {
         applicationRunning = true;
 
         midiController = new MidiHandler();
-        midiController.sendMessageToPressExecuter(1,1);
+        midiController.sendMessageToPressExecuter(1, 1);
 
         MainController mainController = new MainController(this);
 
@@ -97,7 +97,7 @@ public class ControlModel {
         creditsController = new CreditsController(mainController);
         buzzerPressHandler = new BuzzerPressHandler(this);
 
-        useNativeKeyListener = saveDataHandler.getSettings().isUseNativeKeyListener();
+        useNativeKeyListener = saveDataHandler.getSettings().getBoolean(SettingsController.NATIVE_KEY_LISTENER);
 
         this.settingsController = new SettingsController(mainController, saveDataHandler.getSettings());
         createControlView(programHandler, mainController);
@@ -138,10 +138,10 @@ public class ControlModel {
      * sets the window bounds in the save file
      */
     void saveWindowBounds() {
-        settingsController.getSettingsSaveFile().setWindowHeight(getView().getMyJFrame().getFrame().getHeight());
-        settingsController.getSettingsSaveFile().setWindowWidth(getView().getMyJFrame().getFrame().getWidth());
-        settingsController.getSettingsSaveFile().setWindowPositionX(getView().getMyJFrame().getFrame().getX());
-        settingsController.getSettingsSaveFile().setWindowPositionY(getView().getMyJFrame().getFrame().getY());
+        settingsController.getSettingsSaveFile().putInteger(SettingsController.WINDOW_HEIGHT, getView().getMyJFrame().getFrame().getHeight());
+        settingsController.getSettingsSaveFile().putInteger(SettingsController.WINDOW_WIDTH, getView().getMyJFrame().getFrame().getWidth());
+        settingsController.getSettingsSaveFile().putInteger(SettingsController.WINDOW_X, getView().getMyJFrame().getFrame().getX());
+        settingsController.getSettingsSaveFile().putInteger(SettingsController.WINDOW_Y, getView().getMyJFrame().getFrame().getY());
     }
 
     /**

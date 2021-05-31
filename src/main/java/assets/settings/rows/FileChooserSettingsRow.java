@@ -12,7 +12,7 @@ import java.io.File;
 /**
  * settings row used to choose a file
  */
-public class FileChooserSettingsRow extends SettingsRow {
+public class FileChooserSettingsRow extends SettingsRow<File> {
 
     /**
      * button of the chooser
@@ -30,12 +30,12 @@ public class FileChooserSettingsRow extends SettingsRow {
      * @param fileExtensions         extensions of the files visible in the file chooser
      */
     public FileChooserSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, File startValue, String filterName, String... fileExtensions) {
-        super(description);
+        super(name, description);
 
         JFileChooser fileChooser = createFileChooser(filterName, fileExtensions);
 
         button = new MyButton(startValue.getName());
-        button.addActionListener(e -> buttonAction(fileChooser, button, settingsChangeListener, name));
+        button.addActionListener(e -> buttonAction(fileChooser, button, settingsChangeListener));
         super.addInteractionElement(button);
     }
 
@@ -60,12 +60,11 @@ public class FileChooserSettingsRow extends SettingsRow {
      * @param fileChooser            file chooser to select a file
      * @param button                 button that opens the file chooser, used to update its text
      * @param settingsChangeListener listener that listens for changes to the setting
-     * @param name                   name to identify the setting in the listener
      */
-    private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener, String name) {
+    private void buttonAction(JFileChooser fileChooser, MyButton button, SettingsChangeListener settingsChangeListener) {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             button.setText(fileChooser.getSelectedFile().getName());
-            settingsChangeListener.settingChanged(new SettingsEvent<>(fileChooser.getSelectedFile(), name, SettingsEvent.RowKind.FILECHOOSER, "", getPageIdentificationName()));
+            settingsChangeListener.settingChanged(createSettingsEvent("", fileChooser.getSelectedFile(), SettingsEvent.RowKind.FILECHOOSER));
         }
     }
 
@@ -74,7 +73,8 @@ public class FileChooserSettingsRow extends SettingsRow {
      *
      * @param value new value
      */
-    public void setSetting(String value) {
-        button.setText(new File(value).getName());
+    public void setSetting(File value) {
+        super.setSetting(value);
+        button.setText(value.getName());
     }
 }

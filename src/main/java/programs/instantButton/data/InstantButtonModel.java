@@ -9,7 +9,12 @@ import utils.audioSystem.AudioClip;
 /**
  * Program model of the instant button program containing the audio clips for the program
  */
-public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
+public class InstantButtonModel extends ProgramModel {
+
+    /**
+     * Strings to identify the save file values
+     */
+    public static String BUZZER_SOUND = "BUZZER_SOUND";
 
     /**
      * audio clips that get played when a buzzer is pressed
@@ -20,7 +25,7 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
      * creates a new Program model
      */
     public InstantButtonModel() {
-        super(InstantButtonSaveFile.class);
+        super("InstantButton");
     }
 
     /**
@@ -34,10 +39,7 @@ public class InstantButtonModel extends ProgramModel<InstantButtonSaveFile> {
         audioClips = new AudioClip[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             int finalI = i;
-            new Thread(() -> {
-                audioClips[finalI] = loadAudio(getSaveFile().getBuzzerSounds()[finalI], loadingHandler, getSaveFile().getVolume()[finalI]);
-                if (audioClips[finalI] == null) getSaveFile().getBuzzerSounds()[finalI] = "default";
-            }).start();
+            new Thread(() -> audioClips[finalI] = loadAudio(BUZZER_SOUND + finalI, loadingHandler)).start();
         }
     }
 

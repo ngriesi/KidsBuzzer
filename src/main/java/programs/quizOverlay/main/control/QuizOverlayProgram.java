@@ -4,20 +4,19 @@ import programs.quizOverlay.control.control.QuizOverlayProgramController;
 import programs.quizOverlay.data.QuizOverlayModel;
 import presentationWindow.animations.AnimationQueue;
 import programs.quizOverlay.main.view.QuizOverlayPresentationView;
-import programs.quizOverlay.settings.QuizOverlaySettingsController;
 import programs.quizPrograms.main.control.QuizProgram;
+import programs.quizPrograms.settings.QuizSettingsController;
 import savedataHandler.languages.Text;
 
 /**
  * main class of the quiz time program
  */
-public class QuizOverlayProgram extends QuizProgram<QuizOverlayProgramController, QuizOverlaySettingsController, QuizOverlayModel, QuizOverlayPresentationView> {
+public class QuizOverlayProgram extends QuizProgram<QuizOverlayProgramController, QuizSettingsController, QuizOverlayModel, QuizOverlayPresentationView> {
 
     /**
      * creates a new program
      */
     public QuizOverlayProgram() {
-        //noinspection SpellCheckingInspection
         super(true, Text.QUIZ_OVERLAY);
         quizGeneralState = new GeneralState();
         quizStateChanger = new StateChanger(this, quizGeneralState);
@@ -35,8 +34,8 @@ public class QuizOverlayProgram extends QuizProgram<QuizOverlayProgramController
      * @return returns the newly created settings controller for the quiz time program
      */
     @Override
-    public QuizOverlaySettingsController createSettingsController() {
-        return new QuizOverlaySettingsController(this, getProgramModel());
+    public QuizSettingsController createSettingsController() {
+        return new QuizSettingsController(this, getProgramModel());
     }
 
     /**

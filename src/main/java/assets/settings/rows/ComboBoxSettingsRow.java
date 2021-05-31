@@ -10,7 +10,7 @@ import java.awt.event.ItemEvent;
 /**
  * creates a settings row with a combo box
  */
-public class ComboBoxSettingsRow<T> extends SettingsRow {
+public class ComboBoxSettingsRow<T> extends SettingsRow<T> {
 
     /**
      * combo box
@@ -27,13 +27,14 @@ public class ComboBoxSettingsRow<T> extends SettingsRow {
      * @param values                 possible values of the settings row
      */
     public ComboBoxSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, T startValue, T[] values) {
-        super(description);
+        super(name, description);
 
         comboBox = new MyComboBox<>(values);
         comboBox.setSelectedItem(startValue);
         comboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name, SettingsEvent.RowKind.COMBO_BOX, "", getPageIdentificationName()));
+                //noinspection unchecked
+                settingsChangeListener.settingChanged(createSettingsEvent("", (T) e.getItem(), SettingsEvent.RowKind.COMBO_BOX));
             }
         });
 
@@ -46,6 +47,7 @@ public class ComboBoxSettingsRow<T> extends SettingsRow {
      * @param value selected value
      */
     public void setSetting(T value) {
+        super.setSetting(value);
         comboBox.setSelectedItem(value);
     }
 

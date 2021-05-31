@@ -27,7 +27,7 @@ class InstantButtonControlView extends ProgramControllerView<InstantButtonContro
         audioSettingRows = new AudioSettingRow[SaveDataHandler.MAX_BUZZER_COUNT];
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            audioSettingRows[i] = new AudioSettingRow(controller,i+":", Text.SOUND_OF_BUZZER + (i + 1));
+            audioSettingRows[i] = new AudioSettingRow(controller,String.valueOf(i), Text.SOUND_OF_BUZZER + (i + 1));
             this.addComponent(this, audioSettingRows[i],0,i,1,1);
         }
 

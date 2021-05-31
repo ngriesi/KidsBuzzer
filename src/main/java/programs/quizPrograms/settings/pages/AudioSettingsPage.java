@@ -1,9 +1,11 @@
-package programs.quizOverlay.settings.pages;
+package programs.quizPrograms.settings.pages;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsPage;
 import assets.settings.rows.AudioSettingRow;
 import savedataHandler.languages.Text;
+
+import static programs.quizPrograms.data.QuizModel.*;
 
 /**
  * settings page for the audio settings
@@ -30,22 +32,22 @@ public class AudioSettingsPage extends SettingsPage {
      *
      * @param settingsChangeListener <code>SettingsChangeListener</code> for the settings rows
      */
-    private void createAudioSelectionView(SettingsChangeListener settingsChangeListener) {
+    protected void createAudioSelectionView(SettingsChangeListener settingsChangeListener) {
 
 
-        questionSound = new AudioSettingRow(settingsChangeListener, "Question", Text.QUESTION_SOUND);
+        questionSound = new AudioSettingRow(settingsChangeListener, QUESTION_SOUND, Text.QUESTION_SOUND);
 
         super.addRow(questionSound);
 
-        rightSound = new AudioSettingRow(settingsChangeListener, "Right", Text.RIGHT_SOUND);
+        rightSound = new AudioSettingRow(settingsChangeListener, RIGHT_SOUND, Text.RIGHT_SOUND);
 
         super.addRow(rightSound);
 
-        buzzerSound = new AudioSettingRow(settingsChangeListener, "Buzzer", Text.BUZZER_SOUND);
+        buzzerSound = new AudioSettingRow(settingsChangeListener, BUZZER_SOUND, Text.BUZZER_SOUND);
 
         super.addRow(buzzerSound);
 
-        wrongSound = new AudioSettingRow(settingsChangeListener, "Wrong", Text.WRONG_SOUND);
+        wrongSound = new AudioSettingRow(settingsChangeListener, WRONG_SOUND, Text.WRONG_SOUND);
 
         super.addRow(wrongSound);
 

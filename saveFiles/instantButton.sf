@@ -1,3 +1,7 @@
-volume=[100, 100, 100]
-buzzerSounds=[default, C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\sounds\WrongAnswer.wav, default]
+String BUZZER_SOUND2file = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String BUZZER_SOUND1file = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+String BUZZER_SOUND0file = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
+Integer BUZZER_SOUND0volume = 100
+Integer BUZZER_SOUND1volume = 100
+Integer BUZZER_SOUND2volume = 100
 

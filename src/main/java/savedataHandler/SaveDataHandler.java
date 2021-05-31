@@ -1,6 +1,8 @@
 package savedataHandler;
 
+import controlWindow.settings.SettingsController;
 import controlWindow.settings.SettingsSaveFile;
+import utils.save.SaveFile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -45,16 +47,16 @@ public class SaveDataHandler {
     /**
      * settings save file of the main settings
      */
-    private SettingsSaveFile settings;
+    private SaveFile settings;
 
     /**
      * creates a new SaveDataHandler
      *
      * @param settings settings save file of the main settings
      */
-    public SaveDataHandler(SettingsSaveFile settings) {
+    public SaveDataHandler(SaveFile settings) {
         this.settings = settings;
-        BUZZER_COUNT = settings.getBuzzerNumber();
+        BUZZER_COUNT = settings.getInteger(SettingsController.BUZZER_COUNT);
     }
 
     /**
@@ -74,7 +76,7 @@ public class SaveDataHandler {
     /**
      * @return returns settings save file of the main settings
      */
-    public SettingsSaveFile getSettings() {
+    public SaveFile getSettings() {
         return settings;
     }
 }

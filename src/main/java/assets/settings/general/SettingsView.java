@@ -1,19 +1,13 @@
 package assets.settings.general;
 
 import assets.standardAssets.LayerPanel;
-import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
-import utils.saveFile.SaveFile;
-
-import javax.swing.*;
-import java.awt.*;
+import utils.save.SaveFile;
 
 /**
  * abstract super class for settings views
- *
- * @param <T> type of the save file
  */
-public abstract class SettingsView<T extends SaveFile> extends LayerPanel {
+public abstract class SettingsView extends LayerPanel {
 
     private SettingsController settingsController;
 
@@ -40,6 +34,6 @@ public abstract class SettingsView<T extends SaveFile> extends LayerPanel {
      *
      * @param saveFile save file containing the current state of the settings
      */
-    public abstract void updateSettings(T saveFile);
+    public abstract void updateSettings(SaveFile saveFile);
 
 }

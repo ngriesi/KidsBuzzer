@@ -1,4 +1,4 @@
-package programs.quizOverlay.settings.pages;
+package programs.quizPrograms.settings.pages;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsPage;
@@ -7,6 +7,9 @@ import assets.settings.rows.FontData;
 import savedataHandler.languages.Text;
 
 import java.awt.*;
+
+import static programs.quizPrograms.data.QuizModel.BUZZER_FONT;
+import static programs.quizPrograms.data.QuizModel.MAIN_FONT;
 
 /**
  * Settings page for the font selection
@@ -40,11 +43,11 @@ public class FontSettingsPage extends SettingsPage {
      */
     private void createFontSelectionView(SettingsChangeListener settingsChangeListener) {
 
-        mainFontChooserRow = new FontChooserRow(settingsChangeListener, "main", Text.MAIN_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
+        mainFontChooserRow = new FontChooserRow(settingsChangeListener, MAIN_FONT, Text.MAIN_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
 
         super.addRow(mainFontChooserRow);
 
-        buzzerFontChooserRow = new FontChooserRow(settingsChangeListener, "buzzer", Text.BUZZER_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
+        buzzerFontChooserRow = new FontChooserRow(settingsChangeListener, BUZZER_FONT, Text.BUZZER_FONT, new FontData(new Font("arial", Font.PLAIN, 100), Color.WHITE));
 
         super.addRow(buzzerFontChooserRow);
 

@@ -11,7 +11,7 @@ import javax.swing.event.DocumentListener;
 /**
  * creates a settings row with a text field to enter a string
  */
-public class TextFieldSettingsRow extends SettingsRow {
+public class TextFieldSettingsRow extends SettingsRow<String> {
 
     /**
      * text field of the row
@@ -27,11 +27,11 @@ public class TextFieldSettingsRow extends SettingsRow {
      * @param startValue             start value of the setting
      */
     public TextFieldSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, String startValue) {
-        super(description);
+        super(name, description);
 
 
         textField = new MyTextField(startValue);
-        textField.getDocument().addDocumentListener(createDocumentListener(settingsChangeListener, textField, name));
+        textField.getDocument().addDocumentListener(createDocumentListener(settingsChangeListener, textField));
 
         super.addInteractionElement(textField);
     }
@@ -41,10 +41,9 @@ public class TextFieldSettingsRow extends SettingsRow {
      *
      * @param settingsChangeListener listener that listens for changes to the setting
      * @param textField              text field to input the new value for the setting
-     * @param name                   name to identify the setting in the listener
      * @return returns the document listener for the text field
      */
-    private DocumentListener createDocumentListener(SettingsChangeListener settingsChangeListener, JTextField textField, String name) {
+    private DocumentListener createDocumentListener(SettingsChangeListener settingsChangeListener, JTextField textField) {
         return new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -62,7 +61,7 @@ public class TextFieldSettingsRow extends SettingsRow {
             }
 
             private void updateValue() {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(textField.getText(), name, SettingsEvent.RowKind.TEXT_FIELD, "", getPageIdentificationName()));
+                settingsChangeListener.settingChanged(createSettingsEvent("", textField.getText(), SettingsEvent.RowKind.TEXT_FIELD));
             }
         };
     }
@@ -73,6 +72,7 @@ public class TextFieldSettingsRow extends SettingsRow {
      * @param value new value
      */
     public void setSetting(String value) {
+        super.setSetting(value);
         textField.setText(value);
     }
 }

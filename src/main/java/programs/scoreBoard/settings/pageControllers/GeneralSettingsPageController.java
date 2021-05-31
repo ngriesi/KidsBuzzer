@@ -17,6 +17,7 @@ import java.io.File;
 
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
+import static programs.scoreBoard.data.ScoreBoardModel.*;
 
 /**
  * Controller for the general settings page
@@ -60,25 +61,8 @@ public class GeneralSettingsPageController extends ProgramSettingsPageController
     private void changeFontSettings(SettingsEvent se) {
         ScoreBoardProgram program = mainSettingsController.getProgram();
         ScoreBoardModel programModel = mainSettingsController.getProgramModel();
-        switch (se.getComponentName()) {
-            case FontChooserRow.COLOR:
-                Color color = ((Color) se.getValue());
-                int[] oldColor = programModel.getSaveFile().getTextColor();
-                if (color.getRed() != oldColor[0] || color.getGreen() != oldColor[1] || color.getBlue() != oldColor[2] || color.getAlpha() != oldColor[3]) {
-                    programModel.getSaveFile().setTextColor(new int[]{color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()});
-                    program.getRenderer().addActionToOpenGlThread(() -> program.getProgramPresentationView().updateFont());
-                }
-            case FontChooserRow.STYLE:
-                if (!programModel.getSaveFile().isTextBold() == (boolean) se.getValue()) {
-                    programModel.getSaveFile().setTextBold(((boolean) se.getValue()));
-                    program.getRenderer().addActionToOpenGlThread(() -> program.getProgramPresentationView().updateFont());
-                }
-            case FontChooserRow.FONT:
-                if (!programModel.getSaveFile().getFont().equals(se.getValue())) {
-                    programModel.getSaveFile().setFont(((String) se.getValue()));
-                    program.getRenderer().addActionToOpenGlThread(() -> program.getProgramPresentationView().updateFont());
-                }
-        }
+        programModel.getSaveFile().putFontData(FONT, (FontData) se.getValue());
+        program.getRenderer().addActionToOpenGlThread(() -> program.getProgramPresentationView().updateFont());
     }
 
     /**
@@ -87,13 +71,12 @@ public class GeneralSettingsPageController extends ProgramSettingsPageController
      * @param se settings changed event of the setting
      */
     private void changeAudioSetting(SettingsEvent se) {
+        mainSettingsController.getProgramModel().getSaveFile().putAudioData(BUZZER_SOUND, (AudioSettingRow.AudioData) se.getValue());
         if (se.getComponentName().equals(AudioSettingRow.VOLUME)) {
-            mainSettingsController.getProgramModel().getSaveFile().setBuzzerSoundVolume((int) ((float) se.getValue() * 100));
             if (mainSettingsController.getProgramModel().getBuzzerSound() != null) {
                 mainSettingsController.getProgramModel().getBuzzerSound().setGain((float) se.getValue());
             }
         } else {
-            mainSettingsController.getProgramModel().getSaveFile().setBuzzerSound(((File) se.getValue()).getAbsolutePath());
             new Thread(() -> mainSettingsController.getProgramModel().setBuzzerSound(AudioClip.load((File) se.getValue()))).start();
         }
     }
@@ -106,7 +89,7 @@ public class GeneralSettingsPageController extends ProgramSettingsPageController
     private void updateTeamNames(SettingsEvent settingsEvent) {
         ScoreBoardProgram program = mainSettingsController.getProgram();
         int buzzerNumber = SaveDataHandler.getNumberByName(settingsEvent.getName().substring(4));
-        program.getProgramModel().getSaveFile().getTeamNames()[buzzerNumber] = (String) settingsEvent.getValue();
+        program.getProgramModel().getSaveFile().putString(TEAM_NAMES + buzzerNumber, (String) settingsEvent.getValue());
         program.getProgramController().updateNames();
         program.getRenderer().addActionToOpenGlThread(() -> program.getProgramPresentationView().updateText());
     }
@@ -120,15 +103,12 @@ public class GeneralSettingsPageController extends ProgramSettingsPageController
         ScoreBoardModel programModel = mainSettingsController.getProgramModel();
         ScoreBoardSettingsView programView = mainSettingsController.getProgramView();
 
-
-        Font font = new Font(programModel.getSaveFile().getFont(), programModel.getSaveFile().isTextBold() ? BOLD : PLAIN, 200);
-        Color textColor = new Color(programModel.getSaveFile().getTextColor()[0], programModel.getSaveFile().getTextColor()[1], programModel.getSaveFile().getTextColor()[2], programModel.getSaveFile().getTextColor()[3]);
-        programView.getGeneralSettingsPage().getTeamsFontChooserRow().setSetting(new FontData(font, textColor));
+        programView.getGeneralSettingsPage().getTeamsFontChooserRow().setSetting(programModel.getSaveFile().getFontData(FONT));
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            programView.getGeneralSettingsPage().getTeamNames()[i].setSetting(programModel.getSaveFile().getTeamNames()[i]);
+            programView.getGeneralSettingsPage().getTeamNames()[i].setSetting(programModel.getSaveFile().getString(TEAM_NAMES + i));
         }
 
-        programView.getGeneralSettingsPage().getBuzzerPressedSound().setSetting(new AudioSettingRow.AudioData(new File(programModel.getSaveFile().getBuzzerSound()), programModel.getSaveFile().getBuzzerSoundVolume()));
+        programView.getGeneralSettingsPage().getBuzzerPressedSound().setSetting(programModel.getSaveFile().getAudioData(BUZZER_SOUND));
     }
 }

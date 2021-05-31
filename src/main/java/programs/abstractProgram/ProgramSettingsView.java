@@ -57,7 +57,10 @@ public abstract class ProgramSettingsView extends ProgramView {
         this.setLayout(new BorderLayout());
 
 
+
+
         JPanel[] panels = createPanels(actionListener, settingsChangeListener);
+
 
 
         center = new CardLayout();
@@ -65,6 +68,8 @@ public abstract class ProgramSettingsView extends ProgramView {
 
         centerPanel = new JPanel(center);
         centerPanel.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
+
+
 
         int i = 0;
         for (JPanel panel : panels) {
@@ -80,12 +85,15 @@ public abstract class ProgramSettingsView extends ProgramView {
         this.add(bottomBar, PAGE_END);
 
 
+
         center.show(centerPanel, "0");
 
         selectedIndex = 0;
         layerSelectors[0].setSelected(true);
 
         this.setBorder(BorderFactory.createEmptyBorder());
+
+
     }
 
     protected abstract JPanel[] createPanels(ActionListener actionListener, SettingsChangeListener settingsChangeListener);

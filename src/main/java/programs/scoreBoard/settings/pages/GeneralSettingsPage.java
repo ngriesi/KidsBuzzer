@@ -6,11 +6,9 @@ import assets.settings.rows.AudioSettingRow;
 import assets.settings.rows.FontChooserRow;
 import assets.settings.rows.FontData;
 import assets.settings.rows.TextFieldSettingsRow;
-import assets.standardAssets.MyPanel;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

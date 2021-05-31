@@ -7,16 +7,16 @@ import controlWindow.MainController;
 import controlWindow.settings.view.SettingsView;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
+import utils.save.SaveFile;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 /**
  * controller of the main settings of the application
  */
-public class SettingsController extends assets.settings.general.SettingsController<SettingsSaveFile, SettingsView> implements ActionListener, SettingsChangeListener {
+public class SettingsController extends assets.settings.general.SettingsController<SettingsView> implements ActionListener, SettingsChangeListener {
 
     /**
      * reference to the main application model
@@ -24,18 +24,20 @@ public class SettingsController extends assets.settings.general.SettingsControll
     private MainController mainController;
 
     /**
-     * names to identify the possible <code>SettingsChangedEvents</code> that can occur
+     * Strings to identify the settings fields
      */
-    private final String outputScreen = "outputScreen";
-    private final String buzzerCount = "buzzerCount";
-    private final String nativeKey = "nativeKey";
-    private final String language = "language";
-    private final String effectColor = "effectColor";
+    public final static String LANGUAGE = "Language";
+    public final static String EFFECT_COLOR = "Effect Color";
+    public final static String BUZZER_COUNT="Buzzer Count";
+    public final static String OUTPUT_SCREEN = "Output Screen";
+    public final static String DESIRED_OUTPUT_SCREEN = "Desired Output Screen";
+    public final static String NATIVE_KEY_LISTENER = "Native Key Listener";
+    public static final String WINDOW_WIDTH = "Window Width", WINDOW_HEIGHT = "Window Height", WINDOW_X = "Window X", WINDOW_Y = "Window Y";
 
     /**
      * stores the old values for fields where the whole view needs to be updatet if they change
      */
-    private int[] oldColor;
+    private Color oldColor;
     private String oldLanguage;
 
     /**
@@ -44,7 +46,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @param mainController   reference to the main application model
      * @param settingsSaveFile save file that was loaded at the start of the application
      */
-    public SettingsController(MainController mainController, SettingsSaveFile settingsSaveFile) {
+    public SettingsController(MainController mainController, SaveFile settingsSaveFile) {
         super(settingsSaveFile);
         setSettingsView(new SettingsView(this));
         this.mainController = mainController;
@@ -89,6 +91,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
         saveFileHandler.applyChanges();
         saveFileHandler.saveToFile();
 
+
         if(changesMadeToView()) {
             mainController.updateView();
         }
@@ -103,12 +106,10 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @return returns true if the view needs an update
      */
     private boolean changesMadeToView() {
-        if (!oldLanguage.equals(saveFileHandler.getSaveFile().getLanguage())) {
+        if (!oldLanguage.equals(saveFileHandler.getSaveFile().getString(LANGUAGE))) {
             return true;
         }
-        return !(oldColor[0] == saveFileHandler.getSaveFile().getEffectColor()[0]
-                && oldColor[1] == saveFileHandler.getSaveFile().getEffectColor()[1]
-                && oldColor[2] == saveFileHandler.getSaveFile().getEffectColor()[2]);
+        return !oldColor.equals(saveFileHandler.getSaveFile().getColor(EFFECT_COLOR));
 
     }
 
@@ -116,7 +117,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * updates the number of buzzer used/displayed in the whole program
      */
     private void updateBuzzerCount() {
-        SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getBuzzerNumber();
+        SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getInteger(BUZZER_COUNT);
         mainController.recreateBuzzerModel();
         mainController.updateBuzzerCountOfPrograms();
     }
@@ -126,11 +127,11 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     private void cancelButtonAction() {
         saveFileHandler.rollbackChanges();
-        Color color = new Color(saveFileHandler.getSaveFile().getEffectColor()[0], saveFileHandler.getSaveFile().getEffectColor()[1], saveFileHandler.getSaveFile().getEffectColor()[2]);
+        Color color = saveFileHandler.getSaveFile().getColor(EFFECT_COLOR);
         StandardAssetFields.ROLLOVER_COLOR = color;
         StandardAssetFields.PRESSED_COLOR = color;
-        new Text(saveFileHandler.getSaveFile().getLanguage());
-        mainController.updateOutputScreen(saveFileHandler.getSaveFile().getOutputScreen());
+        new Text(saveFileHandler.getSaveFile().getString(LANGUAGE));
+        mainController.updateOutputScreen(saveFileHandler.getSaveFile().getInteger(OUTPUT_SCREEN));
         mainController.displayControlView();
     }
 
@@ -160,27 +161,27 @@ public class SettingsController extends assets.settings.general.SettingsControll
     @Override
     public void settingChanged(SettingsEvent settingsEvent) {
         switch (settingsEvent.getName()) {
-            case outputScreen:
-                saveFileHandler.getSaveFile().setOutputScreen((int) settingsEvent.getValue());
-                saveFileHandler.getSaveFile().setDesiredOutputScreen((int) settingsEvent.getValue());
+            case OUTPUT_SCREEN:
+                saveFileHandler.getSaveFile().putInteger(OUTPUT_SCREEN, (int) settingsEvent.getValue());
+                saveFileHandler.getSaveFile().putInteger(DESIRED_OUTPUT_SCREEN, (int) settingsEvent.getValue());
                 mainController.updateOutputScreen((int) settingsEvent.getValue());
                 break;
-            case buzzerCount:
-                saveFileHandler.getSaveFile().setBuzzerNumber((int) settingsEvent.getValue());
+            case BUZZER_COUNT:
+                saveFileHandler.getSaveFile().putInteger(BUZZER_COUNT, (int) settingsEvent.getValue());
                 break;
-            case nativeKey:
-                saveFileHandler.getSaveFile().setUseNativeKeyListener((boolean) settingsEvent.getValue());
+            case NATIVE_KEY_LISTENER:
+                saveFileHandler.getSaveFile().putBoolean(NATIVE_KEY_LISTENER, (boolean) settingsEvent.getValue());
                 mainController.getControlModel().setEnableNativeKeyListener((boolean) settingsEvent.getValue());
                 break;
-            case language:
-                saveFileHandler.getSaveFile().setLanguage((String) settingsEvent.getValue());
+            case LANGUAGE:
+                saveFileHandler.getSaveFile().putString(LANGUAGE, (String) settingsEvent.getValue());
                 new Text((String) settingsEvent.getValue());
                 this.setSettingsView(new SettingsView(this));
                 mainController.getControlModel().getView().setView(getSettingsView());
                 break;
-            case effectColor:
+            case EFFECT_COLOR:
                 Color color = (Color) settingsEvent.getValue();
-                saveFileHandler.getSaveFile().setEffectColor(new int[]{color.getRed(), color.getGreen(), color.getBlue()});
+                saveFileHandler.getSaveFile().putColor(EFFECT_COLOR, color);
                 StandardAssetFields.ROLLOVER_COLOR = (Color) settingsEvent.getValue();
                 StandardAssetFields.PRESSED_COLOR = ((Color) settingsEvent.getValue()).brighter();
                 this.setSettingsView(new SettingsView(this));
@@ -213,42 +214,6 @@ public class SettingsController extends assets.settings.general.SettingsControll
         getSettingsView().getGeneralPage().getOutputScreen().setPossibleValues(screens);
     }
 
-
-    /**
-     * @return returns the identification name of the output screen setting
-     */
-    public String getOutputScreen() {
-        return outputScreen;
-    }
-
-    /**
-     * @return returns the identification name of the buzzer number setting
-     */
-    public String getBuzzerCount() {
-        return buzzerCount;
-    }
-
-    /**
-     * @return returns the identification name of the native key setting
-     */
-    public String getNativeKey() {
-        return nativeKey;
-    }
-
-    /**
-     * @return returns the identification name of the language setting
-     */
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     * @return returns the identification name of the effect color setting
-     */
-    public String getEffectColor() {
-        return effectColor;
-    }
-
     /**
      * Changes the nativeKeyListener Settings. This method sets the useNativeKeyListener setting and
      * saves it to a file
@@ -256,7 +221,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * @param useNativeKeyListener new value for the use native key listener setting
      */
     public void setNativeKeyListenerSetting(boolean useNativeKeyListener) {
-        saveFileHandler.getSaveFile().setUseNativeKeyListener(useNativeKeyListener);
+        saveFileHandler.getSaveFile().putBoolean(NATIVE_KEY_LISTENER, useNativeKeyListener);
         saveFileHandler.applyChanges();
         saveFileHandler.saveToFile();
         getSettingsView().getGeneralPage().getNativeKeySettingsRow().setSetting(useNativeKeyListener);
@@ -273,7 +238,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * updates the old values of the settings
      */
     public void setOldValues() {
-        oldColor = saveFileHandler.getSaveFile().getEffectColor();
-        oldLanguage = saveFileHandler.getSaveFile().getLanguage();
+        oldColor = saveFileHandler.getSaveFile().getColor(EFFECT_COLOR);
+        oldLanguage = saveFileHandler.getSaveFile().getString(LANGUAGE);
     }
 }

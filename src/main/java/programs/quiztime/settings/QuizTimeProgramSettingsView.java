@@ -2,8 +2,9 @@ package programs.quiztime.settings;
 
 import assets.settings.general.SettingsChangeListener;
 import programs.abstractProgram.ProgramSettingsView;
+import programs.quizPrograms.settings.QuizSettingsView;
 import programs.quiztime.settings.pages.AudioSettingsPage;
-import programs.quiztime.settings.pages.FontSettingsPage;
+import programs.quizPrograms.settings.pages.FontSettingsPage;
 import programs.quiztime.settings.pages.ImageSettingsPage;
 import programs.quiztime.settings.pages.MidiSettingsPage;
 import savedataHandler.languages.Text;
@@ -14,7 +15,7 @@ import java.awt.event.ActionListener;
 /**
  * view of the settings of the quiz time program
  */
-public class QuizTimeProgramSettingsView extends ProgramSettingsView {
+public class QuizTimeProgramSettingsView extends QuizSettingsView {
 
     /**
      * Settings Page for the fonts
@@ -42,7 +43,7 @@ public class QuizTimeProgramSettingsView extends ProgramSettingsView {
      * @param programController sets the controller of the view
      */
     QuizTimeProgramSettingsView(QuizTimeProgramSettingsController programController) {
-        super(programController, programController, new String[]{Text.IMAGES, Text.FONT, Text.AUDIO, Text.LIGHT_CONTROL});
+        super(programController);
     }
 
     /**

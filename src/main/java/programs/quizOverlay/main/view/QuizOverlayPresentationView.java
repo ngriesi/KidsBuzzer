@@ -5,18 +5,13 @@ import presentationWindow.animations.AnimationQueue;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
-import presentationWindow.items.Texture;
-import presentationWindow.renderItems.MainItem;
-import presentationWindow.renderItems.TextItem;
-import programs.abstractProgram.ProgramPresentationView;
 import programs.quizOverlay.main.control.QuizOverlayProgram;
-import programs.quizPrograms.main.control.QuizProgram;
 import programs.quizPrograms.main.view.QuizPresentationView;
 import savedataHandler.SaveDataHandler;
 
 import java.awt.*;
 
-import static java.awt.Font.PLAIN;
+import static programs.quizPrograms.data.QuizModel.MAIN_FONT;
 
 
 /**
@@ -89,9 +84,9 @@ public class QuizOverlayPresentationView extends QuizPresentationView<QuizOverla
      * method needs to be called to be called when the main font has to be updated
      */
     public void updateMainFont() {
-        Font font = new Font(getProgram().getProgramModel().getSaveFile().getMainFont(), getProgram().getProgramModel().getSaveFile().isMainTextBold() ? Font.BOLD : PLAIN, 200);
+        Font font = getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getFont();
         rightText.changeFont(font);
-        Color color = new Color(getProgram().getProgramModel().getSaveFile().getMainTextColor()[0], getProgram().getProgramModel().getSaveFile().getMainTextColor()[1], getProgram().getProgramModel().getSaveFile().getMainTextColor()[2], getProgram().getProgramModel().getSaveFile().getMainTextColor()[3]);
+        Color color = new Color(getProgram().getProgramModel().getSaveFile().getFontData(MAIN_FONT).getColor());
         rightText.setColorScheme(new ColorScheme(color));
     }
 

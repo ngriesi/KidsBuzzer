@@ -28,7 +28,6 @@ public class QuizControlView<Q extends QuizControlController> extends ProgramCon
      *
      * @param programController sets the controller of the view
      */
-    @SuppressWarnings("SpellCheckingInspection")
     public QuizControlView(Q programController) {
         super(programController);
 

@@ -84,4 +84,16 @@ public abstract class SettingsPage extends MyPanel {
         this.addComponent(this, settingsRow, 1, 1, 0, settingsRows.size() + (settingsRows.size()), 1f, 0.05f, BOTH, CENTER);
         settingsRows.add(settingsRow);
     }
+
+    /**
+     * adds empty rows until the overall number of rows equals i
+     *
+     * @param i number of rows altogether
+     */
+    protected void addEmptyTo(int i) {
+        for (int j = 0; j < i - settingsRows.size(); j++) {
+            addEmpty();
+        }
+
+    }
 }

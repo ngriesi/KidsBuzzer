@@ -12,6 +12,8 @@ import utils.audioSystem.AudioClip;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+import static programs.instantButton.data.InstantButtonModel.BUZZER_SOUND;
+
 /**
  * Controller of the control view of the instant button program used to set the settings of this program
  * (change the audio files or the volume)
@@ -44,7 +46,7 @@ public class InstantButtonController extends ProgramController<InstantButtonProg
     @Override
     protected void updateView() {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            getProgramView().getAudioSettingRows()[i].setSetting(new AudioSettingRow.AudioData(new File(getProgramModel().getSaveFile().getBuzzerSounds()[i]), getProgramModel().getSaveFile().getVolume()[i] / 100f));
+            getProgramView().getAudioSettingRows()[i].setSetting(getProgramModel().getSaveFile().getAudioData(BUZZER_SOUND + i));
         }
     }
 
@@ -61,35 +63,14 @@ public class InstantButtonController extends ProgramController<InstantButtonProg
      */
     @Override
     public void settingChanged(SettingsEvent se) {
-        if (se.getName().contains("File")) {
-            fileSettingsChanged(se);
-        } else if (se.getName().contains("Volume")) {
-            volumeSettingsChanged(se);
+        AudioSettingRow.AudioData audioData = (AudioSettingRow.AudioData) se.getValue();
+        getProgramModel().getSaveFile().putAudioData(BUZZER_SOUND + Integer.parseInt(se.getName()), audioData);
+        if (se.getComponentName().equals("File")) {
+            new Thread(() -> getProgramModel().getAudioClips()[Integer.parseInt(se.getName())] = (AudioClip.load(audioData.getFile().getAbsoluteFile()))).start();
+        } else if (se.getComponentName().equals("Volume")) {
+            if (getProgramModel().getAudioClips()[Integer.parseInt(se.getName())] != null) {
+                getProgramModel().getAudioClips()[Integer.parseInt(se.getName())].setGain(audioData.getVolume());
+            }
         }
-    }
-
-    /**
-     * method updates the volume one of the audios
-     *
-     * @param se settings event created by the settings view element, containing a name to identify the setting
-     *           and the new value of the setting
-     */
-    private void volumeSettingsChanged(SettingsEvent se) {
-        int volume = (int) ((float) se.getValue() * 100);
-        getProgramModel().getSaveFile().getVolume()[Integer.parseInt(se.getName().split(":")[0])] = volume;
-        if (getProgramModel().getAudioClips()[Integer.parseInt(se.getName().split(":")[0])] != null) {
-            getProgramModel().getAudioClips()[Integer.parseInt(se.getName().split(":")[0])].setGain(volume / 100.0);
-        }
-    }
-
-    /**
-     * method updates the file one of the audios
-     *
-     * @param se settings event created by the settings view element, containing a name to identify the setting
-     *           and the new value of the setting
-     */
-    private void fileSettingsChanged(SettingsEvent se) {
-        getProgramModel().getSaveFile().getBuzzerSounds()[Integer.parseInt(se.getName().split(":")[0])] = ((File) se.getValue()).getAbsolutePath();
-        new Thread(() -> getProgramModel().getAudioClips()[Integer.parseInt(se.getName().split(":")[0])] = (AudioClip.load((File) se.getValue()))).start();
     }
 }

@@ -1,6 +1,9 @@
 package programs.quiztime.main.control;
 
-import programs.quiztime.data.QuizTimeProgramSaveFile;
+import midi.MidiSettingsRow;
+import utils.save.SaveFile;
+
+import static programs.quiztime.data.QuizTimeProgramModel.MIDI_INTRO;
 
 /**
  * Midi handler for the quiztime program
@@ -10,19 +13,19 @@ public class MidiHandler extends programs.quizPrograms.main.control.MidiHandler 
     /**
      * creates a new midi handler
      *
-     * @param quizTimeProgramSaveFile save file of the program
+     * @param saveFile save file of the program
      */
-    public MidiHandler(QuizTimeProgramSaveFile quizTimeProgramSaveFile) {
-        super(quizTimeProgramSaveFile);
+    public MidiHandler(SaveFile saveFile) {
+        super(saveFile);
     }
 
     /**
-     * performs the midi aciton of the intro aciton
+     * performs the midi action of the intro action
      */
     void performIntroMidiAction() {
-        QuizTimeProgramSaveFile quizTimeProgramSaveFile = (QuizTimeProgramSaveFile) quizSaveFile;
-        if (quizTimeProgramSaveFile.isIntroMidiActivate()) {
-            midiHandler.sendMessageToPressExecuter(quizTimeProgramSaveFile.getIntroMidiX(), quizTimeProgramSaveFile.getIntroMidiY());
+        MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(MIDI_INTRO);
+        if (midiData.isActive()) {
+            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
         }
     }
 }

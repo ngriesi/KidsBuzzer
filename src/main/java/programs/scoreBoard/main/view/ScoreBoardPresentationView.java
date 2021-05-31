@@ -9,6 +9,8 @@ import programs.scoreBoard.main.view.animations.EnteredAnimation;
 import programs.scoreBoard.main.view.animations.ExitedAnimation;
 import programs.scoreBoard.main.view.items.ViewItems;
 
+import static programs.scoreBoard.data.ScoreBoardModel.TEAM_NAMES;
+
 /**
  * Presentation view of the program
  */
@@ -95,7 +97,7 @@ public class ScoreBoardPresentationView extends ProgramPresentationView<ScoreBoa
      * @param score  new score of that buzzer / team
      */
     public void setBuzzerScore(int buzzer, int score) {
-        viewItems.getLabels()[buzzer - 1].changeText(getProgram().getProgramModel().getSaveFile().getTeamNames()[buzzer - 1] + ": " + score);
+        viewItems.getLabels()[buzzer - 1].changeText(getProgram().getProgramModel().getSaveFile().getString(TEAM_NAMES + (buzzer - 1)) + ": " + score);
     }
 
     /**

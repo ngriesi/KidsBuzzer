@@ -21,7 +21,7 @@ import static java.awt.GridBagConstraints.NONE;
 /**
  * class used to set the light button executed for a specific action
  */
-public class MidiSettingsRow extends SettingsRow {
+public class MidiSettingsRow extends SettingsRow<MidiSettingsRow.MidiSettingsRowData> {
 
     /**
      * Identification names of the components of this row
@@ -52,7 +52,7 @@ public class MidiSettingsRow extends SettingsRow {
      * @param startValue             start value of the settings
      */
     public MidiSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, MidiSettingsRowData startValue) {
-        super(description);
+        super(name, description);
 
         JPanel interaction = new JPanel(new GridBagLayout());
         interaction.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -66,7 +66,7 @@ public class MidiSettingsRow extends SettingsRow {
         active = new MyCheckBox();
         active.setMinimumSize(new Dimension(40, 40));
         active.setSelected(startValue.active);
-        active.addItemListener(createItemListener(settingsChangeListener, name));
+        active.addItemListener(createItemListener(settingsChangeListener));
         interaction.add(active, c);
         c.gridx = 2;
         interaction.add(new MyLabel("X: "), c);
@@ -78,7 +78,7 @@ public class MidiSettingsRow extends SettingsRow {
         xCord.setSelectedItem(startValue.button.x);
         xCord.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name, SettingsEvent.RowKind.MIDI, X, getPageIdentificationName()));
+                settingsChangeListener.settingChanged(createSettingsEvent(X, new MidiSettingsRowData(new Vector2i((Integer) e.getItem(), currentValue.button.y), currentValue.active), SettingsEvent.RowKind.MIDI));
             }
         });
 
@@ -94,7 +94,7 @@ public class MidiSettingsRow extends SettingsRow {
         yCord.setSelectedItem(startValue.button.y);
         yCord.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(e.getItem(), name + "y", SettingsEvent.RowKind.MIDI, Y, getPageIdentificationName()));
+                settingsChangeListener.settingChanged(createSettingsEvent(Y, new MidiSettingsRowData(new Vector2i(currentValue.button.x, (Integer) e.getItem()), currentValue.active), SettingsEvent.RowKind.MIDI));
             }
         });
 
@@ -109,17 +109,12 @@ public class MidiSettingsRow extends SettingsRow {
      * creates an item listener for the check box to update the setting
      *
      * @param settingsChangeListener settings changed listener
-     * @param name                   name to identify the setting in the listener
      * @return ItemListener for the check box
      */
-    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener, String name) {
+    private ItemListener createItemListener(SettingsChangeListener settingsChangeListener) {
         return e -> {
             int state = e.getStateChange();
-            if (state == ItemEvent.SELECTED) {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(true, name, SettingsEvent.RowKind.MIDI, ACTIVE, getPageIdentificationName()));
-            } else {
-                settingsChangeListener.settingChanged(new SettingsEvent<>(false, name, SettingsEvent.RowKind.MIDI, ACTIVE, getPageIdentificationName()));
-            }
+            settingsChangeListener.settingChanged(createSettingsEvent(X, new MidiSettingsRowData(new Vector2i(currentValue.button.x, currentValue.button.y), state == ItemEvent.SELECTED), SettingsEvent.RowKind.MIDI));
         };
     }
 

@@ -1,12 +1,12 @@
 package programs.abstractProgram;
 
+import assets.settings.rows.AudioSettingRow;
 import presentationWindow.engine.Action;
 import presentationWindow.window.OpenGlRenderer;
 import startupApp.LoadingHandler;
 import startupApp.LoadingMonitor;
 import utils.audioSystem.AudioClip;
-import utils.saveFile.SaveFile;
-import utils.saveFile.SaveFileLoader;
+import utils.save.SaveFile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,20 +14,18 @@ import java.util.List;
 
 /**
  * program model handling the data of a program
- *
- * @param <S> type of the save file of this model
  */
-public abstract class ProgramModel<S extends SaveFile> {
+public abstract class ProgramModel {
 
     /**
      * save file of this model
      */
-    private S saveFile;
+    private SaveFile saveFile;
 
     /**
-     * type of the save file of this model
+     * name of the save file
      */
-    private Class<S> type;
+    private String name;
 
     /**
      * change listener for the save file
@@ -37,10 +35,10 @@ public abstract class ProgramModel<S extends SaveFile> {
     /**
      * creates a new Program model
      *
-     * @param type type of the save file of this model
+     * @param name of the save file of this model
      */
-    public ProgramModel(Class<S> type) {
-        this.type = type;
+    public ProgramModel(String name) {
+        this.name = name;
         changeListeners = new ArrayList<>();
     }
 
@@ -52,13 +50,9 @@ public abstract class ProgramModel<S extends SaveFile> {
      */
     void loadModel(LoadingHandler loadingHandler, OpenGlRenderer openGlRenderer) {
 
-        LoadingMonitor loadingMonitor = new LoadingMonitor(type.getName() + " saveFile");
+        LoadingMonitor loadingMonitor = new LoadingMonitor(name + " saveFile");
         loadingHandler.addLoadingProcess(loadingMonitor);
-        try {
-            saveFile = SaveFileLoader.loadFile(type.newInstance().getName(), type);
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        saveFile = new SaveFile(name);
         loadingMonitor.finishedProcess(loadingHandler);
 
         loadResources(loadingHandler, openGlRenderer);
@@ -89,10 +83,19 @@ public abstract class ProgramModel<S extends SaveFile> {
         return audioClip;
     }
 
+    protected AudioClip loadAudio(String saveFileFieldName, LoadingHandler loadingHandler) {
+        AudioSettingRow.AudioData audioData = getSaveFile().getAudioData(saveFileFieldName);
+        AudioClip audioClip = AudioClip.load(new File(audioData.getFile().getAbsolutePath()), loadingHandler);
+        if (audioClip == null)
+            getSaveFile().putAudioData(saveFileFieldName, new AudioSettingRow.AudioData(new File("default"), 1));
+        else audioClip.setGain(audioData.getVolume());
+        return audioClip;
+    }
+
     /**
      * @return returns the save file of this model
      */
-    public S getSaveFile() {
+    public SaveFile getSaveFile() {
         return saveFile;
     }
 

@@ -7,6 +7,8 @@ import presentationWindow.window.ExponentialAnimator;
 import presentationWindow.window.LinearAnimator;
 import programs.scoreBoard.main.view.items.ViewItems;
 
+import static programs.scoreBoard.data.ScoreBoardModel.TEAM_NAMES;
+
 /**
  * Animation, played if a buzzer was pressed
  */
@@ -48,7 +50,7 @@ public class BuzzerPressedAnimation {
      */
     public void executeAnimation(AnimationQueue.AnimationQueueItem animationQueueItem, int buzzer) {
         linearAnimator.fadeOut(viewItems.getLabels()[buzzer - 1], 60).addOnFinishedAction(() -> {
-            viewItems.getLabels()[buzzer - 1].changeText(viewItems.getScoreBoardModel().getSaveFile().getTeamNames()[buzzer - 1]
+            viewItems.getLabels()[buzzer - 1].changeText(viewItems.getScoreBoardModel().getSaveFile().getString(TEAM_NAMES + (buzzer - 1))
                     + ": " + viewItems.getScoreBoardModel().getScores()[buzzer - 1]);
             linearAnimator.fadeIn(viewItems.getLabels()[buzzer - 1], 60).addOnFinishedAction(animationQueueItem::animationFinished);
         });

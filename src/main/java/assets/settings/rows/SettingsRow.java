@@ -1,9 +1,11 @@
 package assets.settings.rows;
 
+import assets.settings.general.SettingsEvent;
 import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.MySeparator;
 import assets.standardAssets.StandardAssetFields;
+import programs.quiztime.settings.pages.AudioSettingsPage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,7 @@ import java.awt.*;
 /**
  * abstract super class for the settings rows
  */
-public abstract class SettingsRow extends MyPanel {
+public abstract class SettingsRow<V> extends MyPanel {
 
     /**
      * thickness of the border
@@ -24,10 +26,21 @@ public abstract class SettingsRow extends MyPanel {
     private String pageIdentificationName;
 
     /**
+     * name of this settings row
+     */
+    private String name;
+
+    /**
+     * current value of the setting
+     */
+    protected V currentValue;
+
+    /**
      * creates an empty settings row
      */
-    SettingsRow() {
+    SettingsRow(String name) {
         super(new BorderLayout());
+        this.name = name;
         this.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
         this.getInsets().set(BORDER_THICKNESS, BORDER_THICKNESS, BORDER_THICKNESS, BORDER_THICKNESS);
         this.setPreferredSize(new Dimension(10, 10));
@@ -38,9 +51,31 @@ public abstract class SettingsRow extends MyPanel {
      *
      * @param description description of the setting displayed in the view
      */
-    protected SettingsRow(String description) {
-        this();
+    protected SettingsRow(String name, String description) {
+        this(name);
         createStandardElements(description);
+    }
+
+    /**
+     * sets the setting of this row
+     *
+     * @param value settings value
+     */
+    public void setSetting(V value) {
+        this.currentValue = value;
+    }
+
+    /**
+     * creates a settings event if one of the settings in this row changed
+     *
+     * @param component name of the component in the settings row that created the event
+     * @param value new value for this settings row
+     * @param rowKind the kind of row this is
+     * @return returns the build settings event
+     */
+    public SettingsEvent<V> createSettingsEvent(String component, V value, SettingsEvent.RowKind rowKind) {
+        currentValue = value;
+        return new SettingsEvent<>(value,name, rowKind , component, getPageIdentificationName());
     }
 
     /**

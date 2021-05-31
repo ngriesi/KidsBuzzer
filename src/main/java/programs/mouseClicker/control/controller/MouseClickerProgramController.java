@@ -20,6 +20,12 @@ import java.awt.event.ActionEvent;
 public class MouseClickerProgramController extends ProgramController<MouseClickerProgram, MouseClickerProgramControlView, MouseClickerProgramModel> {
 
     /**
+     * Identification Strings for the settings fields
+     */
+    public static String BLOCKING_BEHAVIOUR = "Blocking Behaviour", BLOCKING_TIME = "Blocking Time", UNBLOCK_BUZZER = "Unblock Buzzer", CLICK_X = "ClickX", CLICK_Y = "ClickY", USE_CLICK = "Use Click", DISPLAY_MOUSE_TRACKER = "Display Mouse Tracker";
+
+
+    /**
      * enum to identify a coordinate direction
      */
     enum Direction {X, Y}
@@ -195,7 +201,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param item name of the item from the selector that was selected
      */
     private void mainBlockingBehaviourSelectorAction(int item) {
-        getProgramModel().getSaveFile().setBlockingBehaviour(item);
+        getProgramModel().getSaveFile().putInteger(BLOCKING_BEHAVIOUR, item);
         if (getProgram().getMainController() != null)
             getProgram().getMainController().getControlModel().getView().getMyJFrame().getFrame().setVisible(true);
     }
@@ -204,7 +210,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * sets the block time for buzzers in the save file
      */
     private void saveBlockTime() {
-        getProgramModel().getSaveFile().setBlockingTime(getProgramView().getBlockingBehaviourRow().getBlockTime());
+        getProgramModel().getSaveFile().putInteger(BLOCKING_TIME, getProgramView().getBlockingBehaviourRow().getBlockTime());
     }
 
     /**
@@ -213,7 +219,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param s name of the buzzer, used with <code>getBuzzerNum</code> to identify the buzzer
      */
     private void buzzerSelectorAction(String s) {
-        getProgramModel().getSaveFile().setUnblockBuzzer(getBuzzerNum(s));
+        getProgramModel().getSaveFile().putInteger(UNBLOCK_BUZZER, getBuzzerNum(s));
     }
 
     /**
@@ -234,7 +240,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      */
     @Override
     protected void updateView() {
-        getProgramView().getDisplayMouseTrackerRow().setValue(getProgramModel().getSaveFile().isDisplayMouseTracker());
+        getProgramView().getDisplayMouseTrackerRow().setValue(getProgramModel().getSaveFile().getBoolean(DISPLAY_MOUSE_TRACKER));
         updatePositionRows();
         updateBlockingBehaviourRow();
     }
@@ -244,9 +250,9 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * main selector, the content of the block time text field and the unblock buzzer
      */
     private void updateBlockingBehaviourRow() {
-        getProgramView().getBlockingBehaviourRow().setMainSelectorItem(getProgramModel().getSaveFile().getBlockingBehaviour());
-        getProgramView().getBlockingBehaviourRow().setBlockTime(getProgramModel().getSaveFile().getBlockingTime());
-        getProgramView().getBlockingBehaviourRow().setUnblockBuzzer(getProgramModel().getSaveFile().getUnblockBuzzer());
+        getProgramView().getBlockingBehaviourRow().setMainSelectorItem(getProgramModel().getSaveFile().getInteger(BLOCKING_BEHAVIOUR));
+        getProgramView().getBlockingBehaviourRow().setBlockTime(getProgramModel().getSaveFile().getInteger(BLOCKING_TIME));
+        getProgramView().getBlockingBehaviourRow().setUnblockBuzzer(getProgramModel().getSaveFile().getInteger(UNBLOCK_BUZZER));
     }
 
     /**
@@ -255,9 +261,9 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      */
     private void updatePositionRows() {
         for (int i = 0; i < SaveDataHandler.BUZZER_NAMES.length; i++) {
-            getProgramView().getPositionRow(i).setXCord(getProgramModel().getSaveFile().getClickX()[i]);
-            getProgramView().getPositionRow(i).setYCord(getProgramModel().getSaveFile().getClickY()[i]);
-            getProgramView().getPositionRow(i).setActive(getProgramModel().getSaveFile().getUseClick()[i]);
+            getProgramView().getPositionRow(i).setXCord(getProgramModel().getSaveFile().getInteger(CLICK_X + i));
+            getProgramView().getPositionRow(i).setYCord(getProgramModel().getSaveFile().getInteger(CLICK_Y + i));
+            getProgramView().getPositionRow(i).setActive(getProgramModel().getSaveFile().getBoolean(USE_CLICK + i));
         }
     }
 
@@ -267,7 +273,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param selected state of the mouse tracker button
      */
     public void mouseTrackerButtonAction(boolean selected) {
-        getProgramModel().getSaveFile().setDisplayMouseTracker(selected);
+        getProgramModel().getSaveFile().putBoolean(DISPLAY_MOUSE_TRACKER, selected);
         mouseTrackerWindow.setWindowVisibility(selected);
     }
 
@@ -293,7 +299,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param buzzerNumber number of the buzzer of which the click position gets changed
      */
     private void changeXCords(int buzzerNumber) {
-        getProgramModel().getSaveFile().getClickX()[buzzerNumber - 1] = (getProgramView().getPositionRow(buzzerNumber - 1).getXCord());
+        getProgramModel().getSaveFile().putInteger(CLICK_X + (buzzerNumber - 1), getProgramView().getPositionRow(buzzerNumber - 1).getXCord());
     }
 
     /**
@@ -303,7 +309,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param buzzerNumber number of the buzzer of which the click position gets changed
      */
     private void changeYCords(int buzzerNumber) {
-        getProgramModel().getSaveFile().getClickY()[buzzerNumber - 1] = (getProgramView().getPositionRow(buzzerNumber - 1).getYCord());
+        getProgramModel().getSaveFile().putInteger(CLICK_Y + (buzzerNumber - 1), getProgramView().getPositionRow(buzzerNumber - 1).getYCord());
     }
 
     /**
@@ -314,7 +320,7 @@ public class MouseClickerProgramController extends ProgramController<MouseClicke
      * @param selected     new value for the field
      */
     private void useBuzzerClick(int buzzerNumber, boolean selected) {
-        getProgramModel().getSaveFile().getUseClick()[buzzerNumber - 1] = selected;
+        getProgramModel().getSaveFile().putBoolean(USE_CLICK + (buzzerNumber - 1), selected);
     }
 
 }

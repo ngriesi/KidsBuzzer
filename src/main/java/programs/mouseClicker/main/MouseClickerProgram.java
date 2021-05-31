@@ -9,6 +9,8 @@ import savedataHandler.languages.Text;
 import java.awt.*;
 import java.awt.event.InputEvent;
 
+import static programs.mouseClicker.control.controller.MouseClickerProgramController.*;
+
 public class MouseClickerProgram extends Program<MouseClickerProgramController, MouseClickerProgramController, MouseClickerProgramModel, EmptyPresentationView> {
 
     private float screenScalar;
@@ -61,7 +63,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
      */
     @Override
     protected void buzzerAction(int buzzerNumber) {
-        if (getProgramModel().getSaveFile().getUseClick()[buzzerNumber - 1]) {
+        if (getProgramModel().getSaveFile().getBoolean(USE_CLICK + (buzzerNumber - 1))) {
             mousePress(buzzerNumber);
         }
         handleReset(buzzerNumber);
@@ -77,7 +79,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
         try {
             bot = new Robot();
             bot.mouseMove(0, 0);
-            bot.mouseMove((int) (getProgramModel().getSaveFile().getClickX()[buzzer - 1] / screenScalar), (int) (getProgramModel().getSaveFile().getClickY()[buzzer - 1] / screenScalar));
+            bot.mouseMove((int) (getProgramModel().getSaveFile().getInteger(CLICK_X + (buzzer - 1)) / screenScalar), (int) (getProgramModel().getSaveFile().getInteger(CLICK_Y + (buzzer - 1)) / screenScalar));
             bot.mousePress(InputEvent.BUTTON1_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_MASK);
         } catch (AWTException e) {
@@ -93,8 +95,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
      * @param buzzerNumber number of the buzzer pressed (starting with 1)
      */
     private void handleReset(int buzzerNumber) {
-        switch (getProgramModel().getSaveFile().getBlockingBehaviour()) {
-            //noinspection SpellCheckingInspection
+        switch (getProgramModel().getSaveFile().getInteger(BLOCKING_BEHAVIOUR)) {
             case 0:
                 getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
 
@@ -105,7 +106,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
             case 2:
                 new Thread(() -> {
                     try {
-                        Thread.sleep(getProgramModel().getSaveFile().getBlockingTime());
+                        Thread.sleep(getProgramModel().getSaveFile().getInteger(BLOCKING_TIME));
 
                         getMainController().getControlModel().getBuzzerControl().unblockBuzzer(buzzerNumber);
                         getMainController().getControlModel().getBuzzerControl().setBlockAllBuzzer(false);
@@ -115,7 +116,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
                 }).start();
                 break;
             case 3:
-                if (buzzerNumber == getProgramModel().getSaveFile().getUnblockBuzzer()) {
+                if (buzzerNumber == getProgramModel().getSaveFile().getInteger(UNBLOCK_BUZZER)) {
                     getMainController().getControlModel().getBuzzerControl().unblockBuzzer(1);
                     getMainController().getControlModel().getBuzzerControl().unblockBuzzer(2);
                     getMainController().getControlModel().getBuzzerControl().unblockBuzzer(3);
@@ -127,7 +128,7 @@ public class MouseClickerProgram extends Program<MouseClickerProgramController, 
 
     @Override
     public void programSelected() {
-        getProgramController().mouseTrackerButtonAction(getProgramModel().getSaveFile().isDisplayMouseTracker());
+        getProgramController().mouseTrackerButtonAction(getProgramModel().getSaveFile().getBoolean(DISPLAY_MOUSE_TRACKER));
     }
 
     @Override

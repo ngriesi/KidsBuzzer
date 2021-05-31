@@ -1,13 +1,18 @@
 package programs.scoreBoard.main.view.items;
 
+import assets.settings.rows.FontData;
 import presentationWindow.assets.Color;
 import presentationWindow.assets.ColorScheme;
 import presentationWindow.engine.Window;
-import presentationWindow.renderItems.*;
+import presentationWindow.renderItems.ImageItem;
+import presentationWindow.renderItems.PresentationViewRenderItem;
+import presentationWindow.renderItems.QuadItem;
+import presentationWindow.renderItems.TextItem;
 import programs.scoreBoard.data.ScoreBoardModel;
 import savedataHandler.SaveDataHandler;
 
-import java.awt.*;
+import static programs.scoreBoard.data.ScoreBoardModel.FONT;
+import static programs.scoreBoard.data.ScoreBoardModel.TEAM_NAMES;
 
 /**
  * Class containing all the items of the sore board output view
@@ -90,13 +95,15 @@ public class ViewItems {
             icons[i].addItem(teamYellowBacks[i]);
         }
 
+        FontData fontData = scoreBoardModel.getSaveFile().getFontData(FONT);
+
         labels = new TextItem[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            labels[i] = new TextItem(scoreBoardModel.getSaveFile().getTeamNames()[i] + ": " + 0, new Font(scoreBoardModel.getSaveFile().getFont(), scoreBoardModel.getSaveFile().isTextBold() ? Font.BOLD : Font.PLAIN, 200));
+            labels[i] = new TextItem(scoreBoardModel.getSaveFile().getString(TEAM_NAMES + i) + ": " + 0, fontData.getFont());
             labels[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 0.95f);
             labels[i].setSize((labels[i].getAspectRatio() * textSize) / Window.WINDOW_ASPECT_RATIO, textSize);
             labels[i].setOpacity(0);
-            labels[i].setColorScheme(new ColorScheme(new Color(scoreBoardModel.getSaveFile().getTextColor())));
+            labels[i].setColorScheme(new ColorScheme(new Color(fontData.getColor())));
             teamYellowBacks[i].addItem(labels[i]);
         }
 
@@ -143,11 +150,10 @@ public class ViewItems {
     public void updateFont() {
         for (TextItem label : labels) {
 
-            Font font = new Font(scoreBoardModel.getSaveFile().getFont(), scoreBoardModel.getSaveFile().isTextBold() ? Font.BOLD : Font.PLAIN, 200);
-            Color color = new Color(scoreBoardModel.getSaveFile().getTextColor());
+            FontData fontData = scoreBoardModel.getSaveFile().getFontData(FONT);
 
-            label.setColorScheme(new ColorScheme(color));
-            label.changeFont(font);
+            label.setColorScheme(new ColorScheme(new Color(fontData.getColor())));
+            label.changeFont(fontData.getFont());
         }
     }
 
@@ -156,7 +162,7 @@ public class ViewItems {
      */
     public void updateText() {
         for (int i = 0; i < labels.length; i++) {
-            labels[i].changeText(scoreBoardModel.getSaveFile().getTeamNames()[i] + ": " + scoreBoardModel.getScores()[i]);
+            labels[i].changeText(scoreBoardModel.getSaveFile().getString(TEAM_NAMES + i) + ": " + scoreBoardModel.getScores()[i]);
             labels[i].setSize((labels[i].getAspectRatio() * textSize) / Window.WINDOW_ASPECT_RATIO, textSize);
         }
     }

@@ -1,48 +1,48 @@
-package programs.quizOverlay.settings;
+package programs.quizPrograms.settings;
 
 import assets.settings.general.SettingsChangeListener;
-import assets.settings.rows.*;
-import assets.standardAssets.MyPanel;
-import assets.standardAssets.StandardAssetFields;
 import programs.abstractProgram.ProgramSettingsView;
-import programs.quizOverlay.settings.pages.AudioSettingsPage;
-import programs.quizOverlay.settings.pages.FontSettingsPage;
-import programs.quizOverlay.settings.pages.ImageSettingsPage;
-import savedataHandler.SaveDataHandler;
+import programs.quizPrograms.settings.pages.AudioSettingsPage;
+import programs.quizPrograms.settings.pages.FontSettingsPage;
+import programs.quizPrograms.settings.pages.ImageSettingsPage;
+import programs.quizPrograms.settings.pages.MidiSettingsPage;
 import savedataHandler.languages.Text;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * view of the settings of the quiz time program
  */
-public class QuizOverlaySettingsView extends ProgramSettingsView {
+public class QuizSettingsView extends ProgramSettingsView {
 
     /**
-     * Settings page for the audio settings
-     */
-    private AudioSettingsPage audioSettingsPage;
-
-    /**
-     * settings page for the font selection
+     * Settings Page for the fonts
      */
     private FontSettingsPage fontSettingsPage;
 
     /**
-     * settings page for the image selection
+     * Settings Page for the audio
+     */
+    private AudioSettingsPage audioSettingsPage;
+
+    /**
+     * Settings Page for the Images
      */
     private ImageSettingsPage imageSettingsPage;
+
+    /**
+     * Settings Page for the Midi controls
+     */
+    private MidiSettingsPage midiSettingsPage;
 
     /**
      * creates a new view
      *
      * @param programController sets the controller of the view
      */
-    QuizOverlaySettingsView(QuizOverlaySettingsController programController) {
-        super(programController, programController, new String[]{Text.IMAGES, Text.FONT, Text.AUDIO});
+    public QuizSettingsView(QuizSettingsController programController) {
+        super(programController, programController, new String[]{Text.IMAGES, Text.FONT, Text.AUDIO, Text.LIGHT_CONTROL});
     }
 
     /**
@@ -57,7 +57,8 @@ public class QuizOverlaySettingsView extends ProgramSettingsView {
         audioSettingsPage = new AudioSettingsPage(settingsChangeListener);
         fontSettingsPage = new FontSettingsPage(settingsChangeListener);
         imageSettingsPage = new ImageSettingsPage(settingsChangeListener);
-        return new JPanel[]{imageSettingsPage, fontSettingsPage, audioSettingsPage};
+        midiSettingsPage = new MidiSettingsPage(settingsChangeListener);
+        return new JPanel[]{imageSettingsPage, fontSettingsPage, audioSettingsPage, midiSettingsPage};
     }
 
     /**
@@ -82,5 +83,13 @@ public class QuizOverlaySettingsView extends ProgramSettingsView {
      */
     public ImageSettingsPage getImageSettingsPage() {
         return imageSettingsPage;
+    }
+
+    /**
+     * @return returns the midi settings page containing the settings rows to select
+     * the midi actions of the program
+     */
+    public MidiSettingsPage getMidiSettingsPage() {
+        return midiSettingsPage;
     }
 }
