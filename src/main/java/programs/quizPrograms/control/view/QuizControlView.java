@@ -21,7 +21,12 @@ public class QuizControlView<Q extends QuizControlController> extends ProgramCon
     /**
      * size of the buttons
      */
-    private Dimension buttonSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 8, Toolkit.getDefaultToolkit().getScreenSize().height / 20);
+    private Dimension buttonSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 7, Toolkit.getDefaultToolkit().getScreenSize().height / 20);
+
+    /**
+     * show hide button
+     */
+    private MyButton showHide;
 
     /**
      * creates a new view
@@ -50,16 +55,16 @@ public class QuizControlView<Q extends QuizControlController> extends ProgramCon
         addButton(Text.SETTINGS, "settings", programController, gc);
 
         gc.gridy = 1;
-        addButton(Text.SHOW, "show", programController, gc);
+        showHide = addButton(Text.SHOW + " (A)", "show", programController, gc);
 
         gc.gridy = 2;
-        addButton(Text.WRONG, "wrong", programController, gc);
+        addButton(Text.WRONG + " (F)", "wrong", programController, gc);
 
         gc.gridx = 2;
-        addButton(Text.RIGHT, "right", programController, gc);
+        addButton(Text.RIGHT + " (R)", "right", programController, gc);
 
         gc.gridy = 3;
-        addButton(Text.NEXT_QUESTION, "next", programController, gc);
+        addButton(Text.NEXT_QUESTION + " (N)", "next", programController, gc);
     }
 
     /**
@@ -87,11 +92,21 @@ public class QuizControlView<Q extends QuizControlController> extends ProgramCon
      * @param actionListener action listener of the button
      * @param gbc            constraint of the button
      */
-    private void addButton(String buttonText, String actionCommand, ActionListener actionListener, GridBagConstraints gbc) {
+    private MyButton addButton(String buttonText, String actionCommand, ActionListener actionListener, GridBagConstraints gbc) {
         MyButton button = new MyButton(buttonText);
         button.setActionCommand(actionCommand);
         button.addActionListener(actionListener);
         button.setPreferredSize(buttonSize);
         this.add(button, gbc);
+        return button;
+    }
+
+    /**
+     * changes the text of the Show/Hide button
+     *
+     * @param text new text of the button
+     */
+    public void changeShowHideButtonText(String text) {
+        showHide.setText(text);
     }
 }

@@ -1,8 +1,8 @@
 package remoteHandler;
 
 import assets.combobox.MyComboBox;
+import assets.standardAssets.KeySelector;
 import assets.standardAssets.MyPanel;
-import assets.standardAssets.MyTextField;
 import controlWindow.ControlWindow;
 
 import javax.swing.*;
@@ -24,7 +24,7 @@ class RemoteSettingsViewBlock extends MyPanel {
     /**
      * text input filed for the key selection
      */
-    private MyTextField textField;
+    private KeySelector keySelector;
 
     /**
      * Button this settings view block belongs to
@@ -40,7 +40,7 @@ class RemoteSettingsViewBlock extends MyPanel {
      * @param key            start value of the text field
      * @param button         button for which this settings block is created
      */
-    RemoteSettingsViewBlock(ActionListener actionListener, String[] comboBoxItems, int selectedIndex, String key, RemoteHandler.RemoteButton button) {
+    RemoteSettingsViewBlock(ActionListener actionListener, String[] comboBoxItems, int selectedIndex, int key, RemoteHandler.RemoteButton button) {
         super(new GridBagLayout());
 
         this.button = button;
@@ -49,7 +49,7 @@ class RemoteSettingsViewBlock extends MyPanel {
 
         this.addComponent(this, comboBox, 1, 2, 0, 0, 1f, 1f, NONE);
 
-        this.addComponent(this, createTextField(actionListener, selectedIndex, comboBoxItems.length, key), 1, 1, 0, 1, 1f, 1f, NONE, GridBagConstraints.PAGE_START);
+        this.addComponent(this, createKeySelector(actionListener, selectedIndex, key), 1, 1, 0, 1, 1f, 1f, NONE, GridBagConstraints.PAGE_START);
 
         this.addComponent(this, new MyPanel(new FlowLayout()), 1, 1, 0, 2, 1f, 1f, NONE);
 
@@ -76,26 +76,25 @@ class RemoteSettingsViewBlock extends MyPanel {
      *
      * @param actionListener <code>ActionListener</code> of all the elements in this view
      * @param selectedIndex  selected index of the combo box
-     * @param comboBoxSize   size of the combo box
      * @param key            start value of the text field
      * @return returns the panel containing the text field that was created
      */
-    private JPanel createTextField(ActionListener actionListener, int selectedIndex, int comboBoxSize, String key) {
-        textField = new MyTextField(key);
-        textField.setMaximumLength(1);
-        textField.setActionCommand("textField:" + button);
-        textField.addActionListener(actionListener);
-        textField.setPreferredSize(new Dimension(70, 40));
+    private JPanel createKeySelector(ActionListener actionListener, int selectedIndex, int key) {
+        keySelector = new KeySelector();
+        keySelector.setActionCommand("keySelector:" + button);
+        keySelector.addActionListener(actionListener);
+        keySelector.setPreferredSize(new Dimension(200, 40));
+        keySelector.setKey(key);
 
         if (selectedIndex == 1) {
-            textField.setVisible(true);
+            keySelector.setVisible(true);
         } else {
-            textField.setVisible(false);
+            keySelector.setVisible(false);
         }
 
         MyPanel placeholder = new MyPanel(new GridBagLayout());
-        placeholder.add(textField);
-        placeholder.setPreferredSize(new Dimension(70, 40));
+        placeholder.add(keySelector);
+        placeholder.setPreferredSize(new Dimension(200, 40));
         return placeholder;
     }
 
@@ -105,10 +104,10 @@ class RemoteSettingsViewBlock extends MyPanel {
      * @param value new visibility of the text field
      */
     void setTextFieldVisibility(boolean value) {
-        if (!textField.isVisible() && value) {
-            textField.setText("a");
+        if (!keySelector.isVisible() && value) {
+            keySelector.setKey(65);
         }
-        textField.setVisible(value);
+        keySelector.setVisible(value);
         ControlWindow.myJFrame.getFrame().setVisible(true);
     }
 }

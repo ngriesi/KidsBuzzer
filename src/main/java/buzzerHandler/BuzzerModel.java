@@ -1,6 +1,7 @@
 package buzzerHandler;
 
 import controlWindow.MainController;
+import controlWindow.settings.SettingsController;
 
 /**
  * Logic class behind the buzzer overlay at the bottom of the window
@@ -40,7 +41,7 @@ public class BuzzerModel {
     public BuzzerModel(MainController mainController) {
         this.mainController = mainController;
 
-        buzzerCount = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(mainController.getControlModel().getSettingsController().BUZZER_COUNT);
+        buzzerCount = mainController.getControlModel().getSettingsController().getSettingsSaveFile().getInteger(SettingsController.BUZZER_COUNT, 3);
         buzzerControlView = new BuzzerControlView(this);
         buzzerPressed = new boolean[buzzerCount];
         resetBuzzers();

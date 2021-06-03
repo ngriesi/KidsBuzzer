@@ -27,7 +27,7 @@ public class MyToggleButton extends JToggleButton {
 
         this.setBackground(StandardAssetFields.NORMAL_COLOR);
         this.setForeground(textColor);
-        this.setFont(new Font("Arial", Font.PLAIN, 30));
+        this.setFont(new Font("Yu Gothic Ui", Font.PLAIN, 30));
         this.setText(text);
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);

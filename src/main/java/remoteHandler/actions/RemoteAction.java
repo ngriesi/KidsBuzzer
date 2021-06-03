@@ -17,10 +17,12 @@ public class RemoteAction {
         this.action = action;
     }
 
+    RemoteAction() {}
+
     /**
      * Performs the remote action
      */
-    public void performAction() {
+    public void performAction(int keyCode) {
         action.execute();
     }
 }

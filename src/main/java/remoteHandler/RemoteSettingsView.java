@@ -39,7 +39,7 @@ class RemoteSettingsView extends MyPanel {
      * @param startIndices    start indices of the selection combo boxes
      * @param keys            keys used if the key press action is selected
      */
-    RemoteSettingsView(ActionListener actionListener, String[] possibleActions, int[] startIndices, String[] keys) {
+    RemoteSettingsView(ActionListener actionListener, String[] possibleActions, int[] startIndices, int[] keys) {
         super(new GridBagLayout());
 
         createButtonBlocks(actionListener, possibleActions, startIndices, keys);
@@ -56,7 +56,7 @@ class RemoteSettingsView extends MyPanel {
      * @param startIndices    start indices of the selection combo boxes
      * @param keys            keys used if the key press action is selected
      */
-    private void createButtonBlocks(ActionListener actionListener, String[] possibleActions, int[] startIndices, String[] keys) {
+    private void createButtonBlocks(ActionListener actionListener, String[] possibleActions, int[] startIndices, int[] keys) {
         topLeft = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[0], keys[0], RemoteHandler.RemoteButton.TOP_LEFT);
         this.addComponent(this, topLeft, 0, 0, 0.1f, 1);
         topRight = new RemoteSettingsViewBlock(actionListener, possibleActions, startIndices[1], keys[1], RemoteHandler.RemoteButton.TOP_RIGHT);

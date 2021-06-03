@@ -49,19 +49,24 @@ public class TextItem extends ChildItem {
 
         this.font = font;
 
-        createTexture();
+        if(!createTexture()) {
+            changeFont(new Font("Arial", Font.PLAIN, 200));
+        }
     }
 
     /**
      * creates an open gl texture with the text on it by using a buffered image
      */
-    private void createTexture() {
+    private boolean createTexture() {
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
 
 
         FontMetrics metrics = g.getFontMetrics(font);
         int width = metrics.stringWidth(text);
+        if (width < 1) {
+            return false;
+        }
         int height = metrics.getHeight();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g = image.createGraphics();
@@ -75,6 +80,8 @@ public class TextItem extends ChildItem {
         aspectRatio = (float) width / (float) height;
 
         gameItem.getMesh().getMaterial().setTexture(new Texture(image));
+
+        return true;
     }
 
     /**
@@ -83,8 +90,10 @@ public class TextItem extends ChildItem {
      * @param text new text
      */
     public void changeText(String text) {
-        this.text = text;
-        createTexture();
+        if(!text.equals("")) {
+            this.text = text;
+            createTexture();
+        }
     }
 
     /**
@@ -94,7 +103,9 @@ public class TextItem extends ChildItem {
      */
     public void changeFont(Font font) {
         this.font = font;
-        createTexture();
+        if(!createTexture()) {
+            changeFont(new Font("Arial", Font.PLAIN, 200));
+        }
     }
 
     /**

@@ -101,7 +101,7 @@ class ScoreBoardControlView extends ProgramView {
         teamNames = new MyLabel[SaveDataHandler.MAX_BUZZER_COUNT];
         scores = new MyTextField[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            teamNames[i] = new MyLabel("default");
+            teamNames[i] = new MyLabel("Team " + i);
             this.addComponent(this, teamNames[i], 0, i + 1, 1, 1);
 
             scores[i] = new MyTextField("0");

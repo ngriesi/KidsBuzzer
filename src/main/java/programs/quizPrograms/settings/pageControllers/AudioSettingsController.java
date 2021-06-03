@@ -7,8 +7,6 @@ import programs.quizPrograms.data.QuizModel;
 import programs.quizPrograms.settings.QuizSettingsController;
 import utils.audioSystem.AudioClip;
 
-import java.io.File;
-
 import static programs.quizPrograms.data.QuizModel.*;
 
 /**
@@ -51,16 +49,16 @@ public class AudioSettingsController extends ProgramSettingsPageController<QuizS
         QuizModel programModel = mainSettingsController.getProgramModel();
         switch (se.getName()) {
             case QUESTION_SOUND:
-                new Thread(() -> programModel.setQuestionSound(AudioClip.load((File) se.getValue()))).start();
+                new Thread(() -> programModel.setQuestionSound(AudioClip.load(((AudioSettingRow.AudioData) se.getValue()).getFile()))).start();
                 break;
             case RIGHT_SOUND:
-                new Thread(() -> programModel.setRightSound(AudioClip.load((File) se.getValue()))).start();
+                new Thread(() -> programModel.setRightSound(AudioClip.load(((AudioSettingRow.AudioData) se.getValue()).getFile()))).start();
                 break;
             case BUZZER_SOUND:
-                new Thread(() -> programModel.setBuzzerSound(AudioClip.load((File) se.getValue()))).start();
+                new Thread(() -> programModel.setBuzzerSound(AudioClip.load(((AudioSettingRow.AudioData) se.getValue()).getFile()))).start();
                 break;
             case WRONG_SOUND:
-                new Thread(() -> programModel.setWrongSound(AudioClip.load((File) se.getValue()))).start();
+                new Thread(() -> programModel.setWrongSound(AudioClip.load(((AudioSettingRow.AudioData) se.getValue()).getFile()))).start();
                 break;
         }
     }
@@ -75,22 +73,22 @@ public class AudioSettingsController extends ProgramSettingsPageController<QuizS
         switch (se.getName()) {
             case QUESTION_SOUND:
                 if (programModel.getQuestionSound() != null) {
-                    programModel.getQuestionSound().setGain((float) se.getValue());
+                    programModel.getQuestionSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
                 }
                 break;
             case RIGHT_SOUND:
                 if (programModel.getRightSound() != null) {
-                    programModel.getRightSound().setGain((float) se.getValue());
+                    programModel.getRightSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
                 }
                 break;
             case BUZZER_SOUND:
                 if (programModel.getBuzzerSound() != null) {
-                    programModel.getBuzzerSound().setGain((float) se.getValue());
+                    programModel.getBuzzerSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
                 }
                 break;
             case WRONG_SOUND:
                 if (programModel.getWrongSound() != null) {
-                    programModel.getWrongSound().setGain((float) se.getValue());
+                    programModel.getWrongSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
                 }
                 break;
         }
@@ -102,7 +100,9 @@ public class AudioSettingsController extends ProgramSettingsPageController<QuizS
     @Override
     public void updateView() {
 
+
         QuizModel quizModel = mainSettingsController.getProgramModel();
+
         mainSettingsController.getProgramView().getAudioSettingsPage().getQuestionSound().setSetting(quizModel.getSaveFile().getAudioData(QUESTION_SOUND));
         mainSettingsController.getProgramView().getAudioSettingsPage().getRightSound().setSetting(quizModel.getSaveFile().getAudioData(RIGHT_SOUND));
         mainSettingsController.getProgramView().getAudioSettingsPage().getBuzzerSound().setSetting(quizModel.getSaveFile().getAudioData(BUZZER_SOUND));

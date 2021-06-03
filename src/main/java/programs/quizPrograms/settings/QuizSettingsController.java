@@ -68,6 +68,7 @@ public class QuizSettingsController extends ProgramController<QuizProgram, QuizS
         imageSettingsPageController.updateView();
         fontSettingsPageController.updateView();
         audioSettingsPageController.updateView();
+        midiSettingsPageController.updateView();
     }
 
     /**
@@ -94,7 +95,7 @@ public class QuizSettingsController extends ProgramController<QuizProgram, QuizS
             fontSettingsPageController.settingChangedAction(se);
         } else if (se.getPageName().startsWith("sound")) {
             audioSettingsPageController.settingChangedAction(se);
-        } else if(se.getName().startsWith("midi")) {
+        } else if(se.getPageName().startsWith("midi")) {
             midiSettingsPageController.settingChangedAction(se);
         } else {
             imageSettingsPageController.settingChangedAction(se);

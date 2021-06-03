@@ -32,6 +32,7 @@ public class AudioSettingRow extends SettingsRow<AudioSettingRow.AudioData> {
     /**
      * component identifications
      */
+    @SuppressWarnings({"WeakerAccess", "RedundantSuppression"})
     public static String VOLUME = "Volume", FILE = "File";
 
     /**
@@ -53,6 +54,8 @@ public class AudioSettingRow extends SettingsRow<AudioSettingRow.AudioData> {
      */
     public AudioSettingRow(SettingsChangeListener settingsChangeListener, String name, String description) {
         super(name, description);
+
+        currentValue = new AudioData(new File("default"), 0f);
 
         JFileChooser fileChooser = createFileChooser();
 

@@ -73,7 +73,7 @@ public abstract class SettingsRow<V> extends MyPanel {
      * @param rowKind the kind of row this is
      * @return returns the build settings event
      */
-    public SettingsEvent<V> createSettingsEvent(String component, V value, SettingsEvent.RowKind rowKind) {
+    protected SettingsEvent<V> createSettingsEvent(String component, V value, SettingsEvent.RowKind rowKind) {
         currentValue = value;
         return new SettingsEvent<>(value,name, rowKind , component, getPageIdentificationName());
     }
@@ -117,7 +117,7 @@ public abstract class SettingsRow<V> extends MyPanel {
     /**
      * @return returns the identification name of the page this row is inside
      */
-    protected String getPageIdentificationName() {
+    private String getPageIdentificationName() {
         return pageIdentificationName;
     }
 

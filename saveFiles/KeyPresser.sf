@@ -1,3 +1,8 @@
+Integer Key2 = 77
+Integer Key1 = 68
 Integer Blocking Time = 1
-Integer Blocking Behaviour = 1
+Integer Key0 = 65
+Integer Blocking Behaviour = 3
+Integer Unblock Buzzer = 2
+Boolean Use Key1 = true
 

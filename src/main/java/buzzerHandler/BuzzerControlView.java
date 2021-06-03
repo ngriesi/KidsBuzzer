@@ -61,7 +61,7 @@ public class BuzzerControlView extends JPanel {
      */
     private void createVirtualBuzzer(int i) {
         virtualBuzzers[i] = new JLabel(Text.BUZZER + " " + (i + 1));
-        virtualBuzzers[i].setFont(new Font("arial", Font.BOLD, 20));
+        virtualBuzzers[i].setFont(new Font("Yu Gothic Ui", Font.BOLD, 40));
         virtualBuzzers[i].setForeground(Color.WHITE);
         virtualBuzzers[i].setHorizontalAlignment(SwingConstants.CENTER);
         virtualBuzzers[i].setAlignmentX(JLabel.CENTER_ALIGNMENT);

@@ -1,7 +1,6 @@
 package savedataHandler;
 
 import controlWindow.settings.SettingsController;
-import controlWindow.settings.SettingsSaveFile;
 import utils.save.SaveFile;
 
 import java.awt.*;
@@ -56,7 +55,7 @@ public class SaveDataHandler {
      */
     public SaveDataHandler(SaveFile settings) {
         this.settings = settings;
-        BUZZER_COUNT = settings.getInteger(SettingsController.BUZZER_COUNT);
+        BUZZER_COUNT = settings.getInteger(SettingsController.BUZZER_COUNT, 3);
     }
 
     /**

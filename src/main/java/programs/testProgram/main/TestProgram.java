@@ -58,7 +58,6 @@ public class TestProgram extends Program<TestProgramController, TestProgramSetti
      */
     @Override
     protected void buzzerAction(int buzzerNumber) {
-        System.out.println("number " + buzzerNumber);
         getProgramPresentationView().press(buzzerNumber);
     }
 

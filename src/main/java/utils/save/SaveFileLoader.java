@@ -49,13 +49,9 @@ class SaveFileLoader {
      */
     private static void computeSaveFileLine(SaveFile saveFile, String string) {
         int valueStartPosition = string.indexOf('=') + 1;
-        System.out.println(string);
         if(valueStartPosition > 1) {
             String signature = string.substring(0, valueStartPosition - 2);
             String dataType = signature.split(" ")[0];
-            System.out.println(dataType);
-            System.out.println(signature.substring(dataType.length() + 1));
-            System.out.println(string.substring(valueStartPosition).trim());
             putSaveFileValue(dataType, signature.substring(dataType.length() + 1), string.substring(valueStartPosition).trim(), saveFile);
         }
     }

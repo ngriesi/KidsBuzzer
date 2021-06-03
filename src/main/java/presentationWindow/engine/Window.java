@@ -30,7 +30,7 @@ public class Window {
     /**
      * id code to identify window in glfw context
      */
-    private long windowHandle;
+    private long windowHandle = -1;
 
     /**
      * variable used to perform action in game loop thread after resized callback was called
@@ -71,8 +71,6 @@ public class Window {
     /**
      * values for window creation
      */
-    private boolean fullScreen;
-
     private boolean transparent;
 
     private int screen;
@@ -100,7 +98,6 @@ public class Window {
         this.resized = false;
         this.closeable = true;
         this.transparent = transparent;
-        this.fullScreen = fullScreen;
         this.screen = screen;
     }
 
@@ -134,7 +131,6 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_FOCUSED, GL_FALSE);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, GL_FALSE);
-        glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
         glfwWindowHint(GLFW_DECORATED, GL_FALSE);
         glfwWindowHint(GLFW_FLOATING, GL_TRUE);
 
@@ -143,42 +139,9 @@ public class Window {
             glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
         }
 
+        windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 
-        PointerBuffer monitors = glfwGetMonitors();
-        long monitor;
-        if (monitors != null && monitors.sizeof() > screen - 1) {
-            monitor = monitors.get(screen - 1);
-        } else {
-            monitor = glfwGetPrimaryMonitor();
-        }
-
-        //get Resolution of the primary monitor
-        monitorData = glfwGetVideoMode(monitor);
-
-        int[] xPos = new int[1];
-
-        int[] yPos = new int[1];
-
-
-        glfwGetMonitorPos(monitor, xPos, yPos);
-
-
-        if (fullScreen) {
-
-            width = monitorData.width();
-            height = monitorData.height() + 1;
-
-            windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
-
-            glfwSetWindowPos(windowHandle, xPos[0] + width / 2, yPos[0] + height / 2);
-
-            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
-        } else {
-            windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
-
-            glfwSetWindowMonitor(windowHandle, NULL, xPos[0], yPos[0], width, height, GLFW_DONT_CARE);
-        }
-
+        setScreen(screen);
 
         // Create window
 
@@ -411,15 +374,18 @@ public class Window {
      * @param outputScreen index of the screen this window should be placed in
      */
     public void setScreen(int outputScreen) {
-        System.out.println(outputScreen);
         screen = outputScreen;
         PointerBuffer monitors = glfwGetMonitors();
         long monitor = 0;
         if (monitors != null) {
-            monitor = monitors.get(screen - 1);
+            if (monitors.capacity() >= screen) {
+                monitor = monitors.get(screen - 1);
+            } else {
+                monitor = glfwGetPrimaryMonitor();
+            }
         }
 
-        //get Resolution of the primary monitor
+        //get Resolution of the monitor
         monitorData = glfwGetVideoMode(monitor);
 
         if (monitorData != null) {
@@ -430,7 +396,6 @@ public class Window {
         int[] yPos = new int[1];
         glfwGetMonitorPos(monitor, xPos, yPos);
 
-
         if (monitor != glfwGetPrimaryMonitor()) {
             width = monitorData.width();
             height = monitorData.height() + 1;
@@ -439,10 +404,8 @@ public class Window {
             height = monitorData.height() / 4 + 1;
         }
 
-        glfwSetWindowPos(windowHandle, xPos[0], yPos[0]);
         glfwSetWindowSize(windowHandle, width, height);
-
-
+        glfwSetWindowPos(windowHandle, xPos[0], yPos[0]);
     }
 
     /**

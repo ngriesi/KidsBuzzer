@@ -1,6 +1,5 @@
 package programs.quiztime.settings.pageController;
 
-import programs.abstractProgram.ProgramSettingsPageController;
 import programs.quizPrograms.settings.QuizSettingsController;
 import programs.quizPrograms.settings.pageControllers.MidiSettingsController;
 import programs.quiztime.settings.pages.MidiSettingsPage;
@@ -30,5 +29,7 @@ public class MidiSettingsPageController extends MidiSettingsController {
         MidiSettingsPage midiSettingsPage = (MidiSettingsPage) mainSettingsController.getProgramView().getMidiSettingsPage();
 
         midiSettingsPage.getIntro().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI_INTRO));
+
+        super.updateView();
     }
 }

@@ -1,9 +1,18 @@
 String Team Names2 = default
-String Team Names1 = default
+String Team Names1 = test
+String Fontfont = Arial
 String Icon0 = default
 String Team Names0 = default
 String Buzzer Soundfile = C:\Users\Niels\Eigenes\Projekte\Kids_Buzzer\default
 String Icon2 = default
 String Icon1 = default
+Integer Fontcolorblue = 255
+Integer Fontcolorgreen = 255
+Integer Midiy = 1
 Integer Buzzer Soundvolume = 100
+Integer Fontcoloralpha = 255
+Integer Midix = 5
+Integer Fontcolorred = 255
+Boolean Fontstyle = false
+Boolean Midiactive = true
 

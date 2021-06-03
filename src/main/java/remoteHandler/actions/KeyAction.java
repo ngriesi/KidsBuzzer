@@ -10,10 +10,19 @@ public class KeyAction extends RemoteAction {
     /**
      * creates a new key action for the given key code
      *
-     * @param keyCode code of the key that gets pressed
      */
-    public KeyAction(int keyCode) {
-        super(() -> new Thread(() -> {
+    public KeyAction() {
+        super();
+    }
+
+    /**
+     * Methods Performs a Key Press
+     *
+     * @param keyCode key that gets pressed
+     */
+    @Override
+    public void performAction(int keyCode) {
+        new Thread(() -> {
             Robot bot;
             try {
                 bot = new Robot();
@@ -23,6 +32,6 @@ public class KeyAction extends RemoteAction {
             } catch (AWTException | InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start());
+        }).start();
     }
 }

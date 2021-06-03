@@ -26,6 +26,7 @@ public class MidiSettingsRow extends SettingsRow<MidiSettingsRow.MidiSettingsRow
     /**
      * Identification names of the components of this row
      */
+    @SuppressWarnings({"WeakerAccess", "RedundantSuppression", "unused"})
     public static final String X = "x", Y = "y", ACTIVE = "active";
 
     /**
@@ -53,6 +54,8 @@ public class MidiSettingsRow extends SettingsRow<MidiSettingsRow.MidiSettingsRow
      */
     public MidiSettingsRow(SettingsChangeListener settingsChangeListener, String name, String description, MidiSettingsRowData startValue) {
         super(name, description);
+
+        currentValue = startValue;
 
         JPanel interaction = new JPanel(new GridBagLayout());
         interaction.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
@@ -114,7 +117,7 @@ public class MidiSettingsRow extends SettingsRow<MidiSettingsRow.MidiSettingsRow
     private ItemListener createItemListener(SettingsChangeListener settingsChangeListener) {
         return e -> {
             int state = e.getStateChange();
-            settingsChangeListener.settingChanged(createSettingsEvent(X, new MidiSettingsRowData(new Vector2i(currentValue.button.x, currentValue.button.y), state == ItemEvent.SELECTED), SettingsEvent.RowKind.MIDI));
+            settingsChangeListener.settingChanged(createSettingsEvent(ACTIVE, new MidiSettingsRowData(new Vector2i(currentValue.button.x, currentValue.button.y), state == ItemEvent.SELECTED), SettingsEvent.RowKind.MIDI));
         };
     }
 

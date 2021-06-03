@@ -23,12 +23,6 @@ public class GeneralPage extends SettingsPage {
     private ComboBoxSettingsRow<String> language;
     private ColorSelectionRow effectColorSelector;
 
-    /**
-     * main controller of the settings
-     */
-    private  SettingsController settingsController;
-
-
 
     /**
      * creates Panel with Layout
@@ -36,7 +30,6 @@ public class GeneralPage extends SettingsPage {
     GeneralPage(SettingsController settingsController) {
         super(Text.GENERAL, "general");
         createSettingsRows(settingsController);
-        this.settingsController = settingsController;
     }
 
     /**
@@ -45,10 +38,10 @@ public class GeneralPage extends SettingsPage {
      * @param settingsSaveFile save file with the values
      */
     void updateSettings(SaveFile settingsSaveFile) {
-        outputScreen.setSetting(settingsSaveFile.getInteger(settingsController.OUTPUT_SCREEN));
-        buzzerNumber.setSetting(settingsSaveFile.getInteger(settingsController.BUZZER_COUNT));
-        language.setSetting(settingsSaveFile.getString(settingsController.LANGUAGE));
-        effectColorSelector.setSetting(settingsSaveFile.getColor(settingsController.EFFECT_COLOR));
+        outputScreen.setSetting(settingsSaveFile.getInteger(SettingsController.OUTPUT_SCREEN));
+        buzzerNumber.setSetting(settingsSaveFile.getInteger(SettingsController.BUZZER_COUNT, 3));
+        language.setSetting(settingsSaveFile.getString(SettingsController.LANGUAGE));
+        effectColorSelector.setSetting(settingsSaveFile.getColor(SettingsController.EFFECT_COLOR));
     }
 
     /**
@@ -56,15 +49,15 @@ public class GeneralPage extends SettingsPage {
      */
     private void createSettingsRows(SettingsController settingsController) {
 
-        outputScreen = new ComboBoxSettingsRow<>(settingsController, settingsController.OUTPUT_SCREEN, Text.CHOOSE_OUTPUT_SCREEN, settingsController.getSettingsSaveFile().getInteger(settingsController.OUTPUT_SCREEN), settingsController.getPossibleScreens());
+        outputScreen = new ComboBoxSettingsRow<>(settingsController, SettingsController.OUTPUT_SCREEN, Text.CHOOSE_OUTPUT_SCREEN, settingsController.getSettingsSaveFile().getInteger(SettingsController.OUTPUT_SCREEN), settingsController.getPossibleScreens());
         super.addRow(outputScreen);
-        buzzerNumber = new ComboBoxSettingsRow<>(settingsController, settingsController.BUZZER_COUNT, Text.SELECT_BUZZER_NUMBER, settingsController.getSettingsSaveFile().getInteger(settingsController.BUZZER_COUNT), new Integer[]{1, 2, 3});
+        buzzerNumber = new ComboBoxSettingsRow<>(settingsController, SettingsController.BUZZER_COUNT, Text.SELECT_BUZZER_NUMBER, settingsController.getSettingsSaveFile().getInteger(SettingsController.BUZZER_COUNT, 3), new Integer[]{1, 2, 3});
         super.addRow(buzzerNumber);
-        useNativeKeyListener = new CheckBoxSettingsRow(settingsController, settingsController.NATIVE_KEY_LISTENER, Text.USE_NATIVE_KEYS, settingsController.getSettingsSaveFile().getBoolean(settingsController.NATIVE_KEY_LISTENER));
+        useNativeKeyListener = new CheckBoxSettingsRow(settingsController, SettingsController.NATIVE_KEY_LISTENER, Text.USE_NATIVE_KEYS, settingsController.getSettingsSaveFile().getBoolean(SettingsController.NATIVE_KEY_LISTENER));
         super.addRow(useNativeKeyListener);
-        language = new ComboBoxSettingsRow<>(settingsController, settingsController.LANGUAGE, Text.LANGUAGE_SELECTION, settingsController.getSettingsSaveFile().getString(settingsController.LANGUAGE), Text.LANGUAGES);
+        language = new ComboBoxSettingsRow<>(settingsController, SettingsController.LANGUAGE, Text.LANGUAGE_SELECTION, settingsController.getSettingsSaveFile().getString(SettingsController.LANGUAGE), Text.LANGUAGES);
         super.addRow(language);
-        effectColorSelector = new ColorSelectionRow(settingsController, settingsController.EFFECT_COLOR, Text.EFFECT_COLOR_SELECTION, settingsController.getSettingsSaveFile().getColor(settingsController.EFFECT_COLOR));
+        effectColorSelector = new ColorSelectionRow(settingsController, SettingsController.EFFECT_COLOR, Text.EFFECT_COLOR_SELECTION, settingsController.getSettingsSaveFile().getColor(SettingsController.EFFECT_COLOR));
         super.addRow(effectColorSelector);
     }
 

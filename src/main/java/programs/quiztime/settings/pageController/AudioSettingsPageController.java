@@ -1,6 +1,7 @@
 package programs.quiztime.settings.pageController;
 
 import assets.settings.general.SettingsEvent;
+import assets.settings.rows.AudioSettingRow;
 import programs.quizPrograms.settings.QuizSettingsController;
 import programs.quizPrograms.settings.pageControllers.AudioSettingsController;
 import programs.quiztime.data.QuizTimeProgramModel;
@@ -43,8 +44,8 @@ public class AudioSettingsPageController extends AudioSettingsController {
 
         QuizTimeProgramModel programModel = (QuizTimeProgramModel) mainSettingsController.getProgramModel();
         AudioSettingsPage audioSettingsPage = (programs.quiztime.settings.pages.AudioSettingsPage) mainSettingsController.getProgramView().getAudioSettingsPage();
-
         audioSettingsPage.getIntroSound().setSetting(programModel.getSaveFile().getAudioData(INTRO_SOUND));
+        super.updateView();
     }
 
     /**
@@ -54,7 +55,7 @@ public class AudioSettingsPageController extends AudioSettingsController {
      */
     @Override
     protected void changeFile(SettingsEvent se) {
-        if ("Intro".equals(se.getName())) {
+        if (INTRO_SOUND.equals(se.getName())) {
             new Thread(() -> ((QuizTimeProgramModel)mainSettingsController.getProgramModel()).setIntroSound(AudioClip.load((File) se.getValue()))).start();
         }
         super.changeFile(se);
@@ -68,9 +69,9 @@ public class AudioSettingsPageController extends AudioSettingsController {
     @Override
     protected void changeVolume(SettingsEvent se) {
         QuizTimeProgramModel programModel = (QuizTimeProgramModel) mainSettingsController.getProgramModel();
-        if ("Intro".equals(se.getName().substring(5))) {
+        if (INTRO_SOUND.equals(se.getName())) {
             if (programModel.getIntroSound() != null) {
-                programModel.getIntroSound().setGain((float) se.getValue());
+                programModel.getIntroSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
             }
         }
         super.changeVolume(se);

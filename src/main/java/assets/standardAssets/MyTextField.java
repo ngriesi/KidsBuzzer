@@ -46,7 +46,7 @@ public class MyTextField extends JTextField {
      */
     private void setLayoutValues() {
         this.setBorder(BorderFactory.createLineBorder(StandardAssetFields.NORMAL_COLOR, 3));
-        this.setFont(new Font("arial", Font.PLAIN, 30));
+        this.setFont(new Font("Yu Gothic Ui", Font.PLAIN, 30));
         this.setPreferredSize(new Dimension(200, 40));
     }
 

@@ -117,7 +117,7 @@ public class MyJFrame extends ResizeWindowPanel {
      */
     private void setWindowBounds(int screenWidth, int screenHeight, int x, int y, int width, int height) {
         super.getFrame().setLocation(x, y);
-        super.getFrame().setMinimumSize(new Dimension(screenWidth / 2, screenHeight / 2));
+        super.getFrame().setMinimumSize(new Dimension((int) (screenWidth / 1.5f), (int) (screenHeight / 1.5f)));
         super.getFrame().setMaximumSize(new Dimension(screenWidth, screenHeight));
         super.getFrame().setSize(width, height);
     }
@@ -160,7 +160,7 @@ public class MyJFrame extends ResizeWindowPanel {
      * recreates the windows title bar
      */
     public void recreate() {
-        this.remove(((BorderLayout)this.getLayout()).getLayoutComponent(BorderLayout.PAGE_START));
+        this.remove(((BorderLayout) this.getLayout()).getLayoutComponent(BorderLayout.PAGE_START));
         this.add(new TitleBar(super.getFrame()), BorderLayout.PAGE_START);
     }
 }

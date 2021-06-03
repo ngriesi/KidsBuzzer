@@ -10,6 +10,7 @@ import programs.quiztime.settings.pages.ImageSettingsPage;
 
 import java.io.File;
 
+import static programs.quizPrograms.data.QuizModel.ICON;
 import static programs.quiztime.data.QuizTimeProgramModel.BACKGROUND;
 
 /**
@@ -36,14 +37,14 @@ public class ImageSettingsPageController extends ImageSettingsController {
         QuizTimeProgram program = (QuizTimeProgram) mainSettingsController.getProgram();
         QuizTimeProgramModel programModel = (QuizTimeProgramModel) mainSettingsController.getProgramModel();
 
-        if ("background".equals(event.getName())) {
+        if (BACKGROUND.equals(event.getName())) {
             mainSettingsController.getProgramModel().getSaveFile().putString(BACKGROUND, ((File) event.getValue()).getAbsolutePath());
             program.getRenderer().addActionToOpenGlThread(() -> {
                 programModel.setBackgroundTexture(Texture.loadTexture(new File(mainSettingsController.getProgramModel().getSaveFile().getString(BACKGROUND))));
                 program.getProgramPresentationView().updateBackground();
             });
         }
-        if (event.getName().contains("icon")) {
+        if (event.getName().equals(ICON)) {
             super.changeIconSetting(event);
         }
     }

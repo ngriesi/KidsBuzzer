@@ -99,7 +99,7 @@ public class ViewItems {
 
         labels = new TextItem[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            labels[i] = new TextItem(scoreBoardModel.getSaveFile().getString(TEAM_NAMES + i) + ": " + 0, fontData.getFont());
+            labels[i] = new TextItem(scoreBoardModel.getSaveFile().getString(TEAM_NAMES + i, "Team " + (i + 1)) + ": " + 0, fontData.getFont());
             labels[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 0.95f);
             labels[i].setSize((labels[i].getAspectRatio() * textSize) / Window.WINDOW_ASPECT_RATIO, textSize);
             labels[i].setOpacity(0);

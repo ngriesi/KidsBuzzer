@@ -1,7 +1,7 @@
 package remoteHandler;
 
 import assets.combobox.MyComboBox;
-import assets.standardAssets.MyTextField;
+import assets.standardAssets.KeySelector;
 import programs.abstractProgram.ProgramSettingsView;
 import programs.abstractProgram.ProgramView;
 import remoteHandler.actions.KeyAction;
@@ -11,7 +11,6 @@ import utils.save.SaveFile;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,16 +94,16 @@ public class RemoteHandler implements ActionListener {
     public void pressedAction(RemoteButton pressedButton) {
         switch (pressedButton) {
             case TOP_LEFT:
-                topLeftButtonAction.performAction();
+                topLeftButtonAction.performAction(remoteSaveFile.getInteger(KEYS + 0, 0));
                 break;
             case TOP_RIGHT:
-                topRightButtonAction.performAction();
+                topRightButtonAction.performAction(remoteSaveFile.getInteger(KEYS + 1, 0));
                 break;
             case BOTTOM_LEFT:
-                bottomLeftButtonAction.performAction();
+                bottomLeftButtonAction.performAction(remoteSaveFile.getInteger(KEYS + 2, 0));
                 break;
             case BOTTOM_RIGHT:
-                bottomRightButtonAction.performAction();
+                bottomRightButtonAction.performAction(remoteSaveFile.getInteger(KEYS + 3, 0));
         }
     }
 
@@ -114,7 +113,7 @@ public class RemoteHandler implements ActionListener {
     private void createDefaultActions() {
         addRemoteAction(Text.NOTHING, new RemoteAction(() -> {
         }));
-        addRemoteAction(Text.KEY_PRESS, new KeyAction(KeyEvent.VK_A));
+        addRemoteAction(Text.KEY_PRESS, new KeyAction());
     }
 
     /**
@@ -128,16 +127,15 @@ public class RemoteHandler implements ActionListener {
         if (programView instanceof ProgramSettingsView) {
             ProgramSettingsView settingsView = (ProgramSettingsView) programView;
 
-            int[] currentSelections = {remoteSaveFile.getInteger(TOP_LEFT_ACTION),
-                    remoteSaveFile.getInteger(TOP_RIGHT_ACTION),
-                    remoteSaveFile.getInteger(BOTTOM_LEFT_ACTION),
-                    remoteSaveFile.getInteger(BOTTOM_RIGHT_ACTION)};
+            int[] currentSelections = {remoteSaveFile.getInteger(TOP_LEFT_ACTION, 0),
+                    remoteSaveFile.getInteger(TOP_RIGHT_ACTION, 0),
+                    remoteSaveFile.getInteger(BOTTOM_LEFT_ACTION, 0),
+                    remoteSaveFile.getInteger(BOTTOM_RIGHT_ACTION, 0)};
 
-            String[] selectedKeys = new String[4];
+            int[] selectedKeys = new int[4];
 
             for (int i = 0; i < selectedKeys.length; i++) {
-                selectedKeys[i] = remoteSaveFile.getString(KEYS + i).length() == 1 ? remoteSaveFile.getString(KEYS + i) : "A";
-                System.out.println(remoteSaveFile.getString(KEYS + i));
+                selectedKeys[i] = remoteSaveFile.getInteger(KEYS + i, 65);
             }
 
             remoteSettingsView = new RemoteSettingsView(this, actions, currentSelections, selectedKeys);
@@ -199,7 +197,7 @@ public class RemoteHandler implements ActionListener {
      * @param button enum to identify the pressed button
      */
     private void textFieldInputAction(ActionEvent e, RemoteButton button) {
-        String key = ((MyTextField) e.getSource()).getText();
+        int key = ((KeySelector) e.getSource()).getKey();
         saveKeyValue(key, button);
     }
 
@@ -215,7 +213,7 @@ public class RemoteHandler implements ActionListener {
             int newSelection = ((MyComboBox) e.getSource()).getSelectedIndex();
             if (newSelection == 1) {
                 setSaveFileValue(newSelection, button);
-                saveKeyValue("A", button);
+                saveKeyValue(65, button);
                 remoteSettingsView.changeToKeySelection(button);
             } else {
                 setSaveFileValue(newSelection, button);
@@ -230,19 +228,19 @@ public class RemoteHandler implements ActionListener {
      * @param key    key that gets saved
      * @param button button for which the key gets saved
      */
-    private void saveKeyValue(String key, RemoteButton button) {
+    private void saveKeyValue(int key, RemoteButton button) {
         switch (button) {
             case TOP_LEFT:
-                remoteSaveFile.putString(KEYS + 0, key);
+                remoteSaveFile.putInteger(KEYS + 0, key);
                 break;
             case TOP_RIGHT:
-                remoteSaveFile.putString(KEYS + 1, key);
+                remoteSaveFile.putInteger(KEYS + 1, key);
                 break;
             case BOTTOM_LEFT:
-                remoteSaveFile.putString(KEYS + 2, key);
+                remoteSaveFile.putInteger(KEYS + 2, key);
                 break;
             case BOTTOM_RIGHT:
-                remoteSaveFile.putString(KEYS + 3, key);
+                remoteSaveFile.putInteger(KEYS + 3, key);
         }
     }
 

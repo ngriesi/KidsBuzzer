@@ -18,7 +18,7 @@ class StateChanger extends QuizStateChanger {
      * @param program      program this is the state changer of
      * @param generalState general state of the program
      */
-    public StateChanger(QuizProgram program, QuizGeneralState generalState) {
+    StateChanger(QuizProgram program, QuizGeneralState generalState) {
         super(program, generalState);
     }
 
@@ -29,8 +29,12 @@ class StateChanger extends QuizStateChanger {
      *                           check whether this method should be called in the QuizTimeProgram class
      */
     public void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
-        programModel.playQuestionSound();
-        animationQueueItem.setAnimationAction(() -> quizViewUpdater.nextQuestion(animationQueueItem));
+
+        animationQueueItem.setAnimationAction(() -> {
+            programModel.fadeOutRightSound();
+            programModel.playQuestionSound();
+            quizViewUpdater.nextQuestion(animationQueueItem);
+        });
         animationQueueItem.addOnFinishedAction(this::reset);
         animationQueue.addAnimation(animationQueueItem);
     }

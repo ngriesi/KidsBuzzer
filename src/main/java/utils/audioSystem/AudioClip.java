@@ -187,4 +187,8 @@ public class AudioClip {
     public void setOnFinishedAction(Action action) {
         this.onFinishedAction = action;
     }
+
+    public FloatControl getGainControl() {
+        return gainControl;
+    }
 }

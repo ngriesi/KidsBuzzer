@@ -18,7 +18,7 @@ public class MyLabel extends JLabel {
 
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        this.setFont(new Font("Arial", Font.PLAIN, 30));
+        this.setFont(new Font("Yu Gothic Ui", Font.PLAIN, 30));
         this.setForeground(StandardAssetFields.FOREGROUND_COLOR);
     }
 }

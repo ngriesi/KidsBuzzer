@@ -44,6 +44,11 @@ public abstract class QuizStateChanger {
     protected MidiHandler midiHandler;
 
     /**
+     * Program of this state changer
+     */
+    protected QuizProgram program;
+
+    /**
      * creates a new state changer
      *
      * @param program      program this is the state changer of
@@ -53,6 +58,8 @@ public abstract class QuizStateChanger {
 
         this.mainController = program.getMainController();
         this.generalState = generalState;
+
+        this.program = program;
 
         this.programModel = (QuizModel) program.getProgramModel();
 
@@ -99,9 +106,11 @@ public abstract class QuizStateChanger {
      */
     void wrongAnswerGiven() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playWrongSound();
-        midiHandler.performWrongMidiAction();
-        animationQueueItem.setAnimationAction(() -> buzzerStateHandler.wrong(animationQueueItem));
+        animationQueueItem.setAnimationAction(() -> {
+            programModel.playWrongSound();
+            midiHandler.performWrongMidiAction();
+            buzzerStateHandler.wrong(animationQueueItem);
+        });
         animationQueue.addAnimation(animationQueueItem);
     }
 
@@ -109,11 +118,14 @@ public abstract class QuizStateChanger {
      * method called when a buzzer has given a right answer and the programs state has to be changed accordingly
      */
     void rightAnswerGiven() {
-        programModel.fadeOutQuestionSound();
+
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        programModel.playRightSound();
-        midiHandler.performRightMidiAction();
-        animationQueueItem.setAnimationAction(() -> buzzerStateHandler.right(animationQueueItem));
+        animationQueueItem.setAnimationAction(() -> {
+            programModel.fadeOutQuestionSound();
+            programModel.playRightSound();
+            midiHandler.performRightMidiAction();
+            buzzerStateHandler.right(animationQueueItem);
+        });
         animationQueue.addAnimation(animationQueueItem);
     }
 
@@ -123,10 +135,14 @@ public abstract class QuizStateChanger {
      * method called and used when the presentation view should fade out
      */
     public void fadeToInvisible() {
-        programModel.fadeOutQuestionSound();
-        programModel.fadeOutRightSound();
+
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        animationQueueItem.setAnimationAction(() -> quizViewUpdater.fadeOutAnimation(animationQueueItem));
+        animationQueueItem.setAnimationAction(() -> {
+            programModel.fadeOutQuestionSound();
+            programModel.fadeOutRightSound();
+            quizViewUpdater.fadeOutAnimation(animationQueueItem);
+        });
+        animationQueueItem.addOnFinishedAction(() -> program.getMainController().hidePresentationWindow());
         generalState.changeToInvisibleState(animationQueueItem, this);
         animationQueue.addAnimation(animationQueueItem);
     }

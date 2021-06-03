@@ -107,7 +107,7 @@ class TitleBar extends JPanel {
         MyLabel title = new MyLabel(" Buzzer");
         title.setForeground(StandardAssetFields.FOREGROUND_COLOR);
         title.setOpaque(false);
-        title.setFont(new Font("arial", Font.PLAIN, 20));
+        title.setFont(new Font("Yu Gothic Ui", Font.PLAIN, 20));
         title.setAlignmentX(LINE_START);
         title.setHorizontalAlignment(SwingConstants.LEFT);
         return title;

@@ -28,14 +28,14 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     public final static String LANGUAGE = "Language";
     public final static String EFFECT_COLOR = "Effect Color";
-    public final static String BUZZER_COUNT="Buzzer Count";
+    public final static String BUZZER_COUNT = "Buzzer Count";
     public final static String OUTPUT_SCREEN = "Output Screen";
     public final static String DESIRED_OUTPUT_SCREEN = "Desired Output Screen";
     public final static String NATIVE_KEY_LISTENER = "Native Key Listener";
     public static final String WINDOW_WIDTH = "Window Width", WINDOW_HEIGHT = "Window Height", WINDOW_X = "Window X", WINDOW_Y = "Window Y";
 
     /**
-     * stores the old values for fields where the whole view needs to be updatet if they change
+     * stores the old values for fields where the whole view needs to be updated if they change
      */
     private Color oldColor;
     private String oldLanguage;
@@ -92,7 +92,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
         saveFileHandler.saveToFile();
 
 
-        if(changesMadeToView()) {
+        if (changesMadeToView()) {
             mainController.updateView();
         }
         mainController.displayControlView();
@@ -101,7 +101,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
     }
 
     /**
-     * chacks if changes where made that require the whole view to update
+     * checks if changes where made that require the whole view to update
      *
      * @return returns true if the view needs an update
      */
@@ -117,7 +117,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * updates the number of buzzer used/displayed in the whole program
      */
     private void updateBuzzerCount() {
-        SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getInteger(BUZZER_COUNT);
+        SaveDataHandler.BUZZER_COUNT = saveFileHandler.getSaveFile().getInteger(BUZZER_COUNT, 3);
         mainController.recreateBuzzerModel();
         mainController.updateBuzzerCountOfPrograms();
     }
@@ -151,7 +151,7 @@ public class SettingsController extends assets.settings.general.SettingsControll
      * updates the behaviour of the program by settings the flag in <code>ControlModel</code>
      * <p>
      * SettingsName: "language":
-     * updates the language of the application by reinstanciating the <code>Text</code> class
+     * updates the language of the application by re-instantiating the <code>Text</code> class
      * <p>
      * SettingsName: "effectColor":
      * updates the effect color of the application

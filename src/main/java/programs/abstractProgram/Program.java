@@ -369,6 +369,7 @@ public abstract class Program<C extends ProgramController, SC extends ProgramCon
         if (settingsController != null) {
             settingsController.recreateView();
             settingsController.updateView();
+            remoteHandler.createAndAddRemoteSettingsView(settingsController.getProgramView());
         }
         if (programController != null) {
             programController.recreateView();

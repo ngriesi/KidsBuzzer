@@ -32,7 +32,7 @@ public class MyButton extends CleanButton {
         super();
         this.textColor = textColor;
         this.setForeground(textColor);
-        this.setFont(new Font("Arial", Font.PLAIN, 30));
+        this.setFont(new Font("Yu Gothic Ui", Font.PLAIN, 30));
         this.setText(text);
     }
 

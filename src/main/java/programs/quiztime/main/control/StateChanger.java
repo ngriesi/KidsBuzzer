@@ -23,7 +23,7 @@ class StateChanger extends QuizStateChanger {
      * @param program      program this is the state changer of
      * @param generalState general state of the program
      */
-    public StateChanger(QuizProgram program, QuizGeneralState generalState) {
+    StateChanger(QuizProgram program, QuizGeneralState generalState) {
         super(program, generalState);
         quizTimeProgramModel = (QuizTimeProgramModel) program.getProgramModel();
     }
@@ -38,10 +38,13 @@ class StateChanger extends QuizStateChanger {
      */
     void changeToIntro() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        quizTimeProgramModel.playIntroSound();
-        ((MidiHandler)midiHandler).performIntroMidiAction();
-        animationQueueItem.setAnimationAction(() -> ((ViewUpdater)quizViewUpdater).introAnimation(animationQueueItem));
-        animationQueueItem.addOnFinishedAction(() -> ((GeneralState)generalState).changeToIntroState());
+        animationQueueItem.setAnimationAction(() -> {
+            program.getMainController().showPresentationWindow();
+            quizTimeProgramModel.playIntroSound();
+            ((MidiHandler) midiHandler).performIntroMidiAction();
+            ((ViewUpdater) quizViewUpdater).introAnimation(animationQueueItem);
+        });
+        animationQueueItem.addOnFinishedAction(() -> ((GeneralState) generalState).changeToIntroState());
         animationQueue.addAnimation(animationQueueItem);
     }
 
@@ -63,14 +66,16 @@ class StateChanger extends QuizStateChanger {
      *                           written inside the QuizTimeProgram class
      */
     public void nextQuestion(AnimationQueue.AnimationQueueItem animationQueueItem, Action action) {
-        quizTimeProgramModel.fadeOutIntroSound();
-        programModel.playQuestionSound();
-        midiHandler.performNextMidiAction();
+
         animationQueueItem.setAnimationAction(() -> {
+            programModel.fadeOutRightSound();
+            quizTimeProgramModel.fadeOutIntroSound();
+            programModel.playQuestionSound();
+            midiHandler.performNextMidiAction();
 
             action.execute();
 
-            ((ViewUpdater)quizViewUpdater).nextQuestion(((GeneralState)generalState).getQuestionNumber(), animationQueueItem);
+            ((ViewUpdater) quizViewUpdater).nextQuestion(((GeneralState) generalState).getQuestionNumber(), animationQueueItem);
 
         });
         animationQueueItem.addOnFinishedAction(this::reset);

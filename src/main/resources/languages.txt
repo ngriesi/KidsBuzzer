@@ -69,3 +69,11 @@ MIDI_BUZZER_DESCRIPTION;Buzzer Pressed Light Action;Buzzer Licht Aktion
 RED;Red;Roter
 GREEN;Green;Grüner
 BLACK;Black;Schwarzer
+RIGHT_DIRECTION;Right;Rechts
+LEFT_DIRECTION;Left;Links
+UP_DIRECTION;Up;Hoch
+DOWN_DIRECTION;Down;Runter
+RETURN;Return;Enter
+SPACE;Space;Leertaste
+BACKSPACE;Backspace;Backspace
+TABULATOR;Tabulator;Tabulator

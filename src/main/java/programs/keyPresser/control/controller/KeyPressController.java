@@ -224,7 +224,7 @@ public class KeyPressController extends ProgramController<KeyPressProgram, KeyPr
      */
     private void updateKeyPressRows() {
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            getProgramView().getKeyPressRow(i).setKey(getProgramModel().getSaveFile().getInteger(KEY + i));
+            getProgramView().getKeyPressRow(i).setKey(getProgramModel().getSaveFile().getInteger(KEY + i, 65));
             getProgramView().getKeyPressRow(i).setActive(getProgramModel().getSaveFile().getBoolean(USE_KEY + i));
         }
     }

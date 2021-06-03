@@ -83,6 +83,14 @@ public class Text {
     public static String MIDI_POINT_SCORED;
     public static String MIDI_BUZZER_DESCRIPTION;
     public static String QUESTION;
+    public static String RIGHT_DIRECTION;
+    public static String LEFT_DIRECTION;
+    public static String UP_DIRECTION;
+    public static String DOWN_DIRECTION;
+    public static String SPACE;
+    public static String RETURN;
+    public static String TABULATOR;
+    public static String BACKSPACE;
     @SuppressWarnings("WeakerAccess")
     public static String RED;
     @SuppressWarnings("WeakerAccess")

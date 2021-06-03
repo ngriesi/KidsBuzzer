@@ -1,10 +1,11 @@
 Integer ClickX2 = 1
-Integer ClickX1 = 1
+Integer ClickX1 = 67
 Integer ClickY2 = 1
-Integer Blocking Time = 1
+Integer Blocking Time = 4564
 Integer ClickX0 = 1
 Integer ClickY1 = 1
-Integer Blocking Behaviour = 1
-Integer ClickY0 = 1
-Boolean Display Mouse Tracker = false
+Integer Blocking Behaviour = 2
+Integer ClickY0 = 16
+Boolean Display Mouse Tracker = true
+Boolean Use Click2 = true
 

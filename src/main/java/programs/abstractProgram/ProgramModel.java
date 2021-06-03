@@ -86,9 +86,11 @@ public abstract class ProgramModel {
     protected AudioClip loadAudio(String saveFileFieldName, LoadingHandler loadingHandler) {
         AudioSettingRow.AudioData audioData = getSaveFile().getAudioData(saveFileFieldName);
         AudioClip audioClip = AudioClip.load(new File(audioData.getFile().getAbsolutePath()), loadingHandler);
-        if (audioClip == null)
+        if (audioClip == null) {
             getSaveFile().putAudioData(saveFileFieldName, new AudioSettingRow.AudioData(new File("default"), 1));
-        else audioClip.setGain(audioData.getVolume());
+        } else {
+            audioClip.setGain(audioData.getVolume());
+        }
         return audioClip;
     }
 

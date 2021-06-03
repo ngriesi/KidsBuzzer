@@ -55,7 +55,6 @@ public class LoadingView extends JPanel {
         this.getActionMap().put("test", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("test");
                 for(LoadingMonitor s : loadingModel.getLoadingHandler().getLoadingProcesses()) {
                     System.out.println(s.getProcessName());
                 }
@@ -112,7 +111,7 @@ public class LoadingView extends JPanel {
         g.fillRect(0, (int) (this.getHeight() * 0.45f), this.getWidth(), (int) (this.getHeight() * 0.025));
 
         g.setColor(new Color(230,230,230));
-        g.setFont(new Font("Arial",Font.PLAIN,12));
+        g.setFont(new Font("Yu Gothic Ui",Font.PLAIN,12));
         g.drawString(finishedStep, (int) (this.getWidth() * 0.01), (int) (this.getHeight() * 0.465));
 
         g.setColor(new Color(20,20,20,100));

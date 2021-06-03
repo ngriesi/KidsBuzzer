@@ -5,6 +5,7 @@ import programs.abstractProgram.ProgramController;
 import programs.quizPrograms.control.view.QuizControlView;
 import programs.quizPrograms.data.QuizModel;
 import programs.quizPrograms.main.control.QuizProgram;
+import savedataHandler.languages.Text;
 
 import java.awt.event.ActionEvent;
 
@@ -107,6 +108,7 @@ public abstract class QuizControlController<P extends QuizProgram, V extends Qui
     public void show() {
         getProgram().getMainController().showPresentationWindow();
         getProgram().fadeIn();
+        getProgramView().changeShowHideButtonText(Text.HIDE + " (V)");
     }
 
     /**
@@ -114,16 +116,8 @@ public abstract class QuizControlController<P extends QuizProgram, V extends Qui
      */
     public void hide() {
         if (getProgram().fadeOut()) {
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            getProgram().getMainController().hidePresentationWindow();
-                            getSimpleOutputView().changeToInvisibleState();
-                        }
-                    },
-                    fadeOutTime
-            );
+            getProgramView().changeShowHideButtonText(Text.SHOW + " (A)");
+            getSimpleOutputView().changeToInvisibleState();
         }
     }
 

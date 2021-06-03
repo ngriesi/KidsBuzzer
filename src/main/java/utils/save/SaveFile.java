@@ -52,12 +52,6 @@ public class SaveFile {
         booleans = new HashMap<>();
 
         SaveFileLoader.tryLoadingSave(this);
-
-        if(name.equals("settings")) {
-            for (String s : integers.keySet()) {
-                System.out.println(s + " : " + integers.get(s));
-            }
-        }
     }
 
     /**
@@ -76,42 +70,45 @@ public class SaveFile {
      * used to access a string from the map without risking a null pointer exception
      *
      * @param key key of the string that was retrieved
+     * @param defaultValue default value if the Field cant be found
      * @return the value for key or "default" if there was no String for that key
      */
-    private String getStringWithCheck(String key) {
+    private String getStringWithCheck(String key, String defaultValue) {
         String result = strings.get(key);
         if (result != null) {
             return result;
         }
-        return "default";
+        return defaultValue;
     }
 
     /**
      * used to access an int from the map without risking a null pointer exception
      *
      * @param key key of the int that was retrieved
+     * @param defaultValue default value if the Field cant be found
      * @return the value for key or "1" if there was no int for that key
      */
-    private int getIntWithCheck(String key) {
+    private int getIntWithCheck(String key, int defaultValue) {
         Integer result = integers.get(key);
         if (result != null) {
             return result;
         }
-        return 1;
+        return defaultValue;
     }
 
     /**
      * used to access a boolean from the map without risking a null pointer exception
      *
      * @param key key of the boolean that was retrieved
+     * @param defaultValue default value if the Field cant be found
      * @return the value for key or "false" if there was no boolean for that key
      */
-    private boolean getBooleanWithCheck(String key) {
+    private boolean getBooleanWithCheck(String key, boolean defaultValue) {
         Boolean result = booleans.get(key);
         if (result != null) {
             return result;
         }
-        return false;
+        return defaultValue;
     }
 
     /**
@@ -120,7 +117,7 @@ public class SaveFile {
      * @param key to access the value
      */
     public String getString(String key) {
-        return getStringWithCheck(key);
+        return getStringWithCheck(key, "default");
     }
 
     /**
@@ -129,7 +126,7 @@ public class SaveFile {
      * @param key to access the value
      */
     public int getInteger(String key) {
-        return getIntWithCheck(key);
+        return getIntWithCheck(key, 1);
     }
 
     /**
@@ -138,7 +135,37 @@ public class SaveFile {
      * @param key to access the value
      */
     public boolean getBoolean(String key) {
-        return getBooleanWithCheck(key);
+        return getBooleanWithCheck(key, false);
+    }
+
+    /**
+     * gets the value of from a key
+     *
+     * @param key to access the value
+     * @param defaultValue default value if the Field cant be found
+     */
+    public String getString(String key, String defaultValue) {
+        return getStringWithCheck(key, defaultValue);
+    }
+
+    /**
+     * gets the value of from a key
+     *
+     * @param key to access the value
+     * @param defaultValue default value if the Field cant be found
+     */
+    public int getInteger(String key, int defaultValue) {
+        return getIntWithCheck(key, defaultValue);
+    }
+
+    /**
+     * gets the value of from a key
+     *
+     * @param key to access the value
+     * @param defaultValue default value if the Field cant be found
+     */
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return getBooleanWithCheck(key, defaultValue);
     }
 
     /**
@@ -284,10 +311,10 @@ public class SaveFile {
      */
     public Color getColor(String key) {
         return new Color(
-                getInteger(key + red),
-                getInteger(key + green),
-                getInteger(key + blue),
-                getInteger(key + alpha)
+                getInteger(key + red, 255),
+                getInteger(key + green, 255),
+                getInteger(key + blue, 255),
+                getInteger(key + alpha, 255)
         );
     }
 
@@ -356,7 +383,7 @@ public class SaveFile {
     public FontData getFontData(String key) {
         return new FontData(
                 new Font(
-                        getString(key + font),
+                        getString(key + font, "Arial"),
                         getBoolean(key + style) ? BOLD : Font.PLAIN,
                         200
                 ),
@@ -392,7 +419,7 @@ public class SaveFile {
     public AudioSettingRow.AudioData getAudioData(String key) {
         return new AudioSettingRow.AudioData(
                 new File(getString(key + file)),
-                getInteger(key + volume) / 100f
+                getInteger(key + volume, 100) / 100f
         );
     }
 }

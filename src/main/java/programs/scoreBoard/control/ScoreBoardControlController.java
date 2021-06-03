@@ -48,7 +48,7 @@ public class ScoreBoardControlController extends ProgramController<ScoreBoardPro
     @Override
     protected void updateView() {
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getString(TEAM_NAMES + i));
+            getProgramView().getTeamNames()[i].setText(getProgramModel().getSaveFile().getString(TEAM_NAMES + i, "Team " + (i + 1)));
         }
     }
 

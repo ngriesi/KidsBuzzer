@@ -85,7 +85,8 @@ public class MySlider extends JSlider {
      * @param value new value of the slider
      */
     public void setRelativeValue(float value) {
-        super.setValue((int) (Math.min(Math.max(value, 1), 0) * maxValue));
+
+        super.setValue((int) (Math.max(Math.min(value, 1), 0) * maxValue));
     }
 
     /**

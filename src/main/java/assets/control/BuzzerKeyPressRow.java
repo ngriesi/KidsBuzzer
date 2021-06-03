@@ -1,15 +1,14 @@
 package assets.control;
 
+import assets.standardAssets.KeySelector;
 import assets.standardAssets.MyCheckBox;
 import assets.standardAssets.MyLabel;
-import assets.standardAssets.MyTextField;
 import assets.standardAssets.StandardAssetFields;
 import savedataHandler.languages.Text;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 /**
  * row in a control layout used to bind a key to a buzzer. The row contains a text field to set the key
@@ -45,9 +44,9 @@ public class BuzzerKeyPressRow extends ControlViewRow {
     /**
      * Text field used to set the key that gets bound to the buzzer
      * <p>
-     * The text field only allows one character. This disable some keys like ESCAPE
+     * The <code>KeySelector</code> to select the Keys
      */
-    private MyTextField key;
+    private KeySelector key;
 
     /**
      * check box used to disable the key binding of a buzzer
@@ -67,7 +66,7 @@ public class BuzzerKeyPressRow extends ControlViewRow {
         JPanel interactionElementsContainer = new JPanel(new GridBagLayout());
         interactionElementsContainer.setBackground(StandardAssetFields.PANEL_BACKGROUND_COLOR);
 
-        createTextField(buzzerColor, actionListener);
+        createKeySelector(buzzerColor, actionListener);
         createCheckBox(buzzerColor, actionListener);
 
         addComponentsToPanel(interactionElementsContainer);
@@ -89,7 +88,6 @@ public class BuzzerKeyPressRow extends ControlViewRow {
         c.gridx = 1;
         interactionElementsContainer.add(key, c);
         c.gridx = 2;
-        //noinspection SpellCheckingInspection
         interactionElementsContainer.add(new MyLabel(" " + Text.ACTIVE + ":"), c);
         c.gridx = 3;
         interactionElementsContainer.add(checkBox, c);
@@ -113,12 +111,11 @@ public class BuzzerKeyPressRow extends ControlViewRow {
      * @param buzzerColor    color of the buzzer this view element belongs to
      * @param actionListener action listener for all components in this view element
      */
-    private void createTextField(String buzzerColor, ActionListener actionListener) {
-        key = new MyTextField("0");
-        key.setPreferredSize(new Dimension(100, 40));
+    private void createKeySelector(String buzzerColor, ActionListener actionListener) {
+        key = new KeySelector();
+        key.setPreferredSize(new Dimension(200, 40));
         key.setActionCommand(PRESS_KEY + ":" + KEY + ":" + buzzerColor);
         key.addActionListener(actionListener);
-        key.setMaximumLength(1);
     }
 
     /**
@@ -127,7 +124,7 @@ public class BuzzerKeyPressRow extends ControlViewRow {
      * @param key key code of the char that gets set as text of the text field key
      */
     public void setKey(int key) {
-        this.key.setText(KeyEvent.getKeyText(key));
+        this.key.setKey(key);
     }
 
     /**
@@ -146,9 +143,6 @@ public class BuzzerKeyPressRow extends ControlViewRow {
      * @return returns the key code of the key entered to the text field key
      */
     public int getKey() {
-        if (key.getText().toCharArray().length > 0) {
-            return KeyEvent.getExtendedKeyCodeForChar(key.getText().toCharArray()[0]);
-        }
-        return 0;
+        return key.getKey();
     }
 }

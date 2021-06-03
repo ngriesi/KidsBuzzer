@@ -8,6 +8,7 @@ import programs.scoreBoard.main.ScoreBoardProgram;
 import programs.scoreBoard.settings.pageControllers.GeneralSettingsPageController;
 import programs.scoreBoard.settings.pageControllers.ImageSettingsPageController;
 import programs.scoreBoard.settings.pageControllers.MidiSettingsPageController;
+import programs.testProgram.main.TestProgram;
 import savedataHandler.languages.Text;
 
 import java.awt.event.ActionEvent;
@@ -67,7 +68,7 @@ public class ScoreBoardSettingsController extends ProgramController<ScoreBoardPr
      */
     @Override
     protected ScoreBoardSettingsView createView() {
-        return new ScoreBoardSettingsView(this, this, new String[]{Text.GENERAL, Text.IMAGES});
+        return new ScoreBoardSettingsView(this, this, new String[]{Text.GENERAL, Text.IMAGES, Text.LIGHT_CONTROL});
     }
 
     /**
