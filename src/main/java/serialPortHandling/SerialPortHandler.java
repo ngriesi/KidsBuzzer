@@ -45,7 +45,23 @@ class SerialPortHandler {
             createAndSetupPort();
             listenForInitialSerialInput();
         } catch (SerialPortException e) {
+            System.out.println("Port opening failed");
+            restartSearchingForThisPort();
+        }
+    }
+
+    /**
+     * restarts the searching for this port if the previous try failed
+     */
+    private void restartSearchingForThisPort() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        if(!serialPortReader.isConnected()) {
+            serialPortReader.removeSerialPortHandler(this);
+            serialPortReader.searchReceiver();
         }
     }
 

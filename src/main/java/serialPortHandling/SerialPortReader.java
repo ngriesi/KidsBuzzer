@@ -101,7 +101,7 @@ public class SerialPortReader {
     /**
      * chooses the serial port by asking the available devices for a code
      */
-    private void searchReceiver() {
+    void searchReceiver() {
 
         serialPortReaderInterface.searchingForReceiver();
 
@@ -160,6 +160,7 @@ public class SerialPortReader {
                 byte[] buffer = serialPort.readBytes();
                 if (buffer != null) {
                     String data = new String(buffer);
+                    System.out.println(data);
                     serialPortReaderInterface.handleData(data);
                 } else {
                     Thread.sleep(1);
@@ -173,6 +174,7 @@ public class SerialPortReader {
     /**
      * @return returns true if the connection to the receiver is established
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean isConnected() {
         return connected;
     }
@@ -182,5 +184,14 @@ public class SerialPortReader {
      */
     SerialPortReaderInterface getSerialPortReaderInterface() {
         return serialPortReaderInterface;
+    }
+
+    /**
+     * removes a serial port handler form the list
+     *
+     * @param serialPortHandler serial port handler that gets removed
+     */
+    void removeSerialPortHandler(SerialPortHandler serialPortHandler) {
+        serialPortHandlerList.remove(serialPortHandler);
     }
 }
