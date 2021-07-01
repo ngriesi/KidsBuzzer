@@ -31,7 +31,8 @@ public class ImageSettingsPageController extends ProgramSettingsPageController<S
      */
     @Override
     public void settingChangedAction(SettingsEvent settingsEvent) {
-        int buzzerNumber = SaveDataHandler.getNumberByName(settingsEvent.getName().substring(4));
+
+        int buzzerNumber = SaveDataHandler.getNumberByName(settingsEvent.getName().substring(5));
         mainSettingsController.getProgramModel().getSaveFile().putString(ICON + buzzerNumber, ((File) settingsEvent.getValue()).getAbsolutePath());
         mainSettingsController.getProgram().getRenderer().addActionToOpenGlThread(() -> {
             mainSettingsController.getProgramModel().setIcon(Texture.loadTexture(new File(mainSettingsController.getProgramModel().getSaveFile().getString(ICON + buzzerNumber))), buzzerNumber);

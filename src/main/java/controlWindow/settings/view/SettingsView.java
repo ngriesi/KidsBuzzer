@@ -31,8 +31,17 @@ public class SettingsView extends assets.settings.general.SettingsView {
      */
     private GeneralPage generalPage;
 
+    /**
+     * information settings page
+     */
+    private InformationPage informationPage;
+
     public GeneralPage getGeneralPage() {
         return generalPage;
+    }
+
+    public InformationPage getInformationPage() {
+        return informationPage;
     }
 
     /**
@@ -47,8 +56,10 @@ public class SettingsView extends assets.settings.general.SettingsView {
 
     private void createLayout(SettingsController settingsController) {
 
+        informationPage = new InformationPage();
         generalPage = new GeneralPage(settingsController);
         createNewPage(Text.GENERAL, generalPage);
+        createNewPage(Text.INFORMATION, informationPage);
     }
 
     /**

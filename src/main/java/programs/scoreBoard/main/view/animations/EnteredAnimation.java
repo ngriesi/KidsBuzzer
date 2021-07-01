@@ -49,7 +49,7 @@ public class EnteredAnimation {
 
             exponentialAnimator.moveYTo(1, viewItems.getTeamMetalBacks()[i], 70 + i * 20);
 
-            exponentialAnimator.moveYTo(1, viewItems.getIcons()[i], 70 + i * 20);
+            exponentialAnimator.moveYTo(0.95f, viewItems.getIcons()[i], 70 + i * 20);
         }
     }
 }

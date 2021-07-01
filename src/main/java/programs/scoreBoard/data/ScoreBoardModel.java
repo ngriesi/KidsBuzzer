@@ -1,6 +1,5 @@
 package programs.scoreBoard.data;
 
-import assets.settings.rows.AudioSettingRow;
 import presentationWindow.items.Texture;
 import presentationWindow.window.OpenGlRenderer;
 import programs.abstractProgram.ProgramModel;
@@ -21,7 +20,7 @@ public class ScoreBoardModel extends ProgramModel {
      */
     public static String ICON = "Icon", BUZZER_SOUND = "Buzzer Sound", TEAM_NAMES = "Team Names";
     public static String FONT = "Font";
-    public static String MIDI = "Midi";
+    public static String MIDI_POINT = "Midi Point",MIDI_SHOW = "Midi Show", MIDI_HIDE = "Midi Hide";
 
     /**
      * Icons of the teams displayed behind their scores

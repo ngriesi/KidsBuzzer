@@ -11,7 +11,7 @@ public class MidiSettingsPage extends SettingsPage {
     /**
      * Midi settings row if a point is scored
      */
-    private MidiSettingsRow scored;
+    private MidiSettingsRow scored, show, hide;
 
     /**
      * creates Panel with Layout
@@ -34,8 +34,15 @@ public class MidiSettingsPage extends SettingsPage {
 
         super.addRow(scored);
 
-        addEmpty();
-        addEmpty();
+        show = new MidiSettingsRow(settingsChangeListener, "show", Text.MIDI_SCOREBOARD_SHOW, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+
+        super.addRow(show);
+
+        hide = new MidiSettingsRow(settingsChangeListener, "hide", Text.MIDI_SCOREBOARD_HIDE, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+
+        super.addRow(hide);
+
+
         addEmpty();
         addEmpty();
     }
@@ -45,5 +52,13 @@ public class MidiSettingsPage extends SettingsPage {
      */
     public MidiSettingsRow getScored() {
         return scored;
+    }
+
+    public MidiSettingsRow getShow() {
+        return show;
+    }
+
+    public MidiSettingsRow getHide() {
+        return hide;
     }
 }

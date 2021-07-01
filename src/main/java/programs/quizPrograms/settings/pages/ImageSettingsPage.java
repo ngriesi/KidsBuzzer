@@ -8,6 +8,8 @@ import savedataHandler.languages.Text;
 
 import java.io.File;
 
+import static programs.quizPrograms.data.QuizModel.ICON;
+
 /**
  * settings page of the image selection of the quiz overlay program
  */
@@ -39,7 +41,7 @@ public class ImageSettingsPage extends SettingsPage {
         icons = new FileChooserSettingsRow[SaveDataHandler.BUZZER_COUNT];
 
         for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
-            icons[i] = new FileChooserSettingsRow(settingsChangeListener, "icon" + i, Text.SELECT_ICON_BUZZER + " " + (i + 1), new File("default"), Text.IMAGES, "png", "jpg");
+            icons[i] = new FileChooserSettingsRow(settingsChangeListener, ICON + i, Text.SELECT_ICON_BUZZER + " " + (i + 1), new File("default"), Text.IMAGES, "png", "jpg");
 
             super.addRow(icons[i]);
         }

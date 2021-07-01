@@ -23,8 +23,6 @@ public class QuizModel extends ProgramModel {
     public static final String QUESTION_SOUND = "Question Sound", RIGHT_SOUND = "Right Sound", WRONG_SOUND = "Wrong Sound", BUZZER_SOUND = "Buzzer Sound";
     public static final String RIGHT_MIDI = "Right Midi", WRONG_MIDI = "Wrong Midi", BUZZER_MIDI = "Buzzer Midi", NEXT_MIDI = "Next Midi";
     public static final String MAIN_FONT = "Main Font", BUZZER_FONT = "Buzzer Font";
-    public static final String MIDI_RIGHT = "Midi Right", MIDI_WRONG = "Midi Wrong", MIDI_BUZZER = "Midi Question", MIDI_NEXT = "Midi Next";
-
 
     /**
      * icons displayed over the virtual buzzers

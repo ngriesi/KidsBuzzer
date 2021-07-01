@@ -5,7 +5,7 @@ import midi.MidiSettingsRow;
 import programs.abstractProgram.ProgramSettingsPageController;
 import programs.scoreBoard.settings.ScoreBoardSettingsController;
 
-import static programs.scoreBoard.data.ScoreBoardModel.MIDI;
+import static programs.scoreBoard.data.ScoreBoardModel.*;
 
 /**
  * settings controller for the midi settings page of the score board program
@@ -28,7 +28,18 @@ public class MidiSettingsPageController extends ProgramSettingsPageController<Sc
      */
     @Override
     public void settingChangedAction(SettingsEvent event) {
-        mainSettingsController.getProgramModel().getSaveFile().putMidiSettingsRowData(MIDI, (MidiSettingsRow.MidiSettingsRowData) event.getValue());
+        switch (event.getName()) {
+            case "score":
+                mainSettingsController.getProgramModel().getSaveFile().putMidiSettingsRowData(MIDI_POINT, (MidiSettingsRow.MidiSettingsRowData) event.getValue());
+                break;
+            case "show":
+                mainSettingsController.getProgramModel().getSaveFile().putMidiSettingsRowData(MIDI_SHOW, (MidiSettingsRow.MidiSettingsRowData) event.getValue());
+                break;
+            case "hide":
+                mainSettingsController.getProgramModel().getSaveFile().putMidiSettingsRowData(MIDI_HIDE, (MidiSettingsRow.MidiSettingsRowData) event.getValue());
+                break;
+        }
+
     }
 
     /**
@@ -36,6 +47,8 @@ public class MidiSettingsPageController extends ProgramSettingsPageController<Sc
      */
     @Override
     public void updateView() {
-        mainSettingsController.getProgramView().getMidiSettingsPage().getScored().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI));
+        mainSettingsController.getProgramView().getMidiSettingsPage().getScored().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI_POINT));
+        mainSettingsController.getProgramView().getMidiSettingsPage().getHide().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI_HIDE));
+        mainSettingsController.getProgramView().getMidiSettingsPage().getShow().setSetting(mainSettingsController.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI_SHOW));
     }
 }

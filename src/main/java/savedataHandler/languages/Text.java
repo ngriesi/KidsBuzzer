@@ -14,7 +14,9 @@ import java.util.List;
  */
 public class Text {
 
+
     public static String LANGUAGE;
+    public static String INFORMATION;
     public static String LANGUAGE_SELECTION;
     public static String EFFECT_COLOR_SELECTION;
     public static String SETTINGS;
@@ -97,6 +99,10 @@ public class Text {
     public static String GREEN;
     @SuppressWarnings("WeakerAccess")
     public static String BLACK;
+    public static String NO_MIDI_DEVICE_FOUND;
+    public static String MIDI_DEVICE_FOUND;
+    public static String MIDI_SCOREBOARD_SHOW;
+    public static String MIDI_SCOREBOARD_HIDE;
 
     public static String[] LANGUAGES;
 

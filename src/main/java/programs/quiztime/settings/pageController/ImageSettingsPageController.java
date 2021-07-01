@@ -44,7 +44,7 @@ public class ImageSettingsPageController extends ImageSettingsController {
                 program.getProgramPresentationView().updateBackground();
             });
         }
-        if (event.getName().equals(ICON)) {
+        if (event.getName().startsWith(ICON)) {
             super.changeIconSetting(event);
         }
     }

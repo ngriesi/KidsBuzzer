@@ -207,11 +207,13 @@ public class QuizTimeProgramPresentationView extends QuizPresentationView<QuizTi
         for (VirtualBuzzer virtualBuzzer : virtualBuzzers) {
             virtualBuzzer.hide(animationQueueItem);
         }
+        animationQueueItem.addUnfinishedAnimation();
         getProgram().getRenderer().getLinearAnimator().fadeOut(title, changeAnimationDuration, animationQueueItem);
         getProgram().getRenderer().getLinearAnimator().fadeOut(rightText, changeAnimationDuration, animationQueueItem);
-        getProgram().getRenderer().getLinearAnimator().fadeOut(questionText, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(background, changeAnimationDuration, animationQueueItem).addOnFinishedAction(this::resetView));
-
-
+        getProgram().getRenderer().getLinearAnimator().fadeOut(questionText, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> getProgram().getRenderer().getLinearAnimator().fadeOut(background, changeAnimationDuration, animationQueueItem).addOnFinishedAction(() -> {
+            resetView();
+            animationQueueItem.addFinishedAnimation();
+        }));
     }
 
     /**

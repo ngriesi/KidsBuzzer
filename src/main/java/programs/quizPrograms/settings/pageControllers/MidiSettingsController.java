@@ -44,12 +44,12 @@ public class MidiSettingsController extends ProgramSettingsPageController<QuizSe
 
         SaveFile saveFile = mainSettingsController.getProgramModel().getSaveFile();
 
-        midiSettingsPage.getRight().setSetting(saveFile.getMidiSettingsRowData(MIDI_RIGHT));
-        midiSettingsPage.getWrong().setSetting(saveFile.getMidiSettingsRowData(MIDI_WRONG));
-        midiSettingsPage.getNext().setSetting(saveFile.getMidiSettingsRowData(MIDI_NEXT));
+        midiSettingsPage.getRight().setSetting(saveFile.getMidiSettingsRowData(RIGHT_MIDI));
+        midiSettingsPage.getWrong().setSetting(saveFile.getMidiSettingsRowData(WRONG_MIDI));
+        midiSettingsPage.getNext().setSetting(saveFile.getMidiSettingsRowData(NEXT_MIDI));
 
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            midiSettingsPage.getBuzzer()[i].setSetting(saveFile.getMidiSettingsRowData(MIDI_BUZZER + i));
+            midiSettingsPage.getBuzzer()[i].setSetting(saveFile.getMidiSettingsRowData(BUZZER_MIDI + i));
         }
     }
 }

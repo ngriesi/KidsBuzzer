@@ -41,18 +41,18 @@ public class MidiSettingsPage extends SettingsPage {
      */
     protected void createMidiSelectionView(SettingsChangeListener settingsChangeListener) {
 
-        right = new MidiSettingsRow(settingsChangeListener, MIDI_RIGHT, Text.MIDI_RIGHT_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+        right = new MidiSettingsRow(settingsChangeListener, RIGHT_MIDI, Text.MIDI_RIGHT_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
         super.addRow(right);
 
-        wrong = new MidiSettingsRow(settingsChangeListener, MIDI_WRONG, Text.MIDI_WRONG_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+        wrong = new MidiSettingsRow(settingsChangeListener, WRONG_MIDI, Text.MIDI_WRONG_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
         super.addRow(wrong);
 
-        next = new MidiSettingsRow(settingsChangeListener, MIDI_NEXT, Text.MIDI_NEXT_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+        next = new MidiSettingsRow(settingsChangeListener, NEXT_MIDI, Text.MIDI_NEXT_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
         super.addRow(next);
 
         buzzer = new MidiSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
         for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
-            buzzer[i] = new MidiSettingsRow(settingsChangeListener, MIDI_BUZZER + i, SaveDataHandler.BUZZER_NAMES[i] + " " + Text.MIDI_BUZZER_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
+            buzzer[i] = new MidiSettingsRow(settingsChangeListener, BUZZER_MIDI + i, SaveDataHandler.BUZZER_NAMES[i] + " " + Text.MIDI_BUZZER_DESCRIPTION, new MidiSettingsRow.MidiSettingsRowData(new Vector2i(1, 1), false));
             super.addRow(buzzer[i]);
         }
     }

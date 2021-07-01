@@ -1,9 +1,12 @@
+import midi.MidiHandler;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import startupApp.LoadingModel;
 import utils.NativeLoadingHandler;
 
+import javax.sound.midi.*;
 import javax.swing.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +19,8 @@ public class Main {
      */
     public static void main(String[] args) {
 
+
+
         try {
             NativeLoadingHandler.loadNatives();
         } catch (Exception e) {
@@ -27,8 +32,6 @@ public class Main {
 
 
         createStartupApp();
-
-
     }
 
     /**

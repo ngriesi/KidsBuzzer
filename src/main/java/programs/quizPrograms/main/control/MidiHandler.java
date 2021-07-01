@@ -38,44 +38,44 @@ public class MidiHandler {
     }
 
     /**
-     * performs the midi aciton of the Right aciton
+     * performs the midi action of the Right action
      */
     void performRightMidiAction() {
         MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.RIGHT_MIDI);
         if (midiData.isActive()) {
-            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            midiHandler.sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
     /**
-     * performs the midi aciton of the Wrong aciton
+     * performs the midi action of the Wrong action
      */
     void performWrongMidiAction() {
         MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.WRONG_MIDI);
         if (midiData.isActive()) {
-            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            midiHandler.sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
     /**
-     * performs the midi aciton of the Next aciton
+     * performs the midi action of the Next action
      */
     public void performNextMidiAction() {
         MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.NEXT_MIDI);
         if (midiData.isActive()) {
-            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            midiHandler.sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 
     /**
-     * performs the midi aciton of the Buzzer aciton
+     * performs the midi action of the Buzzer action
      *
      * @param buzzerIndex index of the buzzer starting with 0
      */
     void performBuzzerMidiAction(int buzzerIndex) {
         MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(QuizModel.BUZZER_MIDI + buzzerIndex);
         if (midiData.isActive()) {
-            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            midiHandler.sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 

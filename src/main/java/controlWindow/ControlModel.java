@@ -86,8 +86,7 @@ public class ControlModel {
     public ControlModel(SaveDataHandler saveDataHandler, OpenGlRenderer openGlRenderer, ProgramHandler programHandler) {
         applicationRunning = true;
 
-        midiController = new MidiHandler();
-        midiController.sendMessageToPressExecuter(1, 1);
+
 
         MainController mainController = new MainController(this);
 
@@ -101,6 +100,9 @@ public class ControlModel {
 
         this.settingsController = new SettingsController(mainController, saveDataHandler.getSettings());
         createControlView(programHandler, mainController);
+
+        midiController = new MidiHandler(mainController);
+        midiController.setupMidiHandler();
 
         mainController.setProgram(programHandler.getByName(programHandler.getProgramNamesList()[0]));
 
@@ -123,7 +125,7 @@ public class ControlModel {
     /**
      * @return returns true if the application is running
      */
-    boolean isApplicationRunning() {
+    public boolean isApplicationRunning() {
         return applicationRunning;
     }
 

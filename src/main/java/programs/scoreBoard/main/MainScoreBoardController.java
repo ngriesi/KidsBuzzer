@@ -4,7 +4,7 @@ package programs.scoreBoard.main;
 import midi.MidiSettingsRow;
 import presentationWindow.animations.AnimationQueue;
 
-import static programs.scoreBoard.data.ScoreBoardModel.MIDI;
+import static programs.scoreBoard.data.ScoreBoardModel.*;
 
 /**
  * main controller of the score board program
@@ -38,7 +38,10 @@ public class MainScoreBoardController {
      */
     public void hide() {
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
-        animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().exitAnimation(animationQueueItem));
+        animationQueueItem.setAnimationAction(() -> {
+            program.getProgramPresentationView().exitAnimation(animationQueueItem);
+            performMidiAction(MIDI_HIDE);
+        });
         animationQueueItem.addOnFinishedAction(() -> program.getMainController().hidePresentationWindow());
         animationQueue.addAnimation(animationQueueItem);
     }
@@ -51,6 +54,7 @@ public class MainScoreBoardController {
         animationQueueItem.setAnimationAction(() -> {
             program.getMainController().showPresentationWindow();
             program.getProgramPresentationView().enterAnimation(animationQueueItem);
+            performMidiAction(MIDI_SHOW);
         });
         animationQueue.addAnimation(animationQueueItem);
     }
@@ -64,7 +68,7 @@ public class MainScoreBoardController {
         program.getProgramModel().getScores()[buzzer - 1]++;
         program.getProgramController().updateScores();
         program.getProgramModel().playBuzzerSound();
-        performMidiAction();
+        performMidiAction(MIDI_POINT);
         AnimationQueue.AnimationQueueItem animationQueueItem = new AnimationQueue.AnimationQueueItem();
         animationQueueItem.setAnimationAction(() -> program.getProgramPresentationView().buzzerAnimation(animationQueueItem, buzzer));
         animationQueueItem.addOnFinishedAction(this::buzzerAnimationFinished);
@@ -75,10 +79,11 @@ public class MainScoreBoardController {
     /**
      * performs the midi action for the scored action
      */
-    private void performMidiAction() {
-        MidiSettingsRow.MidiSettingsRowData midiData = program.getProgramModel().getSaveFile().getMidiSettingsRowData(MIDI);
+    private void performMidiAction(String action) {
+        System.out.println(action);
+        MidiSettingsRow.MidiSettingsRowData midiData = program.getProgramModel().getSaveFile().getMidiSettingsRowData(action);
         if (midiData.isActive()) {
-            program.getMainController().getControlModel().getMidiHandler().sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            program.getMainController().getControlModel().getMidiHandler().sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 

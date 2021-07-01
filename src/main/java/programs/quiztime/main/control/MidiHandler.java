@@ -23,9 +23,13 @@ public class MidiHandler extends programs.quizPrograms.main.control.MidiHandler 
      * performs the midi action of the intro action
      */
     void performIntroMidiAction() {
+
+
+
         MidiSettingsRow.MidiSettingsRowData midiData = quizSaveFile.getMidiSettingsRowData(MIDI_INTRO);
         if (midiData.isActive()) {
-            midiHandler.sendMessageToPressExecuter(midiData.getButton().x, midiData.getButton().y);
+            System.out.println("test");
+            midiHandler.sendMessageToPressExecutor(midiData.getButton().x, midiData.getButton().y);
         }
     }
 }

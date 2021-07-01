@@ -83,6 +83,7 @@ public class MainController {
      * performs the actions for the closing of the application
      */
     void applicationClosing() {
+        getControlModel().getMidiHandler().closeMidi();
         controlModel.getCurrentProgram().programClosed();
         controlModel.applicationIsClosing();
         getControlModel().saveWindowBounds();
@@ -159,4 +160,11 @@ public class MainController {
 
     }
 
+    public void midiDeviceFound() {
+        getControlModel().getSettingsController().getSettingsView().getInformationPage().midiDeviceFound();
+    }
+
+    public void midiDeviceLost() {
+        getControlModel().getSettingsController().getSettingsView().getInformationPage().midiDeviceLost();
+    }
 }
