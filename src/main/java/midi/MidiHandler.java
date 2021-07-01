@@ -184,42 +184,6 @@ public class MidiHandler {
     }
 
     /**
-     * creates the midi message for the event that this note was pressed
-     *
-     * @param note note that was pressed
-     * @return returns the build midi message
-     */
-    private ShortMessage createMidiMessage(int note) {
-        ShortMessage myMsg = new ShortMessage();
-        // Start playing the note note
-        // moderately loud (velocity = 100).
-        try {
-            myMsg.setMessage(ShortMessage.NOTE_ON, 0, note, 100);
-        } catch (InvalidMidiDataException e) {
-            System.out.println("Invalid midi data");
-            e.printStackTrace();
-        }
-        return myMsg;
-    }
-
-    /**
-     * sends the midi message to a device if one is connected
-     *
-     * @param myMsg the midi message
-     */
-    private void sendMessage(ShortMessage myMsg) {
-        long timeStamp = -1;
-        Receiver rcvr;
-        try {
-            rcvr = MidiSystem.getReceiver();
-            rcvr.send(myMsg, timeStamp);
-        } catch (MidiUnavailableException e) {
-            System.out.println("Cant find midi device");
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * closes the midi system
      */
     public void closeMidi() {

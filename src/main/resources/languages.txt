@@ -82,3 +82,5 @@ NO_MIDI_DEVICE_FOUND;No Midi Device Found;Kein Midi Gerät erkannt
 MIDI_DEVICE_FOUND;Midi Device Connected;Midi Gerät Verbunden
 MIDI_SCOREBOARD_SHOW;Midi Action when the score board is shown;Midi Aktion wenn das Scoreboard angezeigt wird
 MIDI_SCOREBOARD_HIDE;Midi Action when the score board is hidden;Midi Aktion wenn das Scoreboard versteckt wird
+TO_MANUAL;Open Manual;Anleitung Öffnen
+MANUAL;Manual;Anleitung

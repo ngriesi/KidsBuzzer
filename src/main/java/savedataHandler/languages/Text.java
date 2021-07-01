@@ -103,6 +103,8 @@ public class Text {
     public static String MIDI_DEVICE_FOUND;
     public static String MIDI_SCOREBOARD_SHOW;
     public static String MIDI_SCOREBOARD_HIDE;
+    public static String TO_MANUAL;
+    public static String MANUAL;
 
     public static String[] LANGUAGES;
 
