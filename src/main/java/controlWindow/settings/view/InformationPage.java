@@ -10,11 +10,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
+/**
+ * Information Page for the settings used to display information and the open button for the manual
+ */
 public class InformationPage extends SettingsPage {
 
 
+    /**
+     * Settings row that displays the midi devices status
+     */
     private MessageSettingsRow midiDeviceStatus;
 
     /**

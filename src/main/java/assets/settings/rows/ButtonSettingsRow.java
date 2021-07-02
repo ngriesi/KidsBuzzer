@@ -19,9 +19,9 @@ public class ButtonSettingsRow extends SettingsRow<String> implements ActionList
     /**
      * creates a new Button settings row
      *
-     * @param name identification name of the settings row
-     * @param description description of the settings row
-     * @param buttonText text of the button
+     * @param name         identification name of the settings row
+     * @param description  description of the settings row
+     * @param buttonText   text of the button
      * @param buttonAction action of the button
      */
     public ButtonSettingsRow(String name, String description, String buttonText, Action buttonAction) {
@@ -35,6 +35,11 @@ public class ButtonSettingsRow extends SettingsRow<String> implements ActionList
         super.addInteractionElement(button);
     }
 
+    /**
+     * Action Listener for the button of the settings row
+     *
+     * @param e action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         action.execute();

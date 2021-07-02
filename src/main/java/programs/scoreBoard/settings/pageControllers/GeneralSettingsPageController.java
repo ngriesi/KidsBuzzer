@@ -74,10 +74,10 @@ public class GeneralSettingsPageController extends ProgramSettingsPageController
         mainSettingsController.getProgramModel().getSaveFile().putAudioData(BUZZER_SOUND, (AudioSettingRow.AudioData) se.getValue());
         if (se.getComponentName().equals(AudioSettingRow.VOLUME)) {
             if (mainSettingsController.getProgramModel().getBuzzerSound() != null) {
-                mainSettingsController.getProgramModel().getBuzzerSound().setGain((float) se.getValue());
+                mainSettingsController.getProgramModel().getBuzzerSound().setGain(((AudioSettingRow.AudioData) se.getValue()).getVolume());
             }
         } else {
-            new Thread(() -> mainSettingsController.getProgramModel().setBuzzerSound(AudioClip.load((File) se.getValue()))).start();
+            new Thread(() -> mainSettingsController.getProgramModel().setBuzzerSound(AudioClip.load(((AudioSettingRow.AudioData)se.getValue()).getFile()))).start();
         }
     }
 

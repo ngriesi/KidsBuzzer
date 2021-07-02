@@ -55,6 +55,12 @@
   </build>
   <profiles>
     <profile>
+      <id>lwjgl-natives-macos-amd64</id>
+      <properties>
+        <lwjgl.natives>natives-macos</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
       <id>lwjgl-natives-windows-amd64</id>
       <properties>
         <lwjgl.natives>natives-windows</lwjgl.natives>

@@ -3,6 +3,8 @@ package assets.standardAssets;
 import assets.combobox.MyComboBox;
 import savedataHandler.languages.Text;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Special combo box used to select a key
  */
@@ -123,21 +125,21 @@ public class KeySelector extends MyComboBox<String> {
                 return 57;
 
             case 36:
-                return 227;
+                return 0x27;
             case 37:
-                return 226;
+                return 0x25;
             case 38:
-                return 224;
+                return 0x26;
             case 39:
-                return 225;
+                return 0x28;
             case 40:
-                return 32;
+                return 0x20;
             case 41:
-                return 10;
+                return '\n';
             case 42:
-                return 8;
+                return '\b';
             case 43:
-                return 9;
+                return '\t';
             default:
                 return 65;
         }

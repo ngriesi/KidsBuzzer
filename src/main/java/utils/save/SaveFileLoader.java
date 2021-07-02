@@ -1,11 +1,12 @@
 package utils.save;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Loads a save file form the SaveFiles directory
@@ -93,7 +94,7 @@ class SaveFileLoader {
         List<String> lines;
         try {
             // reads the file
-            lines = Files.readAllLines(Paths.get("saveFiles/" + saveFile.getName() + ".sf"), Charset.defaultCharset());
+            lines = Files.readAllLines(Paths.get("saveFiles/" + saveFile.getName() + ".sf"), UTF_8);
         } catch (IOException e) {
             System.out.println("Save file " + saveFile.getName() + ".sf not found");
             return new LinkedList<>();

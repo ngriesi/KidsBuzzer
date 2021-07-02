@@ -83,6 +83,7 @@ public class KeyPressProgram extends Program<KeyPressController, KeyPressControl
                 Robot bot;
                 try {
                     bot = new Robot();
+                    System.out.println(getProgramModel().getSaveFile().getInteger(KEY + (buzzer - 1)));
                     bot.keyPress(getProgramModel().getSaveFile().getInteger(KEY + (buzzer - 1)));
                     Thread.sleep(100);
                     bot.keyRelease(getProgramModel().getSaveFile().getInteger(KEY + (buzzer - 1)));
