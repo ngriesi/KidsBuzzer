@@ -36,12 +36,30 @@ public class SettingsView extends assets.settings.general.SettingsView {
      */
     private InformationPage informationPage;
 
+    /**
+     * buzzer settings page
+     */
+    private BuzzerPage buzzerPage;
+
+    /**
+     * @return returns the general Settings page of the main Settings
+     */
     public GeneralPage getGeneralPage() {
         return generalPage;
     }
 
+    /**
+     * @return returns the information settings page of the main Settings
+     */
     public InformationPage getInformationPage() {
         return informationPage;
+    }
+
+    /**
+     * @return returns the settings page of the buzzers
+     */
+    public BuzzerPage getBuzzerPage() {
+        return buzzerPage;
     }
 
     /**
@@ -54,12 +72,19 @@ public class SettingsView extends assets.settings.general.SettingsView {
         createLayout(settingsController);
     }
 
+    /**
+     * Creates the layout of this view
+     *
+     * @param settingsController controller of this Settings view
+     */
     private void createLayout(SettingsController settingsController) {
 
         informationPage = new InformationPage();
         generalPage = new GeneralPage(settingsController);
+        buzzerPage = new BuzzerPage(settingsController);
         createNewPage(Text.GENERAL, generalPage);
         createNewPage(Text.INFORMATION, informationPage);
+        createNewPage(Text.BUZZER, buzzerPage);
     }
 
     /**
@@ -119,5 +144,6 @@ public class SettingsView extends assets.settings.general.SettingsView {
     @Override
     public void updateSettings(SaveFile saveFile) {
         generalPage.updateSettings(saveFile);
+        buzzerPage.updateSettings(saveFile);
     }
 }

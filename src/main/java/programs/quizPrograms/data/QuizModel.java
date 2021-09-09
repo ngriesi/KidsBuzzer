@@ -138,11 +138,29 @@ public class QuizModel extends ProgramModel {
     }
 
     /**
+     * fades out <code>rightSound</code>
+     */
+    public void fadeOutBuzzerSound() {
+        if (buzzerSound != null) {
+            buzzerSound.fadeOut(1);
+        }
+    }
+
+    /**
      * plays the wrong sound if it exists
      */
     public void playWrongSound() {
         if (wrongSound != null) {
             wrongSound.play();
+        }
+    }
+
+    /**
+     * fades out <code>wrongSound</code>
+     */
+    public void fadeOutWrongSound() {
+        if (wrongSound != null) {
+            wrongSound.fadeOut(1);
         }
     }
 

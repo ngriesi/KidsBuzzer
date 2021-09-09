@@ -72,7 +72,12 @@ public class ScoreBoardProgram extends Program<ScoreBoardControlController, Scor
 
     @Override
     public void updateBuzzerCount() {
+        mainController.updateBuzzerCount();
+    }
 
+    @Override
+    public void programClosed() {
+        super.programClosed();
     }
 
     /**

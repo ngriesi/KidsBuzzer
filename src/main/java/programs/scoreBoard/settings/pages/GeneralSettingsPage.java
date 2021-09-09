@@ -2,10 +2,7 @@ package programs.scoreBoard.settings.pages;
 
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsPage;
-import assets.settings.rows.AudioSettingRow;
-import assets.settings.rows.FontChooserRow;
-import assets.settings.rows.FontData;
-import assets.settings.rows.TextFieldSettingsRow;
+import assets.settings.rows.*;
 import savedataHandler.SaveDataHandler;
 import savedataHandler.languages.Text;
 
@@ -55,6 +52,8 @@ public class GeneralSettingsPage extends SettingsPage {
         buzzerPressedSound = new AudioSettingRow(settingsChangeListener, "buzzerSound", Text.SOUND_WHEN_SCORED);
 
         super.addRow(buzzerPressedSound);
+
+        super.addRow(new AudioWarningMessageSettingsRow());
 
         teamNames = new TextFieldSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
 

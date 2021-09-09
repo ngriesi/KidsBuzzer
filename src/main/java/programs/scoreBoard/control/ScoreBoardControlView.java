@@ -19,6 +19,11 @@ import java.awt.event.ActionListener;
 class ScoreBoardControlView extends ProgramView {
 
     /**
+     * size of the buttons
+     */
+    private Dimension buttonSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 7, Toolkit.getDefaultToolkit().getScreenSize().height / 20);
+
+    /**
      * show and hide buttons to show or hide the output window
      */
     private MyButton show, hide;
@@ -61,9 +66,9 @@ class ScoreBoardControlView extends ProgramView {
             }
         });
 
-        show = createButton(actionListener, topBar, Text.SHOW, "show", 0);
+        show = createButton(actionListener, topBar, Text.SHOW + "(A)", "show", 0);
 
-        hide = createButton(actionListener, topBar, Text.HIDE, "hide", 1);
+        hide = createButton(actionListener, topBar, Text.HIDE + "(V)", "hide", 1);
 
         createButton(actionListener, topBar, Text.SETTINGS, "settings", 2);
 
@@ -87,6 +92,7 @@ class ScoreBoardControlView extends ProgramView {
         MyButton button = new MyButton(text);
         button.setActionCommand(actionCommand);
         button.addActionListener(actionListener);
+        button.setPreferredSize(buttonSize);
         this.addComponent(topBar, button, gridX, 0, 1, 1, GridBagConstraints.NONE);
         return button;
     }

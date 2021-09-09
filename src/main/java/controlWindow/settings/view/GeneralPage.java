@@ -18,7 +18,6 @@ public class GeneralPage extends SettingsPage {
      * settings rows
      */
     private ComboBoxSettingsRow<Integer> outputScreen;
-    private ComboBoxSettingsRow<Integer> buzzerNumber;
     private CheckBoxSettingsRow useNativeKeyListener;
     private ComboBoxSettingsRow<String> language;
     private ColorSelectionRow effectColorSelector;
@@ -39,7 +38,6 @@ public class GeneralPage extends SettingsPage {
      */
     void updateSettings(SaveFile settingsSaveFile) {
         outputScreen.setSetting(settingsSaveFile.getInteger(SettingsController.OUTPUT_SCREEN));
-        buzzerNumber.setSetting(settingsSaveFile.getInteger(SettingsController.BUZZER_COUNT, 3));
         language.setSetting(settingsSaveFile.getString(SettingsController.LANGUAGE));
         effectColorSelector.setSetting(settingsSaveFile.getColor(SettingsController.EFFECT_COLOR));
     }
@@ -51,8 +49,6 @@ public class GeneralPage extends SettingsPage {
 
         outputScreen = new ComboBoxSettingsRow<>(settingsController, SettingsController.OUTPUT_SCREEN, Text.CHOOSE_OUTPUT_SCREEN, settingsController.getSettingsSaveFile().getInteger(SettingsController.OUTPUT_SCREEN), settingsController.getPossibleScreens());
         super.addRow(outputScreen);
-        buzzerNumber = new ComboBoxSettingsRow<>(settingsController, SettingsController.BUZZER_COUNT, Text.SELECT_BUZZER_NUMBER, settingsController.getSettingsSaveFile().getInteger(SettingsController.BUZZER_COUNT, 3), new Integer[]{1, 2, 3});
-        super.addRow(buzzerNumber);
         useNativeKeyListener = new CheckBoxSettingsRow(settingsController, SettingsController.NATIVE_KEY_LISTENER, Text.USE_NATIVE_KEYS, settingsController.getSettingsSaveFile().getBoolean(SettingsController.NATIVE_KEY_LISTENER));
         super.addRow(useNativeKeyListener);
         language = new ComboBoxSettingsRow<>(settingsController, SettingsController.LANGUAGE, Text.LANGUAGE_SELECTION, settingsController.getSettingsSaveFile().getString(SettingsController.LANGUAGE), Text.LANGUAGES);

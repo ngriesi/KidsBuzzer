@@ -105,6 +105,12 @@ public class Text {
     public static String MIDI_SCOREBOARD_HIDE;
     public static String TO_MANUAL;
     public static String MANUAL;
+    public static String AUDIO_WARNING;
+    public static String CLEAR_OUTPUT_CHANGE_PROGRAM;
+    public static String CHANGE_PROGRAM;
+    public static String BUZZER_COLOR_1;
+    public static String BUZZER_COLOR_2;
+    public static String BUZZER_COLOR_3;
 
     public static String[] LANGUAGES;
 

@@ -31,17 +31,17 @@ public class SaveDataHandler {
     /**
      * colors of the buzzers when they are in the unpressed state
      */
-    public static Color[] BUZZER_COLORS_UNPRESSED = {new Color(255, 125, 125), new Color(125, 255, 125), new Color(75, 75, 75)};
+    public static Color[] BUZZER_COLORS_UNPRESSED = {new Color(255, 125, 125), new Color(125, 125, 255), new Color(175, 175, 175)};
 
     /**
      * colors of the buzzers when they are in the pressed state
      */
-    public static Color[] BUZZER_COLORS_PRESSED = {new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 0)};
+    public static Color[] BUZZER_COLORS_PRESSED = {new Color(255, 0, 0), new Color(0, 0, 255), new Color(255, 255, 255)};
 
     /**
      * colors of the buzzers when they are disabled
      */
-    public static final Color[] BUZZER_COLORS_DISABLED = {new Color(150, 125, 125), new Color(125, 150, 125), new Color(125, 125, 125)};
+    public static final Color[] BUZZER_COLORS_DISABLED = {new Color(150, 125, 125), new Color(125, 125, 150), new Color(125, 125, 125)};
 
     /**
      * settings save file of the main settings
@@ -70,6 +70,18 @@ public class SaveDataHandler {
         }
 
         return -1;
+    }
+
+    /**
+     * changes the color of one of the buzzers
+     *
+     * @param value new color of the buzzer
+     * @param buzzerNumber buzzer which color gets changed
+     */
+    public static void changeBuzzerColor(Color value, int buzzerNumber) {
+        BUZZER_COLORS_PRESSED[buzzerNumber - 1] = value;
+        BUZZER_COLORS_UNPRESSED[buzzerNumber - 1] = new Color((int) (value.getRed() * 0.8f + 0.5f), (int)(value.getGreen() * 0.8f + 0.5f), (int)(value.getBlue() * 0.8f + 0.5f));
+        BUZZER_COLORS_DISABLED[buzzerNumber - 1] = new Color((int) (value.getRed() * 0.6f + 0.5f), (int)(value.getGreen() * 0.6f + 0.5f), (int)(value.getBlue() * 0.6f + 0.5f));
     }
 
     /**

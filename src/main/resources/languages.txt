@@ -84,3 +84,9 @@ MIDI_SCOREBOARD_SHOW;Midi Action when the score board is shown;Midi Aktion wenn 
 MIDI_SCOREBOARD_HIDE;Midi Action when the score board is hidden;Midi Aktion wenn das Scoreboard versteckt wird
 TO_MANUAL;Open Manual;Anleitung Öffnen
 MANUAL;Manual;Anleitung
+AUDIO_WARNING;Only short Audio Files Allowed;Nur kurze Audiodateien erlaubt
+CLEAR_OUTPUT_CHANGE_PROGRAM;Clear Output to Change Program;Ausgabe verbergen zum Programwechseln
+CHANGE_PROGRAM;Change Program;Program Wechseln
+BUZZER_COLOR_1;Color of Buzzer 1;Farbe Buzzer 1
+BUZZER_COLOR_2;Color of Buzzer 2;Farbe Buzzer 2
+BUZZER_COLOR_3;Color of Buzzer 3;Farbe Buzzer 3

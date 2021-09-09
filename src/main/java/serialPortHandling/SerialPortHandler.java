@@ -80,7 +80,8 @@ class SerialPortHandler {
                 if (buffer != null) {
                     String temp = new String(buffer);
                     data.append(temp);
-                    if (data.toString().trim().equals("buzzer:kids")) {
+                    System.out.println("Initial Value: " + data.toString());
+                    if (data.toString().trim().contains("buzzer:kids")) {
                         serialPortReader.receiverFound(this, data.toString().split(":")[1]);
                         return;
                     }

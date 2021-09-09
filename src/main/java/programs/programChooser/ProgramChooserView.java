@@ -1,6 +1,7 @@
 package programs.programChooser;
 
 import assets.standardAssets.MyButton;
+import assets.standardAssets.MyLabel;
 import assets.standardAssets.MyPanel;
 import assets.standardAssets.StandardAssetFields;
 import savedataHandler.languages.Text;
@@ -21,6 +22,11 @@ public class ProgramChooserView extends MyPanel {
      * left side panel in its expanded state to select programs
      */
     private MyPanel expanded;
+
+    /**
+     * Label displaying if a program change is possible
+     */
+    private MyLabel label;
 
     /**
      * creates a new view
@@ -95,6 +101,13 @@ public class ProgramChooserView extends MyPanel {
      * @param programListBack     parent panel for the buttons
      */
     private void createProgramButtons(ProgramChooserModel programChooserModel, JPanel programListBack) {
+
+        label = new MyLabel(Text.CHANGE_PROGRAM);
+        label.setForeground(StandardAssetFields.FOREGROUND_COLOR);
+        label.setPreferredSize(new Dimension(100,50));
+
+        programListBack.add(label, new GridBagConstraints(0, 0, 2, 1, 1, 0.03f, PAGE_END, BOTH, new Insets(0, 0, 10, 0), 0, 0));
+
         int i = 0;
         for (String name : programChooserModel.getProgramHandler().getProgramNamesList()) {
             MyButton program = new MyButton(name);
@@ -102,6 +115,14 @@ public class ProgramChooserView extends MyPanel {
             program.addActionListener((e) -> programChooserModel.programButtonAction(name));
             i++;
         }
+    }
+
+    /**
+     * changes the text and color of the program change title
+     */
+    void changeProgramTitleText(String text, Color color) {
+        label.setText(text);
+        label.setForeground(color);
     }
 
     /**

@@ -1,6 +1,7 @@
 package programs.instantButton.control;
 
 import assets.settings.rows.AudioSettingRow;
+import assets.settings.rows.AudioWarningMessageSettingsRow;
 import assets.settings.rows.EmptySettingsRow;
 import programs.abstractProgram.ProgramControllerView;
 import savedataHandler.SaveDataHandler;
@@ -31,7 +32,7 @@ class InstantButtonControlView extends ProgramControllerView<InstantButtonContro
             this.addComponent(this, audioSettingRows[i],0,i,1,1);
         }
 
-        this.addComponent(this, new EmptySettingsRow(),0,SaveDataHandler.MAX_BUZZER_COUNT, 1,1);
+        this.addComponent(this, new AudioWarningMessageSettingsRow(),0,SaveDataHandler.MAX_BUZZER_COUNT, 1,1);
         this.addComponent(this, new EmptySettingsRow(),0,SaveDataHandler.MAX_BUZZER_COUNT + 1, 1,1);
 
 

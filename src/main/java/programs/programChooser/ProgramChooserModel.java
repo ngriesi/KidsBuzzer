@@ -1,7 +1,10 @@
 package programs.programChooser;
 
+import assets.standardAssets.StandardAssetFields;
 import controlWindow.MainController;
+import savedataHandler.languages.Text;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +12,11 @@ import java.awt.event.ActionListener;
  * controller for the program choosing side panel
  */
 public class ProgramChooserModel implements ActionListener {
+
+    /**
+     * flag indicating if a program change is allowed
+     */
+    private boolean programChangeAllowed = true;
 
     /**
      * view of this controller
@@ -76,9 +84,24 @@ public class ProgramChooserModel implements ActionListener {
      * @param name name of the selected program
      */
     void programButtonAction(String name) {
-        mainController.setProgram(programHandler.getByName(name));
-        collapseButtonAction();
+        if(programChangeAllowed) {
+            mainController.setProgram(programHandler.getByName(name));
+            collapseButtonAction();
+        }
     }
+
+    /**
+     * action of the keys for the programs
+     *
+     * @param number number of the selected program
+     */
+     public void programButtonAction(int number) {
+        if(programChangeAllowed) {
+            mainController.setProgram(programHandler.getByNumber(number));
+            collapseButtonAction();
+        }
+    }
+
 
     /**
      * action of the settings button
@@ -99,5 +122,21 @@ public class ProgramChooserModel implements ActionListener {
      */
     public void updateView() {
         programChooserView = new ProgramChooserView(this);
+    }
+
+    /**
+     * Allows the change of program
+     */
+    public void allowProgramChange() {
+        programChangeAllowed = true;
+        programChooserView.changeProgramTitleText(Text.CHANGE_PROGRAM, StandardAssetFields.FOREGROUND_COLOR);
+    }
+
+    /**
+     * permits the change of program
+     */
+    public void permitProgramChange() {
+        programChangeAllowed = false;
+        programChooserView.changeProgramTitleText(Text.CLEAR_OUTPUT_CHANGE_PROGRAM, Color.RED);
     }
 }

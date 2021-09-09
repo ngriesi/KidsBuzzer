@@ -2,7 +2,6 @@ package programs.scoreBoard.settings.pageControllers;
 
 import assets.settings.general.SettingsEvent;
 import assets.settings.rows.AudioSettingRow;
-import assets.settings.rows.FontChooserRow;
 import assets.settings.rows.FontData;
 import programs.abstractProgram.ProgramSettingsPageController;
 import programs.scoreBoard.data.ScoreBoardModel;
@@ -12,11 +11,6 @@ import programs.scoreBoard.settings.ScoreBoardSettingsView;
 import savedataHandler.SaveDataHandler;
 import utils.audioSystem.AudioClip;
 
-import java.awt.*;
-import java.io.File;
-
-import static java.awt.Font.BOLD;
-import static java.awt.Font.PLAIN;
 import static programs.scoreBoard.data.ScoreBoardModel.*;
 
 /**

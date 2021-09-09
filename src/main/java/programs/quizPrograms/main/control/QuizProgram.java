@@ -107,6 +107,14 @@ public abstract class QuizProgram<PC extends QuizControlController, SC extends P
     }
 
     /**
+     * action performed when the program gets closed
+     */
+    @Override
+    public void programClosed() {
+        super.programClosed();
+    }
+
+    /**
      * method called through the naive key listener when a key gets released
      *
      * @param keyCode code of the key that was released

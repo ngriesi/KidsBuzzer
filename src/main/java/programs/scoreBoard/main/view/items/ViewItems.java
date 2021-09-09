@@ -13,6 +13,7 @@ import savedataHandler.SaveDataHandler;
 
 import static programs.scoreBoard.data.ScoreBoardModel.FONT;
 import static programs.scoreBoard.data.ScoreBoardModel.TEAM_NAMES;
+import static savedataHandler.SaveDataHandler.MAX_BUZZER_COUNT;
 
 /**
  * Class containing all the items of the sore board output view
@@ -65,17 +66,17 @@ public class ViewItems {
      */
     public void setupView(PresentationViewRenderItem mainItem) {
 
-        teamMetalBacks = new MetalQuad[SaveDataHandler.MAX_BUZZER_COUNT];
+        teamMetalBacks = new MetalQuad[MAX_BUZZER_COUNT];
 
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        for (int i = 0; i < MAX_BUZZER_COUNT; i++) {
             teamMetalBacks[i] = new MetalQuad();
             teamMetalBacks[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 1.5f);
             teamMetalBacks[i].setSize(0.3f, 0.3f);
             mainItem.addItem(teamMetalBacks[i]);
         }
 
-        icons = new ImageItem[SaveDataHandler.MAX_BUZZER_COUNT];
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        icons = new ImageItem[MAX_BUZZER_COUNT];
+        for (int i = 0; i < MAX_BUZZER_COUNT; i++) {
             icons[i] = new ImageItem(scoreBoardModel.getIcons()[i]);
             icons[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 1.5f);
             icons[i].setSize((icons[i].getAspectRatio() * 0.3f) / Window.WINDOW_ASPECT_RATIO, 0.3f);
@@ -85,8 +86,8 @@ public class ViewItems {
         Color darkYellow = new Color(0.98f, 0.82f, 0.243f, 0.7f);
         Color lightYellow = new Color(0.98f, 0.859f, 0.463f, 0.7f);
 
-        teamYellowBacks = new QuadItem[SaveDataHandler.MAX_BUZZER_COUNT];
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        teamYellowBacks = new QuadItem[MAX_BUZZER_COUNT];
+        for (int i = 0; i < MAX_BUZZER_COUNT; i++) {
             teamYellowBacks[i] = new QuadItem();
             teamYellowBacks[i].setPosition(-0.1f, 0.95f);
             teamYellowBacks[i].setSize(0.1f, 0.1f);
@@ -97,8 +98,8 @@ public class ViewItems {
 
         FontData fontData = scoreBoardModel.getSaveFile().getFontData(FONT);
 
-        labels = new TextItem[SaveDataHandler.MAX_BUZZER_COUNT];
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        labels = new TextItem[MAX_BUZZER_COUNT];
+        for (int i = 0; i < MAX_BUZZER_COUNT; i++) {
             labels[i] = new TextItem(scoreBoardModel.getSaveFile().getString(TEAM_NAMES + i, "Team " + (i + 1)) + ": " + 0, fontData.getFont());
             labels[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 0.95f);
             labels[i].setSize((labels[i].getAspectRatio() * textSize) / Window.WINDOW_ASPECT_RATIO, textSize);
@@ -174,5 +175,19 @@ public class ViewItems {
      */
     public void updateIcon(int buzzerNumber) {
         icons[buzzerNumber].setTexture(scoreBoardModel.getIcons()[buzzerNumber]);
+    }
+
+    /**
+     * Updates the view if the number of buzzers has changed
+     */
+    public void updateBuzzerCount() {
+        for(int i = 0; i < MAX_BUZZER_COUNT; i++) {
+            labels[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 0.95f);
+            labels[i].setOpacity(0);
+            teamMetalBacks[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 1.5f);
+            icons[i].setPosition(1 / (SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i), 1.5f);
+            teamYellowBacks[i].setPosition(-0.1f, 0.95f);
+            teamYellowBacks[i].setSize(0.1f, 0.1f);
+        }
     }
 }

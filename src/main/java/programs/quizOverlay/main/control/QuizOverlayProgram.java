@@ -4,6 +4,7 @@ import programs.quizOverlay.control.control.QuizOverlayProgramController;
 import programs.quizOverlay.data.QuizOverlayModel;
 import presentationWindow.animations.AnimationQueue;
 import programs.quizOverlay.main.view.QuizOverlayPresentationView;
+import programs.quizPrograms.main.control.QuizGeneralState;
 import programs.quizPrograms.main.control.QuizProgram;
 import programs.quizPrograms.settings.QuizSettingsController;
 import savedataHandler.languages.Text;
@@ -73,6 +74,14 @@ public class QuizOverlayProgram extends QuizProgram<QuizOverlayProgramController
         if (quizGeneralState.checkAndPerformAction(GeneralState.QuizAction.FADE_IN, animationQueueItem)) {
             quizStateChanger.nextQuestion(animationQueueItem, null);
         }
+    }
+
+    /**
+     * action performed when the program gets closed
+     */
+    @Override
+    public void programClosed() {
+        super.programClosed();
     }
 
 

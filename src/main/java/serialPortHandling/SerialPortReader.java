@@ -114,7 +114,9 @@ public class SerialPortReader {
             return;
         }
 
+        System.out.println("Serial Ports");
         for (String port : ports) {
+            System.out.println("Serrial Port: " + port);
             if (!searchingOnPortsStarted(port)) {
                 serialPortHandlerList.add(new SerialPortHandler(port, this));
             }

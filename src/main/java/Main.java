@@ -58,8 +58,8 @@ public class Main {
 
         try {
             GlobalScreen.registerNativeHook();
-        } catch (NativeHookException ignored) {
-
+        } catch (NativeHookException e) {
+            e.printStackTrace();
         }
     }
 

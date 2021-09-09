@@ -3,6 +3,7 @@ package programs.quizPrograms.settings.pages;
 import assets.settings.general.SettingsChangeListener;
 import assets.settings.general.SettingsPage;
 import assets.settings.rows.AudioSettingRow;
+import assets.settings.rows.AudioWarningMessageSettingsRow;
 import savedataHandler.languages.Text;
 
 import static programs.quizPrograms.data.QuizModel.*;
@@ -50,6 +51,8 @@ public class AudioSettingsPage extends SettingsPage {
         wrongSound = new AudioSettingRow(settingsChangeListener, WRONG_SOUND, Text.WRONG_SOUND);
 
         super.addRow(wrongSound);
+
+        super.addRow(new AudioWarningMessageSettingsRow());
 
     }
 

@@ -38,9 +38,9 @@ public class ImageSettingsPage extends SettingsPage {
      */
     protected void createImageSelectionView(SettingsChangeListener settingsChangeListener) {
 
-        icons = new FileChooserSettingsRow[SaveDataHandler.BUZZER_COUNT];
+        icons = new FileChooserSettingsRow[SaveDataHandler.MAX_BUZZER_COUNT];
 
-        for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
+        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
             icons[i] = new FileChooserSettingsRow(settingsChangeListener, ICON + i, Text.SELECT_ICON_BUZZER + " " + (i + 1), new File("default"), Text.IMAGES, "png", "jpg");
 
             super.addRow(icons[i]);

@@ -38,10 +38,10 @@ public class EnteredAnimation {
      * @param animationQueueItem <code>AnimationQueueItem</code> to queue the animation
      */
     public void executeAnimation(AnimationQueue.AnimationQueueItem animationQueueItem) {
-        for (int i = 0; i < SaveDataHandler.MAX_BUZZER_COUNT; i++) {
+        for (int i = 0; i < SaveDataHandler.BUZZER_COUNT; i++) {
             exponentialAnimator.moveXTo((1/(SaveDataHandler.BUZZER_COUNT * 2f) * (1 + 2 * i)),viewItems.getTeamYellowBacks()[i],70);
             int finalI = i;
-            if (i == SaveDataHandler.MAX_BUZZER_COUNT - 1) {
+            if (i == SaveDataHandler.BUZZER_COUNT - 1) {
                 exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).addOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30).addOnFinishedAction(animationQueueItem::animationFinished));
             } else {
                 exponentialAnimator.scaleWidthTo(0.25f, viewItems.getTeamYellowBacks()[i], 70 + i * 20).addOnFinishedAction(() -> exponentialAnimator.fadeIn(viewItems.getLabels()[finalI], 30));

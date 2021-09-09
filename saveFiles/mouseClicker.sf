@@ -6,6 +6,6 @@ Integer ClickX0 = 1
 Integer ClickY1 = 1
 Integer Blocking Behaviour = 2
 Integer ClickY0 = 16
-Boolean Display Mouse Tracker = true
+Boolean Display Mouse Tracker = false
 Boolean Use Click2 = true
 

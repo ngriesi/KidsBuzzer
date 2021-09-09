@@ -73,7 +73,8 @@ class SaveFileLoader {
             case "Integer":
                 try {
                     saveFile.putInteger(name, Integer.parseInt(value));
-                } catch (NumberFormatException ignored) {
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
                 break;
             case "Boolean":

@@ -1,13 +1,21 @@
 String Language = English
-Integer Window Height = 720
-Integer Window Width = 1280
+Integer Buzzer Color 1alpha = 255
+Integer Window Height = 769
+Integer Window Width = 1306
 Integer Buzzer Count = 3
+Integer Output Screen = 1
+Integer Buzzer Color 2blue = 0
+Integer Buzzer Color 1red = 255
+Integer Buzzer Color 2red = 0
+Integer Buzzer Color 1green = 0
+Integer Effect Colorred = 51
 Integer Effect Colorblue = 255
 Integer Effect Coloralpha = 255
-Integer Window Y = 118
-Integer Window X = 254
-Integer Output Screen = 1
+Integer Window Y = 98
+Integer Buzzer Color 2alpha = 255
+Integer Window X = 514
 Integer Desired Output Screen = 2
+Integer Buzzer Color 2green = 0
+Integer Buzzer Color 1blue = 102
 Integer Effect Colorgreen = 51
-Integer Effect Colorred = 51
 

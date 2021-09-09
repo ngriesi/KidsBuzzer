@@ -2,6 +2,8 @@ package assets.settings.rows;
 
 import assets.standardAssets.MyLabel;
 
+import java.awt.*;
+
 /**
  * Message settings row used to display a Message in the settings
  */
@@ -20,6 +22,19 @@ public class MessageSettingsRow extends SettingsRow {
     public MessageSettingsRow(String text) {
         super("");
         label = new MyLabel(text);
+        this.add(label);
+    }
+
+    /**
+     * constructor creating a message row
+     *
+     * @param text text of the message
+     * @param color color of the text
+     */
+    MessageSettingsRow(String text, Color color) {
+        super("");
+        label = new MyLabel(text);
+        label.setForeground(color);
         this.add(label);
     }
 

@@ -70,6 +70,8 @@ public class InformationPage extends SettingsPage {
                 }
 
                 Desktop.getDesktop().open(tempFile);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();

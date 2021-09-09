@@ -103,6 +103,7 @@ public class MainController {
      * shows the presentation window
      */
     public void showPresentationWindow() {
+        controlModel.getProgramChooserModel().permitProgramChange();
         controlModel.getOpenGlRenderer().getWindow().show();
     }
 
@@ -111,6 +112,7 @@ public class MainController {
      */
     public void hidePresentationWindow() {
         controlModel.getOpenGlRenderer().getWindow().hide();
+        controlModel.getProgramChooserModel().allowProgramChange();
     }
 
     /**

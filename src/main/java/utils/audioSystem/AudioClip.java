@@ -55,10 +55,21 @@ public class AudioClip {
             audioInputStream = javax.sound.sampled.AudioSystem.getAudioInputStream(file.getAbsoluteFile());
 
             result = javax.sound.sampled.AudioSystem.getClip();
+            if (audioInputStream.available() / 44100 > 1000) {
+                loadingMonitor.finishedProcess(loadingHandler);
+                return null;
+            }
             result.open(audioInputStream);
+
+
             pre_playAudio(result);
 
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ignored) {
+
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
+            System.out.println("Audio file not found");
+        } catch (OutOfMemoryError error) {
+            loadingMonitor.finishedProcess(loadingHandler);
+            return null;
         }
 
         loadingMonitor.finishedProcess(loadingHandler);
@@ -81,6 +92,7 @@ public class AudioClip {
 
         AudioInputStream audioInputStream;
         try {
+
             audioInputStream = javax.sound.sampled.AudioSystem.getAudioInputStream(file.getAbsoluteFile());
 
             result = javax.sound.sampled.AudioSystem.getClip();

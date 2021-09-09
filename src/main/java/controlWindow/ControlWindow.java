@@ -253,7 +253,7 @@ public class ControlWindow {
      * @param number program number
      */
     private void switchToProgram(int number) {
-        mainController.setProgram(mainController.getControlModel().getProgramChooserModel().getProgramHandler().getByNumber(number));
+        mainController.getControlModel().getProgramChooserModel().programButtonAction(number);
         myJFrame.getFrame().setVisible(true);
     }
 

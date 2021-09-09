@@ -1,6 +1,7 @@
 package programs.quiztime.main.control;
 
 import presentationWindow.animations.AnimationQueue;
+import programs.quizPrograms.main.control.QuizGeneralState;
 import programs.quizPrograms.main.control.QuizProgram;
 import programs.quiztime.control.control.QuizTimeProgramControlController;
 import programs.quiztime.data.QuizTimeProgramModel;
@@ -61,6 +62,15 @@ public class QuizTimeProgram extends QuizProgram<QuizTimeProgramControlControlle
         if (quizGeneralState.checkAndPerformAction(GeneralState.QuizAction.SHOW_TITLE)) {
             ((StateChanger)quizStateChanger).changeToIntro();
         }
+    }
+
+    /**
+     * action performed when the program gets closed
+     */
+    @Override
+    public void programClosed() {
+
+        super.programClosed();
     }
 
     /**

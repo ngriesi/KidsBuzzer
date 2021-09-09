@@ -171,6 +171,8 @@ public class ShaderProgram {
             FloatBuffer fb = stack.mallocFloat(16);
             value.get(fb);
             glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

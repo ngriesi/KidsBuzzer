@@ -122,4 +122,11 @@ public class ScoreBoardPresentationView extends ProgramPresentationView<ScoreBoa
     public void updateIcon(int buzzerNumber) {
         viewItems.updateIcon(buzzerNumber);
     }
+
+    /**
+     * Updates the view if the number of buzzers has changed
+     */
+    public void updateBuzzerCount() {
+        viewItems.updateBuzzerCount();
+    }
 }

@@ -71,6 +71,15 @@ public class ScoreBoardModel extends ProgramModel {
     }
 
     /**
+     * Fades Out the Buzzer sound
+     */
+    public void fadeOutBuzzerSound() {
+        if (buzzerSound != null) {
+            buzzerSound.fadeOut(1);
+        }
+    }
+
+    /**
      * plays the buzzer sound sound if it exists
      */
     public void playBuzzerSound() {
@@ -104,4 +113,5 @@ public class ScoreBoardModel extends ProgramModel {
     public void setIcon(Texture texture, int index) {
         icons[index] = texture;
     }
+
 }

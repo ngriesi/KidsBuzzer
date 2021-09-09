@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
  */
 public class SettingsController extends assets.settings.general.SettingsController<SettingsView> implements ActionListener, SettingsChangeListener {
 
+
     /**
      * reference to the main application model
      */
@@ -33,6 +34,10 @@ public class SettingsController extends assets.settings.general.SettingsControll
     public final static String DESIRED_OUTPUT_SCREEN = "Desired Output Screen";
     public final static String NATIVE_KEY_LISTENER = "Native Key Listener";
     public static final String WINDOW_WIDTH = "Window Width", WINDOW_HEIGHT = "Window Height", WINDOW_X = "Window X", WINDOW_Y = "Window Y";
+
+    public static String BUZZER_COLOR_1 = "Buzzer Color 1";
+    public static String BUZZER_COLOR_2 = "Buzzer Color 2";
+    public static String BUZZER_COLOR_3 = "Buzzer Color 3";
 
     /**
      * stores the old values for fields where the whole view needs to be updated if they change
@@ -160,33 +165,40 @@ public class SettingsController extends assets.settings.general.SettingsControll
      */
     @Override
     public void settingChanged(SettingsEvent settingsEvent) {
-        switch (settingsEvent.getName()) {
-            case OUTPUT_SCREEN:
-                saveFileHandler.getSaveFile().putInteger(OUTPUT_SCREEN, (int) settingsEvent.getValue());
-                saveFileHandler.getSaveFile().putInteger(DESIRED_OUTPUT_SCREEN, (int) settingsEvent.getValue());
-                mainController.updateOutputScreen((int) settingsEvent.getValue());
-                break;
-            case BUZZER_COUNT:
+        if(!settingsEvent.getPageName().equals("buzzer")) {
+            switch (settingsEvent.getName()) {
+                case OUTPUT_SCREEN:
+                    saveFileHandler.getSaveFile().putInteger(OUTPUT_SCREEN, (int) settingsEvent.getValue());
+                    saveFileHandler.getSaveFile().putInteger(DESIRED_OUTPUT_SCREEN, (int) settingsEvent.getValue());
+                    mainController.updateOutputScreen((int) settingsEvent.getValue());
+                    break;
+                case NATIVE_KEY_LISTENER:
+                    saveFileHandler.getSaveFile().putBoolean(NATIVE_KEY_LISTENER, (boolean) settingsEvent.getValue());
+                    mainController.getControlModel().setEnableNativeKeyListener((boolean) settingsEvent.getValue());
+                    break;
+                case LANGUAGE:
+                    saveFileHandler.getSaveFile().putString(LANGUAGE, (String) settingsEvent.getValue());
+                    new Text((String) settingsEvent.getValue());
+                    this.setSettingsView(new SettingsView(this));
+                    mainController.getControlModel().getView().setView(getSettingsView());
+                    break;
+                case EFFECT_COLOR:
+                    Color color = (Color) settingsEvent.getValue();
+                    saveFileHandler.getSaveFile().putColor(EFFECT_COLOR, color);
+                    StandardAssetFields.ROLLOVER_COLOR = (Color) settingsEvent.getValue();
+                    StandardAssetFields.PRESSED_COLOR = ((Color) settingsEvent.getValue()).brighter();
+                    this.setSettingsView(new SettingsView(this));
+                    mainController.getControlModel().getView().setView(getSettingsView());
+                    break;
+            }
+        } else {
+            if(settingsEvent.getName().equals(BUZZER_COUNT)) {
                 saveFileHandler.getSaveFile().putInteger(BUZZER_COUNT, (int) settingsEvent.getValue());
-                break;
-            case NATIVE_KEY_LISTENER:
-                saveFileHandler.getSaveFile().putBoolean(NATIVE_KEY_LISTENER, (boolean) settingsEvent.getValue());
-                mainController.getControlModel().setEnableNativeKeyListener((boolean) settingsEvent.getValue());
-                break;
-            case LANGUAGE:
-                saveFileHandler.getSaveFile().putString(LANGUAGE, (String) settingsEvent.getValue());
-                new Text((String) settingsEvent.getValue());
-                this.setSettingsView(new SettingsView(this));
-                mainController.getControlModel().getView().setView(getSettingsView());
-                break;
-            case EFFECT_COLOR:
-                Color color = (Color) settingsEvent.getValue();
-                saveFileHandler.getSaveFile().putColor(EFFECT_COLOR, color);
-                StandardAssetFields.ROLLOVER_COLOR = (Color) settingsEvent.getValue();
-                StandardAssetFields.PRESSED_COLOR = ((Color) settingsEvent.getValue()).brighter();
-                this.setSettingsView(new SettingsView(this));
-                mainController.getControlModel().getView().setView(getSettingsView());
-                break;
+            } else {
+                saveFileHandler.getSaveFile().putColor(settingsEvent.getName(), (Color) settingsEvent.getValue());
+                int buzzerNumber = settingsEvent.getName().equals(BUZZER_COLOR_1)?1:settingsEvent.getName().equals(BUZZER_COLOR_2)?2:3;
+                SaveDataHandler.changeBuzzerColor((Color) settingsEvent.getValue(), buzzerNumber);
+            }
         }
     }
 
